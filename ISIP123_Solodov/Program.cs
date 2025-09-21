@@ -1,42 +1,84 @@
-﻿void mainMenu(int id, List<Product> PRODUCTS)
+﻿void mainMenu(int id, List<Product> PRODUCTS, Stack<List<Product>> PRODUCTS_History, List<Product> sellReportLst)
 {
 
-    Console.WriteLine("1.Добавить товар\n2.Удалить тоывар\n3.Заказать поставку товара\n4.Продать товар\n5.Поиск товара\n0.Выход");
+    Console.WriteLine("-----------------------------------------\n\t1. Добавить товар\n\t2. Удалить товар\n\t3. Заказать поставку товара\n\t4. Продать товар\n\t5. Поиск товара\n\t6. (DLC) AdminPanel\n\t7. (DLC) Сформировать отчёт о продажах\n\t0. Выход\n-----------------------------------------");
     string choice = Console.ReadLine();
 
     switch (choice)
     {
         case "1":
-            AddProduct(id, PRODUCTS);
+            // Создание копии и добавление в стек
+            List<Product> copyPRODUCTS = new List<Product>(PRODUCTS);
+            PRODUCTS_History.Push(copyPRODUCTS);
+
+            PRODUCTS.Add(AddProduct(id));
+            id++;
+            mainMenu(id, PRODUCTS, PRODUCTS_History, sellReportLst);
             break;
+
         case "2":
-            DeleteProduct(id, PRODUCTS);
+            DeleteProduct(PRODUCTS, PRODUCTS_History);
+            mainMenu(id, PRODUCTS, PRODUCTS_History, sellReportLst);
             break;
+
         case "3":
-            DeliveryFromStorage(id, PRODUCTS);
+            DeliveryFromStorage(PRODUCTS, PRODUCTS_History);
+            mainMenu(id, PRODUCTS, PRODUCTS_History, sellReportLst);
             break;
+
         case "4":
-            SellProduct(id, PRODUCTS);
+            SellProduct(id, PRODUCTS, PRODUCTS_History, sellReportLst);
             break;
+
         case "5":
-            SearchProduct(id, PRODUCTS);
+            SearchProduct(PRODUCTS);
+            mainMenu(id, PRODUCTS, PRODUCTS_History, sellReportLst);
             break;
+
+        case "6":
+            AdminPanel(id,PRODUCTS, PRODUCTS_History, sellReportLst);
+            break;
+
+        case "7":
+            MakeReport(sellReportLst);
+            mainMenu(id, PRODUCTS, PRODUCTS_History, sellReportLst);
+            break;
+
         case "0":
             break;
-        default: mainMenu(id, PRODUCTS); break;
+        default: mainMenu(id, PRODUCTS, PRODUCTS_History, sellReportLst); break;
     }
 }
 void printInfo(Product tovar)
 {
-    Console.WriteLine($"---------------------------------\nID: {tovar.productID}\nНазвание: {tovar.productName}\nЦена: {tovar.productPrice}\nКол-во: {tovar.productCount}\nЕсть на складе? {tovar.isProductInStock}\nКатегория: {tovar.productCategory}\n---------------------------------");
+    Console.WriteLine($"-----------------------------------------\nID: {tovar.productID}\nНазвание: {tovar.productName}\nЦена: {tovar.productPrice} руб.\nКол-во: {tovar.productCount}\nЕсть на складе? {tovar.isProductInStock}\nКатегория: {tovar.productCategory}\n-----------------------------------------");
 }
-(double Price, int Count) checkNumericValue(double input)
+(double Price, int Count) checkNumericValue(object input)
 {
-    if (input < 0)
+    char[] numsLst = {'1','2', '3', '4', '5', '6', '7', '8', '9', '0', ',' };
+    string strInput = (string)input;
+
+    if (strInput != "")
     {
-        input *= -1;
+        for (int i = 0; i < strInput.Length; i++)
+        {
+            if (numsLst.Contains(strInput[i]) == false)
+            {
+                Console.WriteLine("Error: Введите корректные данные!");
+                return checkNumericValue(Console.ReadLine());
+            }
+        }
+        double inputDBL = Convert.ToDouble(input);
+        if (inputDBL < 0)
+        {
+            inputDBL *= -1;
+        }
+        return (inputDBL, Convert.ToInt32(inputDBL));
     }
-    return (input, Convert.ToInt32(input));
+    else {
+        Console.WriteLine("Error: Введите корректные данные!");
+        return checkNumericValue(Console.ReadLine());
+    }
 }
 string checkStringValue(string input)
 {
@@ -46,19 +88,19 @@ string checkStringValue(string input)
     }
     return input;
 }
-void AddProduct(int id, List<Product> PRODUCTS)
+Product AddProduct(int id)
 {
 
-    Console.WriteLine($"Введите название продукта");
+    Console.Write($"Введите название продукта: ");
     string name = checkStringValue(Console.ReadLine());
 
-    Console.WriteLine($"Введите цену продукта");
-    double price = checkNumericValue(Convert.ToDouble(Console.ReadLine())).Price;
+    Console.Write($"Введите цену продукта (если цена не целая, вводите через запятую): ");
+    double price = checkNumericValue(Console.ReadLine()).Price;
 
-    Console.WriteLine($"Введите количество продукта");
-    int count = checkNumericValue(Convert.ToInt32(Console.ReadLine())).Count;
+    Console.Write($"Введите количество продукта: ");
+    int count = checkNumericValue(Console.ReadLine()).Count;
 
-    Console.WriteLine("Есть ли товар на складе? (Да / Нет)");
+    Console.Write("Есть ли товар на складе? (Да / Нет): ");
     string ans = Console.ReadLine();
 
     bool isInStock;
@@ -67,8 +109,8 @@ void AddProduct(int id, List<Product> PRODUCTS)
     if (ans.Length == 2)
     {
         isInStock = true;
-        Console.WriteLine("Сколько товара на складе?");
-        countInStorage = checkNumericValue(Convert.ToInt32(Console.ReadLine())).Count;
+        Console.Write("Введите кол-во товара на складе: ");
+        countInStorage = checkNumericValue(Console.ReadLine()).Count;
     }
     else
     {
@@ -92,36 +134,37 @@ void AddProduct(int id, List<Product> PRODUCTS)
         default: choice = "Другое"; break;
     }
     Product product = new Product(id, name, price, count, isInStock, choice, countInStorage);
-    id++;
-    PRODUCTS.Add(product);
-    Console.WriteLine("Операция выполнена успешно!\n");
-    mainMenu(id, PRODUCTS);
-}
-void DeleteProduct(int id, List<Product> PRODUCTS)
-{
+    Console.WriteLine("Операция выполнена успешно!");
 
+    return product;
+}
+void DeleteProduct(List<Product> PRODUCTS, Stack<List<Product>> PRODUCTS_History)
+{
     foreach (Product tovar in PRODUCTS)
     {
         printInfo(tovar);
     }
 
-    Console.WriteLine("Введите ID продукта который хотите удалить");
-    int idx = Convert.ToInt32(Console.ReadLine());
-    string message = "Error! Продукта с таким ID не существует!";
+    Console.Write("Введите ID продукта который хотите удалить: ");
+    int idx = checkNumericValue(Console.ReadLine()).Count;
+    string message = "Error: Продукта с таким ID не существует!";
 
     foreach (Product p in PRODUCTS)
     {
         if (idx == p.productID)
         {
+            // Создание копии и добавление в стек
+            List<Product> copyPRODUCTS = new List<Product>(PRODUCTS);
+            PRODUCTS_History.Push(copyPRODUCTS);
+
             PRODUCTS.Remove(p);
-            message = "Операция выполнена успешно!\n";
+            message = "Операция выполнена успешно!";
             break;
         }
     }
     Console.WriteLine(message);
-    mainMenu(id, PRODUCTS);
 }
-void DeliveryFromStorage(int id, List<Product> PRODUCTS)
+void DeliveryFromStorage(List<Product> PRODUCTS, Stack<List<Product>> PRODUCTS_History)
 {
 
     foreach (Product tovar in PRODUCTS)
@@ -129,62 +172,74 @@ void DeliveryFromStorage(int id, List<Product> PRODUCTS)
         printInfo(tovar);
     }
 
-    Console.WriteLine("Какой продукт вы хотите заказать?");
-    string name = checkStringValue(Console.ReadLine());
-    string message = "Error! Товара с таким названием нет на складе.\n";
+    Console.Write("Введите название продукта, который хотите заказать: ");
+    string name = checkStringValue(Console.ReadLine()).ToLower();
+    string message = "Error: Товара с таким названием нет на складе.";
 
     foreach (Product tovar in PRODUCTS)
     {
-        if (tovar.productName.IndexOf(name) >= 0)
+        string lowerName = tovar.productName.ToLower();
+        if (lowerName.IndexOf(name) >= 0)
         {
-            Console.WriteLine($"-----------------------------\n{tovar.productName}: {tovar.countInStorage} шт.\n-----------------------------");
-            Console.Write("Сколько вы хотите заказать со склада ");
-            int count = checkNumericValue(Convert.ToInt32(Console.ReadLine())).Count;
+            Console.WriteLine($"-----------------------------------------\n{tovar.productName}: {tovar.countInStorage} шт.\n-----------------------------------------");
+            Console.Write("Сколько вы хотите заказать со склада: ");
+            int count = checkNumericValue(Console.ReadLine()).Count;
 
             if (count <= tovar.countInStorage)
             {
+                // Создание копии и добавление в стек
+                List<Product> copyPRODUCTS = new List<Product>(PRODUCTS);
+                PRODUCTS_History.Push(copyPRODUCTS);
+
                 tovar.countInStorage -= count;
                 tovar.productCount += count;
-                message = "Операция выполнена успешно!\n";
+                message = "Операция выполнена успешно!";
                 break;
             }
-            else { message = "Error! Товар либо закончился, либо его нет в таком количестве.\n"; break; }
+            else { message = "Error: Товар либо закончился, либо его нет в таком количестве."; break; }
         }
     }
     Console.WriteLine(message);
-    mainMenu(id, PRODUCTS);
 }
-void SellProduct(int id, List<Product> PRODUCTS)
+void SellProduct(int id,List<Product> PRODUCTS, Stack<List<Product>> PRODUCTS_History, List<Product> sellReportLst)
 {
-
     foreach (Product tovar in PRODUCTS)
     {
         printInfo(tovar);
     }
 
-    Console.WriteLine("Какой товар вы продали?");
-    string name = checkStringValue(Console.ReadLine());
-
+    Console.Write("Введите название товара: ");
+    string name = checkStringValue(Console.ReadLine()).ToLower();
+    string message = "Error: Такого товара нет в магазине!";
     foreach (Product t in PRODUCTS)
     {
-
-        if (t.productName.IndexOf(name) >= 0)
+        string lowerName = t.productName.ToLower();
+        if (lowerName.IndexOf(name) >= 0)
         {
             Console.WriteLine($"В данный момент в магазине {t.productName} в кол-ве {t.productCount} шт.");
-            Console.Write("Какое кол-во товара вы хотите продать?");
-            int count = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Введите кол-во товара, которое хотите продать: ");
+            int count = checkNumericValue(Console.ReadLine()).Count;
 
-            if (t.productCount >= count) { t.productCount -= count; Console.WriteLine("Операция выполнена успешно!\n"); }
-            else { Console.WriteLine("Error! В наличии нет столько товара"); }
+            if (t.productCount >= count) {
+                // Создание копии и добавление в стек
+                List<Product> copyPRODUCTS = new List<Product>(PRODUCTS);
+                PRODUCTS_History.Push(copyPRODUCTS);
+                t.productCount -= count;
+                t.countOfSellProduct += count;
+                sellReportLst.Add(t);
+
+                message = "Операция выполнена успешно!";
+            }
+            else { message = "Error: В наличии нет столько товара!"; }
         }
-        else { Console.WriteLine("Error! Такого товара нет в магазине"); }
     }
-    mainMenu(id, PRODUCTS);
+    Console.WriteLine(message);
+    mainMenu(id, PRODUCTS, PRODUCTS_History, sellReportLst);
 }
-void SearchProduct(int id, List<Product> PRODUCTS)
+void SearchProduct(List<Product> PRODUCTS)
 {
 
-    Console.WriteLine("Введите ID, название или категорию продукта");
+    Console.Write("Введите ID, название или категорию продукта: ");
     string p = Console.ReadLine();
 
     try
@@ -203,7 +258,7 @@ void SearchProduct(int id, List<Product> PRODUCTS)
         }
         if (mark == false)
         {
-            Console.WriteLine("Продукта с таким ID не существует.\n");
+            Console.WriteLine("Продукта с таким ID не существует.");
         }
     }
     catch
@@ -219,21 +274,70 @@ void SearchProduct(int id, List<Product> PRODUCTS)
         }
         if (mark == false)
         {
-            Console.WriteLine("Продукта c таким названием/категорией не существует.\n");
+            Console.WriteLine("Продукта c таким названием/категорией не существует.");
         }
     }
-    finally { mainMenu(id, PRODUCTS); }
+}
+void AdminPanel(int id, List<Product> PRODUCTS, Stack<List<Product>> PRODUCTS_History, List<Product> sellReportLst) {
+
+    foreach (List<Product> p in PRODUCTS_History) {
+        Console.WriteLine(12133);
+        foreach (Product pp in p) {
+            printInfo(pp);
+        }
+    }
+    string ans = null;
+    bool tempMark = false;
+    Console.WriteLine("Отменить последнюю продажу? (YES/NO)");
+    ans = Console.ReadLine();
+
+    while (tempMark == false) {
+
+        if (ans == "YES")
+        {
+            PRODUCTS = new List<Product>(PRODUCTS_History.Pop());
+            if (sellReportLst.Count != 0) {
+                sellReportLst.RemoveAt(sellReportLst.Count-1);          
+            }
+            Console.WriteLine("Операция выполнена!");
+            tempMark = true;
+        }
+        else if (ans == "NO")
+        {
+            Console.WriteLine("Операция прервана!");
+            tempMark = true;
+        }
+        else {
+            Console.WriteLine("Введите: YES или NO");
+            ans = Console.ReadLine();
+        }  
+    }
+    mainMenu(id, PRODUCTS, PRODUCTS_History, sellReportLst);
+}
+void MakeReport(List<Product> sellReportLst) {
+
+    double sum = 0;
+    foreach (Product sellingProduct in sellReportLst) {
+        Console.WriteLine($"-----------------------------------------\nID: {sellingProduct.productID}\nНазвание: {sellingProduct.productName}\nЦена: {sellingProduct.productPrice} руб.\nКол-во проданных единиц: {sellingProduct.countOfSellProduct}\n-----------------------------------------");
+        sum += sellingProduct.countOfSellProduct * sellingProduct.productPrice;
+    }
+    Console.WriteLine($"Общая сумма продажи: {sum} руб.");
 }
 
 int id = 4;
 List<Product> PRODUCTS = new List<Product>();
+Stack<List<Product>> PRODUCTS_History = new Stack<List<Product>>();
+List<Product> sellReportLst = new List<Product>();
+
 Product p1 = new Product(1, "Помидор", 60, 100, true, "Полезная пища", 1000);
 PRODUCTS.Add(p1);
 Product p2 = new Product(2, "Чипсы", 120, 60, false, "Вредная пища");
 PRODUCTS.Add(p2);
 Product p3 = new Product(3, "Кактус", 500, 10, false, "Другое");
 PRODUCTS.Add(p3);
-mainMenu(id, PRODUCTS);
+
+mainMenu(id, PRODUCTS, PRODUCTS_History, sellReportLst);
+
 class Product
 {
     public int productID;
@@ -243,8 +347,9 @@ class Product
     public bool isProductInStock;
     public string productCategory;
     public int countInStorage;
+    public int countOfSellProduct;
 
-    public Product(int productID = 4, string productName = "Название отсутсвует", double productPrice = 0, int productCount = 0, bool isProductInStock = false, string productCategory = "нет", int countInStorage = 0)
+    public Product(int productID = 4, string productName = "Название отсутсвует", double productPrice = 0, int productCount = 0, bool isProductInStock = false, string productCategory = "нет", int countInStorage = 0, int countOfSellProduct = 0)
     {
         this.productID = productID;
         this.productName = productName;
@@ -253,5 +358,6 @@ class Product
         this.isProductInStock = isProductInStock;
         this.productCategory = productCategory;
         this.countInStorage = countInStorage;
+        this.countOfSellProduct = countOfSellProduct;
     }
 }
