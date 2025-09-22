@@ -1,4 +1,4 @@
-﻿void mainMenu(int id, List<Product> PRODUCTS, Stack<List<Product>> PRODUCTS_History, List<Product> sellReportLst)
+﻿void mainMenu(int id, List<Product> PRODUCTS, Stack<Product> PRODUCTS_History, List<Product> sellReportLst)
 {
 
     Console.WriteLine("-----------------------------------------\n\t1. Добавить товар\n\t2. Удалить товар\n\t3. Заказать поставку товара\n\t4. Продать товар\n\t5. Поиск товара\n\t6. (DLC) AdminPanel\n\t7. (DLC) Сформировать отчёт о продажах\n\t0. Выход\n-----------------------------------------");
@@ -7,9 +7,6 @@
     switch (choice)
     {
         case "1":
-            // Создание копии и добавление в стек
-            List<Product> copyPRODUCTS = new List<Product>(PRODUCTS);
-            PRODUCTS_History.Push(copyPRODUCTS);
 
             PRODUCTS.Add(AddProduct(id));
             id++;
@@ -138,7 +135,7 @@ Product AddProduct(int id)
 
     return product;
 }
-void DeleteProduct(List<Product> PRODUCTS, Stack<List<Product>> PRODUCTS_History)
+void DeleteProduct(List<Product> PRODUCTS, Stack<Product> PRODUCTS_History)
 {
     foreach (Product tovar in PRODUCTS)
     {
@@ -153,18 +150,18 @@ void DeleteProduct(List<Product> PRODUCTS, Stack<List<Product>> PRODUCTS_History
     {
         if (idx == p.productID)
         {
-            // Создание копии и добавление в стек
-            List<Product> copyPRODUCTS = new List<Product>(PRODUCTS);
-            PRODUCTS_History.Push(copyPRODUCTS);
+            var copy = new Product(p.productID, p.productName, p.productPrice, p.productCount, p.isProductInStock, p.productCategory, p.countInStorage, p.countOfSellProduct);
+            PRODUCTS_History.Push(copy);
 
             PRODUCTS.Remove(p);
+
             message = "Операция выполнена успешно!";
             break;
         }
     }
     Console.WriteLine(message);
 }
-void DeliveryFromStorage(List<Product> PRODUCTS, Stack<List<Product>> PRODUCTS_History)
+void DeliveryFromStorage(List<Product> PRODUCTS, Stack<Product> PRODUCTS_History)
 {
 
     foreach (Product tovar in PRODUCTS)
@@ -187,9 +184,8 @@ void DeliveryFromStorage(List<Product> PRODUCTS, Stack<List<Product>> PRODUCTS_H
 
             if (count <= tovar.countInStorage)
             {
-                // Создание копии и добавление в стек
-                List<Product> copyPRODUCTS = new List<Product>(PRODUCTS);
-                PRODUCTS_History.Push(copyPRODUCTS);
+                var copy = new Product(tovar.productID, tovar.productName, tovar.productPrice, tovar.productCount, tovar.isProductInStock, tovar.productCategory, tovar.countInStorage, tovar.countOfSellProduct);
+                PRODUCTS_History.Push(copy);
 
                 tovar.countInStorage -= count;
                 tovar.productCount += count;
@@ -201,7 +197,7 @@ void DeliveryFromStorage(List<Product> PRODUCTS, Stack<List<Product>> PRODUCTS_H
     }
     Console.WriteLine(message);
 }
-void SellProduct(int id,List<Product> PRODUCTS, Stack<List<Product>> PRODUCTS_History, List<Product> sellReportLst)
+void SellProduct(int id,List<Product> PRODUCTS, Stack<Product> PRODUCTS_History, List<Product> sellReportLst)
 {
     foreach (Product tovar in PRODUCTS)
     {
@@ -221,9 +217,10 @@ void SellProduct(int id,List<Product> PRODUCTS, Stack<List<Product>> PRODUCTS_Hi
             int count = checkNumericValue(Console.ReadLine()).Count;
 
             if (t.productCount >= count) {
-                // Создание копии и добавление в стек
-                List<Product> copyPRODUCTS = new List<Product>(PRODUCTS);
-                PRODUCTS_History.Push(copyPRODUCTS);
+
+                var copy = new Product(t.productID,t.productName,t.productPrice,t.productCount,t.isProductInStock,t.productCategory, t.countInStorage, t.countOfSellProduct);
+                PRODUCTS_History.Push(copy);
+
                 t.productCount -= count;
                 t.countOfSellProduct += count;
                 sellReportLst.Add(t);
@@ -278,13 +275,11 @@ void SearchProduct(List<Product> PRODUCTS)
         }
     }
 }
-void AdminPanel(int id, List<Product> PRODUCTS, Stack<List<Product>> PRODUCTS_History, List<Product> sellReportLst) {
+void AdminPanel(int id, List<Product> PRODUCTS, Stack<Product> PRODUCTS_History, List<Product> sellReportLst) {
 
-    foreach (List<Product> p in PRODUCTS_History) {
-        Console.WriteLine(12133);
-        foreach (Product pp in p) {
-            printInfo(pp);
-        }
+    Console.WriteLine("---------------------------ЭЛЕМЕНТЫ В СТЕКЕ---------------------------");
+    foreach (Product p in PRODUCTS_History) {
+        printInfo(p);
     }
     string ans = null;
     bool tempMark = false;
@@ -295,9 +290,26 @@ void AdminPanel(int id, List<Product> PRODUCTS, Stack<List<Product>> PRODUCTS_Hi
 
         if (ans == "YES")
         {
-            PRODUCTS = new List<Product>(PRODUCTS_History.Pop());
-            if (sellReportLst.Count != 0) {
-                sellReportLst.RemoveAt(sellReportLst.Count-1);          
+            Product elem = PRODUCTS_History.Pop();
+            bool mark = false;
+
+            foreach (Product check in PRODUCTS) {
+                if (check.productID == elem.productID) {
+
+                    PRODUCTS.Remove(check);
+                    PRODUCTS.Insert(elem.productID - 1, elem);
+
+                    mark = true;
+                    break;
+                }
+            }
+            if (mark == false) {
+                PRODUCTS.Insert(elem.productID - 1, elem);
+            }
+
+            if (sellReportLst.Count != 0)
+            {
+                sellReportLst.RemoveAt(sellReportLst.Count - 1);
             }
             Console.WriteLine("Операция выполнена!");
             tempMark = true;
@@ -326,7 +338,7 @@ void MakeReport(List<Product> sellReportLst) {
 
 int id = 4;
 List<Product> PRODUCTS = new List<Product>();
-Stack<List<Product>> PRODUCTS_History = new Stack<List<Product>>();
+Stack<Product> PRODUCTS_History = new Stack<Product>();
 List<Product> sellReportLst = new List<Product>();
 
 Product p1 = new Product(1, "Помидор", 60, 100, true, "Полезная пища", 1000);
