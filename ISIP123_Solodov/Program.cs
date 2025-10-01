@@ -3,6 +3,7 @@ using System.Xml.Linq;
 
 Dictionary<int, Book> lst = new Dictionary<int, Book>();
 List<Book> shoppingCart = new List<Book>();
+List<int> temp = new List<int>();
 
 Book b1 = new Book("Мертвые души", "Н.В. Гоголь", "Роман, Сатира", 1842, 1499.99);
 Book b2 = new Book("Мертвые души 2", "Н.В. Гоголь", "Роман, Сатира", 1852, 15999.99);
@@ -16,6 +17,8 @@ lst.Add(4, b4);
 lst.Add(5, b5);
 
 int idx = 6;
+double sumOfBuys = 0;
+
 Console.WriteLine("---------------MENU---------------\n1. Вывести все книги\n2. Добавить книгу\n3. Удалить книгу\n4. Найти книгу\n5. Отсортировать книги\n6. Вывести книгу(дорогая/дешевая)\n7. Группировка книг\n8. Вставить блок книг\n9. Добавить книгу в корзину");
 Console.Write(">>> ");
 string choice = Console.ReadLine();
@@ -51,9 +54,14 @@ while (choice != "0") {
         case "7":
             GroupByBooks();
             break;
+
         case "8":
+            idx = AddBlockBooks(idx);
             break;
+
         case "9":
+            sumOfBuys = buyBook(sumOfBuys);
+            Console.WriteLine($"Общая сумма корзины: {sumOfBuys} руб.");
             break;
     }
     Console.WriteLine("\n---------------MENU---------------\n1. Вывести все книги\n2. Добавить книгу\n3. Удалить книгу\n4. Найти книгу\n5. Отсортировать книги\n6. Вывести книгу(дорогая/дешевая)\n7. Группировка книг\n8. Вставить блок книг\n9. Добавить книгу в корзину");
@@ -298,22 +306,50 @@ void GroupByBooks() {
     }
     Console.WriteLine("---------------------------------------");
 }
+int AddBlockBooks(int id) {
 
-void buyBook() {
+    Console.WriteLine("Вводите книги в формате: Название;Автор;Жанр;Год;Цена\nВведите 0 чтобы добавить книги.");
+    string str = checkStrValue(Console.ReadLine());
 
-    Console.Write("Введите ID книги, которую хотите купить: ");
-    int id = Convert.ToInt32(Console.ReadLine());
-    string message = "Книга не найдена!";
+    while (str != "0") {
 
-    foreach (var item in lst) {
+        string[] massive = str.Split(separator: ";");
+        Book newBook = new Book(massive[0], massive[1], massive[2], Convert.ToInt32(massive[3]), Convert.ToDouble(massive[4]));
 
-        if (item.Key == id) {
-            shoppingCart.Add(item.Value);
-            message = "Операция выполнена!";
-        }
+        lst.Add(id, newBook);
+        id++;
+
+        str = Console.ReadLine();
     }
 
+    Console.WriteLine("Операция выполнена успешно!");
+    return id;
+}
+double buyBook(double sum) {
+
+    Console.Write("Введите ID книги, которую хотите купить: ");
+    int id = checkNumValue(Console.ReadLine()).Year;
+    string message = "Книга не найдена!";
+
+    if (temp.Contains(id) == false)
+    {
+        foreach (var item in lst)
+        {
+            if (item.Key == id)
+            {
+                shoppingCart.Add(item.Value);
+                sum += item.Value.price;
+                temp.Add(item.Key);
+                message = "Операция выполнена!";
+            }
+        }
+    }
+    else
+    {
+        message = "Книга уже добавлена в корзину!";
+    }
     Console.WriteLine(message);
+    return sum;
 }
 class Book {
 
