@@ -2,6 +2,8 @@
 using System.Xml.Linq;
 
 Dictionary<int, Book> lst = new Dictionary<int, Book>();
+List<Book> shoppingCart = new List<Book>();
+
 Book b1 = new Book("Мертвые души", "Н.В. Гоголь", "Роман, Сатира", 1842, 1499.99);
 Book b2 = new Book("Мертвые души 2", "Н.В. Гоголь", "Роман, Сатира", 1852, 15999.99);
 Book b3 = new Book("Машины сказки", "Маша Медведева", "Российский Фольклор", 2012, 100100);
@@ -14,7 +16,7 @@ lst.Add(4, b4);
 lst.Add(5, b5);
 
 int idx = 6;
-Console.WriteLine("---------------MENU---------------\n1. Вывести все книги\n2. Добавить книгу\n3. Удалить книгу\n4. Найти книгу\n5. Отсортировать книги\n6. Вывести книгу(дорогая/дешевая)\n7. Группировка книг");
+Console.WriteLine("---------------MENU---------------\n1. Вывести все книги\n2. Добавить книгу\n3. Удалить книгу\n4. Найти книгу\n5. Отсортировать книги\n6. Вывести книгу(дорогая/дешевая)\n7. Группировка книг\n8. Вставить блок книг\n9. Добавить книгу в корзину");
 Console.Write(">>> ");
 string choice = Console.ReadLine();
 
@@ -49,8 +51,12 @@ while (choice != "0") {
         case "7":
             GroupByBooks();
             break;
+        case "8":
+            break;
+        case "9":
+            break;
     }
-    Console.WriteLine("\n---------------MENU---------------\n1. Вывести все книги\n2. Добавить книгу\n3. Удалить книгу\n4. Найти книгу\n5. Отсортировать книги\n6. Вывести книгу(дорогая/дешевая)\n7. Группировка книг");
+    Console.WriteLine("\n---------------MENU---------------\n1. Вывести все книги\n2. Добавить книгу\n3. Удалить книгу\n4. Найти книгу\n5. Отсортировать книги\n6. Вывести книгу(дорогая/дешевая)\n7. Группировка книг\n8. Вставить блок книг\n9. Добавить книгу в корзину");
     Console.Write(">>> ");
     choice = Console.ReadLine();
 }
@@ -291,6 +297,23 @@ void GroupByBooks() {
         Console.WriteLine($"{temp.author}:\t{temp.bookCount}");
     }
     Console.WriteLine("---------------------------------------");
+}
+
+void buyBook() {
+
+    Console.Write("Введите ID книги, которую хотите купить: ");
+    int id = Convert.ToInt32(Console.ReadLine());
+    string message = "Книга не найдена!";
+
+    foreach (var item in lst) {
+
+        if (item.Key == id) {
+            shoppingCart.Add(item.Value);
+            message = "Операция выполнена!";
+        }
+    }
+
+    Console.WriteLine(message);
 }
 class Book {
 
