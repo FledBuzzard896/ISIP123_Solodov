@@ -9,6 +9,71 @@
 // 3. Мега Толстяк (расса Толстяк)
 // 4. Гёрди Старшая (расса Булька)
 
+// Меню
+Console.WriteLine("   +++============+*#+++=============+#% =+===============   ================+  +================   \r\n   +++++======+++++#*=====++++++++++++%%*=====++++++=======#*======+++++=======%+=====++++++======  \r\n    %%%#+====+%%%%%%+=====*%%%%%%%%%%%%%+=====+%%%%#=====+#%#=====+#%%%#+=====*%*=====+%%%%*=====+  \r\n       +=====*%%%   ======+++=======    ==================#%#========++++=====*%*=====+  %%%######  \r\n      =======#%%     ================*# ==================*%#=================*%#+====== %%%%%%%%   \r\n      ======+%%%       %%%%%%%#+=====#%#+=====+*   +======*%%======*%%%%+=====+%#+=====+    +=====+ \r\n ===========*###         +****+======#%%=======+   +======+%%+=====+  %%*=====+%%+====== ###+====== \r\n+===============+#%+==============+*#%%%========   ++======%%+======  %%#=====+%%#*+=============++ \r\n+**##############%%################%%%%%########   ########%%######*  %%%######%%%%############+++  \r\n  ##%%%%%%%%%%%%%%%  %%%%%%%%%%%%%%%%%  %%%%%%%    %%%%%%%%%%##%%%    %%%%%%%%  %%%%%%%%%%%%%%#   \n");
+Console.WriteLine("1. Начать игру\n0. Выйти");
+string choice = Console.ReadLine();
+
+Random random = new Random();
+
+if (choice == "1") {
+
+    Console.WriteLine("Выберите персонажа:\n1. Айзек \t(HP\t|||\tDMG ||)\n2. Каин \t(HP\t||\tDMG |||)\n3. Магдалина \t(HP\t||||\tDMG ||)");
+    string hero = Console.ReadLine();
+
+    while (hero != "used")
+    {
+        switch (hero)
+        {
+
+            case "1":
+                Isaac ClassicIsaac = new Isaac(6 * 10, 3.5, 0.1, "");
+                Console.WriteLine("Выбранный персонаж: Айзек");
+                hero = "used";
+                break;
+
+            case "2":
+                Isaac KainIsaac = new Isaac(4 * 10, 3.5 * 1.2, 0.3, "Счастливая нога");
+                Console.WriteLine("Выбранный персонаж: Каин");
+                hero = "used";
+                break;
+
+            case "3":
+                Isaac MagdaleneIsaac = new Isaac(8 * 10, 3.5, 0.05, "Ням-сердце");
+                Console.WriteLine("Выбранный персонаж: Магдалина");
+                hero = "used";
+                break;
+
+            default:
+                hero = Convert.ToString(random.Next(1, 4));
+                break;
+        }
+    }
+
+    // Начало игры
+    for (int lvl = 1; lvl < 6; lvl++) 
+    {
+        if (lvl <= 3)
+        {
+            Console.WriteLine($"Подвал: {lvl}");
+        }
+        else 
+        {
+            Console.WriteLine($"Глубины: {lvl - 3}");
+        }
+
+        int countOfRooms = random.Next(4, 7); // кол-во комнат от 4 до 6
+
+        while (countOfRooms != 1)
+        {
+            Console.WriteLine("========== Выберите действие ==========\n1. Посмотреть статистику\n2. Зайти в следующую комнату");
+            choice = Console.ReadLine();
+
+
+        }
+    }
+    
+}
 class Isaac {
 
     private double hp;
@@ -77,6 +142,7 @@ class BoomFly : Enemy
         this.description = description;
         this.critChance = crit;
     }
+
 }
 class Gurgling : Enemy
 {
@@ -88,6 +154,7 @@ class Gurgling : Enemy
         this.description = description;
         this.ignoreArmor = ignoreArmor;
     }
+
 }
 class Fatty : Enemy
 {
