@@ -12,14 +12,63 @@
 // Меню
 Console.WriteLine("   +++============+*#+++=============+#% =+===============   ================+  +================   \r\n   +++++======+++++#*=====++++++++++++%%*=====++++++=======#*======+++++=======%+=====++++++======  \r\n    %%%#+====+%%%%%%+=====*%%%%%%%%%%%%%+=====+%%%%#=====+#%#=====+#%%%#+=====*%*=====+%%%%*=====+  \r\n       +=====*%%%   ======+++=======    ==================#%#========++++=====*%*=====+  %%%######  \r\n      =======#%%     ================*# ==================*%#=================*%#+====== %%%%%%%%   \r\n      ======+%%%       %%%%%%%#+=====#%#+=====+*   +======*%%======*%%%%+=====+%#+=====+    +=====+ \r\n ===========*###         +****+======#%%=======+   +======+%%+=====+  %%*=====+%%+====== ###+====== \r\n+===============+#%+==============+*#%%%========   ++======%%+======  %%#=====+%%#*+=============++ \r\n+**##############%%################%%%%%########   ########%%######*  %%%######%%%%############+++  \r\n  ##%%%%%%%%%%%%%%%  %%%%%%%%%%%%%%%%%  %%%%%%%    %%%%%%%%%%##%%%    %%%%%%%%  %%%%%%%%%%%%%%#   \n");
 Console.WriteLine("1. Начать игру\n0. Выйти");
+Console.Write(">>> ");
 string choice = Console.ReadLine();
 
 Random random = new Random();
 
+List<Item> lstOfpickUps = new List<Item>();
+
+Weapon Pentagram = new Weapon("Пентаграмма", 1, "+ Урон, + 10% шанс сделки");
+Weapon Synthoil = new Weapon("Шприц синтола", 1, "+ Урон, + Дальность выстрела");
+Weapon DarkMatter = new Weapon("Черная материя", 1, "+ Урон, + Шанс наложить на врага эффект страха");
+Weapon Barley = new Weapon("Ячмень", 1, "+ Урон");
+Weapon Stapler = new Weapon("Степлер", 1, "+ Урон, Все слёзы стреляют из правого глаза");
+Weapon SacredHeart = new Weapon("Священное сердце", 2.3, "+ Урон, Выстрелы самонаводятся");
+Weapon Guillotine = new Weapon("Гильётина", 1, "+ Урон, Голова персонажа летает отдельно от него");
+Weapon Ipecac = new Weapon("Рвотный корень", 40, "+ Мега урон, взрывные слёзы");
+
+lstOfpickUps.Add(Pentagram);
+lstOfpickUps.Add(Synthoil);
+lstOfpickUps.Add(DarkMatter);
+lstOfpickUps.Add(Barley);
+lstOfpickUps.Add(Stapler);
+lstOfpickUps.Add(SacredHeart);
+lstOfpickUps.Add(Guillotine);
+lstOfpickUps.Add(Ipecac);
+
+Armor MomsUnderwear = new Armor("Мамино бельё", 0.1, "Снижает получаемый урон на 10%");
+Armor Pjs = new Armor("Пижама", 0.2, "Снижает получаемый урон на 20%");
+Armor Habit = new Armor("Одеяние", 0.1, "Снижает получаемый урон на 10%");
+
+lstOfpickUps.Add(MomsUnderwear);
+lstOfpickUps.Add(Pjs);
+lstOfpickUps.Add(Habit);
+
+Item YumHeart = new Item("Ням сердце", "Даёт возможность его съесть когда у персонажа остается меньше 25% здоровья");
+Item LuckyLeg = new Item("Счастливая нога", "+ 1 удача");
+Item TheBelt = new Item("Ремень", "Вы быстрее бегаете");
+Item PiggyBank = new Item("Свинюшка", "+ 3 монеты");
+Item Bumbo = new Item("Бамбо", "фамильяр, который собирает монетки и растет за счет них, больше он ничего не делает");
+
+lstOfpickUps.Add(YumHeart);
+lstOfpickUps.Add(LuckyLeg);
+lstOfpickUps.Add(TheBelt);
+lstOfpickUps.Add(PiggyBank);
+lstOfpickUps.Add(Bumbo);
+
 if (choice == "1") {
 
-    Console.WriteLine("Выберите персонажа:\n1. Айзек \t(HP\t|||\tDMG ||)\n2. Каин \t(HP\t||\tDMG |||)\n3. Магдалина \t(HP\t||||\tDMG ||)");
+    Console.WriteLine("=========== Выберите персонажа ===========\n1. Айзек \t(HP\t|||\tDMG ||)\n2. Каин \t(HP\t||\tDMG |||)\n3. Магдалина \t(HP\t||||\tDMG ||)");
+    Console.Write(">>> ");
     string hero = Console.ReadLine();
+
+    double hp = 6 * 10;
+    double damage = 3.5;
+    double defence = 0.1;
+    string inventory = "";
+
+    List<Item> lstInventory = new List<Item>();
 
     while (hero != "used")
     {
@@ -27,20 +76,34 @@ if (choice == "1") {
         {
 
             case "1":
-                Isaac ClassicIsaac = new Isaac(6 * 10, 3.5, 0.1, "");
-                Console.WriteLine("Выбранный персонаж: Айзек");
+
+                Console.WriteLine("Выбранный персонаж: Айзек\n");
                 hero = "used";
                 break;
 
             case "2":
-                Isaac KainIsaac = new Isaac(4 * 10, 3.5 * 1.2, 0.3, "Счастливая нога");
-                Console.WriteLine("Выбранный персонаж: Каин");
+
+                hp = 4 * 10;
+                damage = 3.5 * 1.2;
+                defence = 0.25;
+                inventory = "Счастливая нога";
+
+                lstInventory.Add(LuckyLeg);
+                
+                Console.WriteLine("Выбранный персонаж: Каин\n");
                 hero = "used";
                 break;
 
             case "3":
-                Isaac MagdaleneIsaac = new Isaac(8 * 10, 3.5, 0.05, "Ням-сердце");
-                Console.WriteLine("Выбранный персонаж: Магдалина");
+
+                hp = 8 * 10;
+                damage = 3.5;
+                defence = 0.05;
+                inventory = "Ням-сердце";
+
+                lstInventory.Add(YumHeart);
+
+                Console.WriteLine("Выбранный персонаж: Магдалина\n");
                 hero = "used";
                 break;
 
@@ -49,6 +112,8 @@ if (choice == "1") {
                 break;
         }
     }
+
+    Isaac Character = new Isaac(hp,damage,defence,inventory);
 
     // Начало игры
     for (int lvl = 1; lvl < 6; lvl++) 
@@ -64,16 +129,37 @@ if (choice == "1") {
 
         int countOfRooms = random.Next(4, 7); // кол-во комнат от 4 до 6
 
-        while (countOfRooms != 1)
+        while (countOfRooms != 0)
         {
-            Console.WriteLine("========== Выберите действие ==========\n1. Посмотреть статистику\n2. Зайти в следующую комнату");
+            Console.WriteLine("----------- Выберите действие ------------\n1. Посмотреть статистику\n2. Зайти в следующую комнату");
+            Console.Write(">>> ");
             choice = Console.ReadLine();
 
-
+            switch (choice)
+            {
+                case "1":
+                    Character.PrintInfo();
+                    break;
+            }
         }
     }
     
 }
+
+void generateRoom(int countOfRooms) {
+
+    if (countOfRooms > 1) {
+        
+        int mobOrChest = random.Next(1, 101);
+
+        if (mobOrChest >= 75) {
+
+            Console.WriteLine($"На твоём пути встала комната сокровищ, в ней находится {1}");
+            Console.WriteLine("1. Взять предмет\n2. Пропустить предмет");
+        }
+    }
+}
+
 class Isaac {
 
     private double hp;
@@ -92,29 +178,37 @@ class Isaac {
 
     public void PrintInfo()
     {
-        Console.WriteLine($"----------Статистика----------\nHP: {hp}\nУрон: {damage}\nБроня: {defence}\nPull-up: {inventory}");
+        Console.WriteLine($"=============== Статистика ===============\nHP: {hp}\nУрон: {damage}\nБроня: {defence}\nPull-up: {inventory}\n==========================================\n");
     }
 }
-class Weapon {
+class Item {
+
+    private string name;
+    private string description;
+
+    public Item(string name,string description)
+    {
+
+        this.description = description;
+        this.name = name;
+    }
+}
+class Weapon : Item{
 
     private double weaponDamage;
-    private string description;
 
-    public Weapon(double weaponDamage, string description) {
-        
+    public Weapon(string name, double weaponDamage, string description) : base(name,description)
+    {    
         this.weaponDamage = weaponDamage;
-        this.description = description;
     }
 }
-class Armor {
+class Armor : Item{
 
     private double armorDefence;
-    private string description;
 
-    public Armor(double armorDefence, string description) {
-
+    public Armor(string name, double armorDefence, string description) : base(name, description)
+    {
         this.armorDefence = armorDefence;
-        this.description = description;
     }
 }
 
