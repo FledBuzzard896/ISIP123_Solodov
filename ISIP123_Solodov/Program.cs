@@ -15,9 +15,11 @@ Console.WriteLine("1. Начать игру\n0. Выйти");
 Console.Write(">>> ");
 string choice = Console.ReadLine();
 
+
 Random random = new Random();
 
-List<Item> lstOfpickUps = new List<Item>();
+List<Item> lstOfPickUps = new List<Item>();
+List<Enemy> lstOfEnemies = new List<Enemy>();
 
 Weapon Pentagram = new Weapon("Пентаграмма", 1, "+ Урон, + 10% шанс сделки");
 Weapon Synthoil = new Weapon("Шприц синтола", 1, "+ Урон, + Дальность выстрела");
@@ -28,34 +30,42 @@ Weapon SacredHeart = new Weapon("Священное сердце", 2.3, "+ Ур�
 Weapon Guillotine = new Weapon("Гильётина", 1, "+ Урон, Голова персонажа летает отдельно от него");
 Weapon Ipecac = new Weapon("Рвотный корень", 40, "+ Мега урон, взрывные слёзы");
 
-lstOfpickUps.Add(Pentagram);
-lstOfpickUps.Add(Synthoil);
-lstOfpickUps.Add(DarkMatter);
-lstOfpickUps.Add(Barley);
-lstOfpickUps.Add(Stapler);
-lstOfpickUps.Add(SacredHeart);
-lstOfpickUps.Add(Guillotine);
-lstOfpickUps.Add(Ipecac);
+lstOfPickUps.Add(Pentagram);
+lstOfPickUps.Add(Synthoil);
+lstOfPickUps.Add(DarkMatter);
+lstOfPickUps.Add(Barley);
+lstOfPickUps.Add(Stapler);
+lstOfPickUps.Add(SacredHeart);
+lstOfPickUps.Add(Guillotine);
+lstOfPickUps.Add(Ipecac);
 
 Armor MomsUnderwear = new Armor("Мамино бельё", 0.1, "Снижает получаемый урон на 10%");
 Armor Pjs = new Armor("Пижама", 0.2, "Снижает получаемый урон на 20%");
 Armor Habit = new Armor("Одеяние", 0.1, "Снижает получаемый урон на 10%");
 
-lstOfpickUps.Add(MomsUnderwear);
-lstOfpickUps.Add(Pjs);
-lstOfpickUps.Add(Habit);
+lstOfPickUps.Add(MomsUnderwear);
+lstOfPickUps.Add(Pjs);
+lstOfPickUps.Add(Habit);
 
 Item YumHeart = new Item("Ням сердце", "Даёт возможность его съесть когда у персонажа остается меньше 25% здоровья");
 Item LuckyLeg = new Item("Счастливая нога", "+ 1 удача");
 Item TheBelt = new Item("Ремень", "Вы быстрее бегаете");
 Item PiggyBank = new Item("Свинюшка", "+ 3 монеты");
-Item Bumbo = new Item("Бамбо", "фамильяр, который собирает монетки и растет за счет них, больше он ничего не делает");
+Item Bumbo = new Item("Бамбо", "Фамильяр, который собирает монетки и растет за счет них, больше он ничего не делает");
 
-lstOfpickUps.Add(YumHeart);
-lstOfpickUps.Add(LuckyLeg);
-lstOfpickUps.Add(TheBelt);
-lstOfpickUps.Add(PiggyBank);
-lstOfpickUps.Add(Bumbo);
+lstOfPickUps.Add(YumHeart);
+lstOfPickUps.Add(LuckyLeg);
+lstOfPickUps.Add(TheBelt);
+lstOfPickUps.Add(PiggyBank);
+lstOfPickUps.Add(Bumbo);
+
+BoomFly enemy1 = new BoomFly(15, 2, 0.1, "Красная Бомбомуха", 10);
+Gurgling enemy2 = new Gurgling(30, 3, 0.1, "Булькающий", true);
+Fatty enemy3 = new Fatty(20, 2.5, 0.2, "Толстяк", 10);
+
+lstOfEnemies.Add(enemy1);
+lstOfEnemies.Add(enemy2);
+lstOfEnemies.Add(enemy3);
 
 if (choice == "1") {
 
@@ -113,11 +123,13 @@ if (choice == "1") {
         }
     }
 
+    double MAX_HP = hp;
     Isaac Character = new Isaac(hp,damage,defence,inventory);
 
     // Начало игры
     for (int lvl = 1; lvl < 6; lvl++) 
     {
+        // вывод информации о номере этажа
         if (lvl <= 3)
         {
             Console.WriteLine($"Подвал: {lvl}");
@@ -131,7 +143,7 @@ if (choice == "1") {
 
         while (countOfRooms != 0)
         {
-            Console.WriteLine("----------- Выберите действие ------------\n1. Посмотреть статистику\n2. Зайти в следующую комнату");
+            Console.WriteLine("----------- Выберите действие ------------\n1. Посмотреть статистику\n2. Зайти в следующую комнату\n3. Использовать предмет");
             Console.Write(">>> ");
             choice = Console.ReadLine();
 
@@ -140,22 +152,107 @@ if (choice == "1") {
                 case "1":
                     Character.PrintInfo();
                     break;
+
+                case "2":
+                    generateRoom(countOfRooms, Character);
+                    countOfRooms--;
+                    break;
+
+                case "3":
+                    if (Character.GetInventory().Contains("Ням сердце"))
+                    {
+                        Character.HealthUp(MAX_HP);
+                    }
+                    else 
+                    {
+                        Console.WriteLine("У вас нет предметов, которые можно использовать!\n");
+                    }
+                    break;
             }
         }
     }
     
 }
 
-void generateRoom(int countOfRooms) {
+void generateRoom(int countOfRooms, Isaac isaac) {
 
     if (countOfRooms > 1) {
         
         int mobOrChest = random.Next(1, 101);
 
-        if (mobOrChest >= 75) {
+        if (mobOrChest > 50)
+        {
 
-            Console.WriteLine($"На твоём пути встала комната сокровищ, в ней находится {1}");
-            Console.WriteLine("1. Взять предмет\n2. Пропустить предмет");
+            int randomItem = random.Next(0, lstOfPickUps.Count());
+            string barier = "==========================================";
+
+            Console.WriteLine($"\nНа твоём пути встала комната сокровищ, в ней находится \"{lstOfPickUps[randomItem].name}\"\n\nОписание:");
+
+            // вывод информации о предмете
+            if (lstOfPickUps[randomItem].description.Length > barier.Length)
+            {
+
+                barier = "";
+                for (int i = 0; i < lstOfPickUps[randomItem].description.Length; i++)
+                {
+
+                    barier += "=";
+                }
+            }
+
+            Console.WriteLine(barier);
+            lstOfPickUps[randomItem].PrintInfo();
+            Console.WriteLine(barier);
+
+            // подобрать или оставить предмет
+            Console.WriteLine("\n1. Взять предмет\n2. Пропустить предмет\n");
+            Console.Write(">>> ");
+            choice = Console.ReadLine();
+
+            switch (choice)
+            {
+
+                case "1":
+                    isaac.AddPickUp(lstOfPickUps[randomItem]);
+
+                    if (lstOfPickUps[randomItem] is Weapon)
+                    {
+                        isaac.AddDamage((Weapon)lstOfPickUps[randomItem]);
+                    }
+                    else if (lstOfPickUps[randomItem] is Armor)
+                    {
+                        isaac.AddDefence((Armor)lstOfPickUps[randomItem]);
+                    }
+                    break;
+
+                default: break;
+            }
+        }
+        else 
+        {
+            int randomEnemy = random.Next(0, lstOfEnemies.Count());
+            Console.WriteLine($"Вы зашли в комнату, в комнате на вас напал {lstOfEnemies[randomEnemy].description}");
+
+            double enemyHP = lstOfEnemies[randomEnemy].Health;
+            double enemyDMG = lstOfEnemies[randomEnemy].Damage;
+            double enemyDFNC = lstOfEnemies[randomEnemy].Defence;
+
+            double enemyCRIT = 0;
+            double enemyFROZEN = 0;
+            bool enemyIGNORE_ARMOR = false;
+
+            if (lstOfEnemies[randomEnemy] is BoomFly)
+            {
+                enemyCRIT = enemy1.GetCritChance();
+            }
+            else if (lstOfEnemies[randomEnemy] is Gurgling)
+            {
+                enemyIGNORE_ARMOR = true;
+            }
+            else 
+            {
+                enemyFROZEN = enemy3.GetFrozenCrit();
+            }
         }
     }
 }
@@ -165,7 +262,6 @@ class Isaac {
     private double hp;
     private double damage;
     private double defence;
-
     private string inventory;
 
     public Isaac(double hp, double damage, double defence, string inventory)
@@ -180,17 +276,57 @@ class Isaac {
     {
         Console.WriteLine($"=============== Статистика ===============\nHP: {hp}\nУрон: {damage}\nБроня: {defence}\nPull-up: {inventory}\n==========================================\n");
     }
+
+    private int count = 1;
+    public void AddPickUp(Item pickUp) 
+    {
+        inventory += ", ";
+
+        if (count % 3 == 0) {
+            inventory += "\n";
+        }
+
+        inventory += pickUp.name;
+        count++;
+    }
+    public void AddDamage(Weapon pickUp) 
+    {
+        damage += pickUp.GetDamage();
+    }
+    public void AddDefence(Armor pickUp) 
+    {
+        defence += pickUp.GetDefence();
+    }
+    public void HealthUp(double maxHP) 
+    {
+        if (hp <= maxHP * 0.25)
+        {
+            hp = maxHP;
+        }
+        else
+        {
+            Console.WriteLine("Вы еще не можете использовать этот предмет!");
+        }
+    }
+    public string GetInventory() {
+        return inventory;
+    }
 }
 class Item {
 
-    private string name;
-    private string description;
+    public string name;
+    public string description;
 
     public Item(string name,string description)
     {
 
         this.description = description;
         this.name = name;
+    }
+
+    public virtual void PrintInfo() 
+    {
+        Console.WriteLine(description);
     }
 }
 class Weapon : Item{
@@ -201,6 +337,14 @@ class Weapon : Item{
     {    
         this.weaponDamage = weaponDamage;
     }
+    public override void PrintInfo()
+    {
+        base.PrintInfo();
+    }
+    public double GetDamage() 
+    {
+        return weaponDamage;
+    }
 }
 class Armor : Item{
 
@@ -210,68 +354,76 @@ class Armor : Item{
     {
         this.armorDefence = armorDefence;
     }
+    public override void PrintInfo()
+    {
+        base.PrintInfo();
+    }
+    public double GetDefence() 
+    {
+        return armorDefence;
+    }
 }
 
-class Enemy {
-
+class Enemy 
+{
     private double health;
     private double damage;
     private double defence;
+    public string description;
 
-    public Enemy(double health, double damage, double defence)
+    public Enemy(double health, double damage, double defence, string description)
     {
         this.health = health;
         this.damage = damage;
         this.defence = defence;
+        this.description = description;
     }
+
+    public double Health => health;
+    public double Damage => damage;
+    public double Defence => defence;
 }
 class BoomFly : Enemy
 {
-
-    private string description;
     private double critChance;
-
-    public BoomFly(double health, double damage, double defence, string description, double crit) : base(health, damage, defence)
+    public BoomFly(double health, double damage, double defence, string description, double crit) : base(health, damage, defence, description)
     {
-        this.description = description;
         this.critChance = crit;
     }
 
+    public double GetCritChance() { return critChance; }
 }
 class Gurgling : Enemy
 {
+    private bool ignoreArmor;
 
-    private string description;
-    bool ignoreArmor;
-    public Gurgling(double health, double damage, double defence, string description, bool ignoreArmor) : base(health, damage, defence)
+    public Gurgling(double health, double damage, double defence, string description, bool ignoreArmor) : base(health, damage, defence, description)
     {
-        this.description = description;
         this.ignoreArmor = ignoreArmor;
     }
-
 }
 class Fatty : Enemy
 {
-
-    private string description;
     private double frozenCrit;
 
-    public Fatty(double health, double damage, double defence, string description, double frozenCrit) : base(health, damage, defence)
+    public Fatty(double health, double damage, double defence, string description, double frozenCrit) : base(health, damage, defence, description)
     {
-        this.description = description;
         this.frozenCrit = frozenCrit;
     }
-}
-class BabyPlum : BoomFly {
 
+    public double GetFrozenCrit() { return frozenCrit; }
+}
+
+class BabyPlum : BoomFly 
+{
     public BabyPlum(double health, double damage, double defence, string description, double crit) : base(health * 2, damage * 1.5, defence * 1.2, description, crit * 1.1) { }
 }
 class GurdyJr : Gurgling
 {
     public GurdyJr(double health, double damage, double defence, string description, bool ignoreArmor) : base(health * 2.5, damage * 1.3, defence * 1.4, description, ignoreArmor) { }
 }
-class MegaFatty : Fatty {
-
+class MegaFatty : Fatty 
+{
     public MegaFatty(double health, double damage, double defence, string description, double frozenCrit) : base(health * 1.8, damage * 1.6, defence * 1.1, description, frozenCrit + 0.1) { }
 }
 class Gurdy : Gurgling
