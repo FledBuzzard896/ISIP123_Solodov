@@ -246,19 +246,18 @@ bool generateRoom(int countOfRooms, Isaac isaac) {
         else
         {
             int randomEnemy = random.Next(0, lstOfEnemies.Count());
-            Console.WriteLine($"Вы зашли в комнату, в комнате на вас напал {lstOfEnemies[randomEnemy].description}\n");
 
             double enemyHP = lstOfEnemies[randomEnemy].Health;
-            double enemyDMG = lstOfEnemies[randomEnemy].Damage;
-            double enemyDFNC = lstOfEnemies[randomEnemy].Defence;
+            double enemyDAMAGE = lstOfEnemies[randomEnemy].Damage;
+            double enemyDEFENCE = lstOfEnemies[randomEnemy].Defence;
 
-            double enemyCRIT = 0;
-            double enemyFROZEN = 0;
+            double enemyCRIT_CHANCE = 0;
+            double enemyFROZEN_CHANCE = 0;
             bool enemyIGNORE_ARMOR = false;
 
             if (lstOfEnemies[randomEnemy] is BoomFly)
             {
-                enemyCRIT = enemy1.GetCritChance();
+                enemyCRIT_CHANCE = enemy1.GetCritChance();
             }
             else if (lstOfEnemies[randomEnemy] is Gurgling)
             {
@@ -266,119 +265,163 @@ bool generateRoom(int countOfRooms, Isaac isaac) {
             }
             else
             {
-                enemyFROZEN = enemy3.GetFrozenCrit();
+                enemyFROZEN_CHANCE = enemy3.GetFrozenCrit();
             }
 
-            string message = "";
-            double damage = 0;
-            bool userMoveSkip = false;
+            Console.WriteLine($"Вы зашли в комнату, в комнате на вас напал {lstOfEnemies[randomEnemy].description}\n");
 
-            while (isaac.Hp > 0 && enemyHP > 0)
-            {
-                Console.WriteLine($"Враг:\n=======================\nHP: {enemyHP}\nDamage: {enemyDMG}\nCritDamage: {enemyDMG * 1.5}\n");
-                Console.WriteLine($"Вы\n=======================\nHP: {isaac.Hp}\nDamage: {isaac.Damage}\n");
-                Console.WriteLine(message);
-
-                if (userMoveSkip)
-                {
-                    isaac.HealthDown(damage);
-                }
-
-                Console.WriteLine("1. Атаковать\n2. Уклониться");
-                string userMove = Console.ReadLine();
-
-                switch (userMove)
-                {
-
-                    case "1":
-                        enemyHP -= isaac.Damage - (isaac.Damage * enemyDFNC);
-                        isaac.HealthDown(damage);
-                        break;
-
-                    case "2":
-                        int chance = random.Next(1, 101);
-
-                        if (chance <= 40)
-                        {
-                            Console.WriteLine("Вы успешно уклонились");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Во время уклонения вас задело, но вы вовремя успели защититься, получаемый урон снижен на 70 - 100%");
-
-                            chance = random.Next(1, 101);
-
-                            if (chance <= 70)
-                            {
-                                isaac.HealthDown(damage - (damage * (70 / 100)));
-                            }
-                            else
-                            {
-                                isaac.HealthDown(damage - (damage * (chance / 100)));
-                            }
-                        }
-
-
-                        break;
-                }
-
-                if (enemyCRIT != 0)
-                {
-                    int chance = random.Next(1, 101);
-
-                    if (chance <= enemyCRIT)
-                    {
-                        damage = (enemyDMG * 1.5) - (enemyDMG * 1.5 * isaac.Defence);
-                        message = "Враг наносит критический удар!\n";
-                    }
-                    else
-                    {
-                        damage = enemyDMG - (enemyDMG * isaac.Defence);
-                        message = "Враг наносит удар\n";
-                    }
-                }
-                else if (enemyIGNORE_ARMOR)
-                {
-                    damage = enemyDMG;
-                    message = "Враг игнорирует твою броню и наносит удар\n";
-                }
-                else
-                {
-                    int chance = random.Next(1, 101);
-
-                    if (chance <= enemyFROZEN)
-                    {
-                        userMoveSkip = true;
-                        message = "Враг использовал заморозку, вы пропускаете ход\n";
-                    }
-                    else
-                    {
-                        userMoveSkip = false;
-                        message = "Враг наносит удар\n";
-                    }
-                    damage = enemyDMG - (enemyDMG * isaac.Defence);
-                }
-            }
-
-            if (isaac.Hp > 0)
-            {
-                Console.WriteLine("============= Враг повержен! =============\n");
-            }
-            else
-            {
-                Console.WriteLine("Дорогой дневник, сегодня я умер. Все свои вещи я завещаю моему коту Гаппи. Прощай, жестокий мир. Люблю, целую, Айзек!");
-                isIsaacAlive = false;
-            }
+            isIsaacAlive = Fight(enemyHP, enemyDAMAGE, enemyDEFENCE, enemyCRIT_CHANCE, enemyFROZEN_CHANCE, enemyIGNORE_ARMOR, isaac);
         }
     }
-    else 
+    else
     {
-        
+        int randomBoss = random.Next(1, lstOfBosses.Count);
+
+        double bossHP = lstOfBosses[randomBoss].Health;
+        double bossDEFENCE = lstOfBosses[randomBoss].Defence;
+        double bossDAMAGE = lstOfBosses[randomBoss].Damage;
+
+        double bossCRIT_CHANCE = 0;
+        double bossFROZEN_CHANCE = 0;
+        bool bossIGNORE_ARMOR = false;
+
+        if (lstOfBosses[randomBoss] is BabyPlum)
+        {
+            bossCRIT_CHANCE = boss1.GetCritChance();
+            lstOfBosses.Remove(boss1);
+        }
+        else if (lstOfBosses[randomBoss] is GurdyJr)
+        {
+            bossIGNORE_ARMOR = true;
+            lstOfBosses.Remove(boss2);
+        }
+        else if (lstOfBosses[randomBoss] is MegaFatty)
+        {
+            bossFROZEN_CHANCE = boss3.GetFrozenCrit();
+            lstOfBosses.Remove(boss3);
+        }
+        else
+        {
+            bossIGNORE_ARMOR = true;
+            bossFROZEN_CHANCE = boss3.GetFrozenCrit();
+            lstOfBosses.Remove(boss4);
+        }
+
+        Console.WriteLine($"Вы зашли в комнату босса, в комнате оказался {lstOfBosses[randomBoss].description}\n");
+
+        isIsaacAlive = Fight(bossHP, bossDAMAGE, bossDEFENCE, bossCRIT_CHANCE, bossFROZEN_CHANCE, bossIGNORE_ARMOR, isaac);
     }
 
     return isIsaacAlive;
 }
 
+bool Fight(double enemyHP, double enemyDAMAGE, double enemyDEFENCE, double enemyCRIT_CHANCE, double enemyFROZEN_CHANCE, bool enemyIGNORE_ARMOR, Isaac isaac) {
+
+    bool isIsaacAlive = true;
+
+    string message = "";
+    double damage = 0;
+    bool userMoveSkip = false;
+
+    while (isaac.Hp > 0 && enemyHP > 0)
+    {
+        Console.WriteLine($"Враг:\n=======================\nHP: {enemyHP}\nDamage: {enemyDAMAGE}\nCritDamage: {enemyDAMAGE * 1.5}\n");
+        Console.WriteLine($"Вы\n=======================\nHP: {isaac.Hp}\nDamage: {isaac.Damage}\n");
+        Console.WriteLine(message);
+
+        if (userMoveSkip)
+        {
+            isaac.HealthDown(damage);
+        }
+
+        Console.WriteLine("1. Атаковать\n2. Уклониться");
+        string userMove = Console.ReadLine();
+
+        switch (userMove)
+        {
+
+            case "1":
+                enemyHP -= isaac.Damage - (isaac.Damage * enemyDEFENCE);
+                isaac.HealthDown(damage);
+                break;
+
+            case "2":
+                int chance = random.Next(1, 101);
+
+                if (chance <= 40)
+                {
+                    Console.WriteLine("Вы успешно уклонились");
+                }
+                else
+                {
+                    Console.WriteLine("Во время уклонения вас задело, но вы вовремя успели защититься, получаемый урон снижен на 70 - 100%");
+
+                    chance = random.Next(1, 101);
+
+                    if (chance <= 70)
+                    {
+                        isaac.HealthDown(damage - (damage * (70 / 100)));
+                    }
+                    else
+                    {
+                        isaac.HealthDown(damage - (damage * (chance / 100)));
+                    }
+                }
+
+
+                break;
+        }
+
+        if (enemyCRIT_CHANCE != 0)
+        {
+            int chance = random.Next(1, 101);
+
+            if (chance <= enemyCRIT_CHANCE)
+            {
+                damage = (enemyDAMAGE * 1.5) - (enemyDAMAGE * 1.5 * isaac.Defence);
+                message = "Враг наносит критический удар!\n";
+            }
+            else
+            {
+                damage = enemyDAMAGE - (enemyDAMAGE * isaac.Defence);
+                message = "Враг наносит удар\n";
+            }
+        }
+        else if (enemyIGNORE_ARMOR)
+        {
+            damage = enemyDAMAGE;
+            message = "Враг игнорирует твою броню и наносит удар\n";
+        }
+        else
+        {
+            int chance = random.Next(1, 101);
+
+            if (chance <= enemyFROZEN_CHANCE)
+            {
+                userMoveSkip = true;
+                message = "Враг использовал заморозку, вы пропускаете ход\n";
+            }
+            else
+            {
+                userMoveSkip = false;
+                message = "Враг наносит удар\n";
+            }
+            damage = enemyDAMAGE - (enemyDAMAGE * isaac.Defence);
+        }
+    }
+
+    if (isaac.Hp > 0)
+    {
+        Console.WriteLine("============= Враг повержен! =============\n");
+    }
+    else
+    {
+        Console.WriteLine("Дорогой дневник, сегодня я умер. Все свои вещи я завещаю моему коту Гаппи. Прощай, жестокий мир. Люблю, целую, Айзек!");
+        isIsaacAlive = false;
+    }
+
+    return isIsaacAlive;
+}
 class Isaac {
 
     private double hp;
@@ -563,4 +606,23 @@ class Gurdy : Gurgling
     {
         this.frozenCrit = frozenCrit + 0.15;
     }
+}
+
+class Mother 
+{
+    private double hp;
+    private double damage;
+    private string description;
+
+    public double HP => hp;
+    public double DAMAGE => damage;
+    
+    public Mother(string description, double hp = 150, double damage = 8)
+    {
+        this.hp = hp;
+        this.damage = damage;
+        this.description = description;
+    }
+
+    public string GetDescription() { return description; }
 }
