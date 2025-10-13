@@ -20,6 +20,7 @@ Random random = new Random();
 
 List<Item> lstOfPickUps = new List<Item>();
 List<Enemy> lstOfEnemies = new List<Enemy>();
+List<Enemy> lstOfBosses = new List<Enemy>();
 
 Weapon Pentagram = new Weapon("Пентаграмма", 1, "+ Урон, + 10% шанс сделки");
 Weapon Synthoil = new Weapon("Шприц синтола", 1, "+ Урон, + Дальность выстрела");
@@ -60,12 +61,22 @@ lstOfPickUps.Add(PiggyBank);
 lstOfPickUps.Add(Bumbo);
 
 BoomFly enemy1 = new BoomFly(15, 2, 0.1, "Красная Бомбомуха", 10);
-Gurgling enemy2 = new Gurgling(30, 3, 0.1, "Булькающий", true);
+Gurgling enemy2 = new Gurgling(20, 3, 0.1, "Булькающий", true);
 Fatty enemy3 = new Fatty(20, 2.5, 0.2, "Толстяк", 10);
 
 lstOfEnemies.Add(enemy1);
 lstOfEnemies.Add(enemy2);
 lstOfEnemies.Add(enemy3);
+
+BabyPlum boss1 = new BabyPlum(15, 2, 0.1, "Сливка", 10);
+GurdyJr boss2 = new GurdyJr(20,3,0.1,"Гёрди Младшая", true);
+MegaFatty boss3 = new MegaFatty(20, 2.5, 0.2, "Толстяк", 10);
+Gurdy boss4 = new Gurdy(20, 3, 0.1, "Гёрди", true, 10);
+
+lstOfBosses.Add(boss1);
+lstOfBosses.Add(boss2);
+lstOfBosses.Add(boss3);
+lstOfBosses.Add(boss4);
 
 if (choice == "1") {
 
@@ -76,7 +87,7 @@ if (choice == "1") {
     double hp = 6 * 10;
     double damage = 3.5;
     double defence = 0.1;
-    string inventory = "";
+    string inventory = "Девственные слёзы";
 
     List<Item> lstInventory = new List<Item>();
 
@@ -140,8 +151,9 @@ if (choice == "1") {
         }
 
         int countOfRooms = random.Next(4, 7); // кол-во комнат от 4 до 6
+        bool isIsaacAlive = true;
 
-        while (countOfRooms != 0)
+        while (countOfRooms != 0 && isIsaacAlive == false)
         {
             Console.WriteLine("----------- Выберите действие ------------\n1. Посмотреть статистику\n2. Зайти в следующую комнату\n3. Использовать предмет");
             Console.Write(">>> ");
@@ -154,7 +166,7 @@ if (choice == "1") {
                     break;
 
                 case "2":
-                    generateRoom(countOfRooms, Character);
+                    isIsaacAlive = generateRoom(countOfRooms, Character);
                     countOfRooms--;
                     break;
 
@@ -174,10 +186,13 @@ if (choice == "1") {
     
 }
 
-void generateRoom(int countOfRooms, Isaac isaac) {
+bool generateRoom(int countOfRooms, Isaac isaac) {
 
-    if (countOfRooms > 1) {
-        
+    bool isIsaacAlive = true;
+
+    if (countOfRooms > 1)
+    {
+
         int mobOrChest = random.Next(1, 101);
 
         if (mobOrChest > 50)
@@ -228,10 +243,10 @@ void generateRoom(int countOfRooms, Isaac isaac) {
                 default: break;
             }
         }
-        else 
+        else
         {
             int randomEnemy = random.Next(0, lstOfEnemies.Count());
-            Console.WriteLine($"Вы зашли в комнату, в комнате на вас напал {lstOfEnemies[randomEnemy].description}");
+            Console.WriteLine($"Вы зашли в комнату, в комнате на вас напал {lstOfEnemies[randomEnemy].description}\n");
 
             double enemyHP = lstOfEnemies[randomEnemy].Health;
             double enemyDMG = lstOfEnemies[randomEnemy].Damage;
@@ -249,12 +264,119 @@ void generateRoom(int countOfRooms, Isaac isaac) {
             {
                 enemyIGNORE_ARMOR = true;
             }
-            else 
+            else
             {
                 enemyFROZEN = enemy3.GetFrozenCrit();
             }
+
+            string message = "";
+            double damage = 0;
+            bool userMoveSkip = false;
+
+            while (isaac.Hp > 0 && enemyHP > 0)
+            {
+                Console.WriteLine($"Враг:\n=======================\nHP: {enemyHP}\nDamage: {enemyDMG}\nCritDamage: {enemyDMG * 1.5}\n");
+                Console.WriteLine($"Вы\n=======================\nHP: {isaac.Hp}\nDamage: {isaac.Damage}\n");
+                Console.WriteLine(message);
+
+                if (userMoveSkip)
+                {
+                    isaac.HealthDown(damage);
+                }
+
+                Console.WriteLine("1. Атаковать\n2. Уклониться");
+                string userMove = Console.ReadLine();
+
+                switch (userMove)
+                {
+
+                    case "1":
+                        enemyHP -= isaac.Damage - (isaac.Damage * enemyDFNC);
+                        isaac.HealthDown(damage);
+                        break;
+
+                    case "2":
+                        int chance = random.Next(1, 101);
+
+                        if (chance <= 40)
+                        {
+                            Console.WriteLine("Вы успешно уклонились");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Во время уклонения вас задело, но вы вовремя успели защититься, получаемый урон снижен на 70 - 100%");
+
+                            chance = random.Next(1, 101);
+
+                            if (chance <= 70)
+                            {
+                                isaac.HealthDown(damage - (damage * (70 / 100)));
+                            }
+                            else
+                            {
+                                isaac.HealthDown(damage - (damage * (chance / 100)));
+                            }
+                        }
+
+
+                        break;
+                }
+
+                if (enemyCRIT != 0)
+                {
+                    int chance = random.Next(1, 101);
+
+                    if (chance <= enemyCRIT)
+                    {
+                        damage = (enemyDMG * 1.5) - (enemyDMG * 1.5 * isaac.Defence);
+                        message = "Враг наносит критический удар!\n";
+                    }
+                    else
+                    {
+                        damage = enemyDMG - (enemyDMG * isaac.Defence);
+                        message = "Враг наносит удар\n";
+                    }
+                }
+                else if (enemyIGNORE_ARMOR)
+                {
+                    damage = enemyDMG;
+                    message = "Враг игнорирует твою броню и наносит удар\n";
+                }
+                else
+                {
+                    int chance = random.Next(1, 101);
+
+                    if (chance <= enemyFROZEN)
+                    {
+                        userMoveSkip = true;
+                        message = "Враг использовал заморозку, вы пропускаете ход\n";
+                    }
+                    else
+                    {
+                        userMoveSkip = false;
+                        message = "Враг наносит удар\n";
+                    }
+                    damage = enemyDMG - (enemyDMG * isaac.Defence);
+                }
+            }
+
+            if (isaac.Hp > 0)
+            {
+                Console.WriteLine("============= Враг повержен! =============\n");
+            }
+            else
+            {
+                Console.WriteLine("Дорогой дневник, сегодня я умер. Все свои вещи я завещаю моему коту Гаппи. Прощай, жестокий мир. Люблю, целую, Айзек!");
+                isIsaacAlive = false;
+            }
         }
     }
+    else 
+    {
+        
+    }
+
+    return isIsaacAlive;
 }
 
 class Isaac {
@@ -263,6 +385,10 @@ class Isaac {
     private double damage;
     private double defence;
     private string inventory;
+
+    public double Hp => hp;
+    public double Damage => damage;
+    public double Defence => defence;
 
     public Isaac(double hp, double damage, double defence, string inventory)
     {
@@ -307,6 +433,10 @@ class Isaac {
         {
             Console.WriteLine("Вы еще не можете использовать этот предмет!");
         }
+    }
+    public void HealthDown(double damage) 
+    {    
+        hp -= damage;
     }
     public string GetInventory() {
         return inventory;
