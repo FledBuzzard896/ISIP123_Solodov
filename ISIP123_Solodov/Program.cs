@@ -174,6 +174,7 @@ if (choice == "1") {
     
 }
 
+
 void generateRoom(int countOfRooms, Isaac isaac) {
 
     if (countOfRooms > 1) {
@@ -253,6 +254,39 @@ void generateRoom(int countOfRooms, Isaac isaac) {
             {
                 enemyFROZEN = enemy3.GetFrozenCrit();
             }
+
+            while (isaac.Hp > 0 || enemyHP > 0) {
+
+                Console.WriteLine("1. Атаковать\n2. Защититься");
+                string userMove = Console.ReadLine();
+
+                switch (userMove) {
+
+                    case "1":
+                        Console.WriteLine("Вы атакуете врага");
+                        enemyHP -= (isaac.Damage - (isaac.Damage * enemyDFNC));
+                        break;
+
+                    case "2":
+                        Console.WriteLine("Вы защищаетесь");
+                        int chance = random.Next(1, 101);
+                        break;     
+                }
+
+                Console.WriteLine("Враг делает попытку вас атаковать!");
+
+                if (enemyCRIT != 0) {   
+                    
+                    int temp = random.Next(1,101);
+
+                    if (temp <= enemyCRIT) {
+
+                        Console.WriteLine("Враг делает критический удар!!!");
+
+                    }
+                }
+            }
+            
         }
     }
 }
@@ -260,7 +294,11 @@ void generateRoom(int countOfRooms, Isaac isaac) {
 class Isaac {
 
     private double hp;
+    public double Hp => hp;
+    
     private double damage;
+    public double Damage => damage;
+
     private double defence;
     private string inventory;
 
