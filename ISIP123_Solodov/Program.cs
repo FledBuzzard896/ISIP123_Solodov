@@ -712,16 +712,19 @@ class Isaac
 
             string newInventory = "";
 
-            for (int i = 0; i != inventory.Length; i++)
+            for (int i = 0; i < inventory.Length; i++)
             {
-                if (i == inventory.IndexOf("Ням-сердце"))
+                // Проверяем, начинается ли с текущей позиции "Ням-сердце"
+                if (i <= inventory.Length - "Ням-сердце".Length &&
+                    inventory.Substring(i, "Ням-сердце".Length) == "Ням-сердце")
                 {
-                    foreach (char elem in "Ням-сердце")
-                    {
-                        i++;
-                    }
+                    // Пропускаем "Ням-сердце"
+                    i += "Ням-сердце".Length - 1;
                 }
-                newInventory += inventory[i];
+                else
+                {
+                    newInventory += inventory[i];
+                }
             }
 
             inventory = newInventory;
