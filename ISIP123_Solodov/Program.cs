@@ -10,6 +10,7 @@
 // 4. Гёрди Старшая (расса Булька)
 
 // Меню
+using static System.Net.Mime.MediaTypeNames;
 
 Console.WriteLine("   +++============+*#+++=============+#% =+===============   ================+  +================   \r\n   +++++======+++++#*=====++++++++++++%%*=====++++++=======#*======+++++=======%+=====++++++======  \r\n    %%%#+====+%%%%%%+=====*%%%%%%%%%%%%%+=====+%%%%#=====+#%#=====+#%%%#+=====*%*=====+%%%%*=====+  \r\n       +=====*%%%   ======+++=======    ==================#%#========++++=====*%*=====+  %%%######  \r\n      =======#%%     ================*# ==================*%#=================*%#+====== %%%%%%%%   \r\n      ======+%%%       %%%%%%%#+=====#%#+=====+*   +======*%%======*%%%%+=====+%#+=====+    +=====+ \r\n ===========*###         +****+======#%%=======+   +======+%%+=====+  %%*=====+%%+====== ###+====== \r\n+===============+#%+==============+*#%%%========   ++======%%+======  %%#=====+%%#*+=============++ \r\n+**##############%%################%%%%%########   ########%%######*  %%%######%%%%############+++  \r\n  ##%%%%%%%%%%%%%%%  %%%%%%%%%%%%%%%%%  %%%%%%%    %%%%%%%%%%##%%%    %%%%%%%%  %%%%%%%%%%%%%%#   \n");
 Console.WriteLine("1. Начать игру\n0. Выйти");
@@ -200,14 +201,13 @@ if (choice == "1")
         }
 
         int countOfRooms = random.Next(4, 7); // кол-во комнат от 4 до 6
-        bool isIsaacAlive = true;
 
         while (countOfRooms != 0 && isIsaacAlive == true)
         {
             Console.WriteLine("----------- Выберите действие ------------\n1. Посмотреть статистику\n2. Зайти в следующую комнату\n3. Использовать предмет");
             Console.Write(">>> ");
             choice = Console.ReadLine();
-            
+
             switch (choice)
             {
                 case "1":
@@ -215,7 +215,7 @@ if (choice == "1")
                     break;
 
                 case "2":
-                    generateRoom(countOfRooms, Character);
+                    isIsaacAlive = generateRoom(countOfRooms, Character, MAX_HP);
                     countOfRooms--;
                     break;
 
@@ -268,10 +268,20 @@ if (choice == "1")
             Console.WriteLine("\t\tКонцовка.");
             Console.WriteLine("=========================================");
 
-void generateRoom(int countOfRooms, Isaac isaac) {
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("Дорогой дневник, сегодня я умер. Я был убит этим существом → Мать. \nВсе свои вещи я завещаю моему коту Гаппи. Прощай, жестокий мир. Люблю, целую, Айзек!");
+            Console.ResetColor();
+        }
+    }
+}
 
-    if (countOfRooms > 1) {
-        
+bool generateRoom(int countOfRooms, Isaac isaac, double MAX_HP)
+{
+    bool isIsaacAlive = true;
+
+    if (countOfRooms > 1)
+    {
+
         int mobOrChest = random.Next(1, 101);
 
         if (mobOrChest > 50)
@@ -350,15 +360,277 @@ void generateRoom(int countOfRooms, Isaac isaac) {
             {
                 enemyIGNORE_ARMOR = true;
             }
-            else 
+            else
             {
-                enemyFROZEN = enemy3.GetFrozenCrit();
+                enemyFROZEN_CHANCE = enemy3.GetFrozenCrit();
             }
+
+            Console.Write("Вы зашли в комнату, в комнате на вас напал ");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine(lstOfEnemies[randomEnemy].description + "\n");
+            Console.ResetColor();
+
+            var MENUcoordinates = Console.GetCursorPosition();
+
+            isIsaacAlive = Fight(enemyHP, enemyDAMAGE, enemyDEFENCE, enemyCRIT_CHANCE, enemyFROZEN_CHANCE, enemyIGNORE_ARMOR, isaac, MAX_HP, MENUcoordinates);
         }
     }
-}
+    else
+    {
+        int randomBoss = random.Next(0, lstOfBosses.Count);
 
-class Isaac {
+        Console.Write($"Вы зашли в комнату босса, в комнате оказался ");
+        Console.ForegroundColor = ConsoleColor.DarkRed;
+        Console.WriteLine(lstOfBosses[randomBoss].description + "\n");
+        Console.ResetColor();
+
+        double bossHP = lstOfBosses[randomBoss].Health;
+        double bossDEFENCE = lstOfBosses[randomBoss].Defence;
+        double bossDAMAGE = lstOfBosses[randomBoss].Damage;
+
+        double bossCRIT_CHANCE = 0;
+        double bossFROZEN_CHANCE = 0;
+        bool bossIGNORE_ARMOR = false;
+
+        if (lstOfBosses[randomBoss] is BabyPlum)
+        {
+            bossCRIT_CHANCE = boss1.GetCritChance();
+            lstOfBosses.Remove(boss1);
+        }
+        else if (lstOfBosses[randomBoss] is GurdyJr)
+        {
+            bossIGNORE_ARMOR = true;
+            lstOfBosses.Remove(boss2);
+        }
+        else if (lstOfBosses[randomBoss] is MegaFatty)
+        {
+            bossFROZEN_CHANCE = boss3.GetFrozenCrit();
+            lstOfBosses.Remove(boss3);
+        }
+        else
+        {
+            bossIGNORE_ARMOR = true;
+            bossFROZEN_CHANCE = boss3.GetFrozenCrit();
+            lstOfBosses.Remove(boss4);
+        }
+
+        var MENUcoordinates = Console.GetCursorPosition();
+
+        isIsaacAlive = Fight(bossHP, bossDAMAGE, bossDEFENCE, bossCRIT_CHANCE, bossFROZEN_CHANCE, bossIGNORE_ARMOR, isaac, MAX_HP, MENUcoordinates);
+    }
+
+    return isIsaacAlive;
+}
+bool Fight(double enemyHP, double enemyDAMAGE, double enemyDEFENCE, double enemyCRIT_CHANCE, double enemyFROZEN_CHANCE, bool enemyIGNORE_ARMOR, Isaac isaac, double MAX_HP, (int left, int top) MENUcoordinates)
+{
+    bool isIsaacAlive = true;
+
+    string message = " ";
+    double damage = 0;
+    bool userMoveSkip = false;
+
+    var INPUTcoordinates = Console.GetCursorPosition();
+
+    while (isaac.Hp > 0 && enemyHP > 0)
+    {
+        if (isaac.Hp <= MAX_HP * 0.25)
+        {
+            isaac.HealthUp(MAX_HP);
+        }
+
+        Console.WriteLine($"\t\t  Враг:\n=========================================\nHP: {Math.Round(enemyHP, 1)}\nDamage: {Math.Round(enemyDAMAGE, 2)}\nCritDamage: {Math.Round(enemyDAMAGE * 1.5, 2)}\n");
+        Console.WriteLine($"\t\t   Вы:\n=========================================\nHP: {Math.Round(isaac.Hp, 1)}\nDamage: {Math.Round(isaac.Damage, 2)}\n");
+
+        Console.ForegroundColor = ConsoleColor.DarkRed;
+        Console.WriteLine(message);
+        Console.ResetColor();
+
+        if (userMoveSkip)
+        {
+            isaac.HealthDown(damage);
+        }
+
+        Console.WriteLine("1. Атаковать\n2. Уклониться");
+        Console.Write(">>>  ");
+
+        INPUTcoordinates = Console.GetCursorPosition();
+        Console.SetCursorPosition(INPUTcoordinates.Left - 1, INPUTcoordinates.Top);
+
+        string userMove = Console.ReadLine();
+
+        switch (userMove)
+        {
+            case "1":
+                enemyHP -= isaac.Damage - (isaac.Damage * enemyDEFENCE);
+                isaac.HealthDown(damage);
+                break;
+
+            case "2":
+                int chance = random.Next(1, 101);
+
+                var tempCoords = Console.GetCursorPosition();
+
+                if (chance <= 40)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine("Вы успешно уклонились");
+                    Console.ResetColor();
+                    Console.SetCursorPosition(0, tempCoords.Top);
+                    System.Threading.Thread.Sleep(2000);
+                    Console.WriteLine("                                                                                                     ");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine("Во время уклонения вас задело, но вы вовремя успели защититься, получаемый урон снижен на 70 - 100%");
+                    Console.ResetColor();
+                    Console.SetCursorPosition(0, tempCoords.Top);
+                    System.Threading.Thread.Sleep(5000);
+                    Console.WriteLine("                                                                                                     ");
+
+                    chance = random.Next(1, 101);
+
+                    if (chance <= 70)
+                    {
+                        isaac.HealthDown(damage - (damage * (70 / 100)));
+                    }
+                    else
+                    {
+                        isaac.HealthDown(damage - (damage * (chance / 100)));
+                    }
+                }
+                break;
+        }
+
+        if (enemyCRIT_CHANCE != 0)
+        {
+            int chance = random.Next(1, 101);
+
+            if (chance <= enemyCRIT_CHANCE)
+            {
+                damage = (enemyDAMAGE * 1.5) - (enemyDAMAGE * 1.5 * isaac.Defence);
+                message = "Враг наносит критический удар!                                   ";
+            }
+            else
+            {
+                damage = enemyDAMAGE - (enemyDAMAGE * isaac.Defence);
+                message = "Враг наносит удар                                                ";
+            }
+        }
+        else if (enemyIGNORE_ARMOR)
+        {
+            damage = enemyDAMAGE;
+            message = "Враг игнорирует твою броню и наносит удар                            ";
+        }
+        else
+        {
+            int chance = random.Next(1, 101);
+
+            if (chance <= enemyFROZEN_CHANCE)
+            {
+                userMoveSkip = true;
+                message = "Враг использовал заморозку, вы пропускаете ход                   ";
+            }
+            else
+            {
+                userMoveSkip = false;
+                message = "Враг наносит удар                                                ";
+            }
+            damage = enemyDAMAGE - (enemyDAMAGE * isaac.Defence);
+        }
+
+        Console.SetCursorPosition(MENUcoordinates.left, MENUcoordinates.top);
+    }
+    Console.SetCursorPosition(0, INPUTcoordinates.Top + 1);
+
+    if (isaac.Hp > 0)
+    {
+        Console.WriteLine("============= Враг повержен! =============\n");
+    }
+    else
+    {
+        Console.WriteLine("\t\tКонцовка.");
+        Console.WriteLine("=========================================");
+
+        Console.ForegroundColor = ConsoleColor.DarkGray;
+        Console.WriteLine("Дорогой дневник, сегодня я умер. Все свои вещи я завещаю моему коту Гаппи. \nПрощай, жестокий мир. Люблю, целую, Айзек!");
+        Console.ResetColor();
+
+        isIsaacAlive = false;
+    }
+
+    return isIsaacAlive;
+}
+bool FinalBossFight(Mother boss, Isaac isaac, (int left, int top) MENUcoordinates)
+{
+    bool isIsaacAlive = true;
+    string message = "";
+    double damage = 0;
+
+    var INPUTcoordinates = Console.GetCursorPosition();
+
+    while (isaac.Hp > 0 && boss.Hp > 0)
+    {
+        Console.WriteLine($"\t\t  Мама:\n=========================================\nHP: {Math.Round(boss.Hp, 1)}\nDamage: {Math.Round(boss.Damage, 2)}\nLegDamage: {Math.Round(boss.LegPunch(), 2)}\nEyeLazerDamage: {Math.Round(boss.EyeLazer(), 2)}\n{boss.GetDescription}");
+        Console.WriteLine($"\t\t   Вы:\n=========================================\nHP: {Math.Round(isaac.Hp, 1)}\nDamage: {Math.Round(isaac.Damage, 2)}\n");
+
+        Console.ForegroundColor = ConsoleColor.DarkRed;
+        Console.WriteLine(message);
+        Console.ResetColor();
+
+        Console.WriteLine("1. Атаковать\n2. Уклониться");
+        Console.Write(">>>  ");
+
+        INPUTcoordinates = Console.GetCursorPosition();
+        Console.SetCursorPosition(INPUTcoordinates.Left - 1, INPUTcoordinates.Top);
+
+        string userMove = Console.ReadLine();
+
+        switch (userMove)
+        {
+            case "1":
+                boss.HealthDown(isaac.Damage);
+                isaac.HealthDown(damage);
+                break;
+
+            case "2":
+                int chance = random.Next(1, 101);
+
+                var tempCoords = Console.GetCursorPosition();
+
+                if (chance <= 40)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine("Вы успешно уклонились");
+                    Console.ResetColor();
+                    Console.SetCursorPosition(0, tempCoords.Top);
+                    System.Threading.Thread.Sleep(2000);
+                    Console.WriteLine("                                                                                                     ");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine("Во время уклонения вас задело, но вы вовремя успели защититься, получаемый урон снижен на 70 - 100%");
+                    Console.ResetColor();
+                    Console.SetCursorPosition(0, tempCoords.Top);
+                    System.Threading.Thread.Sleep(5000);
+                    Console.WriteLine("                                                                                                     ");
+
+                    chance = random.Next(1, 101);
+
+                    if (chance <= 70)
+                    {
+                        isaac.HealthDown(damage - (damage * (70 / 100)));
+                    }
+                    else
+                    {
+                        isaac.HealthDown(damage - (damage * (chance / 100)));
+                    }
+                }
+                break;
+        }
+
+        int attack = random.Next(1, 101);
 
         if (attack <= 33)
         {
@@ -458,6 +730,10 @@ class Isaac
         {
             Console.WriteLine("Вы еще не можете использовать этот предмет!");
         }
+    }
+    public void HealthDown(double damage)
+    {
+        hp -= damage;
     }
     public string GetInventory()
     {
@@ -584,5 +860,38 @@ class Gurdy : Gurgling
     public Gurdy(double health, double damage, double defence, string description, bool ignoreArmor, double frozenCrit) : base(health * 1.3, damage * 1.8, defence * 0.6, description, ignoreArmor)
     {
         this.frozenCrit = frozenCrit + 0.15;
+    }
+}
+
+class Mother
+{
+    private double hp;
+    private double damage;
+    private string description;
+
+    public double Hp => hp;
+    public double Damage => damage;
+
+    public Mother(string description, double hp = 100, double damage = 8)
+    {
+        this.hp = hp;
+        this.damage = damage;
+        this.description = description;
+    }
+
+    public string GetDescription() { return description; }
+
+    public void HealthDown(double input)
+    {
+        hp -= input;
+    }
+    public double LegPunch()
+    {
+        return damage * 1.5;
+    }
+
+    public double EyeLazer()
+    {
+        return damage * 1.3;
     }
 }
