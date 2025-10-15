@@ -136,7 +136,7 @@ if (choice == "1") {
 
     double MAX_HP = hp;
     Isaac Character = new Isaac(hp,damage,defence,inventory);
-    Console.Clear();
+
     // Начало игры
     for (int lvl = 1; lvl < 6; lvl++) 
     {
@@ -225,9 +225,10 @@ bool generateRoom(int countOfRooms, Isaac isaac) {
             Console.WriteLine(barier);
 
             // подобрать или оставить предмет
-            Console.WriteLine("\n1. Взять предмет\n2. Пропустить предмет\n");
+            Console.WriteLine("\n1. Взять предмет\n2. Пропустить предмет");
             Console.Write(">>> ");
             choice = Console.ReadLine();
+            Console.WriteLine();
 
             switch (choice)
             {
@@ -275,12 +276,14 @@ bool generateRoom(int countOfRooms, Isaac isaac) {
 
             Console.WriteLine($"Вы зашли в комнату, в комнате на вас напал {lstOfEnemies[randomEnemy].description}\n");
 
-            isIsaacAlive = Fight(enemyHP, enemyDAMAGE, enemyDEFENCE, enemyCRIT_CHANCE, enemyFROZEN_CHANCE, enemyIGNORE_ARMOR, isaac);
+            var MENUcoordinates = Console.GetCursorPosition();
+
+            isIsaacAlive = Fight(enemyHP, enemyDAMAGE, enemyDEFENCE, enemyCRIT_CHANCE, enemyFROZEN_CHANCE, enemyIGNORE_ARMOR, isaac, MENUcoordinates);
         }
     }
     else
     {
-        int randomBoss = random.Next(1, lstOfBosses.Count);
+        int randomBoss = random.Next(0, lstOfBosses.Count);
 
         double bossHP = lstOfBosses[randomBoss].Health;
         double bossDEFENCE = lstOfBosses[randomBoss].Defence;
@@ -314,24 +317,28 @@ bool generateRoom(int countOfRooms, Isaac isaac) {
 
         Console.WriteLine($"Вы зашли в комнату босса, в комнате оказался {lstOfBosses[randomBoss].description}\n");
 
-        isIsaacAlive = Fight(bossHP, bossDAMAGE, bossDEFENCE, bossCRIT_CHANCE, bossFROZEN_CHANCE, bossIGNORE_ARMOR, isaac);
+        var MENUcoordinates = Console.GetCursorPosition();
+
+        isIsaacAlive = Fight(bossHP, bossDAMAGE, bossDEFENCE, bossCRIT_CHANCE, bossFROZEN_CHANCE, bossIGNORE_ARMOR, isaac, MENUcoordinates);
     }
 
     return isIsaacAlive;
 }
 
-bool Fight(double enemyHP, double enemyDAMAGE, double enemyDEFENCE, double enemyCRIT_CHANCE, double enemyFROZEN_CHANCE, bool enemyIGNORE_ARMOR, Isaac isaac) {
+bool Fight(double enemyHP, double enemyDAMAGE, double enemyDEFENCE, double enemyCRIT_CHANCE, double enemyFROZEN_CHANCE, bool enemyIGNORE_ARMOR, Isaac isaac, (int left, int top) MENUcoordinates) {
 
     bool isIsaacAlive = true;
 
-    string message = "";
+    string message = " ";
     double damage = 0;
     bool userMoveSkip = false;
 
+    var INPUTcoordinates = Console.GetCursorPosition();
+
     while (isaac.Hp > 0 && enemyHP > 0)
     {
-        Console.WriteLine($"\t\t  Враг:\n=========================================\nHP: {enemyHP}\nDamage: {enemyDAMAGE}\nCritDamage: {enemyDAMAGE * 1.5}\n");
-        Console.WriteLine($"\t\t  Вы:\n=========================================\nHP: {isaac.Hp}\nDamage: {isaac.Damage}\n");
+        Console.WriteLine($"\t\t  Враг:\n=========================================\nHP: {Math.Round(enemyHP, 1)}\nDamage: {Math.Round(enemyDAMAGE, 2)}\nCritDamage: {Math.Round(enemyDAMAGE * 1.5, 2)}\n");
+        Console.WriteLine($"\t\t   Вы:\n=========================================\nHP: {Math.Round(isaac.Hp, 1)}\nDamage: {Math.Round(isaac.Damage, 2)}\n");
 
         Console.ForegroundColor = ConsoleColor.DarkRed;
         Console.WriteLine(message);
@@ -343,9 +350,12 @@ bool Fight(double enemyHP, double enemyDAMAGE, double enemyDEFENCE, double enemy
         }
 
         Console.WriteLine("1. Атаковать\n2. Уклониться");
-        Console.Write(">>> ");
+        Console.Write(">>>  ");
+
+        INPUTcoordinates = Console.GetCursorPosition();
+        Console.SetCursorPosition(INPUTcoordinates.Left - 1, INPUTcoordinates.Top);
+
         string userMove = Console.ReadLine();
-        Console.WriteLine();
 
         switch (userMove)
         {
@@ -389,18 +399,18 @@ bool Fight(double enemyHP, double enemyDAMAGE, double enemyDEFENCE, double enemy
             if (chance <= enemyCRIT_CHANCE)
             {
                 damage = (enemyDAMAGE * 1.5) - (enemyDAMAGE * 1.5 * isaac.Defence);
-                message = "Враг наносит критический удар!\n";
+                message = "Враг наносит критический удар!                                   ";
             }
             else
             {
                 damage = enemyDAMAGE - (enemyDAMAGE * isaac.Defence);
-                message = "Враг наносит удар\n";
+                message = "Враг наносит удар                                                ";
             }
         }
         else if (enemyIGNORE_ARMOR)
         {
             damage = enemyDAMAGE;
-            message = "Враг игнорирует твою броню и наносит удар\n";
+            message = "Враг игнорирует твою броню и наносит удар                            ";
         }
         else
         {
@@ -409,16 +419,19 @@ bool Fight(double enemyHP, double enemyDAMAGE, double enemyDEFENCE, double enemy
             if (chance <= enemyFROZEN_CHANCE)
             {
                 userMoveSkip = true;
-                message = "Враг использовал заморозку, вы пропускаете ход\n";
+                message = "Враг использовал заморозку, вы пропускаете ход                   ";
             }
             else
             {
                 userMoveSkip = false;
-                message = "Враг наносит удар\n";
+                message = "Враг наносит удар                                                ";
             }
             damage = enemyDAMAGE - (enemyDAMAGE * isaac.Defence);
         }
+
+        Console.SetCursorPosition(MENUcoordinates.left, MENUcoordinates.top);
     }
+    Console.SetCursorPosition(0, INPUTcoordinates.Top+1);
 
     if (isaac.Hp > 0)
     {
@@ -453,7 +466,7 @@ class Isaac {
 
     public void PrintInfo()
     {
-        Console.WriteLine($"=============== Статистика ===============\nHP: {hp}\nУрон: {damage}\nБроня: {defence}\nPull-up: {inventory}\n==========================================\n");
+        Console.WriteLine($"\n=============== Статистика ===============\nHP: {Math.Round(hp, 1)}\nУрон: {Math.Round(damage, 2)}\nБроня: {Math.Round(defence, 2)}\nPull-up: {inventory}\n==========================================\n");
     }
 
     private int count = 1;
