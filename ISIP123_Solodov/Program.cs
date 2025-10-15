@@ -28,7 +28,7 @@ Weapon DarkMatter = new Weapon("Черная материя", 1, "+ Урон, + 
 Weapon Barley = new Weapon("Ячмень", 1, "+ Урон");
 Weapon Stapler = new Weapon("Степлер", 1, "+ Урон, Все слёзы стреляют из правого глаза");
 Weapon SacredHeart = new Weapon("Священное сердце", 2.3, "+ Урон, Выстрелы самонаводятся");
-Weapon Guillotine = new Weapon("Гильётина", 1, "+ Урон, Голова персонажа летает отдельно от него");
+Weapon Guillotine = new Weapon("Гильотина", 1, "+ Урон, Голова персонажа летает отдельно от него");
 Weapon Ipecac = new Weapon("Рвотный корень", 40, "+ Мега урон, взрывные слёзы");
 
 lstOfPickUps.Add(Pentagram);
@@ -70,7 +70,7 @@ lstOfEnemies.Add(enemy3);
 
 BabyPlum boss1 = new BabyPlum(15, 2, 0.1, "Сливка", 10);
 GurdyJr boss2 = new GurdyJr(20,3,0.1,"Гёрди Младшая", true);
-MegaFatty boss3 = new MegaFatty(20, 2.5, 0.2, "Толстяк", 10);
+MegaFatty boss3 = new MegaFatty(20, 2.5, 0.2, "Мега Толстяк", 10);
 Gurdy boss4 = new Gurdy(20, 3, 0.1, "Гёрди", true, 10);
 
 lstOfBosses.Add(boss1);
@@ -136,7 +136,7 @@ if (choice == "1") {
 
     double MAX_HP = hp;
     Isaac Character = new Isaac(hp,damage,defence,inventory);
-
+    Console.Clear();
     // Начало игры
     for (int lvl = 1; lvl < 6; lvl++) 
     {
@@ -153,12 +153,12 @@ if (choice == "1") {
         int countOfRooms = random.Next(4, 7); // кол-во комнат от 4 до 6
         bool isIsaacAlive = true;
 
-        while (countOfRooms != 0 && isIsaacAlive == false)
+        while (countOfRooms != 0 && isIsaacAlive == true)
         {
             Console.WriteLine("----------- Выберите действие ------------\n1. Посмотреть статистику\n2. Зайти в следующую комнату\n3. Использовать предмет");
             Console.Write(">>> ");
             choice = Console.ReadLine();
-
+            
             switch (choice)
             {
                 case "1":
@@ -201,8 +201,13 @@ bool generateRoom(int countOfRooms, Isaac isaac) {
             int randomItem = random.Next(0, lstOfPickUps.Count());
             string barier = "==========================================";
 
-            Console.WriteLine($"\nНа твоём пути встала комната сокровищ, в ней находится \"{lstOfPickUps[randomItem].name}\"\n\nОписание:");
+            Console.WriteLine($"\nНа твоём пути встала комната сокровищ");
 
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine($"В ней находится \"{lstOfPickUps[randomItem].name}\"\n");
+            Console.ResetColor();
+
+            Console.WriteLine("Описание:");
             // вывод информации о предмете
             if (lstOfPickUps[randomItem].description.Length > barier.Length)
             {
@@ -325,9 +330,12 @@ bool Fight(double enemyHP, double enemyDAMAGE, double enemyDEFENCE, double enemy
 
     while (isaac.Hp > 0 && enemyHP > 0)
     {
-        Console.WriteLine($"Враг:\n=======================\nHP: {enemyHP}\nDamage: {enemyDAMAGE}\nCritDamage: {enemyDAMAGE * 1.5}\n");
-        Console.WriteLine($"Вы\n=======================\nHP: {isaac.Hp}\nDamage: {isaac.Damage}\n");
+        Console.WriteLine($"\t\t  Враг:\n=========================================\nHP: {enemyHP}\nDamage: {enemyDAMAGE}\nCritDamage: {enemyDAMAGE * 1.5}\n");
+        Console.WriteLine($"\t\t  Вы:\n=========================================\nHP: {isaac.Hp}\nDamage: {isaac.Damage}\n");
+
+        Console.ForegroundColor = ConsoleColor.DarkRed;
         Console.WriteLine(message);
+        Console.ResetColor();
 
         if (userMoveSkip)
         {
@@ -335,7 +343,9 @@ bool Fight(double enemyHP, double enemyDAMAGE, double enemyDEFENCE, double enemy
         }
 
         Console.WriteLine("1. Атаковать\n2. Уклониться");
+        Console.Write(">>> ");
         string userMove = Console.ReadLine();
+        Console.WriteLine();
 
         switch (userMove)
         {
