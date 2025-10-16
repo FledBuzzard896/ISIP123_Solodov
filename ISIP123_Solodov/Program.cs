@@ -185,7 +185,7 @@ if (choice == "1")
 
     bool isIsaacAlive = true;
 
-    for (int lvl = 1; lvl < 6; lvl++)
+    for (int lvl = 1; lvl < 5; lvl++)
     {
         Console.ForegroundColor = ConsoleColor.DarkGray;
         // вывод информации о номере этажа
@@ -567,11 +567,13 @@ bool FinalBossFight(Mother boss, Isaac isaac, (int left, int top) MENUcoordinate
     string message = "";
     double damage = 0;
 
+    string str = boss.GetDescription();
+
     var INPUTcoordinates = Console.GetCursorPosition();
 
     while (isaac.Hp > 0 && boss.Hp > 0)
     {
-        Console.WriteLine($"\t\t  Мама:\n=========================================\nHP: {Math.Round(boss.Hp, 1)}\nDamage: {Math.Round(boss.Damage, 2)}\nLegDamage: {Math.Round(boss.LegPunch(), 2)}\nEyeLazerDamage: {Math.Round(boss.EyeLazer(), 2)}\n{boss.GetDescription}");
+        Console.WriteLine($"\t\t  Мама:\n=========================================\nHP: {Math.Round(boss.Hp, 1)}\nDamage: {Math.Round(boss.Damage, 2)}\nLegDamage: {Math.Round(boss.LegPunch(), 2)}\nEyeLazerDamage: {Math.Round(boss.EyeLazer(), 2)}\n{str}");
         Console.WriteLine($"\t\t   Вы:\n=========================================\nHP: {Math.Round(isaac.Hp, 1)}\nDamage: {Math.Round(isaac.Damage, 2)}\n");
 
         Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -711,15 +713,17 @@ class Isaac
             hp = maxHP;
 
             string newInventory = "";
+            int c = 0;
 
             for (int i = 0; i < inventory.Length; i++)
             {
                 // Проверяем, начинается ли с текущей позиции "Ням-сердце"
                 if (i <= inventory.Length - "Ням-сердце".Length &&
-                    inventory.Substring(i, "Ням-сердце".Length) == "Ням-сердце")
+                    inventory.Substring(i, "Ням-сердце".Length) == "Ням-сердце" && c == 0)
                 {
                     // Пропускаем "Ням-сердце"
                     i += "Ням-сердце".Length - 1;
+                    c = 1;
                 }
                 else
                 {
@@ -882,7 +886,7 @@ class Mother
         this.description = description;
     }
 
-    public string GetDescription() { return description; }
+    public string GetDescription() => description.ToString(); 
 
     public void HealthDown(double input)
     {
