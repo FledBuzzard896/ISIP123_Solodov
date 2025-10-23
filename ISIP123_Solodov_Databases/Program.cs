@@ -10,6 +10,7 @@ namespace ISIP123_Solodov_Databases
     {
         static void Main(string[] args)
         {
+            int n = 0;
         }
     }
 }
