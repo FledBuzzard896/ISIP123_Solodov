@@ -14,6 +14,12 @@ namespace ISIP123_Solodov_Databases
     
     public partial class ShoppingCart
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ShoppingCart()
+        {
+            this.OrdersHistory = new HashSet<OrdersHistory>();
+        }
+    
         public int ID { get; set; }
         public int id_Сlient { get; set; }
         public int id_Cloth { get; set; }
@@ -21,5 +27,7 @@ namespace ISIP123_Solodov_Databases
     
         public virtual Client Client { get; set; }
         public virtual likeNaGeev likeNaGeev { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrdersHistory> OrdersHistory { get; set; }
     }
 }

@@ -12,22 +12,13 @@ namespace ISIP123_Solodov_Databases
     using System;
     using System.Collections.Generic;
     
-    public partial class Client
+    public partial class OrdersHistory
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Client()
-        {
-            this.ShoppingCart = new HashSet<ShoppingCart>();
-        }
-    
         public int ID { get; set; }
-        public string FIO { get; set; }
-        public Nullable<double> Balance { get; set; }
-        public Nullable<System.DateTime> LastTransaction { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
+        public Nullable<int> ID_ShoppingCart { get; set; }
+        public Nullable<decimal> PriceSum { get; set; }
+        public Nullable<System.DateTime> DateOfOrder { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ShoppingCart> ShoppingCart { get; set; }
+        public virtual ShoppingCart ShoppingCart { get; set; }
     }
 }

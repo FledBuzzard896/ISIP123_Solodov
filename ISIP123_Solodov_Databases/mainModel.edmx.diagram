@@ -10,6 +10,8 @@
         <EntityTypeShape EntityType="Solodov_NagievOrderModel.ShoppingCart" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
         <AssociationConnector Association="Solodov_NagievOrderModel.FK_ShoppingCart_Client" ManuallyRouted="false" />
         <AssociationConnector Association="Solodov_NagievOrderModel.FK_ShoppingCart_likeNaGeev" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Solodov_NagievOrderModel.OrdersHistory" Width="1.5" PointX="5.25" PointY="1.125" />
+        <AssociationConnector Association="Solodov_NagievOrderModel.FK_OrdersHistory_ShoppingCart" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

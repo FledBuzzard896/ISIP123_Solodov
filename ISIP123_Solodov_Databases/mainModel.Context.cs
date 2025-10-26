@@ -28,5 +28,6 @@ namespace ISIP123_Solodov_Databases
         public virtual DbSet<Client> Client { get; set; }
         public virtual DbSet<likeNaGeev> likeNaGeev { get; set; }
         public virtual DbSet<ShoppingCart> ShoppingCart { get; set; }
+        public virtual DbSet<OrdersHistory> OrdersHistory { get; set; }
     }
 }
