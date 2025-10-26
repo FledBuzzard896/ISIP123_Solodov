@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище Solodov_NagievOrderModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FIO" Type="nvarchar" MaxLength="60" />
+          <Property Name="Balance" Type="float" />
+          <Property Name="LastTransaction" Type="datetime" />
+        </EntityType>
+        <EntityType Name="likeNaGeev">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClothName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClothSize" Type="nvarchar" MaxLength="4" />
+          <Property Name="ClothType" Type="nvarchar" MaxLength="40" />
+          <Property Name="ClothSex" Type="nvarchar" MaxLength="6" />
+          <Property Name="ClothPrice" Type="float" Nullable="false" />
+          <Property Name="ClothCount" Type="int" />
+        </EntityType>
+        <EntityType Name="ShoppingCart">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Сlient" Type="int" Nullable="false" />
+          <Property Name="id_Cloth" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" />
+        </EntityType>
+        <Association Name="FK_ShoppingCart_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ShoppingCart" Type="Self.ShoppingCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ShoppingCart">
+              <PropertyRef Name="id_Сlient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShoppingCart_likeNaGeev">
+          <End Role="likeNaGeev" Type="Self.likeNaGeev" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ShoppingCart" Type="Self.ShoppingCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="likeNaGeev">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ShoppingCart">
+              <PropertyRef Name="id_Cloth" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище Solodov_NagievOrderModelContainer">
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="likeNaGeev" EntityType="Self.likeNaGeev" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ShoppingCart_Client" Association="Self.FK_ShoppingCart_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="ShoppingCart" EntitySet="ShoppingCart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShoppingCart_likeNaGeev" Association="Self.FK_ShoppingCart_likeNaGeev">
+            <End Role="likeNaGeev" EntitySet="likeNaGeev" />
+            <End Role="ShoppingCart" EntitySet="ShoppingCart" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Solodov_NagievOrderModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FIO" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Balance" Type="Double" />
+          <Property Name="LastTransaction" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ShoppingCart" Relationship="Self.FK_ShoppingCart_Client" FromRole="Client" ToRole="ShoppingCart" />
+        </EntityType>
+        <EntityType Name="likeNaGeev">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClothName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClothSize" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="ClothType" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="ClothSex" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="ClothPrice" Type="Double" Nullable="false" />
+          <Property Name="ClothCount" Type="Int32" />
+          <NavigationProperty Name="ShoppingCart" Relationship="Self.FK_ShoppingCart_likeNaGeev" FromRole="likeNaGeev" ToRole="ShoppingCart" />
+        </EntityType>
+        <EntityType Name="ShoppingCart">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Сlient" Type="Int32" Nullable="false" />
+          <Property Name="id_Cloth" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_ShoppingCart_Client" FromRole="ShoppingCart" ToRole="Client" />
+          <NavigationProperty Name="likeNaGeev" Relationship="Self.FK_ShoppingCart_likeNaGeev" FromRole="ShoppingCart" ToRole="likeNaGeev" />
+        </EntityType>
+        <Association Name="FK_ShoppingCart_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ShoppingCart" Type="Self.ShoppingCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ShoppingCart">
+              <PropertyRef Name="id_Сlient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShoppingCart_likeNaGeev">
+          <End Role="likeNaGeev" Type="Self.likeNaGeev" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ShoppingCart" Type="Self.ShoppingCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="likeNaGeev">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ShoppingCart">
+              <PropertyRef Name="id_Cloth" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Solodov_NagievOrderEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Client" EntityType="Self.Client" />
+          <EntitySet Name="likeNaGeev" EntityType="Self.likeNaGeev" />
+          <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" />
+          <AssociationSet Name="FK_ShoppingCart_Client" Association="Self.FK_ShoppingCart_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="ShoppingCart" EntitySet="ShoppingCart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShoppingCart_likeNaGeev" Association="Self.FK_ShoppingCart_likeNaGeev">
+            <End Role="likeNaGeev" EntitySet="likeNaGeev" />
+            <End Role="ShoppingCart" EntitySet="ShoppingCart" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище Solodov_NagievOrderModelContainer" CdmEntityContainer="Solodov_NagievOrderEntities">
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="Solodov_NagievOrderModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="LastTransaction" ColumnName="LastTransaction" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="likeNaGeev">
+            <EntityTypeMapping TypeName="Solodov_NagievOrderModel.likeNaGeev">
+              <MappingFragment StoreEntitySet="likeNaGeev">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ClothName" ColumnName="ClothName" />
+                <ScalarProperty Name="ClothSize" ColumnName="ClothSize" />
+                <ScalarProperty Name="ClothType" ColumnName="ClothType" />
+                <ScalarProperty Name="ClothSex" ColumnName="ClothSex" />
+                <ScalarProperty Name="ClothPrice" ColumnName="ClothPrice" />
+                <ScalarProperty Name="ClothCount" ColumnName="ClothCount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShoppingCart">
+            <EntityTypeMapping TypeName="Solodov_NagievOrderModel.ShoppingCart">
+              <MappingFragment StoreEntitySet="ShoppingCart">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="id_Сlient" ColumnName="id_Сlient" />
+                <ScalarProperty Name="id_Cloth" ColumnName="id_Cloth" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
