@@ -12,9 +12,33 @@ namespace ISIP123_Solodov_Databases
         static void Main(string[] args)
         {
             int USER_ID = 0;
+
             List<likeNaGeev> storage = Core.Context.likeNaGeev.ToList();
+            List<Client> users = Core.Context.Client.ToList();
+            List<ShoppingCart> shoppingCart = Core.Context.ShoppingCart.ToList();
 
             Console.WriteLine("=============== MENU ===============\n1. Ассортимент\n2. Зарегистрироваться/Войти\n3. Корзина\n====================================");
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    CheckAssortiment(storage, USER_ID);
+                    break;
+                case "2":
+                    RegOrLog(users);
+                    break;
+                case "3":
+                    if (USER_ID != 0)
+                    {
+
+                    }
+                    else 
+                    {
+                        Console.WriteLine("Сначала зарегестрируйтесь или войдите в аккаунт");
+                    }
+                    break;
+            }
         }
 
         static public void CheckAssortiment(List<likeNaGeev> storage, int USER_ID) 
@@ -130,6 +154,10 @@ namespace ISIP123_Solodov_Databases
 
             USER_ID = Core.Context.Client.First(x => x.Login == login).ID;
             return USER_ID;
+        }
+        static public void CheckShoppingCart(int USER_ID) 
+        {
+            
         }
     }
 }
