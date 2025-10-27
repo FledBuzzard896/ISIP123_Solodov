@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="128fcfc3446844d2898ffd363776118d" Name="Diagram1">
+        <EntityTypeShape EntityType="Solodov_NagievOrderModel1.Client" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Solodov_NagievOrderModel1.likeNaGeev" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Solodov_NagievOrderModel1.OrdersHistory" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Solodov_NagievOrderModel1.ShoppingCart" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="Solodov_NagievOrderModel1.FK_ShoppingCart_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="Solodov_NagievOrderModel1.FK_ShoppingCart_likeNaGeev" ManuallyRouted="false" />
+        <AssociationConnector Association="Solodov_NagievOrderModel1.FK_OrdersHistory_ShoppingCart" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

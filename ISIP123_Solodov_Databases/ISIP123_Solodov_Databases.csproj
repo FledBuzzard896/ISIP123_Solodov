@@ -56,11 +56,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs">
-      <DependentUpon>mainModel.tt</DependentUpon>
+      <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
     <Compile Include="Core.cs" />
     <Compile Include="likeNaGeev.cs">
-      <DependentUpon>mainModel.tt</DependentUpon>
+      <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
     <Compile Include="mainModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -77,13 +77,28 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>mainModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ModelKIP.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelKIP.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelKIP.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelKIP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelKIP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelKIP.edmx</DependentUpon>
+    </Compile>
     <Compile Include="OrdersHistory.cs">
-      <DependentUpon>mainModel.tt</DependentUpon>
+      <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShoppingCart.cs">
-      <DependentUpon>mainModel.tt</DependentUpon>
+      <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +109,13 @@
     </EntityDeploy>
     <None Include="mainModel.edmx.diagram">
       <DependentUpon>mainModel.edmx</DependentUpon>
+    </None>
+    <EntityDeploy Include="ModelKIP.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelKIP.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="ModelKIP.edmx.diagram">
+      <DependentUpon>ModelKIP.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -107,6 +129,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>mainModel.edmx</DependentUpon>
       <LastGenOutput>mainModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="ModelKIP.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelKIP.edmx</DependentUpon>
+      <LastGenOutput>ModelKIP.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ModelKIP.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelKIP.edmx</DependentUpon>
+      <LastGenOutput>ModelKIP.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

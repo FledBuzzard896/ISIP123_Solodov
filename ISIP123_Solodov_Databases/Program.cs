@@ -13,9 +13,9 @@ namespace ISIP123_Solodov_Databases
         {
             int USER_ID = 0;
 
-            List<likeNaGeev> storage = Core.Context.likeNaGeev.ToList();
-            List<Client> users = Core.Context.Client.ToList();
-            List<ShoppingCart> shoppingCart = Core.Context.ShoppingCart.ToList();
+            List<likeNaGeev> storage = Core.ContextKIP.likeNaGeev.ToList();
+            List<Client> users = Core.ContextKIP.Client.ToList();
+            List<ShoppingCart> shoppingCart = Core.ContextKIP.ShoppingCart.ToList();
 
             Console.WriteLine("=============== MENU ===============\n1. Ассортимент\n2. Зарегистрироваться/Войти\n3. Корзина\n====================================");
             string choice = Console.ReadLine();
@@ -77,12 +77,12 @@ namespace ISIP123_Solodov_Databases
                             Quantity = count,
                         };
 
-                        Core.Context.ShoppingCart.Add(newElem);
+                        Core.ContextKIP.ShoppingCart.Add(newElem);
 
-                        likeNaGeev editCloth = Core.Context.likeNaGeev.First(x => x.ID == choice);
+                        likeNaGeev editCloth = Core.ContextKIP.likeNaGeev.First(x => x.ID == choice);
                         editCloth.ClothCount -= count;
 
-                        Core.Context.SaveChanges();
+                        Core.ContextKIP.SaveChanges();
 
                         Console.WriteLine("Товар добавлен в корзину!");
                     }
@@ -101,7 +101,7 @@ namespace ISIP123_Solodov_Databases
                 Console.WriteLine("Невохможно выбрать товар, вы не вошли в аккаунт");
             }
         }
-        static public int RegOrLog(List<Client> users) 
+        static public int RegOrLog(List<Client> users)
         {
             int USER_ID;
             Console.Write("Введите login: ");
@@ -134,6 +134,26 @@ namespace ISIP123_Solodov_Databases
             }
             Console.WriteLine("Вы еще не зарегистрированы, давайте сделаем это!");
 
+            Console.Write("Введите login: ");
+            login = Console.ReadLine();
+            Console.Write("Введите пароль: ");
+            password = Console.ReadLine();
+
+            string copy_password = "";
+
+            while (copy_password != password) 
+            {
+                Console.Write("Повторите пароль: ");
+                copy_password = Console.ReadLine();
+
+                if (password != copy_password) 
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine($"Пароль введён не правильно!");
+                    Console.ResetColor();
+                }
+            }
+
             Console.Write("Введите ФИО: ");
             string FIO = Console.ReadLine();
             Console.Write("Введите сумму денег, которую хотите потратить у нас в приложении: ");
@@ -148,16 +168,24 @@ namespace ISIP123_Solodov_Databases
                 Password = password,
             };
 
-            Core.Context.Client.Add(newClient);
+            Core.ContextKIP.Client.Add(newClient);
 
-            Core.Context.SaveChanges();
+            Core.ContextKIP.SaveChanges();
 
-            USER_ID = Core.Context.Client.First(x => x.Login == login).ID;
+            USER_ID = Core.ContextKIP.Client.First(x => x.Login == login).ID;
             return USER_ID;
         }
-        static public void CheckShoppingCart(int USER_ID) 
+        static public void CheckShoppingCart(int USER_ID, List<ShoppingCart> cart) 
         {
-            
+            Console.WriteLine("===== Корзина с покупочками =====");
+            bool isID = false;
+            foreach (var item in cart) 
+            {
+                if (item.Client.ID == USER_ID) 
+                {
+                    Console.WriteLine($"ID корзины: {item.ID}\n{item.likeNaGeev.ID}");
+                }
+            }
         }
     }
 }

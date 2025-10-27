@@ -9,5 +9,6 @@ namespace ISIP123_Solodov_Databases
     internal class Core
     {
         public static Solodov_NagievOrderEntities Context = new Solodov_NagievOrderEntities();
+        public static Solodov_NagievOrderEntities1 ContextKIP = new Solodov_NagievOrderEntities1();
     }
 }
