@@ -15,9 +15,9 @@ namespace ISIP123_Solodov_Databases
             int USER_ID = 0;
             Console.ForegroundColor = ConsoleColor.Gray;
 
-            List<likeNaGeev> storage = Core.Context.likeNaGeev.ToList();
-            List<Client> users = Core.Context.Client.ToList();
-            List<ShoppingCart> shoppingCart = Core.Context.ShoppingCart.ToList();
+            List<likeNaGeev> storage = Core.ContextKIP.likeNaGeev.ToList();
+            List<Client> users = Core.ContextKIP.Client.ToList();
+            List<ShoppingCart> shoppingCart = Core.ContextKIP.ShoppingCart.ToList();
 
             string choice = "";
 
@@ -30,21 +30,23 @@ namespace ISIP123_Solodov_Databases
                 {
                     case "1":
                         CheckAssortiment(storage, USER_ID, shoppingCart);
-                        storage = Core.Context.likeNaGeev.ToList();
-                        shoppingCart = Core.Context.ShoppingCart.ToList();
+                        storage = Core.ContextKIP.likeNaGeev.ToList();
+                        shoppingCart = Core.ContextKIP.ShoppingCart.ToList();
                         break;
 
                     case "2":
                         USER_ID = RegOrLog(users);
+
+                        //Console.WriteLine($"АЙЛИ {USER_ID}");
                         break;
 
                     case "3":
                         if (USER_ID != 0)
                         {
                             CheckShoppingCart(USER_ID, shoppingCart, storage, users);
-                            storage = Core.Context.likeNaGeev.ToList();
-                            shoppingCart = Core.Context.ShoppingCart.ToList();
-                            users = Core.Context.Client.ToList();
+                            storage = Core.ContextKIP.likeNaGeev.ToList();
+                            shoppingCart = Core.ContextKIP.ShoppingCart.ToList();
+                            users = Core.ContextKIP.Client.ToList();
                         }
                         else 
                         {
@@ -56,7 +58,7 @@ namespace ISIP123_Solodov_Databases
 
                     case "4":
                         AddBalance(USER_ID, users);
-                        users = Core.Context.Client.ToList();
+                        users = Core.ContextKIP.Client.ToList();
                         break;
 
                     case "0":
@@ -106,11 +108,14 @@ namespace ISIP123_Solodov_Databases
                         foreach (var elem in shoppingCart) 
                         {
                             // изменение количества товара в корзине
-                            if (elem.id_Cloth == newElem.id_Cloth) 
+                            if (elem.id_Сlient == USER_ID) 
                             {
-                                elem.Quantity += count;
+                                
+                                var change = Core.ContextKIP.ShoppingCart.Where(x => x.id_Сlient == USER_ID).ToList(); 
+                                ShoppingCart s = change.First(x => x.id_Cloth == newElem.id_Cloth);
+                                s.Quantity += count;
 
-                                Core.Context.SaveChanges();
+                                Core.ContextKIP.SaveChanges();
 
                                 isFalse = false;
                                 break;
@@ -120,13 +125,13 @@ namespace ISIP123_Solodov_Databases
                         // добавление товара в корзину если изначально его в ней не было
                         if (isFalse)
                         {
-                            Core.Context.ShoppingCart.Add(newElem);
+                            Core.ContextKIP.ShoppingCart.Add(newElem);
                         }
 
-                        likeNaGeev editCloth = Core.Context.likeNaGeev.First(x => x.ID == choice); // снижение кол-ва товара из асортимента
+                        likeNaGeev editCloth = Core.ContextKIP.likeNaGeev.First(x => x.ID == choice); // снижение кол-ва товара из асортимента
                         editCloth.ClothCount -= count;
 
-                        Core.Context.SaveChanges();
+                        Core.ContextKIP.SaveChanges();
 
                         Console.ForegroundColor = ConsoleColor.DarkGreen;
                         Console.WriteLine("Товар добавлен в корзину!");
@@ -232,40 +237,43 @@ namespace ISIP123_Solodov_Databases
                 Password = password,
             };
 
-            Core.Context.Client.Add(newClient);
+            Core.ContextKIP.Client.Add(newClient);
 
-            Core.Context.SaveChanges();
+            Core.ContextKIP.SaveChanges();
 
-            USER_ID = Core.Context.Client.First(x => x.Login == login).ID;
+            USER_ID = Core.ContextKIP.Client.First(x => x.Login == login).ID;
 
             return USER_ID;
         }
         static public void CheckShoppingCart(int USER_ID, List<ShoppingCart> cart, List<likeNaGeev> storage, List<Client> users) 
         {
             double totalSum = 0;
+            bool printSomething = false;
 
-            if (cart.Count > 0)
+            foreach (var line in cart) 
             {
-                Console.WriteLine("===== Корзиночка с покупочками =====");
+                if (line.id_Сlient == USER_ID) //  && line.Quantity != null 
+                {
+                    printSomething = true;
+
+                    
+                    Console.WriteLine("===== Корзиночка с покупочками =====");
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine($"ID корзины: {line.ID}");
+                    Console.ResetColor();
+                    Console.WriteLine("------------------------------------");
+                    break;
+                } 
+            }
 
 
+            if (printSomething)
+            {
                 foreach (var item in cart)
                 {
                     if (item.id_Сlient == USER_ID)
                     {
-                        Console.ForegroundColor = ConsoleColor.DarkGray;
-                        Console.WriteLine($"ID корзины: {item.ID}");
-                        Console.ResetColor();
-                        Console.WriteLine("------------------------------------");
-                        break;
-                    }
-                }
-
-                foreach (var item in cart)
-                {
-                    if (item.id_Сlient == USER_ID)
-                    {
-                        likeNaGeev Product = Core.Context.likeNaGeev.First(x => x.ID == item.id_Cloth); 
+                        likeNaGeev Product = Core.ContextKIP.likeNaGeev.First(x => x.ID == item.id_Cloth);
 
                         Console.WriteLine($"ID товара: {item.id_Cloth}\nНазвание: {Product.ClothName}\nРазмер: {Product.ClothSize}\nКолво: {item.Quantity}\nЦена: {item.Quantity * Product.ClothPrice}\n");
                         totalSum += (double)item.Quantity * Product.ClothPrice;
@@ -300,15 +308,15 @@ namespace ISIP123_Solodov_Databases
                                     break;
                             }
 
-                            Client client = Core.Context.Client.First(x => x.ID == USER_ID);
+                            Client client = Core.ContextKIP.Client.First(x => x.ID == USER_ID);
                             if (client.Balance >= totalSum)
                             {
                                 client.Balance -= totalSum;
                             }
-                            else 
+                            else
                             {
                                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                                Console.WriteLine("Ошибка транзакции!"); 
+                                Console.WriteLine("Ошибка транзакции!");
                                 Console.ResetColor();
                             }
 
@@ -319,9 +327,9 @@ namespace ISIP123_Solodov_Databases
 
                             foreach (var item in cart)
                             {
-                                Core.Context.ShoppingCart.Remove(item);
+                                Core.ContextKIP.ShoppingCart.Remove(item);
                             }
-                            Core.Context.SaveChanges();
+                            Core.ContextKIP.SaveChanges();
 
                             break;
 
@@ -339,27 +347,31 @@ namespace ISIP123_Solodov_Databases
                                     switch (choice)
                                     {
                                         case "1":
-                                            Core.Context.ShoppingCart.Remove(item);
-                                            Core.Context.SaveChanges();
+                                            Core.ContextKIP.ShoppingCart.Remove(item);
+                                            Core.ContextKIP.SaveChanges();
                                             break;
 
                                         case "2":
                                             Console.Write("Введите сколько позиций товара вы хотите удалить: ");
                                             int c = Convert.ToInt32(Console.ReadLine());
 
-                                            ShoppingCart changingItem = Core.Context.ShoppingCart.First(x => x.id_Cloth == deletedID);
+                                            // ИЗМЕНИ УДАЛЕНИЕ!!!!
+                                            //var change = Core.ContextKIP.ShoppingCart.Where(x => x.id_Сlient == USER_ID).ToList();
+                                            //ShoppingCart s = change.First(x => x.id_Cloth == newElem.id_Cloth);
+                                            //s.Quantity += count;
+                                            ShoppingCart changingItem = Core.ContextKIP.ShoppingCart.First(x => x.id_Cloth == deletedID);
                                             changingItem.Quantity -= c;
 
                                             if (changingItem.Quantity == 0)
                                             {
-                                                Core.Context.ShoppingCart.Remove(item);
+                                                Core.ContextKIP.ShoppingCart.Remove(item);
                                             }
 
                                             // возврат позиций в ассортимент
-                                            likeNaGeev changing = Core.Context.likeNaGeev.First(x => x.ID == item.id_Cloth);
+                                            likeNaGeev changing = Core.ContextKIP.likeNaGeev.First(x => x.ID == item.id_Cloth);
                                             changing.ClothCount += c;
 
-                                            Core.Context.SaveChanges();
+                                            Core.ContextKIP.SaveChanges();
                                             break;
                                     }
                                     Console.WriteLine("Корзина изменена!");
@@ -373,7 +385,7 @@ namespace ISIP123_Solodov_Databases
                     }
                 }
             }
-            else 
+            else
             {
                 Console.WriteLine("Корзина пуста!");
             }
@@ -382,7 +394,7 @@ namespace ISIP123_Solodov_Databases
         {
             if (USER_ID != 0)
             {
-                Client ChangeClient = Core.Context.Client.First(x => x.ID == USER_ID);
+                Client ChangeClient = Core.ContextKIP.Client.First(x => x.ID == USER_ID);
 
                 Console.WriteLine($"Текущий баланс: {ChangeClient.Balance} руб.");
 
@@ -393,7 +405,7 @@ namespace ISIP123_Solodov_Databases
 
                 Console.WriteLine("Операция выполнена!");
 
-                Core.Context.SaveChanges();
+                Core.ContextKIP.SaveChanges();
             }
             else 
             {
