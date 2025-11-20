@@ -1,0 +1,95 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ISIP123_Solodov.Model
+{
+    internal class Isaac
+    {
+        private double hp;
+        private double damage;
+        private double defence;
+        private string inventory;
+
+        public double Hp => hp;
+        public double Damage => damage;
+        public double Defence => defence;
+
+        public Isaac(double hp, double damage, double defence, string inventory)
+        {
+            this.hp = hp;
+            this.damage = damage;
+            this.defence = defence;
+            this.inventory = inventory;
+        }
+
+        public void PrintInfo()
+        {
+            Console.WriteLine($"\n=============== Статистика ===============\nHP: {Math.Round(hp, 1)}\nУрон: {Math.Round(damage, 2)}\nБроня: {Math.Round(defence, 2)}\nPull-up: {inventory}\n==========================================\n");
+        }
+
+        private int count = 1;
+        public void AddPickUp(Item pickUp)
+        {
+            inventory += ", ";
+
+            if (count % 3 == 0)
+            {
+                inventory += "\n";
+            }
+
+            inventory += pickUp.name;
+            count++;
+        }
+        public void AddDamage(Weapon pickUp)
+        {
+            damage += pickUp.GetDamage();
+        }
+        public void AddDefence(Armor pickUp)
+        {
+            defence += pickUp.GetDefence();
+        }
+        public void HealthUp(double maxHP)
+        {
+            if (hp <= maxHP * 0.25)
+            {
+                hp = maxHP;
+
+                string newInventory = "";
+                int c = 0;
+
+                for (int i = 0; i < inventory.Length; i++)
+                {
+                    // Проверяем, начинается ли с текущей позиции "Ням-сердце"
+                    if (i <= inventory.Length - "Ням-сердце".Length &&
+                        inventory.Substring(i, "Ням-сердце".Length) == "Ням-сердце" && c == 0)
+                    {
+                        // Пропускаем "Ням-сердце"
+                        i += "Ням-сердце".Length - 1;
+                        c = 1;
+                    }
+                    else
+                    {
+                        newInventory += inventory[i];
+                    }
+                }
+
+                inventory = newInventory;
+            }
+            else
+            {
+                Console.WriteLine("Вы еще не можете использовать этот предмет!");
+            }
+        }
+        public void HealthDown(double damage)
+        {
+            hp -= damage;
+        }
+        public string GetInventory()
+        {
+            return inventory;
+        }
+    }
+}

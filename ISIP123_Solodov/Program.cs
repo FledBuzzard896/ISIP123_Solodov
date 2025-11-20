@@ -10,7 +10,8 @@
 // 4. Гёрди Старшая (расса Булька)
 
 // Меню
-using static System.Net.Mime.MediaTypeNames;
+using ISIP123_Solodov.Model;
+using ISIP123_Solodov.Mom.Mommy.Mammy.Ma.Mama.Mater.Matron.Mumsy;
 
 Console.WriteLine("   +++============+*#+++=============+#% =+===============   ================+  +================   \r\n   +++++======+++++#*=====++++++++++++%%*=====++++++=======#*======+++++=======%+=====++++++======  \r\n    %%%#+====+%%%%%%+=====*%%%%%%%%%%%%%+=====+%%%%#=====+#%#=====+#%%%#+=====*%*=====+%%%%*=====+  \r\n       +=====*%%%   ======+++=======    ==================#%#========++++=====*%*=====+  %%%######  \r\n      =======#%%     ================*# ==================*%#=================*%#+====== %%%%%%%%   \r\n      ======+%%%       %%%%%%%#+=====#%#+=====+*   +======*%%======*%%%%+=====+%#+=====+    +=====+ \r\n ===========*###         +****+======#%%=======+   +======+%%+=====+  %%*=====+%%+====== ###+====== \r\n+===============+#%+==============+*#%%%========   ++======%%+======  %%#=====+%%#*+=============++ \r\n+**##############%%################%%%%%########   ########%%######*  %%%######%%%%############+++  \r\n  ##%%%%%%%%%%%%%%%  %%%%%%%%%%%%%%%%%  %%%%%%%    %%%%%%%%%%##%%%    %%%%%%%%  %%%%%%%%%%%%%%#   \n");
 Console.WriteLine("1. Начать игру\n0. Выйти");
@@ -342,28 +343,32 @@ bool generateRoom(int countOfRooms, Isaac isaac, double MAX_HP)
         }
         else
         {
+            //int randomEnemy = random.Next(0, lstOfEnemies.Count());
+
+            //double enemyHP = lstOfEnemies[randomEnemy].Health;
+            //double enemyDAMAGE = lstOfEnemies[randomEnemy].Damage;
+            //double enemyDEFENCE = lstOfEnemies[randomEnemy].Defence;
+
+            //double enemyCRIT_CHANCE = 0;
+            //double enemyFROZEN_CHANCE = 0;
+            //bool enemyIGNORE_ARMOR = false;
+
+            //if (lstOfEnemies[randomEnemy] is BoomFly)
+            //{
+            //    enemyCRIT_CHANCE = enemy1.GetCritChance();
+            //}
+            //else if (lstOfEnemies[randomEnemy] is Gurgling)
+            //{
+            //    enemyIGNORE_ARMOR = true;
+            //}
+            //else
+            //{
+            //    enemyFROZEN_CHANCE = enemy3.GetFrozenCrit();
+            //}
+
             int randomEnemy = random.Next(0, lstOfEnemies.Count());
 
-            double enemyHP = lstOfEnemies[randomEnemy].Health;
-            double enemyDAMAGE = lstOfEnemies[randomEnemy].Damage;
-            double enemyDEFENCE = lstOfEnemies[randomEnemy].Defence;
-
-            double enemyCRIT_CHANCE = 0;
-            double enemyFROZEN_CHANCE = 0;
-            bool enemyIGNORE_ARMOR = false;
-
-            if (lstOfEnemies[randomEnemy] is BoomFly)
-            {
-                enemyCRIT_CHANCE = enemy1.GetCritChance();
-            }
-            else if (lstOfEnemies[randomEnemy] is Gurgling)
-            {
-                enemyIGNORE_ARMOR = true;
-            }
-            else
-            {
-                enemyFROZEN_CHANCE = enemy3.GetFrozenCrit();
-            }
+            SimpleFactory.CreateEnemy(lstOfEnemies[randomEnemy].description);
 
             Console.Write("Вы зашли в комнату, в комнате на вас напал ");
             Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -660,245 +665,4 @@ bool FinalBossFight(Mother boss, Isaac isaac, (int left, int top) MENUcoordinate
     }
 
     return isIsaacAlive;
-}
-class Isaac
-{
-    private double hp;
-    private double damage;
-    private double defence;
-    private string inventory;
-
-    public double Hp => hp;
-    public double Damage => damage;
-    public double Defence => defence;
-
-    public Isaac(double hp, double damage, double defence, string inventory)
-    {
-        this.hp = hp;
-        this.damage = damage;
-        this.defence = defence;
-        this.inventory = inventory;
-    }
-
-    public void PrintInfo()
-    {
-        Console.WriteLine($"\n=============== Статистика ===============\nHP: {Math.Round(hp, 1)}\nУрон: {Math.Round(damage, 2)}\nБроня: {Math.Round(defence, 2)}\nPull-up: {inventory}\n==========================================\n");
-    }
-
-    private int count = 1;
-    public void AddPickUp(Item pickUp)
-    {
-        inventory += ", ";
-
-        if (count % 3 == 0)
-        {
-            inventory += "\n";
-        }
-
-        inventory += pickUp.name;
-        count++;
-    }
-    public void AddDamage(Weapon pickUp)
-    {
-        damage += pickUp.GetDamage();
-    }
-    public void AddDefence(Armor pickUp)
-    {
-        defence += pickUp.GetDefence();
-    }
-    public void HealthUp(double maxHP)
-    {
-        if (hp <= maxHP * 0.25)
-        {
-            hp = maxHP;
-
-            string newInventory = "";
-            int c = 0;
-
-            for (int i = 0; i < inventory.Length; i++)
-            {
-                // Проверяем, начинается ли с текущей позиции "Ням-сердце"
-                if (i <= inventory.Length - "Ням-сердце".Length &&
-                    inventory.Substring(i, "Ням-сердце".Length) == "Ням-сердце" && c == 0)
-                {
-                    // Пропускаем "Ням-сердце"
-                    i += "Ням-сердце".Length - 1;
-                    c = 1;
-                }
-                else
-                {
-                    newInventory += inventory[i];
-                }
-            }
-
-            inventory = newInventory;
-        }
-        else
-        {
-            Console.WriteLine("Вы еще не можете использовать этот предмет!");
-        }
-    }
-    public void HealthDown(double damage)
-    {
-        hp -= damage;
-    }
-    public string GetInventory()
-    {
-        return inventory;
-    }
-}
-class Item
-{
-    public string name;
-    public string description;
-
-    public Item(string name, string description)
-    {
-
-        this.description = description;
-        this.name = name;
-    }
-
-    public virtual void PrintInfo()
-    {
-        Console.WriteLine(description);
-    }
-}
-class Weapon : Item
-{
-    private double weaponDamage;
-
-    public Weapon(string name, double weaponDamage, string description) : base(name, description)
-    {
-        this.weaponDamage = weaponDamage;
-    }
-    public override void PrintInfo()
-    {
-        base.PrintInfo();
-    }
-    public double GetDamage()
-    {
-        return weaponDamage;
-    }
-}
-class Armor : Item
-{
-    private double armorDefence;
-
-    public Armor(string name, double armorDefence, string description) : base(name, description)
-    {
-        this.armorDefence = armorDefence;
-    }
-    public override void PrintInfo()
-    {
-        base.PrintInfo();
-    }
-    public double GetDefence()
-    {
-        return armorDefence;
-    }
-}
-
-class Enemy
-{
-    private double health;
-    private double damage;
-    private double defence;
-    public string description;
-
-    public Enemy(double health, double damage, double defence, string description)
-    {
-        this.health = health;
-        this.damage = damage;
-        this.defence = defence;
-        this.description = description;
-    }
-
-    public double Health => health;
-    public double Damage => damage;
-    public double Defence => defence;
-}
-class BoomFly : Enemy
-{
-    private double critChance;
-    public BoomFly(double health, double damage, double defence, string description, double crit) : base(health, damage, defence, description)
-    {
-        this.critChance = crit;
-    }
-
-    public double GetCritChance() { return critChance; }
-}
-class Gurgling : Enemy
-{
-    private bool ignoreArmor;
-
-    public Gurgling(double health, double damage, double defence, string description, bool ignoreArmor) : base(health, damage, defence, description)
-    {
-        this.ignoreArmor = ignoreArmor;
-    }
-}
-class Fatty : Enemy
-{
-    private double frozenCrit;
-
-    public Fatty(double health, double damage, double defence, string description, double frozenCrit) : base(health, damage, defence, description)
-    {
-        this.frozenCrit = frozenCrit;
-    }
-
-    public double GetFrozenCrit() { return frozenCrit; }
-}
-
-class BabyPlum : BoomFly
-{
-    public BabyPlum(double health, double damage, double defence, string description, double crit) : base(health * 2, damage * 1.5, defence * 1.2, description, crit * 1.1) { }
-}
-class GurdyJr : Gurgling
-{
-    public GurdyJr(double health, double damage, double defence, string description, bool ignoreArmor) : base(health * 2.5, damage * 1.3, defence * 1.4, description, ignoreArmor) { }
-}
-class MegaFatty : Fatty
-{
-    public MegaFatty(double health, double damage, double defence, string description, double frozenCrit) : base(health * 1.8, damage * 1.6, defence * 1.1, description, frozenCrit + 0.1) { }
-}
-class Gurdy : Gurgling
-{
-    private double frozenCrit;
-    public Gurdy(double health, double damage, double defence, string description, bool ignoreArmor, double frozenCrit) : base(health * 1.3, damage * 1.8, defence * 0.6, description, ignoreArmor)
-    {
-        this.frozenCrit = frozenCrit + 0.15;
-    }
-}
-
-class Mother
-{
-    private double hp;
-    private double damage;
-    private string description;
-
-    public double Hp => hp;
-    public double Damage => damage;
-
-    public Mother(string description, double hp = 100, double damage = 8)
-    {
-        this.hp = hp;
-        this.damage = damage;
-        this.description = description;
-    }
-
-    public string GetDescription() => description.ToString(); 
-
-    public void HealthDown(double input)
-    {
-        hp -= input;
-    }
-    public double LegPunch()
-    {
-        return damage * 1.5;
-    }
-
-    public double EyeLazer()
-    {
-        return damage * 1.3;
-    }
 }
