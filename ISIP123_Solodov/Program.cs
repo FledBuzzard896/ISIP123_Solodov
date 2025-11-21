@@ -63,13 +63,13 @@ lstOfPickUps.Add(TheBelt);
 lstOfPickUps.Add(PiggyBank);
 lstOfPickUps.Add(Bumbo);
 
-BoomFly enemy1 = new BoomFly(15, 2, 0.1, "Красная Бомбомуха", 10);
-Gurgling enemy2 = new Gurgling(20, 3, 0.1, "Булькающий", true);
-Fatty enemy3 = new Fatty(20, 2.5, 0.2, "Толстяк", 10);
+//BoomFly enemy1 = new BoomFly(15, 2, 0.1, "Красная Бомбомуха", 10);
+//Gurgling enemy2 = new Gurgling(20, 3, 0.1, "Булькающий", true);
+//Fatty enemy3 = new Fatty(20, 2.5, 0.2, "Толстяк", 10);
 
-lstOfEnemies.Add(enemy1);
-lstOfEnemies.Add(enemy2);
-lstOfEnemies.Add(enemy3);
+//lstOfEnemies.Add(enemy1);
+//lstOfEnemies.Add(enemy2);
+//lstOfEnemies.Add(enemy3);
 
 BabyPlum boss1 = new BabyPlum(15, 2, 0.1, "Сливка", 10);
 GurdyJr boss2 = new GurdyJr(20, 3, 0.1, "Гёрди Младшая", true);
@@ -343,41 +343,18 @@ bool generateRoom(int countOfRooms, Isaac isaac, double MAX_HP)
         }
         else
         {
-            //int randomEnemy = random.Next(0, lstOfEnemies.Count());
+            int randomEnemy = random.Next(0, 3);
 
-            //double enemyHP = lstOfEnemies[randomEnemy].Health;
-            //double enemyDAMAGE = lstOfEnemies[randomEnemy].Damage;
-            //double enemyDEFENCE = lstOfEnemies[randomEnemy].Defence;
-
-            //double enemyCRIT_CHANCE = 0;
-            //double enemyFROZEN_CHANCE = 0;
-            //bool enemyIGNORE_ARMOR = false;
-
-            //if (lstOfEnemies[randomEnemy] is BoomFly)
-            //{
-            //    enemyCRIT_CHANCE = enemy1.GetCritChance();
-            //}
-            //else if (lstOfEnemies[randomEnemy] is Gurgling)
-            //{
-            //    enemyIGNORE_ARMOR = true;
-            //}
-            //else
-            //{
-            //    enemyFROZEN_CHANCE = enemy3.GetFrozenCrit();
-            //}
-
-            int randomEnemy = random.Next(0, lstOfEnemies.Count());
-
-            SimpleFactory.CreateEnemy(lstOfEnemies[randomEnemy].description);
-
+            var vrag = SimpleFactory.CreateEnemy(randomEnemy);
+            
             Console.Write("Вы зашли в комнату, в комнате на вас напал ");
             Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine(lstOfEnemies[randomEnemy].description + "\n");
+            Console.WriteLine(vrag.description + "\n");
             Console.ResetColor();
 
             var MENUcoordinates = Console.GetCursorPosition();
 
-            isIsaacAlive = Fight(enemyHP, enemyDAMAGE, enemyDEFENCE, enemyCRIT_CHANCE, enemyFROZEN_CHANCE, enemyIGNORE_ARMOR, isaac, MAX_HP, MENUcoordinates);
+            isIsaacAlive = Fight(vrag.Health, vrag.Damage, vrag.Defence, vrag.GetCritChance(), vrag.GetFrozenChance(), vrag.GetIgnoreArmor(), isaac, MAX_HP, MENUcoordinates);
         }
     }
     else
@@ -404,18 +381,18 @@ bool generateRoom(int countOfRooms, Isaac isaac, double MAX_HP)
         }
         else if (lstOfBosses[randomBoss] is GurdyJr)
         {
-            bossIGNORE_ARMOR = true;
+            bossIGNORE_ARMOR = boss2.GetIgnoreArmor();
             lstOfBosses.Remove(boss2);
         }
         else if (lstOfBosses[randomBoss] is MegaFatty)
         {
-            bossFROZEN_CHANCE = boss3.GetFrozenCrit();
+            bossFROZEN_CHANCE = boss3.GetFrozenChance();
             lstOfBosses.Remove(boss3);
         }
         else
         {
             bossIGNORE_ARMOR = true;
-            bossFROZEN_CHANCE = boss3.GetFrozenCrit();
+            bossFROZEN_CHANCE = boss3.GetFrozenChance();
             lstOfBosses.Remove(boss4);
         }
 

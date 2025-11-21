@@ -14,7 +14,6 @@ namespace ISIP123_Solodov.Model
         {
             this.frozenCrit = frozenCrit;
         }
-
-        public double GetFrozenCrit() { return frozenCrit; }
+        public override double GetFrozenChance() => frozenCrit;
     }
 }

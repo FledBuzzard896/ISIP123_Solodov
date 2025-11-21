@@ -24,5 +24,9 @@ namespace ISIP123_Solodov.Model
         public double Health => health;
         public double Damage => damage;
         public double Defence => defence;
+
+        public virtual double GetCritChance() => 0;
+        public virtual bool GetIgnoreArmor() => false;
+        public virtual double GetFrozenChance() => 0;
     }
 }

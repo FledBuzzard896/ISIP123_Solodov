@@ -14,5 +14,6 @@ namespace ISIP123_Solodov.Model
         {
             this.ignoreArmor = ignoreArmor;
         }
+        public override bool GetIgnoreArmor() => ignoreArmor;
     }
 }
