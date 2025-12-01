@@ -5,8 +5,54 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ISIP123_Solodov_WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="400">
     <Grid>
-        <Button Height="50" Width="200" Content="база"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="61*"/>
+            <ColumnDefinition Width="139*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="88*"/>
+            <RowDefinition Height="88*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="143*"/>
+            <RowDefinition Height="45*"/>
+        </Grid.RowDefinitions>
+
+        <!--Заголовок-->
+        <TextBlock TextWrapping="Wrap" FontSize="18" Text="Заказ пиццы" TextAlignment="Center" VerticalAlignment="Center" Height="28" Grid.ColumnSpan="2"/>
+
+        <!--Выбор размера-->
+        <TextBlock TextWrapping="Wrap" FontSize="14" Text="Размер:" TextAlignment="Right" Margin="0,10,10,0" Grid.Row="1" Grid.Column="0"/>
+        <StackPanel Grid.Column="1" Margin="0,35,0,3" Grid.RowSpan="2">
+            <RadioButton Margin="15,15,0,0" FontSize="14" Content="большая"/>
+            <RadioButton Margin="15,5,0,0" FontSize="14" Content="средняя"/>
+            <RadioButton Margin="15,5,0,0" FontSize="14" Content="4 сыра"/>
+        </StackPanel>
+
+        <!--Выбор начинки-->
+        <TextBlock TextWrapping="Wrap" FontSize="14" Text="Добавки:" TextAlignment="Right" Margin="0,10,10,0" Grid.Row="2" Grid.Column="0"/>
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,80,0,0" Grid.RowSpan="2">
+            <CheckBox Margin="15,15,0,0" FontSize="14" Content="грибы"/>
+            <CheckBox Margin="15,5,0,0" FontSize="14" Content="пепперони"/>
+            <CheckBox Margin="15,5,0,0" FontSize="14" Content="4 сыра"/>
+        </StackPanel>
+
+        <!--Выбор количества-->
+        <WrapPanel Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Height="23">
+            <TextBlock Margin="30,0,10,0" TextWrapping="Wrap" FontSize="14" Text="Количество:" TextAlignment="Center" HorizontalAlignment="Center" Width="auto"/>
+            <Slider Minimum="1" Maximum="10" Value="1" IsSnapToTickEnabled="True" TickFrequency="1" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" Width="200"/>
+            <TextBlock Margin="10,0,0,0" TextWrapping="Wrap" FontSize="14" Text="штук." TextAlignment="Center" HorizontalAlignment="Center" Width="auto"/>
+        </WrapPanel>
+
+        <!--Комментарий-->
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Margin="0,35,0,0" Grid.RowSpan="2">
+            <TextBlock Margin="30,10,0,0" TextWrapping="Wrap" FontSize="14" Text="Комментарий к заказу:"/>
+            <TextBox Margin="30,10,30,0" TextWrapping="Wrap" MaxLength="200"/>
+        </StackPanel>
+
+        <!--Подвал-->
+        <Button Margin="70,5,70,0" FontSize="18" Content="Оформить заказ" VerticalAlignment="Top" Height="28" Grid.Row="5" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>
