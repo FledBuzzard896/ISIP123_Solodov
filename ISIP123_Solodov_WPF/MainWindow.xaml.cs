@@ -91,7 +91,26 @@ namespace ISIP123_Solodov_WPF
             }
             else 
             {
-                MessageBox.Show($"Вы: {name.Text}\nТелефон: {phone.Text}\nСпособ оплаты: {RadioButton.ContentProperty.Name}\nДополнительно: {CheckBox.ContentProperty}\nКоличество: {count.Text}\nИтог: {price} руб.");
+                string pay_choice;
+                string additionally = "";
+
+                if (btn1.IsChecked == true)
+                {
+                    pay_choice = btn1.Content.ToString();
+                }
+                else if (btn2.IsChecked == true)
+                {
+                    pay_choice = btn2.Content.ToString();
+                }
+                else 
+                {
+                    pay_choice = btn3.Content.ToString();
+                }
+
+                if (isPresent) { additionally += "\n" + box1.Content.ToString(); }
+                if (isDelivery) { additionally += "\n" + box2.Content.ToString(); }
+
+                MessageBox.Show($"Вы: {name.Text}\nТелефон: {phone.Text}\nСпособ оплаты: {pay_choice}\nДополнительно: {additionally}\nКоличество: {count.Text}\nИтог: {price} руб.");
             }
         }
     }
