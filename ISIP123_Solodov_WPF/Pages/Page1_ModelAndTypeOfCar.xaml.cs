@@ -68,7 +68,7 @@ namespace ISIP123_Solodov_WPF.Pages
                 return;
             }
             Page2_ColorAndAdditions page2 = new Page2_ColorAndAdditions(selectedModel, selectedEngine);
-            NavigationService.Navigate(new Page2_ColorAndAdditions());
+            NavigationService.Navigate(page2);
         }
         
     }
