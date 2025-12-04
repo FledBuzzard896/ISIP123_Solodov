@@ -1,0 +1,66 @@
+﻿<Page x:Class="ISIP123_Solodov_WPF.Pages.Page1_ModelAndTypeOfCar"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ISIP123_Solodov_WPF.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="400"
+      Title="Page1_ModelAndTypeOfCar">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="99*"/>
+            <ColumnDefinition Width="101*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="11*"/>
+            <RowDefinition Height="4*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Margin="0,20,0,0" FontSize="16" Text="Салон Chevrolet 1964-1970" Grid.RowSpan="5" Grid.Row="0" TextAlignment="Center" Grid.ColumnSpan="2"/>
+        <TextBlock Margin="20,15,20,0" TextWrapping="Wrap"  FontSize="10" FontStyle="Italic" Text="    Chevrolet Impala — американский полноразмерный автомобиль, выпускавшийся подразделением корпорации GM Chevrolet как модель с 1958 по 1985 год, с 1994 по 1996 год и с 1999 по 2020 год. В модельном ряду автомобиль занимал различное положение в зависимости от года выпуска. До 1965 года это был самый дорогой легковой «Шевроле». С 1965 по 1985 год занимала по цене промежуточное положение между люксовой модификацей Chevrolet Caprice и дешёвыми Chevrolet Bel Air и Biscayne." Grid.Row="1" Grid.ColumnSpan="2" />
+        <TextBlock Margin="0,15,0,0" FontSize="14" Text="Выберите конфигурацию:" TextAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2"/>
+
+        <StackPanel Margin="20,0,0,0"  Grid.Row="3" Grid.Column="0" Orientation="Vertical" Grid.RowSpan="2">
+            <TextBlock FontSize="14" Text="Модель автомобиля:" TextAlignment="Center"/>
+            <RadioButton Margin="0,10,0,0" x:Name="Model1" GroupName="Model" FontSize="14" Content="Седан-Хардтоп" VerticalContentAlignment="Center" Checked="ModelRadioButton_Checked"/>
+            <RadioButton Margin="0,10,0,0" x:Name="Model2" GroupName="Model" FontSize="14" Content="Универсал 5 дв." VerticalContentAlignment="Center" Checked="ModelRadioButton_Checked"/>
+            <RadioButton Margin="0,10,0,0" x:Name="Model3" GroupName="Model" FontSize="14" Content="Купе-Хардтоп" VerticalContentAlignment="Center" Checked="ModelRadioButton_Checked"/>
+            <RadioButton Margin="0,10,0,0" x:Name="Model4" GroupName="Model" FontSize="14" Content="Кабриолет" VerticalContentAlignment="Center" Checked="ModelRadioButton_Checked"/>
+        </StackPanel>
+
+        <!--Модель1-->
+        <StackPanel x:Name="Model1_type" Margin="0,0,20,0" Grid.Row="3" Grid.Column="1" Orientation="Vertical" Visibility="Collapsed" Grid.RowSpan="2">
+            <TextBlock FontSize="14" Text="Тип двигателя:" TextAlignment="Center"/>
+            <RadioButton Margin="20,10,0,0" GroupName="Type" FontSize="14" Content="4.1/142 л.с./бензин" VerticalContentAlignment="Center" Checked="EngineRadioButton_Checked"/>
+            <RadioButton Margin="20,10,0,0" GroupName="Type" FontSize="14" Content="5.4/254 л.с./бензин" VerticalContentAlignment="Center" Checked="EngineRadioButton_Checked"/>
+            <RadioButton Margin="20,10,0,0" GroupName="Type" FontSize="14" Content="6.5/330 л.с./бензин" VerticalContentAlignment="Center" Checked="EngineRadioButton_Checked"/>
+            <RadioButton Margin="20,10,0,0" GroupName="Type" FontSize="14" Content="7.0/431 л.с./бензин" VerticalContentAlignment="Center" Checked="EngineRadioButton_Checked"/>
+        </StackPanel>
+        <!--Модель2-->
+        <StackPanel x:Name="Model2_type" Margin="0,0,20,0" Grid.Row="3" Grid.Column="1" Orientation="Vertical" Visibility="Collapsed" Grid.RowSpan="2">
+            <TextBlock FontSize="14" Text="Тип двигателя:" TextAlignment="Center"/>
+            <RadioButton Margin="20,10,0,0" GroupName="Type" FontSize="14" Content="4.6/198 л.с./бензин" VerticalContentAlignment="Center" Checked="EngineRadioButton_Checked"/>
+        </StackPanel>
+        <!--Модель3-->
+        <StackPanel x:Name="Model3_type" Margin="0,0,20,0" Grid.Row="3" Grid.Column="1" Orientation="Vertical" Visibility="Collapsed" Grid.RowSpan="2">
+            <TextBlock FontSize="14" Text="Тип двигателя:" TextAlignment="Center"/>
+            <RadioButton Margin="20,10,0,0" GroupName="Type" FontSize="14" Content="4.1/157 л.с./бензин" VerticalContentAlignment="Center" Checked="EngineRadioButton_Checked"/>
+            <RadioButton Margin="20,10,0,0" GroupName="Type" FontSize="14" Content="5.4/304 л.с./бензин" VerticalContentAlignment="Center" Checked="EngineRadioButton_Checked"/>
+            <RadioButton Margin="20,10,0,0" GroupName="Type" FontSize="14" Content="6.7/405 л.с./бензин" VerticalContentAlignment="Center" Checked="EngineRadioButton_Checked"/>
+        </StackPanel>
+        <!--Модель4-->
+        <StackPanel x:Name="Model4_type" Margin="0,0,20,0" Grid.Row="3" Grid.Column="1" Orientation="Vertical" Visibility="Collapsed" Grid.RowSpan="2">
+            <TextBlock FontSize="14" Text="Тип двигателя:" TextAlignment="Center"/>
+            <RadioButton Margin="20,10,0,0" GroupName="Type" FontSize="14" Content="3.8/140 л.с./бензин" VerticalContentAlignment="Center" Checked="EngineRadioButton_Checked"/>
+            <RadioButton Margin="20,10,0,0" GroupName="Type" FontSize="14" Content="7.0/390 л.с./бензин" VerticalContentAlignment="Center" Checked="EngineRadioButton_Checked"/>
+        </StackPanel>
+
+        <Button x:Name="NextBttn" Margin="0,0,0,10" Content="Далее" HorizontalAlignment="Center" Width="150" Height="35"  Grid.Row="4" Grid.ColumnSpan="2" Click="NextBttn_Click"/>
+    </Grid>
+</Page>
