@@ -23,6 +23,7 @@ namespace ISIP123_Solodov_WPF.Pages
         string selectedModel = "";
         string selectedEngine = "";
 
+        double price;
         public Page1_ModelAndTypeOfCar()
         {
             InitializeComponent();
@@ -40,13 +41,13 @@ namespace ISIP123_Solodov_WPF.Pages
                 switch (radioButton.Name) 
                 {
                     case "Model1":
-                        Model1_type.Visibility = Visibility.Visible;  break;
+                        Model1_type.Visibility = Visibility.Visible; price = 5000000;  break;
                     case "Model2":
-                        Model2_type.Visibility = Visibility.Visible;  break;
+                        Model2_type.Visibility = Visibility.Visible; price = 2000000; break;
                     case "Model3":
-                        Model3_type.Visibility = Visibility.Visible;  break;
+                        Model3_type.Visibility = Visibility.Visible; price = 3500000; break;
                     case "Model4":
-                        Model4_type.Visibility = Visibility.Visible;  break;
+                        Model4_type.Visibility = Visibility.Visible; price = 1500000; break;
                 }
                 selectedModel = radioButton.Content.ToString();
             }
@@ -57,6 +58,21 @@ namespace ISIP123_Solodov_WPF.Pages
             if (sender is RadioButton radioButton)
             {
                 selectedEngine = radioButton.Content.ToString();
+                char f_symb = selectedEngine.ToString()[0];
+                double copy_price;
+
+                if ((int)f_symb <= 4)
+                {
+                    copy_price = price * 1.3;
+                }
+                else if ((int)f_symb >= 6)
+                {
+                    copy_price = price * 2;
+                }
+                else 
+                {
+                    copy_price = price * 1.6;
+                }
             }
         }
 
@@ -67,7 +83,7 @@ namespace ISIP123_Solodov_WPF.Pages
                 MessageBox.Show("Выберите модель и тип двигателя автомобиля!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            Page2_ColorAndAdditions page2 = new Page2_ColorAndAdditions(selectedModel, selectedEngine);
+            Page2_ColorAndAdditions page2 = new Page2_ColorAndAdditions(price, selectedModel, selectedEngine);
             NavigationService.Navigate(page2);
         }
         

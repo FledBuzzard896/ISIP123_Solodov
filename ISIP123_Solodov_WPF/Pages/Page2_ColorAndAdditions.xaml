@@ -9,10 +9,39 @@
       Title="Page2_ColorAndAdditions">
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="199*"/>
+            <ColumnDefinition Width="201*"/>
+        </Grid.ColumnDefinitions>
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="45*"/>
-            <RowDefinition Height="407*"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="37*"/>
+            <RowDefinition Height="44*"/>
         </Grid.RowDefinitions>
-        <TextBlock Margin="0,20,0,0" FontSize="16" Text="Салон Chevrolet 1964-1970" Grid.RowSpan="2" Grid.Row="0" TextAlignment="Center"/>
+
+        <TextBlock Margin="0,20,0,0" FontSize="16" Text="Салон Chevrolet 1964-1970" Grid.Row="0" TextAlignment="Center" Grid.ColumnSpan="2"/>
+        <StackPanel Margin="0,10,0,0" Grid.Row="1" Grid.Column="0">
+            <TextBlock FontSize="14" Text="Выберите цвет:" TextAlignment="Center" Height="auto"/>
+            <RadioButton Margin="20,10,0,0" GroupName="color" FontSize="14" Content="Бордовый" VerticalContentAlignment="Center" Checked="ColorRadioButton_Checked"/>
+            <RadioButton Margin="20,10,0,0" GroupName="color" FontSize="14" Content="Бежевый" VerticalContentAlignment="Center" Checked="ColorRadioButton_Checked"/>
+            <RadioButton Margin="20,10,0,0" GroupName="color" FontSize="14" Content="Черный" VerticalContentAlignment="Center" Checked="ColorRadioButton_Checked"/>
+            <RadioButton Margin="20,10,0,0" GroupName="color" FontSize="14" Content="Голубой" VerticalContentAlignment="Center" Checked="ColorRadioButton_Checked"/>
+            <RadioButton Margin="20,10,0,0" GroupName="color" FontSize="14" Content="Коричневый" VerticalContentAlignment="Center" Checked="ColorRadioButton_Checked"/>
+        </StackPanel>
+
+        <TextBlock x:Name="color_square" Margin="50,15,50,0" Grid.Row="1" Grid.Column="1" FontSize="100" FontWeight="Bold" Text="██" Height="160" VerticalAlignment="Top" Foreground="Gray" />
+
+        <StackPanel Margin="0,10,0,0" Grid.Row="2" Grid.Column="0">
+            <TextBlock FontSize="14" Text="Дополнительные опции:" TextAlignment="Center"/>
+            <CheckBox Margin="20,10,0,0" FontSize="14" Content="Магнитола (+12 999₽)" VerticalContentAlignment="Center" Checked="AddsBox_Checked"/>
+            <CheckBox Margin="20,10,0,0" FontSize="14" Content="Салон (кожа) (+70 459₽)" VerticalContentAlignment="Center" Checked="AddsBox_Checked"/>
+            <CheckBox Margin="20,10,0,0" FontSize="14" Content="Хром. дет. (+142 000₽)" VerticalContentAlignment="Center" Checked="AddsBox_Checked"/>
+            <CheckBox Margin="20,10,0,0" FontSize="14" Content="Вонючка (+150 ₽)" VerticalContentAlignment="Center" Checked="AddsBox_Checked"/>
+        </StackPanel>
+        <StackPanel Margin="0,10,0,0" Grid.Row="2" Grid.Column="1">
+            <TextBlock FontSize="14" Text="Напишите свои пожелания:" TextAlignment="Center"/>
+            <TextBox x:Name="comment" Margin="20,10,20,0" Text="" TextWrapping="Wrap" MaxLength="200" Height="100" />
+        </StackPanel>
     </Grid>
 </Page>
