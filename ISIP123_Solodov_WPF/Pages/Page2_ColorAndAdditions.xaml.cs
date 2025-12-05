@@ -51,22 +51,23 @@ namespace ISIP123_Solodov_WPF.Pages
         {
             CheckBox checkBox = sender as CheckBox;
             
+            _adds += "\n" + checkBox.Content;
 
-            if (checkBox.IsChecked == true)
-            {
-                _adds += "\n" + checkBox.Content;
-            }
-            else 
-            {
-                string toRemove = checkBox.Content.ToString();
-                int index = _adds.IndexOf(toRemove);
+            comment.Text = _adds;
+        }
 
-                if (index != -1)
-                {
-                    _adds = _adds.Remove(index, toRemove.Length).Trim();
-                    // Убираем лишние пробелы (двойные пробелы)
-                    _adds = _adds.Replace("  ", " ");
-                }
+        private void AddsBox_UnChecked(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+
+            string toRemove = checkBox.Content.ToString();
+            int index = _adds.IndexOf(toRemove);
+
+            if (index != -1)
+            {
+                _adds = _adds.Remove(index, toRemove.Length).Trim();
+                // Убираем лишние пробелы (двойные пробелы)
+                _adds = _adds.Replace("  ", " ");
             }
 
             comment.Text = _adds;
