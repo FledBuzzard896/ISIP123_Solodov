@@ -17,7 +17,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="9*"/>
             <RowDefinition Height="37*"/>
-            <RowDefinition Height="44*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
 
         <TextBlock Margin="0,20,0,0" FontSize="16" Text="Салон Chevrolet 1964-1970" Grid.Row="0" TextAlignment="Center" Grid.ColumnSpan="2"/>
@@ -30,18 +31,20 @@
             <RadioButton Margin="20,10,0,0" GroupName="color" FontSize="14" Content="Коричневый" VerticalContentAlignment="Center" Checked="ColorRadioButton_Checked"/>
         </StackPanel>
 
-        <TextBlock x:Name="color_square" Margin="50,15,50,0" Grid.Row="1" Grid.Column="1" FontSize="100" FontWeight="Bold" Text="██" Height="160" VerticalAlignment="Top" Foreground="Gray" />
+        <TextBlock x:Name="color_square" Margin="50,15,50,0" Grid.Row="1" Grid.Column="1" FontSize="100" FontWeight="Bold" Text="██" Height="160" VerticalAlignment="Top"/>
 
-        <StackPanel Margin="0,10,0,0" Grid.Row="2" Grid.Column="0">
+        <StackPanel Margin="0,10,0,0" Grid.Row="2" Grid.Column="0" Grid.RowSpan="2">
             <TextBlock FontSize="14" Text="Дополнительные опции:" TextAlignment="Center"/>
             <CheckBox Margin="20,10,0,0" FontSize="14" Content="Магнитола (+12 999₽)" VerticalContentAlignment="Center" Checked="AddsBox_Checked" Unchecked="AddsBox_UnChecked"/>
-            <CheckBox Margin="20,10,0,0" FontSize="14" Content="Салон (кожа) (+70 459₽)" VerticalContentAlignment="Center" Checked="AddsBox_Checked" Unchecked="AddsBox_UnChecked"/>
-            <CheckBox Margin="20,10,0,0" FontSize="14" Content="Хром. дет. (+142 000₽)" VerticalContentAlignment="Center" Checked="AddsBox_Checked" Unchecked="AddsBox_UnChecked"/>
+            <CheckBox Margin="20,10,0,0" FontSize="14" Content="Салон (кожа) (+97 459₽)" VerticalContentAlignment="Center" Checked="AddsBox_Checked" Unchecked="AddsBox_UnChecked"/>
+            <CheckBox Margin="20,10,0,0" FontSize="14" Content="Хром. дет. (+342 000₽)" VerticalContentAlignment="Center" Checked="AddsBox_Checked" Unchecked="AddsBox_UnChecked"/>
             <CheckBox Margin="20,10,0,0" FontSize="14" Content="Вонючка (+150 ₽)" VerticalContentAlignment="Center" Checked="AddsBox_Checked" Unchecked="AddsBox_UnChecked"/>
         </StackPanel>
-        <StackPanel Margin="0,10,0,0" Grid.Row="2" Grid.Column="1">
+        <StackPanel Margin="0,10,0,0" Grid.Row="2" Grid.Column="1" Grid.RowSpan="2">
             <TextBlock FontSize="14" Text="Напишите свои пожелания:" TextAlignment="Center"/>
             <TextBox x:Name="comment" Margin="20,10,20,0" Text="" TextWrapping="Wrap" MaxLength="200" Height="100" />
         </StackPanel>
+        <Button x:Name="ToBack" FontSize="14" Content="Назад" Height="35" Width="150" Grid.Row="3" Grid.Column="0" Click="ToBack_Click"/>
+        <Button x:Name="ToNext" FontSize="14" Content="Далее" Height="35" Width="150" Grid.Row="3" Grid.Column="1" Click="ToNext_Click"/>
     </Grid>
 </Page>

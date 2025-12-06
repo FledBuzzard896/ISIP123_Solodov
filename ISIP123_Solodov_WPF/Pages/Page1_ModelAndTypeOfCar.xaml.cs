@@ -24,6 +24,7 @@ namespace ISIP123_Solodov_WPF.Pages
         string selectedEngine = "";
 
         double price;
+        double copy_price;
         public Page1_ModelAndTypeOfCar()
         {
             InitializeComponent();
@@ -59,7 +60,6 @@ namespace ISIP123_Solodov_WPF.Pages
             {
                 selectedEngine = radioButton.Content.ToString();
                 char f_symb = selectedEngine.ToString()[0];
-                double copy_price;
 
                 if ((int)f_symb <= 4)
                 {
@@ -83,7 +83,7 @@ namespace ISIP123_Solodov_WPF.Pages
                 MessageBox.Show("Выберите модель и тип двигателя автомобиля!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            Page2_ColorAndAdditions page2 = new Page2_ColorAndAdditions(price, selectedModel, selectedEngine);
+            Page2_ColorAndAdditions page2 = new Page2_ColorAndAdditions(copy_price, selectedModel, selectedEngine);
             NavigationService.Navigate(page2);
         }
         
