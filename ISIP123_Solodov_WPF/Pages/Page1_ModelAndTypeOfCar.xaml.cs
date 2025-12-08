@@ -59,7 +59,7 @@ namespace ISIP123_Solodov_WPF.Pages
             if (sender is RadioButton radioButton)
             {
                 selectedEngine = radioButton.Content.ToString();
-                char f_symb = selectedEngine.ToString()[0];
+                char f_symb = selectedEngine[0];
 
                 if ((int)f_symb <= 4)
                 {
@@ -78,13 +78,22 @@ namespace ISIP123_Solodov_WPF.Pages
 
         private void NextBttn_Click(object sender, RoutedEventArgs e)
         {
-            if (selectedModel == "" || selectedEngine == "") 
+            if (NavigationService.CanGoForward && selectedModel == copy_model)
             {
-                MessageBox.Show("Выберите модель и тип двигателя автомобиля!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                NavigationService.GoForward();
             }
-            Page2_ColorAndAdditions page2 = new Page2_ColorAndAdditions(copy_price, selectedModel, selectedEngine);
-            NavigationService.Navigate(page2);
+            else 
+            {
+                if (selectedModel == "" || selectedEngine == "")
+                {
+                    MessageBox.Show("Выберите модель и тип двигателя автомобиля!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                copy_model = selectedModel;
+                Page2_ColorAndAdditions page2 = new Page2_ColorAndAdditions(copy_price, selectedModel, selectedEngine);
+                NavigationService.Navigate(page2);
+            }
+            
         }
         
     }

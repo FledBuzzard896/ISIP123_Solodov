@@ -28,16 +28,17 @@ namespace ISIP123_Solodov_WPF.Pages
         private string _engine;
         private double _price;
 
-        public Page3_TotalPrice(double price, string model, string engine, string color, string adds, string adds_comment, double adds_price)
+        public Page3_TotalPrice(double price, string model, string engine, string color, string adds, string adds_comment)
         {
             InitializeComponent();
-            _price = price + adds_price;
+            _price = price;
             _model = model;
             _engine = engine;
             _color = color;
             _adds = adds;
             _adds_comment = adds_comment;
 
+            
             /// Добавление точек после 3 цифр в цене
             string s_price = "";
             int count = 0;
@@ -69,7 +70,14 @@ namespace ISIP123_Solodov_WPF.Pages
 
         private void ToNext_Click(object sender, RoutedEventArgs e)
         {
-
+            if (NavigationService.CanGoForward)
+            {
+                NavigationService.GoForward();
+            }
+            else 
+            {
+            
+            }
         }
 
         private void ToBack_Click(object sender, RoutedEventArgs e)

@@ -28,7 +28,7 @@ namespace ISIP123_Solodov_WPF.Pages
         private string _engine;
         private double _price;
 
-        double copy_price;
+        double copy_price = 0;
 
         public Page2_ColorAndAdditions(double price, string model, string engine ) 
         {
@@ -91,30 +91,37 @@ namespace ISIP123_Solodov_WPF.Pages
 
         private void ToNext_Click(object sender, RoutedEventArgs e)
         {
-            if (_color == "") 
+            if (NavigationService.CanGoForward)
             {
-                MessageBox.Show("Выберите цвет автомобиля!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                NavigationService.GoForward();
             }
-
-            string[] adds = _adds.Split('\n');
-
-
-            foreach (string add in adds) 
+            else
             {
-                switch (add) 
+                if (_color == "")
                 {
-                    case "Магнитола (+12 999₽)": _price += 12999; break;
-                    case "Салон (кожа) (+97 459₽)": _price += 97459; break;
-                    case "Хром. дет. (+342 000₽)": _price += 342000; break;
-                    case "Вонючка (+150 ₽)": _price += 150; break;
+                    MessageBox.Show("Выберите цвет автомобиля!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
-            }
 
-            _adds_comment = comment.Text;
-            Page3_TotalPrice page3 = new Page3_TotalPrice(_price, _model, _engine, _color, _adds, _adds_comment, copy_price);
-            _price = copy_price;
-            NavigationService.Navigate(page3);
+                string[] adds = _adds.Split('\n');
+
+
+                foreach (string add in adds)
+                {
+                    switch (add)
+                    {
+                        case "Магнитола (+12 999₽)": _price += 12999; break;
+                        case "Салон (кожа) (+97 459₽)": _price += 97459; break;
+                        case "Хром. дет. (+342 000₽)": _price += 342000; break;
+                        case "Вонючка (+150 ₽)": _price += 150; break;
+                    }
+                }
+
+                _adds_comment = comment.Text;
+                Page3_TotalPrice page3 = new Page3_TotalPrice(_price, _model, _engine, _color, _adds, _adds_comment);
+                _price = copy_price;
+                NavigationService.Navigate(page3);
+            }
         }
     }
 }

@@ -79,8 +79,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Page4_Credit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MyCar.cs" />
     <Compile Include="Pages\Page1_ModelAndTypeOfCar.xaml.cs">
       <DependentUpon>Page1_ModelAndTypeOfCar.xaml</DependentUpon>
     </Compile>
@@ -89,6 +94,9 @@
     </Compile>
     <Compile Include="Pages\Page3_TotalPrice.xaml.cs">
       <DependentUpon>Page3_TotalPrice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Page4_Credit.xaml.cs">
+      <DependentUpon>Page4_Credit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
