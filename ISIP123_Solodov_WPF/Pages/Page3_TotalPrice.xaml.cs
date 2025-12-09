@@ -21,22 +21,14 @@ namespace ISIP123_Solodov_WPF.Pages
     /// </summary>
     public partial class Page3_TotalPrice : Page
     {
-        private string _color;
-        private string _adds;
         private string _adds_comment;
-        private string _model;
-        private string _engine;
         private double _price;
 
-        public Page3_TotalPrice(double price, string model, string engine, string color, string adds, string adds_comment)
+        public Page3_TotalPrice()
         {
             InitializeComponent();
-            _price = price;
-            _model = model;
-            _engine = engine;
-            _color = color;
-            _adds = adds;
-            _adds_comment = adds_comment;
+            _price = MyCar.price;
+            _adds_comment = MyCar.adds_comment;
 
             
             /// Добавление точек после 3 цифр в цене
@@ -60,7 +52,7 @@ namespace ISIP123_Solodov_WPF.Pages
             s_price = new string(chars);
 
             /// Вывод чека
-            complectation.Text = $"Модель: {_model}\nТип двигателя: {_engine}\nЦвет: {_color}\nДополнительные опции:{_adds}\nВаш комментарий: {_adds_comment}";
+            complectation.Text = MyCar.PrintInfo();
             if (_adds_comment == "") 
             {
                 complectation.Text = complectation.Text.Replace("Ваш комментарий: ", "");
@@ -76,7 +68,8 @@ namespace ISIP123_Solodov_WPF.Pages
             }
             else 
             {
-            
+                Page4_Credit page4 = new Page4_Credit();
+                NavigationService.Navigate(page4);
             }
         }
 

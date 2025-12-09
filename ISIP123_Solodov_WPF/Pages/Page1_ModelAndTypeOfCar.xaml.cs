@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using ISIP123_Solodov_WPF;
+
 namespace ISIP123_Solodov_WPF.Pages
 {
     /// <summary>
@@ -78,19 +80,23 @@ namespace ISIP123_Solodov_WPF.Pages
 
         private void NextBttn_Click(object sender, RoutedEventArgs e)
         {
-            if (NavigationService.CanGoForward && selectedModel == copy_model)
+            if (NavigationService.CanGoForward && MyCar.CheckModel() == selectedModel && MyCar.CheckEngine() == selectedEngine)
             {
                 NavigationService.GoForward();
             }
-            else 
+            else
             {
                 if (selectedModel == "" || selectedEngine == "")
                 {
                     MessageBox.Show("Выберите модель и тип двигателя автомобиля!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-                copy_model = selectedModel;
-                Page2_ColorAndAdditions page2 = new Page2_ColorAndAdditions(copy_price, selectedModel, selectedEngine);
+
+                MyCar.price = copy_price;
+                MyCar.model = selectedModel;
+                MyCar.engine = selectedEngine;
+
+                Page2_ColorAndAdditions page2 = new Page2_ColorAndAdditions();
                 NavigationService.Navigate(page2);
             }
             

@@ -83,6 +83,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Page5_EndForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MyCar.cs" />
@@ -97,6 +101,9 @@
     </Compile>
     <Compile Include="Pages\Page4_Credit.xaml.cs">
       <DependentUpon>Page4_Credit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Page5_EndForm.xaml.cs">
+      <DependentUpon>Page5_EndForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
