@@ -69,13 +69,17 @@ namespace ISIP123_Solodov_WPF.Pages
         {
             if (NavigationService.CanGoBack) 
             {
-                NavigationService.GoBack();
-            }
-        }
+                MessageBoxResult check = MessageBox.Show("Внимание! Введенные данные будут утеряны!", "Предупреждение!!!", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
 
-        private void ToNext_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
+                if (check == MessageBoxResult.OK) 
+                {
+                    FullName.Text = string.Empty;
+                    Mail.Text = string.Empty;
+                    PhoneNum.Text = string.Empty;
+                    
+                    NavigationService.GoBack();
+                }
+            }
         }
 
         private void bttn_Click(object sender, RoutedEventArgs e)
@@ -87,6 +91,7 @@ namespace ISIP123_Solodov_WPF.Pages
             if (part1 && part2 && part3)
             {
                 MessageBox.Show("Форма отправлена!", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
+                Application.Current.Shutdown();
             }
             else
             {

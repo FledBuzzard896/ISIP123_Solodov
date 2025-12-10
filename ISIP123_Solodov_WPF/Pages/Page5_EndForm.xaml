@@ -39,6 +39,5 @@
         </StackPanel>
         <Button x:Name="bttn" Content="Отправить" Grid.Row="3" Click="bttn_Click" Grid.ColumnSpan="2" Margin="125,9,125,6"/>
         <Button x:Name="ToBack" FontSize="14" Content="Назад" Grid.Row="5" Grid.Column="0" Click="ToBack_Click" Margin="25,6,25,6" />
-        <Button x:Name="ToNext" FontSize="14" Content="Закрыть" Grid.Row="5" Grid.Column="1" Click="ToNext_Click" Margin="25,6,25,6"/>
     </Grid>
 </Page>
