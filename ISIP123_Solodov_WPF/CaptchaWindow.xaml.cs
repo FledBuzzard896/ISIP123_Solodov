@@ -10,25 +10,29 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ISIP123_Solodov_WPF
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для CaptchaWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CaptchaWindow : Window
     {
-        public MainWindow()
+        string captcha = "qazwsxedcrvftgbyhnujmikolp1029384756";
+        string text = "";
+        public CaptchaWindow()
         {
             InitializeComponent();
-        }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            CaptchaWindow captchaWindow = new CaptchaWindow();
-            captchaWindow.ShowDialog();
+            Random random = new Random();
+
+            for (int i = 0; i < 10; i++) 
+            {
+                text += captcha[random.Next(0, captcha.Length + 1)];
+            }
+
+            mainText.Text = text;
         }
     }
 }
