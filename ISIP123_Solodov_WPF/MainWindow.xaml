@@ -9,7 +9,7 @@
     <Grid>
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button Content="ОТкрыть кааптчвчцу" Height="20" Width="150" Click="Button_Click"/>
-            <Button Content="ОТкрыть настрйоки" Height="20" Width="150" Margin="0,10,0,0"/>
+            <Button Content="ОТкрыть настрйоки" Height="20" Width="150" Margin="0,10,0,0" Click="Button_Click_1"/>
         </StackPanel>
     </Grid>
 </Window>

@@ -21,18 +21,55 @@ namespace ISIP123_Solodov_WPF
     {
         string captcha = "qazwsxedcrvftgbyhnujmikolp1029384756";
         string text = "";
+
+        Random random = new Random();
+
         public CaptchaWindow()
         {
             InitializeComponent();
+            
+            GetCaptcha();
+        }
 
+        private void GetCaptcha() 
+        {
             Random random = new Random();
 
-            for (int i = 0; i < 10; i++) 
+            inputText.Text = "";
+            mainText.Text = "";
+
+            for (int i = 0; i < 10; i++)
             {
-                text += captcha[random.Next(0, captcha.Length + 1)];
+                text += captcha[random.Next(0, captcha.Length)];
             }
 
             mainText.Text = text;
+            text = "";
+        }
+
+        private void CheckBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (inputText.Text == mainText.Text)
+            {
+                var res = MessageBox.Show("Капча пройдена! Закрыть окно?", "captha", MessageBoxButton.YesNo, MessageBoxImage.None, MessageBoxResult.No);
+                if (res == MessageBoxResult.Yes) 
+                {
+                    Close();
+                }
+            }
+            else 
+            {
+                GetCaptcha();
+            }
+        }
+
+        private void BackBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var res = MessageBox.Show("Закрыть окно?", "captha", MessageBoxButton.YesNo, MessageBoxImage.None, MessageBoxResult.No);
+            if (res == MessageBoxResult.Yes)
+            {
+                Close();
+            }
         }
     }
 }

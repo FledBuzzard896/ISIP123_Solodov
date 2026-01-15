@@ -9,19 +9,19 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60*"/>
-            <RowDefinition Height="35*"/>
-            <RowDefinition Height="142*"/>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="134*"/>
             <RowDefinition Height="47*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Margin="0,20,0,0" HorizontalAlignment="Center" FontSize="30" Text="Напишите:" Grid.Row="0" />
-        <TextBlock x:Name="mainText" Margin="0,10,0,0" HorizontalAlignment="Center" FontSize="25" Text="" Grid.Row="1"/>
+        <TextBlock Margin="0,20,0,0" HorizontalAlignment="Center" FontSize="30" Text="Напишите:" Grid.Row="0" Width="148" />
+        <TextBlock x:Name="mainText" Margin="0,10,0,0" HorizontalAlignment="Center" FontSize="15" Text="" Grid.Row="1" Width="150" TextAlignment="Center"/>
 
-        <TextBox x:Name="inputText" Margin="0,10,0,0" HorizontalAlignment="Center" FontSize="25" Text="" Width="150" Height="30" Grid.Row="2"/>
+        <TextBox x:Name="inputText" Margin="0,50,0,50" HorizontalAlignment="Center" FontSize="15" Text="" Width="150" Grid.Row="2"/>
 
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="3">
-            <Button x:Name="CheckBtn" Content="Проверить" Height="20" Width="90"/>
-            <Button x:Name="BackBtn" Content="Закрыть" Height="20" Width="90" Margin="20,0,0,0"/>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="3" Height="20" Width="200">
+            <Button x:Name="CheckBtn" Content="Проверить" Height="20" Width="90" Click="CheckBtn_Click"/>
+            <Button x:Name="BackBtn" Content="Закрыть" Height="20" Width="90" Margin="20,0,0,0" Click="BackBtn_Click"/>
         </StackPanel>
     </Grid>
 </Window>

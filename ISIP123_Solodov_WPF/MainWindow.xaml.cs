@@ -30,5 +30,12 @@ namespace ISIP123_Solodov_WPF
             CaptchaWindow captchaWindow = new CaptchaWindow();
             captchaWindow.ShowDialog();
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            SettingsWindow settingsWindow = new SettingsWindow(this);
+            settingsWindow.Owner = this;
+            settingsWindow.ShowDialog();
+        }
     }
 }
