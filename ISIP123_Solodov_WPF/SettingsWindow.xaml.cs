@@ -19,45 +19,41 @@ namespace ISIP123_Solodov_WPF
     /// </summary>
     public partial class SettingsWindow : Window
     {
-        private readonly MainWindow _mainWindow;
-        public SettingsWindow(MainWindow mainWindow)
+        public SettingsWindow()
         {
             InitializeComponent();
-            _mainWindow = mainWindow;
-
-            WidthSlider.Value = _mainWindow.Width;
-            HeightSlider.Value = _mainWindow.Height;
+ 
         }
 
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            _mainWindow.Width = WidthSlider.Value;
+            App.Current.Windows[0].Width = WidthSlider.Value;
         }
 
         private void another_Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            _mainWindow.Height = HeightSlider.Value;
+            App.Current.Windows[0].Height = HeightSlider.Value;
         }
 
         private void white_Click(object sender, RoutedEventArgs e)
         {
-            _mainWindow.Background = Brushes.White;
+            App.Current.Windows[0].Background = Brushes.White;
         }
 
         private void blue_Click(object sender, RoutedEventArgs e)
         {
-            _mainWindow.Background  = Brushes.DarkCyan;
+            App.Current.Windows[0].Background  = Brushes.DarkCyan;
         }
 
         private void red_Click(object sender, RoutedEventArgs e)
         {
-            _mainWindow.Background = Brushes.Red;
+            App.Current.Windows[0].Background = Brushes.Red;
         }
 
         private void green_Click(object sender, RoutedEventArgs e)
         {
-            _mainWindow.Background = Brushes.Green;
+            App.Current.Windows[0].Background = Brushes.Green;
         }
     }
 }

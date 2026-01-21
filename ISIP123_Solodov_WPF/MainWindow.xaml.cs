@@ -33,7 +33,7 @@ namespace ISIP123_Solodov_WPF
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            SettingsWindow settingsWindow = new SettingsWindow(this);
+            SettingsWindow settingsWindow = new SettingsWindow();
             settingsWindow.Owner = this;
             settingsWindow.ShowDialog();
         }
