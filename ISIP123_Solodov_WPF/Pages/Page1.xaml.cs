@@ -38,7 +38,8 @@ namespace ISIP123_Solodov_WPF.Pages
 
         private void page4_Click(object sender, RoutedEventArgs e)
         {
-
+            Page4 page4 = new Page4();
+            NavigationService.Navigate(page4);
         }
     }
 }

@@ -9,6 +9,28 @@
       Title="Page2">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="7*"/>
+            <RowDefinition Height="68*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" >
+            <Button x:Name="red" Width="100" Height="30" Background="Red" Click="red_Click"/>
+            <Button x:Name="green" Width="100" Height="30" Background="Green" Margin="20,0,20,0" Click="green_Click"/>
+            <Button x:Name="blue" Width="100" Height="30" Background="Blue" Click="blue_Click"/>
+            <Button x:Name="clear" Width="100" Height="30" Content="Очистить" Margin="20,0,0,0" Click="clear_Click"/>
+
+            <Button Content="Нажми ка!" Width="100" Height="30" Margin="20,0,0,0">
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Очистить холст" Click="clear_Click"/>
+                        <Separator/>
+                        <MenuItem Header="Выход" Click="exit_Click"/>
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+        </StackPanel>
+
+        <Canvas Background="AliceBlue" x:Name="DriwingCanvas" MouseDown="DrawingCanvas_MouseDown" MouseMove="DrawingCanvas_MouseMove" MouseUp="DrawingCanvas_MouseUp" Grid.Row="2"/>
     </Grid>
 </Page>
