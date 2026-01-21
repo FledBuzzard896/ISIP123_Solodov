@@ -5,8 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ISIP123_Solodov_WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="TextR" Height="450" Width="800">
     <Grid>
-        <Button Height="50" Width="200" Content="база"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="39*"/>
+            <RowDefinition Height="395*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="OpenFileBtn" FontSize="10" Content="Открыть файл" Height="20" Margin="20,0,0,0" Click="OpenFileBtn_Click"/>
+            <Button x:Name="SaveFileBtn" FontSize="10" Content="Сохранить файл" Height="20" Margin="20,0,0,0" Click="SaveFileBtn_Click"/>
+            <Button x:Name="SaveKAKFileBtn" FontSize="10" Content="Сохранить как" Height="20" Margin="20,0,0,0" Click="SaveKAKFileBtn_Click"/>
+            <Button x:Name="CreateFileBtn" FontSize="10" Content="Создать новый файл" Height="20" Margin="20,0,0,0" Click="CreateFileBtn_Click"/>
+        </StackPanel>
+        <TextBox x:Name="mainText" Grid.Row="1" Margin="20" AcceptsReturn="True"/>
     </Grid>
 </Window>
