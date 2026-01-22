@@ -23,14 +23,19 @@
         </Grid.RowDefinitions>
 
         <TextBlock FontSize="20" Text="ZOVб" Grid.Row="0" HorizontalAlignment="Center" Margin="1,0,0,0" Grid.ColumnSpan="4" Width="50"/>
+
         <Image x:Name="obama" Margin="10,10,10,10" Grid.Row="1" Source="/Images/Obama.jpg" Stretch="Fill" MouseLeftButtonDown="MyImage_MouseLeftButtonDown" Cursor="Hand"/>
         <Image x:Name="whiteHouse" Grid.Column="1" Margin="10,10,10,10" Grid.Row="1" Source="/Images/WhiteHouse.jpg" Stretch="Fill" MouseLeftButtonDown="MyImage_MouseLeftButtonDown" Cursor="Hand"/>
         <Image x:Name="trump" Grid.Column="2" Margin="10,10,10,10" Grid.Row="1" Source="/Images/Trump.jpg" Stretch="Fill" MouseLeftButtonDown="MyImage_MouseLeftButtonDown" Cursor="Hand"/>
-        <Image Grid.Row="2" Source="/Images/belka.jpg" Stretch="Fill" Margin="0,10,0,10" HorizontalAlignment="Center" Width="148"/>
-        <Image Grid.Column="1" Grid.Row="2" Source="/Images/soyz.jpg" Stretch="Fill" Margin="10,10,10,10"/>
-        <Image Grid.Column="2" Grid.Row="2" Source="/Images/ushanka.jpg" Stretch="Fill" Margin="10,10,10,10"/>
-        <Image Grid.Row="3" Source="/Images/AK-47.jpg" Stretch="Fill" Margin="10,10,10,10"/>
-        <Image Grid.Row="3" Source="/Images/Maus.jpg" Stretch="Fill" Grid.Column="1" Margin="10,10,10,10"/>
-        <Image Grid.Column="2" Grid.Row="3" Source="/Images/oreshki.jpg" Stretch="Fill" Margin="10,10,10,10"/>
+        <Image Grid.Row="2" Source="/Images/belka.jpg" Stretch="Fill" Margin="0,10,0,10" HorizontalAlignment="Center" Width="148" MouseLeftButtonDown="MyImage_MouseLeftButtonDown" Cursor="Hand"/>
+        <Image Grid.Column="1" Grid.Row="2" Source="/Images/soyz.jpg" Stretch="Fill" Margin="10,10,10,10" MouseLeftButtonDown="MyImage_MouseLeftButtonDown" Cursor="Hand"/>
+        <Image Grid.Column="2" Grid.Row="2" Source="/Images/ushanka.jpg" Stretch="Fill" Margin="10,10,10,10" MouseLeftButtonDown="MyImage_MouseLeftButtonDown" Cursor="Hand"/>
+        <Image Grid.Row="3" Source="/Images/AK-47.jpg" Stretch="Fill" Margin="10,10,10,10" MouseLeftButtonDown="MyImage_MouseLeftButtonDown" Cursor="Hand"/>
+        <Image Grid.Row="3" Source="/Images/Maus.jpg" Stretch="Fill" Grid.Column="1" Margin="10,10,10,10" MouseLeftButtonDown="MyImage_MouseLeftButtonDown" Cursor="Hand"/>
+        <Image Grid.Column="2" Grid.Row="3" Source="/Images/oreshki.jpg" Stretch="Fill" Margin="10,10,10,10" MouseLeftButtonDown="MyImage_MouseLeftButtonDown" Cursor="Hand"/>
+
+        <StackPanel x:Name="mainPanel" Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" Margin="10,10,10,10" Visibility="Collapsed">
+            <Image x:Name="mainPic" Source="{Binding CurrentImageSource}"/>
+        </StackPanel>
     </Grid>
 </Page>

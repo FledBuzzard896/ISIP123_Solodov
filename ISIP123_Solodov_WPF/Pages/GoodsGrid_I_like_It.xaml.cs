@@ -25,10 +25,13 @@ namespace ISIP123_Solodov_WPF.Pages
             InitializeComponent();
         }
 
+        public string CurrentImageSource { get; set; } = "/Images/Obama.jpg";
+
         private void MyImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            // Ваша логика при клике
-            MessageBox.Show("Картинка была кликнута!");
+            mainPanel.Visibility = Visibility.Visible;
+
+            CurrentImageSource = "/Images/Obama.jpg";
         }
     }
 }
