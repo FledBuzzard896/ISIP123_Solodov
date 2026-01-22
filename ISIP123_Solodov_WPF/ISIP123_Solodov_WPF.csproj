@@ -67,8 +67,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\GoodsGrid_I_like_It.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pages\GoodsGrid_I_like_It.xaml.cs">
+      <DependentUpon>GoodsGrid_I_like_It.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -93,6 +100,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Obama.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\WhiteHouse.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Trump.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\belka.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\soyz.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ushanka.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\AK-47.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Maus.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\oreshki.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
