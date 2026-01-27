@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ISIP123_Solodov_WPF.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="500" d:DesignWidth="800"
       Title="GoodsGrid_I_like_It">
 
     <Grid>
@@ -34,8 +34,22 @@
         <Image Grid.Row="3" Source="/Images/Maus.jpg" Stretch="Fill" Grid.Column="1" Margin="10,10,10,10" MouseLeftButtonDown="MyImage_MouseLeftButtonDown" Cursor="Hand"/>
         <Image Grid.Column="2" Grid.Row="3" Source="/Images/oreshki.jpg" Stretch="Fill" Margin="10,10,10,10" MouseLeftButtonDown="MyImage_MouseLeftButtonDown" Cursor="Hand"/>
 
-        <StackPanel x:Name="mainPanel" Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" Margin="10,10,10,10" Visibility="Collapsed">
-            <Image x:Name="mainPic" Source="{Binding CurrentImageSource}"/>
+        <StackPanel x:Name="mainPanel" Grid.Column="3" Grid.RowSpan="2" Margin="10,10,10,10" Grid.Row="1">
+            <Image x:Name="mainPic" Height="240" Width="274"/>
+        </StackPanel>
+        
+        <StackPanel x:Name="descriptPanel" Grid.Column="3" Margin="10,0,10,10" Grid.Row="3" Visibility="Collapsed">
+            
+            <TextBlock x:Name="descript" Text="" TextAlignment="Center" FontSize="14"/>
+            <TextBlock x:Name="price" Text="" TextAlignment="Center" FontSize="16" Margin="0,10,0,10"/>
+            
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="AddItem" Content="Добавить в корзину" Height="20" Width="120" Background="Green" Click="AddItem_Click"/>
+                <Button x:Name="DeleteItem" Content="Удалить (1)" Height="20" Width="120" Background="DarkRed" Margin="20,0,0,0" Click="DeleteItem_Click" Visibility="Collapsed"/>
+            </StackPanel>
+
+            <Button x:Name="GoToCart" Content="Перейти в корзину" HorizontalAlignment="Center" Height="20" Width="120" Margin="0,10,0,0" Click="GoToCart_Click"/>
+
         </StackPanel>
     </Grid>
 </Page>
