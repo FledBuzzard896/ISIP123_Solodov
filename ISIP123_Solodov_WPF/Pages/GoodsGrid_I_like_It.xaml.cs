@@ -48,7 +48,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     price.Text = "40790,00 ₽";
                     id = "ak";
 
-                    if (cart.ak > 0) { DeleteItem.Visibility = Visibility.Visible; DeleteItem.Content = $"Удалить ({cart.ak})"; }
+                    if (shopCart.ak > 0) { DeleteItem.Visibility = Visibility.Visible; DeleteItem.Content = $"Удалить ({shopCart.ak})"; }
 
                     break;
 
@@ -58,7 +58,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     price.Text = "409,00 ₽";
                     id = "belka";
 
-                    if (cart.ak > 0) { DeleteItem.Visibility = Visibility.Visible; DeleteItem.Content = $"Удалить ({cart.ak})"; }
+                    if (shopCart.ak > 0) { DeleteItem.Visibility = Visibility.Visible; DeleteItem.Content = $"Удалить ({shopCart.ak})"; }
 
                     break;
 
@@ -68,7 +68,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     price.Text = "2.146.011.560,00 ₽";
                     id = "maus";
 
-                    if (cart.maus > 0) { DeleteItem.Visibility = Visibility.Visible; DeleteItem.Content = $"Удалить ({cart.maus})"; }
+                    if (shopCart.maus > 0) { DeleteItem.Visibility = Visibility.Visible; DeleteItem.Content = $"Удалить ({shopCart.maus})"; }
 
                     break;
 
@@ -78,7 +78,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     price.Text = "123.456,00 ₽";
                     id = "obama";
 
-                    if (cart.obama > 0) { DeleteItem.Visibility = Visibility.Visible; DeleteItem.Content = $"Удалить ({cart.obama})"; }
+                    if (shopCart.obama > 0) { DeleteItem.Visibility = Visibility.Visible; DeleteItem.Content = $"Удалить ({shopCart.obama})"; }
 
                     break;
 
@@ -88,7 +88,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     price.Text = "613.146.160,00 ₽";
                     id = "oreshk";
 
-                    if (cart.oreshk > 0) { DeleteItem.Visibility = Visibility.Visible; DeleteItem.Content = $"Удалить ({cart.oreshk})"; }
+                    if (shopCart.oreshk > 0) { DeleteItem.Visibility = Visibility.Visible; DeleteItem.Content = $"Удалить ({shopCart.oreshk})"; }
 
                     break;
 
@@ -98,7 +98,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     price.Text = "419.990,00 ₽";
                     id = "soyz";
 
-                    if (cart.soyz > 0) { DeleteItem.Visibility = Visibility.Visible; DeleteItem.Content = $"Удалить ({cart.soyz})"; }
+                    if (shopCart.soyz > 0) { DeleteItem.Visibility = Visibility.Visible; DeleteItem.Content = $"Удалить ({shopCart.soyz})"; }
 
                     break;
 
@@ -108,7 +108,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     price.Text = "148.852,67 ₽";
                     id = "trump";
 
-                    if (cart.trump > 0) { DeleteItem.Visibility = Visibility.Visible; DeleteItem.Content = $"Удалить ({cart.trump})"; }
+                    if (shopCart.trump > 0) { DeleteItem.Visibility = Visibility.Visible; DeleteItem.Content = $"Удалить ({shopCart.trump})"; }
 
                     break;
 
@@ -118,7 +118,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     price.Text = "5260,00 ₽";
                     id = "ushanka";
 
-                    if (cart.ushanka > 0) { DeleteItem.Visibility = Visibility.Visible; DeleteItem.Content = $"Удалить ({cart.ushanka})"; }
+                    if (shopCart.ushanka > 0) { DeleteItem.Visibility = Visibility.Visible; DeleteItem.Content = $"Удалить ({shopCart.ushanka})"; }
 
                     break;
 
@@ -128,31 +128,153 @@ namespace ISIP123_Solodov_WPF.Pages
                     price.Text = "100,00 ₽";
                     id = "whouse";
 
-                    if (cart.whouse > 0) { DeleteItem.Visibility = Visibility.Visible; DeleteItem.Content = $"Удалить ({cart.whouse})"; }
+                    if (shopCart.whouse > 0) { DeleteItem.Visibility = Visibility.Visible; DeleteItem.Content = $"Удалить ({shopCart.whouse})"; }
 
                     break;
 
             }
         }
+        private void OpenProductCard(object sender, MouseButtonEventArgs e) 
+        {
+            List<Products> products = Core.Context.Products.ToList();
 
-        shopCart cart = new shopCart();
+            string text = "Описание: ";
+
+            foreach (var elem in products) 
+            {
+                if (elem.ProductName == descript.Text.Replace("\n", string.Empty)) { text += $"{elem.Description}\nКоличество: {elem.Count}"; }
+            }
+
+            MessageBox.Show(text, "Карточка товара.", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        //shopCart shopCart = new shopCart();
 
         private void AddItem_Click(object sender, RoutedEventArgs e)
         {
+
+            List<Products> products = Core.Context.Products.ToList();
 
             DeleteItem.Visibility = Visibility.Visible;
 
             switch (id) 
             {
-                case "ak": cart.ak++; DeleteItem.Content = $"Удалить ({cart.ak})"; break;
-                case "belka": cart.belka++; DeleteItem.Content = $"Удалить ({cart.belka})"; break;
-                case "maus": cart.maus++; DeleteItem.Content = $"Удалить ({cart.maus})"; break;
-                case "obama": cart.obama++; DeleteItem.Content = $"Удалить ({cart.obama})"; break;
-                case "oreshk": cart.oreshk++; DeleteItem.Content = $"Удалить ({cart.oreshk})"; break;
-                case "soyz": cart.soyz++; DeleteItem.Content = $"Удалить ({cart.soyz})"; break;
-                case "trump": cart.trump++; DeleteItem.Content = $"Удалить ({cart.trump})"; break;
-                case "ushanka": cart.ushanka++; DeleteItem.Content = $"Удалить ({cart.ushanka})"; break;
-                case "whouse": cart.whouse++; DeleteItem.Content = $"Удалить ({cart.whouse})"; break;
+                case "ak":
+                    shopCart.ak++;
+
+                    var res = products.Find(x => x.ProductName == "Пушка AK-47 гад дэмн");
+                    if (shopCart.ak > res.Count) 
+                    {
+                        MessageBox.Show("Товаров на скалде больше нет", "Обосрано!", MessageBoxButton.OK, MessageBoxImage.Information);
+                        shopCart.ak--;
+                    }
+
+                    DeleteItem.Content = $"Удалить ({shopCart.ak})";
+                    break;
+
+                case "belka":
+                    shopCart.belka++;
+
+                    res = products.Find(x => x.ProductName == "Водка Белочка: Я пришла! 40%, 500мл");
+                    if (shopCart.belka > res.Count)
+                    {
+                        MessageBox.Show("Товаров на скалде больше нет", "Обосрано!", MessageBoxButton.OK, MessageBoxImage.Information);
+                        shopCart.belka--;
+                    }
+
+                    DeleteItem.Content = $"Удалить ({shopCart.belka})";
+                    break;
+
+                case "maus":
+                    shopCart.maus++;
+
+                    res = products.Find(x => x.ProductName == "Maus — легендарный сверхтяжёлый танк Второй мировой, 188 тонн");
+                    if (shopCart.maus > res.Count)
+                    {
+                        MessageBox.Show("Товаров на скалде больше нет", "Обосрано!", MessageBoxButton.OK, MessageBoxImage.Information);
+                        shopCart.maus--;
+                    }
+
+                    DeleteItem.Content = $"Удалить ({shopCart.maus})";
+                    break;
+
+                case "obama":
+                    shopCart.obama++;
+
+                    res = products.Find(x => x.ProductName == "Надувной Бардак Обама в полный рост");
+                    if (shopCart.obama > res.Count)
+                    {
+                        MessageBox.Show("Товаров на скалде больше нет", "Обосрано!", MessageBoxButton.OK, MessageBoxImage.Information);
+                        shopCart.obama--;
+                    }
+
+                    DeleteItem.Content = $"Удалить ({shopCart.obama})";
+                    break;
+
+                case "oreshk":
+                    shopCart.oreshk++;
+
+                    res = products.Find(x => x.ProductName == "Боевая машина поддержки танков (БМПТ) «Орешник»");
+                    if (shopCart.oreshk > res.Count)
+                    {
+                        MessageBox.Show("Товаров на скалде больше нет", "Обосрано!", MessageBoxButton.OK, MessageBoxImage.Information);
+                        shopCart.oreshk--;
+                    }
+
+                    DeleteItem.Content = $"Удалить ({shopCart.oreshk})";
+                    break;
+
+                case "soyz":
+                    shopCart.soyz++;
+
+                    res = products.Find(x => x.ProductName == "Микрофон студийный СОЮЗ 017 TUBE");
+                    if (shopCart.soyz > res.Count)
+                    {
+                        MessageBox.Show("Товаров на скалде больше нет", "Обосрано!", MessageBoxButton.OK, MessageBoxImage.Information);
+                        shopCart.soyz--;
+                    }
+
+                    DeleteItem.Content = $"Удалить ({shopCart.soyz})";
+                    break;
+
+                case "trump":
+                    shopCart.trump++;
+                    
+                    res = products.Find(x => x.ProductName == "Надувной Дональд Трамп в полный рост");
+                    if (shopCart.trump > res.Count)
+                    {
+                        MessageBox.Show("Товаров на скалде больше нет", "Обосрано!", MessageBoxButton.OK, MessageBoxImage.Information);
+                        shopCart.trump--;
+                    }
+
+                    DeleteItem.Content = $"Удалить ({shopCart.trump})";
+                    break;
+
+                case "ushanka":
+                    shopCart.ushanka++;
+
+                    res = products.Find(x => x.ProductName == "Шапка ушанка енот");
+                    if (shopCart.ushanka > res.Count)
+                    {
+                        MessageBox.Show("Товаров на скалде больше нет", "Обосрано!", MessageBoxButton.OK, MessageBoxImage.Information);
+                        shopCart.ushanka--;
+                    }
+
+                    DeleteItem.Content = $"Удалить ({shopCart.ushanka})";
+                    break;
+
+                case "whouse":
+                    shopCart.whouse++;
+
+                    res = products.Find(x => x.ProductName == "Бля Белый Дом");
+                    if (shopCart.whouse > res.Count)
+                    {
+                        MessageBox.Show("Товаров на скалде больше нет", "Обосрано!", MessageBoxButton.OK, MessageBoxImage.Information);
+                        shopCart.whouse--;
+                    }
+
+                    DeleteItem.Content = $"Удалить ({shopCart.whouse})";
+                    break;
             }
         }
 
@@ -161,110 +283,110 @@ namespace ISIP123_Solodov_WPF.Pages
             switch (id)
             {
                 case "ak": 
-                    cart.ak--;
-                    if (cart.ak == 0)
+                    shopCart.ak--;
+                    if (shopCart.ak == 0)
                     {
                         DeleteItem.Visibility = Visibility.Collapsed;
                     }
                     else 
                     {
-                        DeleteItem.Content = $"Удалить ({cart.ak})";
+                        DeleteItem.Content = $"Удалить ({shopCart.ak})";
                     }
                     break;
 
                 case "belka":
-                    cart.belka--;
-                    if (cart.belka == 0)
+                    shopCart.belka--;
+                    if (shopCart.belka == 0)
                     {
                         DeleteItem.Visibility = Visibility.Collapsed;
                     }
                     else
                     {
-                        DeleteItem.Content = $"Удалить ({cart.belka})";
+                        DeleteItem.Content = $"Удалить ({shopCart.belka})";
                     }
                     break; 
 
                 case "maus":
-                    cart.maus--;
-                    if (cart.maus == 0)
+                    shopCart.maus--;
+                    if (shopCart.maus == 0)
                     {
                         DeleteItem.Visibility = Visibility.Collapsed;
                     }
                     else
                     {
-                        DeleteItem.Content = $"Удалить ({cart.maus})";
+                        DeleteItem.Content = $"Удалить ({shopCart.maus})";
                     }
                     break;
 
                 case "obama":
-                    cart.obama--;
-                    if (cart.obama == 0)
+                    shopCart.obama--;
+                    if (shopCart.obama == 0)
                     {
                         DeleteItem.Visibility = Visibility.Collapsed;
                     }
                     else
                     {
-                        DeleteItem.Content = $"Удалить ({cart.obama})";
+                        DeleteItem.Content = $"Удалить ({shopCart.obama})";
                     }
                     break;
 
                 case "oreshk":
-                    cart.oreshk--;
-                    if (cart.oreshk == 0)
+                    shopCart.oreshk--;
+                    if (shopCart.oreshk == 0)
                     {
                         DeleteItem.Visibility = Visibility.Collapsed;
                     }
                     else
                     {
-                        DeleteItem.Content = $"Удалить ({cart.oreshk})";
+                        DeleteItem.Content = $"Удалить ({shopCart.oreshk})";
                     }
                     break;
 
                 case "soyz":
-                    cart.soyz--;
-                    if (cart.soyz == 0)
+                    shopCart.soyz--;
+                    if (shopCart.soyz == 0)
                     {
                         DeleteItem.Visibility = Visibility.Collapsed;
                     }
                     else
                     {
-                        DeleteItem.Content = $"Удалить ({cart.soyz})";
+                        DeleteItem.Content = $"Удалить ({shopCart.soyz})";
                     }
                     break; 
 
                 case "trump":
-                    cart.trump--;
-                    if (cart.trump == 0)
+                    shopCart.trump--;
+                    if (shopCart.trump == 0)
                     {
                         DeleteItem.Visibility = Visibility.Collapsed;
                     }
                     else
                     {
-                        DeleteItem.Content = $"Удалить ({cart.trump})";
+                        DeleteItem.Content = $"Удалить ({shopCart.trump})";
                     }
                     break;
 
                 case "ushanka":
-                    cart.ushanka--;
-                    if (cart.ushanka == 0)
+                    shopCart.ushanka--;
+                    if (shopCart.ushanka == 0)
                     {
                         DeleteItem.Visibility = Visibility.Collapsed;
                     }
                     else
                     {
-                        DeleteItem.Content = $"Удалить ({cart.ushanka})";
+                        DeleteItem.Content = $"Удалить ({shopCart.ushanka})";
                     }
                     break;
 
                 case "whouse":
-                    cart.whouse--;
-                    if (cart.whouse == 0)
+                    shopCart.whouse--;
+                    if (shopCart.whouse == 0)
                     {
                         DeleteItem.Visibility = Visibility.Collapsed;
                     }
                     else
                     {
-                        DeleteItem.Content = $"Удалить ({cart.whouse})";
+                        DeleteItem.Content = $"Удалить ({shopCart.whouse})";
                     }
                     break;
             }
@@ -272,6 +394,7 @@ namespace ISIP123_Solodov_WPF.Pages
 
         private void GoToCart_Click(object sender, RoutedEventArgs e)
         {
+            
             ShoppingCartPage page = new ShoppingCartPage();
             NavigationService.Navigate(page);
         }
