@@ -1,0 +1,44 @@
+﻿<Page x:Class="ISIP123_Solodov_WPF.Pages.TakeOrderPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ISIP123_Solodov_WPF.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="500" d:DesignWidth="800"
+      Title="TakeOrderPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45*"/>
+            <RowDefinition Height="206*"/>
+            <RowDefinition Height="191*"/>
+            <RowDefinition Height="58*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Оформление заказа" HorizontalAlignment="Left" FontSize="16" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="326,0,0,0" Height="21" Width="148"/>
+        <StackPanel Grid.Row="1" Margin="10,0,0,0" Grid.ColumnSpan="2" >
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
+                <TextBlock Text="Введите полное ФИО: "/>
+                <TextBox x:Name="name" Text="" Width="200" Margin="25,0,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="Введите почту: "/>
+                <TextBox x:Name="mail" Text="" Width="200" Margin="64,0,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="Введите адрес доставки: "/>
+                <TextBox x:Name="adress" Text="" Width="200" Margin="11,0,0,0"/>
+            </StackPanel>
+        </StackPanel>
+        <Image Source="/Images/ne_hochu.jpg" Grid.RowSpan="2" Margin="10,10,10,0" Grid.Column="1" Grid.Row="1" Height="375" VerticalAlignment="Top"/>
+
+        <TextBlock x:Name="final" Text="Переведите нам свои деньги: " FontSize="16" Grid.Row="2" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
+
+        <Button x:Name="payBtn" Content="Оплатить!!!" Grid.Row="3" Grid.ColumnSpan="2" Height="30" Width="200" Background="LawnGreen" Click="payBtn_Click"/>
+    </Grid>
+</Page>
