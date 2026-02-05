@@ -83,24 +83,39 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ModelKIP.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelKIP.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelKIP.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelKIP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelKIP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelKIP.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Orders.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
     <Compile Include="Pages\TakeOrderPage.xaml.cs">
       <DependentUpon>TakeOrderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ProductList.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
     <Compile Include="Products.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
     <Compile Include="shopCart.cs" />
     <Compile Include="sysdiagrams.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Users.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -158,6 +173,13 @@
     <None Include="Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </None>
+    <EntityDeploy Include="ModelKIP.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelKIP.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="ModelKIP.edmx.diagram">
+      <DependentUpon>ModelKIP.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -201,6 +223,16 @@
     <Resource Include="Images\potihonku.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ModelKIP.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ModelKIP.Context.cs</LastGenOutput>
+      <DependentUpon>ModelKIP.edmx</DependentUpon>
+    </Content>
+    <Content Include="ModelKIP.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelKIP.edmx</DependentUpon>
+      <LastGenOutput>ModelKIP.cs</LastGenOutput>
+    </Content>
     <Resource Include="Images\ne_hochu.jpg" />
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

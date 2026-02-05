@@ -25,6 +25,7 @@ namespace ISIP123_Solodov_WPF
         public string Description { get; set; }
         public decimal Price { get; set; }
         public int Count { get; set; }
+        public string ImgURL { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductList> ProductList { get; set; }

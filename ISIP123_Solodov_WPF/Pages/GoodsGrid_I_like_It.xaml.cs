@@ -25,10 +25,29 @@ namespace ISIP123_Solodov_WPF.Pages
         public GoodsGrid_I_like_It()
         {
             InitializeComponent();
+
+            List<Products> items = Core.Context.Products.ToList(); // лист с итемами из бд
+            Products_LB.ItemsSource = items;
         }
 
         string id;
 
+        private void Products_LB_MouseDoubleClick(object sender, MouseButtonEventArgs e) 
+        {
+            mainPanel.Visibility = Visibility.Visible;
+            descriptPanel.Visibility = Visibility.Visible;
+            DeleteItem.Visibility = Visibility.Collapsed;
+
+            //mainPic.Source = ImgURL;
+            Products selectedProduct = Products_LB.SelectedItem as Products;
+
+            //mainPic.Source = new BitmapImage(new Uri(selectedProduct.ImgURL, UriKind.Absolute));
+            descript.Text = selectedProduct.ProductName;
+            price.Text = Convert.ToString(selectedProduct.Price);
+
+            id = selectedProduct.ProductName;
+
+        }
         private void MyImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             mainPanel.Visibility = Visibility.Visible;
@@ -42,7 +61,7 @@ namespace ISIP123_Solodov_WPF.Pages
 
             switch (mainPic.Source.ToString()) 
             {
-                case "pack://application:,,,/Images/AK-47.jpg":
+                case "/Images/AK-47.jpg":
 
                     descript.Text = "Пушка AK-47 гад дэмн";
                     price.Text = "40790,00 ₽";
@@ -71,7 +90,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     if (shopCart.maus > 0) { DeleteItem.Visibility = Visibility.Visible; DeleteItem.Content = $"Удалить ({shopCart.maus})"; }
 
                     break;
-
+                
                 case "pack://application:,,,/Images/Obama.jpg":
 
                     descript.Text = "Надувной Бардак Обама в полный рост";
@@ -159,7 +178,7 @@ namespace ISIP123_Solodov_WPF.Pages
 
             switch (id) 
             {
-                case "ak":
+                case "Пушка AK-47 гад дэмн":
                     shopCart.ak++;
 
                     var res = products.Find(x => x.ProductName == "Пушка AK-47 гад дэмн");
@@ -172,7 +191,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     DeleteItem.Content = $"Удалить ({shopCart.ak})";
                     break;
 
-                case "belka":
+                case "Водка Белочка: Я пришла! 40%, 500мл":
                     shopCart.belka++;
 
                     res = products.Find(x => x.ProductName == "Водка Белочка: Я пришла! 40%, 500мл");
@@ -185,7 +204,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     DeleteItem.Content = $"Удалить ({shopCart.belka})";
                     break;
 
-                case "maus":
+                case "Maus — легендарный сверхтяжёлый танк Второй мировой, 188 тонн":
                     shopCart.maus++;
 
                     res = products.Find(x => x.ProductName == "Maus — легендарный сверхтяжёлый танк Второй мировой, 188 тонн");
@@ -198,7 +217,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     DeleteItem.Content = $"Удалить ({shopCart.maus})";
                     break;
 
-                case "obama":
+                case "Надувной Бардак Обама в полный рост":
                     shopCart.obama++;
 
                     res = products.Find(x => x.ProductName == "Надувной Бардак Обама в полный рост");
@@ -211,7 +230,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     DeleteItem.Content = $"Удалить ({shopCart.obama})";
                     break;
 
-                case "oreshk":
+                case "Боевая машина поддержки танков (БМПТ) «Орешник»":
                     shopCart.oreshk++;
 
                     res = products.Find(x => x.ProductName == "Боевая машина поддержки танков (БМПТ) «Орешник»");
@@ -224,7 +243,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     DeleteItem.Content = $"Удалить ({shopCart.oreshk})";
                     break;
 
-                case "soyz":
+                case "Микрофон студийный СОЮЗ 017 TUBE":
                     shopCart.soyz++;
 
                     res = products.Find(x => x.ProductName == "Микрофон студийный СОЮЗ 017 TUBE");
@@ -237,7 +256,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     DeleteItem.Content = $"Удалить ({shopCart.soyz})";
                     break;
 
-                case "trump":
+                case "Надувной Дональд Трамп в полный рост":
                     shopCart.trump++;
                     
                     res = products.Find(x => x.ProductName == "Надувной Дональд Трамп в полный рост");
@@ -250,7 +269,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     DeleteItem.Content = $"Удалить ({shopCart.trump})";
                     break;
 
-                case "ushanka":
+                case "Шапка ушанка енот":
                     shopCart.ushanka++;
 
                     res = products.Find(x => x.ProductName == "Шапка ушанка енот");
@@ -263,7 +282,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     DeleteItem.Content = $"Удалить ({shopCart.ushanka})";
                     break;
 
-                case "whouse":
+                case "Бля Белый Дом":
                     shopCart.whouse++;
 
                     res = products.Find(x => x.ProductName == "Бля Белый Дом");
@@ -282,7 +301,7 @@ namespace ISIP123_Solodov_WPF.Pages
         {
             switch (id)
             {
-                case "ak": 
+                case "Пушка AK-47 гад дэмн": 
                     shopCart.ak--;
                     if (shopCart.ak == 0)
                     {
@@ -294,7 +313,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     }
                     break;
 
-                case "belka":
+                case "Водка Белочка: Я пришла! 40%, 500мл":
                     shopCart.belka--;
                     if (shopCart.belka == 0)
                     {
@@ -306,7 +325,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     }
                     break; 
 
-                case "maus":
+                case "Maus — легендарный сверхтяжёлый танк Второй мировой, 188 тонн":
                     shopCart.maus--;
                     if (shopCart.maus == 0)
                     {
@@ -318,7 +337,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     }
                     break;
 
-                case "obama":
+                case "Надувной Бардак Обама в полный рост":
                     shopCart.obama--;
                     if (shopCart.obama == 0)
                     {
@@ -330,7 +349,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     }
                     break;
 
-                case "oreshk":
+                case "Боевая машина поддержки танков (БМПТ) «Орешник»":
                     shopCart.oreshk--;
                     if (shopCart.oreshk == 0)
                     {
@@ -342,7 +361,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     }
                     break;
 
-                case "soyz":
+                case "Микрофон студийный СОЮЗ 017 TUBE":
                     shopCart.soyz--;
                     if (shopCart.soyz == 0)
                     {
@@ -354,7 +373,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     }
                     break; 
 
-                case "trump":
+                case "Надувной Дональд Трамп в полный рост":
                     shopCart.trump--;
                     if (shopCart.trump == 0)
                     {
@@ -366,7 +385,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     }
                     break;
 
-                case "ushanka":
+                case "Шапка ушанка енот":
                     shopCart.ushanka--;
                     if (shopCart.ushanka == 0)
                     {
@@ -378,7 +397,7 @@ namespace ISIP123_Solodov_WPF.Pages
                     }
                     break;
 
-                case "whouse":
+                case "Бля Белый Дом":
                     shopCart.whouse--;
                     if (shopCart.whouse == 0)
                     {

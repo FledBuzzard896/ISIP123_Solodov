@@ -8,6 +8,7 @@ namespace ISIP123_Solodov_WPF
 {
     internal class Core
     {
-        public static ZOVb_MarketplaceEntities Context = new ZOVb_MarketplaceEntities();
+        //public static ZOVb_MarketplaceEntities Context = new ZOVb_MarketplaceEntities();
+        public static ZOVb_MarketplaceEntities1 Context = new ZOVb_MarketplaceEntities1();
     }
 }
