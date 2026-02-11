@@ -36,7 +36,6 @@ namespace ISIP123_Solodov_WPF.Pages
             // sender — это Image, его DataContext — объект Films
             if (sender is FrameworkElement element && element.DataContext is Films movie)
             {
-                // Передаём ID фильма на страницу с деталями
                 FilmPage page = new FilmPage(movie.ID);
                 NavigationService?.Navigate(page);
 
