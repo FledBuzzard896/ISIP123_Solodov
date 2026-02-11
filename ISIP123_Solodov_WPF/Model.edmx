@@ -1,0 +1,768 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище FilmSearchModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Afisha">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FilmID" Type="int" />
+          <Property Name="DateOfSession" Type="datetime" Nullable="false" />
+          <Property Name="HallNumber" Type="int" Nullable="false" />
+          <Property Name="HallTypeID" Type="int" />
+        </EntityType>
+        <EntityType Name="AfishaSit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SitID" Type="int" />
+          <Property Name="AfishaID" Type="int" />
+          <Property Name="isTaken" Type="bit" />
+        </EntityType>
+        <EntityType Name="AgeLimit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Limit" Type="nvarchar" MaxLength="3" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CinemaHallType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FilmGenres">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FilmID" Type="int" />
+          <Property Name="GenreID" Type="int" />
+        </EntityType>
+        <EntityType Name="Films">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="Rating" Type="decimal" Precision="2" Scale="1" />
+          <Property Name="PremiereDate" Type="date" Nullable="false" />
+          <Property Name="AgeLimitID" Type="int" Nullable="false" />
+          <Property Name="Cover" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Genres">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="History">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TicketID" Type="int" />
+          <Property Name="UserID" Type="int" />
+        </EntityType>
+        <EntityType Name="Sit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Row" Type="int" Nullable="false" />
+          <Property Name="Chair" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SitID" Type="int" Nullable="false" />
+          <Property Name="AfishaID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fullname" Type="nvarchar" MaxLength="100" />
+          <Property Name="Birthday" Type="date" />
+        </EntityType>
+        <Association Name="FK_Afisha_CinemaHallType">
+          <End Role="CinemaHallType" Type="Self.CinemaHallType" Multiplicity="0..1" />
+          <End Role="Afisha" Type="Self.Afisha" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CinemaHallType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Afisha">
+              <PropertyRef Name="HallTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Afisha_Films">
+          <End Role="Films" Type="Self.Films" Multiplicity="0..1" />
+          <End Role="Afisha" Type="Self.Afisha" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Films">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Afisha">
+              <PropertyRef Name="FilmID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AfishaSit_Afisha">
+          <End Role="Afisha" Type="Self.Afisha" Multiplicity="0..1" />
+          <End Role="AfishaSit" Type="Self.AfishaSit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Afisha">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AfishaSit">
+              <PropertyRef Name="AfishaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AfishaSit_Sit">
+          <End Role="Sit" Type="Self.Sit" Multiplicity="0..1" />
+          <End Role="AfishaSit" Type="Self.AfishaSit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sit">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AfishaSit">
+              <PropertyRef Name="SitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FilmGenres_Films">
+          <End Role="Films" Type="Self.Films" Multiplicity="0..1" />
+          <End Role="FilmGenres" Type="Self.FilmGenres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Films">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FilmGenres">
+              <PropertyRef Name="FilmID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FilmGenres_Genres">
+          <End Role="Genres" Type="Self.Genres" Multiplicity="0..1" />
+          <End Role="FilmGenres" Type="Self.FilmGenres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FilmGenres">
+              <PropertyRef Name="GenreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Films_AgeLimit">
+          <End Role="AgeLimit" Type="Self.AgeLimit" Multiplicity="1" />
+          <End Role="Films" Type="Self.Films" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AgeLimit">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Films">
+              <PropertyRef Name="AgeLimitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_History_Ticket">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="0..1" />
+          <End Role="History" Type="Self.History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="History">
+              <PropertyRef Name="TicketID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_History_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="History" Type="Self.History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="History">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Afisha">
+          <End Role="Afisha" Type="Self.Afisha" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Afisha">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="AfishaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Sit">
+          <End Role="Sit" Type="Self.Sit" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sit">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="SitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище FilmSearchModelContainer">
+          <EntitySet Name="Afisha" EntityType="Self.Afisha" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AfishaSit" EntityType="Self.AfishaSit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AgeLimit" EntityType="Self.AgeLimit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CinemaHallType" EntityType="Self.CinemaHallType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FilmGenres" EntityType="Self.FilmGenres" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Films" EntityType="Self.Films" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genres" EntityType="Self.Genres" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="History" EntityType="Self.History" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sit" EntityType="Self.Sit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Afisha_CinemaHallType" Association="Self.FK_Afisha_CinemaHallType">
+            <End Role="CinemaHallType" EntitySet="CinemaHallType" />
+            <End Role="Afisha" EntitySet="Afisha" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Afisha_Films" Association="Self.FK_Afisha_Films">
+            <End Role="Films" EntitySet="Films" />
+            <End Role="Afisha" EntitySet="Afisha" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AfishaSit_Afisha" Association="Self.FK_AfishaSit_Afisha">
+            <End Role="Afisha" EntitySet="Afisha" />
+            <End Role="AfishaSit" EntitySet="AfishaSit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AfishaSit_Sit" Association="Self.FK_AfishaSit_Sit">
+            <End Role="Sit" EntitySet="Sit" />
+            <End Role="AfishaSit" EntitySet="AfishaSit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FilmGenres_Films" Association="Self.FK_FilmGenres_Films">
+            <End Role="Films" EntitySet="Films" />
+            <End Role="FilmGenres" EntitySet="FilmGenres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FilmGenres_Genres" Association="Self.FK_FilmGenres_Genres">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="FilmGenres" EntitySet="FilmGenres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Films_AgeLimit" Association="Self.FK_Films_AgeLimit">
+            <End Role="AgeLimit" EntitySet="AgeLimit" />
+            <End Role="Films" EntitySet="Films" />
+          </AssociationSet>
+          <AssociationSet Name="FK_History_Ticket" Association="Self.FK_History_Ticket">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="History" EntitySet="History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_History_Users" Association="Self.FK_History_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="History" EntitySet="History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Afisha" Association="Self.FK_Ticket_Afisha">
+            <End Role="Afisha" EntitySet="Afisha" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Sit" Association="Self.FK_Ticket_Sit">
+            <End Role="Sit" EntitySet="Sit" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FilmSearchModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Afisha">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FilmID" Type="Int32" />
+          <Property Name="DateOfSession" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="HallNumber" Type="Int32" Nullable="false" />
+          <Property Name="HallTypeID" Type="Int32" />
+          <NavigationProperty Name="CinemaHallType" Relationship="Self.FK_Afisha_CinemaHallType" FromRole="Afisha" ToRole="CinemaHallType" />
+          <NavigationProperty Name="Films" Relationship="Self.FK_Afisha_Films" FromRole="Afisha" ToRole="Films" />
+          <NavigationProperty Name="AfishaSit" Relationship="Self.FK_AfishaSit_Afisha" FromRole="Afisha" ToRole="AfishaSit" />
+          <NavigationProperty Name="Ticket" Relationship="Self.FK_Ticket_Afisha" FromRole="Afisha" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="AfishaSit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SitID" Type="Int32" />
+          <Property Name="AfishaID" Type="Int32" />
+          <Property Name="isTaken" Type="Boolean" />
+          <NavigationProperty Name="Afisha" Relationship="Self.FK_AfishaSit_Afisha" FromRole="AfishaSit" ToRole="Afisha" />
+          <NavigationProperty Name="Sit" Relationship="Self.FK_AfishaSit_Sit" FromRole="AfishaSit" ToRole="Sit" />
+        </EntityType>
+        <EntityType Name="AgeLimit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Limit" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Films" Relationship="Self.FK_Films_AgeLimit" FromRole="AgeLimit" ToRole="Films" />
+        </EntityType>
+        <EntityType Name="CinemaHallType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Afisha" Relationship="Self.FK_Afisha_CinemaHallType" FromRole="CinemaHallType" ToRole="Afisha" />
+        </EntityType>
+        <EntityType Name="FilmGenres">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FilmID" Type="Int32" />
+          <Property Name="GenreID" Type="Int32" />
+          <NavigationProperty Name="Films" Relationship="Self.FK_FilmGenres_Films" FromRole="FilmGenres" ToRole="Films" />
+          <NavigationProperty Name="Genres" Relationship="Self.FK_FilmGenres_Genres" FromRole="FilmGenres" ToRole="Genres" />
+        </EntityType>
+        <EntityType Name="Films">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Rating" Type="Decimal" Precision="2" Scale="1" />
+          <Property Name="PremiereDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="AgeLimitID" Type="Int32" Nullable="false" />
+          <Property Name="Cover" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Afisha" Relationship="Self.FK_Afisha_Films" FromRole="Films" ToRole="Afisha" />
+          <NavigationProperty Name="AgeLimit" Relationship="Self.FK_Films_AgeLimit" FromRole="Films" ToRole="AgeLimit" />
+          <NavigationProperty Name="FilmGenres" Relationship="Self.FK_FilmGenres_Films" FromRole="Films" ToRole="FilmGenres" />
+        </EntityType>
+        <EntityType Name="Genres">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FilmGenres" Relationship="Self.FK_FilmGenres_Genres" FromRole="Genres" ToRole="FilmGenres" />
+        </EntityType>
+        <EntityType Name="History">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TicketID" Type="Int32" />
+          <Property Name="UserID" Type="Int32" />
+          <NavigationProperty Name="Ticket" Relationship="Self.FK_History_Ticket" FromRole="History" ToRole="Ticket" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_History_Users" FromRole="History" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Sit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Row" Type="Int32" Nullable="false" />
+          <Property Name="Chair" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AfishaSit" Relationship="Self.FK_AfishaSit_Sit" FromRole="Sit" ToRole="AfishaSit" />
+          <NavigationProperty Name="Ticket" Relationship="Self.FK_Ticket_Sit" FromRole="Sit" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SitID" Type="Int32" Nullable="false" />
+          <Property Name="AfishaID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Afisha" Relationship="Self.FK_Ticket_Afisha" FromRole="Ticket" ToRole="Afisha" />
+          <NavigationProperty Name="History" Relationship="Self.FK_History_Ticket" FromRole="Ticket" ToRole="History" />
+          <NavigationProperty Name="Sit" Relationship="Self.FK_Ticket_Sit" FromRole="Ticket" ToRole="Sit" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Fullname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Birthday" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="History" Relationship="Self.FK_History_Users" FromRole="Users" ToRole="History" />
+        </EntityType>
+        <Association Name="FK_Afisha_CinemaHallType">
+          <End Role="CinemaHallType" Type="Self.CinemaHallType" Multiplicity="0..1" />
+          <End Role="Afisha" Type="Self.Afisha" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CinemaHallType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Afisha">
+              <PropertyRef Name="HallTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Afisha_Films">
+          <End Role="Films" Type="Self.Films" Multiplicity="0..1" />
+          <End Role="Afisha" Type="Self.Afisha" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Films">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Afisha">
+              <PropertyRef Name="FilmID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AfishaSit_Afisha">
+          <End Role="Afisha" Type="Self.Afisha" Multiplicity="0..1" />
+          <End Role="AfishaSit" Type="Self.AfishaSit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Afisha">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AfishaSit">
+              <PropertyRef Name="AfishaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Afisha">
+          <End Role="Afisha" Type="Self.Afisha" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Afisha">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="AfishaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AfishaSit_Sit">
+          <End Role="Sit" Type="Self.Sit" Multiplicity="0..1" />
+          <End Role="AfishaSit" Type="Self.AfishaSit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sit">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AfishaSit">
+              <PropertyRef Name="SitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Films_AgeLimit">
+          <End Role="AgeLimit" Type="Self.AgeLimit" Multiplicity="1" />
+          <End Role="Films" Type="Self.Films" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AgeLimit">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Films">
+              <PropertyRef Name="AgeLimitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FilmGenres_Films">
+          <End Role="Films" Type="Self.Films" Multiplicity="0..1" />
+          <End Role="FilmGenres" Type="Self.FilmGenres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Films">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FilmGenres">
+              <PropertyRef Name="FilmID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FilmGenres_Genres">
+          <End Role="Genres" Type="Self.Genres" Multiplicity="0..1" />
+          <End Role="FilmGenres" Type="Self.FilmGenres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FilmGenres">
+              <PropertyRef Name="GenreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_History_Ticket">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="0..1" />
+          <End Role="History" Type="Self.History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="History">
+              <PropertyRef Name="TicketID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_History_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="History" Type="Self.History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="History">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Sit">
+          <End Role="Sit" Type="Self.Sit" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sit">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="SitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FilmSearchEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Afisha" EntityType="Self.Afisha" />
+          <EntitySet Name="AfishaSit" EntityType="Self.AfishaSit" />
+          <EntitySet Name="AgeLimit" EntityType="Self.AgeLimit" />
+          <EntitySet Name="CinemaHallType" EntityType="Self.CinemaHallType" />
+          <EntitySet Name="FilmGenres" EntityType="Self.FilmGenres" />
+          <EntitySet Name="Films" EntityType="Self.Films" />
+          <EntitySet Name="Genres" EntityType="Self.Genres" />
+          <EntitySet Name="History" EntityType="Self.History" />
+          <EntitySet Name="Sit" EntityType="Self.Sit" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Ticket" EntityType="Self.Ticket" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_Afisha_CinemaHallType" Association="Self.FK_Afisha_CinemaHallType">
+            <End Role="CinemaHallType" EntitySet="CinemaHallType" />
+            <End Role="Afisha" EntitySet="Afisha" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Afisha_Films" Association="Self.FK_Afisha_Films">
+            <End Role="Films" EntitySet="Films" />
+            <End Role="Afisha" EntitySet="Afisha" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AfishaSit_Afisha" Association="Self.FK_AfishaSit_Afisha">
+            <End Role="Afisha" EntitySet="Afisha" />
+            <End Role="AfishaSit" EntitySet="AfishaSit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Afisha" Association="Self.FK_Ticket_Afisha">
+            <End Role="Afisha" EntitySet="Afisha" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AfishaSit_Sit" Association="Self.FK_AfishaSit_Sit">
+            <End Role="Sit" EntitySet="Sit" />
+            <End Role="AfishaSit" EntitySet="AfishaSit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Films_AgeLimit" Association="Self.FK_Films_AgeLimit">
+            <End Role="AgeLimit" EntitySet="AgeLimit" />
+            <End Role="Films" EntitySet="Films" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FilmGenres_Films" Association="Self.FK_FilmGenres_Films">
+            <End Role="Films" EntitySet="Films" />
+            <End Role="FilmGenres" EntitySet="FilmGenres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FilmGenres_Genres" Association="Self.FK_FilmGenres_Genres">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="FilmGenres" EntitySet="FilmGenres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_History_Ticket" Association="Self.FK_History_Ticket">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="History" EntitySet="History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_History_Users" Association="Self.FK_History_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="History" EntitySet="History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Sit" Association="Self.FK_Ticket_Sit">
+            <End Role="Sit" EntitySet="Sit" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище FilmSearchModelContainer" CdmEntityContainer="FilmSearchEntities">
+          <EntitySetMapping Name="Afisha">
+            <EntityTypeMapping TypeName="FilmSearchModel.Afisha">
+              <MappingFragment StoreEntitySet="Afisha">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FilmID" ColumnName="FilmID" />
+                <ScalarProperty Name="DateOfSession" ColumnName="DateOfSession" />
+                <ScalarProperty Name="HallNumber" ColumnName="HallNumber" />
+                <ScalarProperty Name="HallTypeID" ColumnName="HallTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AfishaSit">
+            <EntityTypeMapping TypeName="FilmSearchModel.AfishaSit">
+              <MappingFragment StoreEntitySet="AfishaSit">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SitID" ColumnName="SitID" />
+                <ScalarProperty Name="AfishaID" ColumnName="AfishaID" />
+                <ScalarProperty Name="isTaken" ColumnName="isTaken" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AgeLimit">
+            <EntityTypeMapping TypeName="FilmSearchModel.AgeLimit">
+              <MappingFragment StoreEntitySet="AgeLimit">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Limit" ColumnName="Limit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CinemaHallType">
+            <EntityTypeMapping TypeName="FilmSearchModel.CinemaHallType">
+              <MappingFragment StoreEntitySet="CinemaHallType">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FilmGenres">
+            <EntityTypeMapping TypeName="FilmSearchModel.FilmGenres">
+              <MappingFragment StoreEntitySet="FilmGenres">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FilmID" ColumnName="FilmID" />
+                <ScalarProperty Name="GenreID" ColumnName="GenreID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Films">
+            <EntityTypeMapping TypeName="FilmSearchModel.Films">
+              <MappingFragment StoreEntitySet="Films">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="PremiereDate" ColumnName="PremiereDate" />
+                <ScalarProperty Name="AgeLimitID" ColumnName="AgeLimitID" />
+                <ScalarProperty Name="Cover" ColumnName="Cover" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genres">
+            <EntityTypeMapping TypeName="FilmSearchModel.Genres">
+              <MappingFragment StoreEntitySet="Genres">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="History">
+            <EntityTypeMapping TypeName="FilmSearchModel.History">
+              <MappingFragment StoreEntitySet="History">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TicketID" ColumnName="TicketID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sit">
+            <EntityTypeMapping TypeName="FilmSearchModel.Sit">
+              <MappingFragment StoreEntitySet="Sit">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Row" ColumnName="Row" />
+                <ScalarProperty Name="Chair" ColumnName="Chair" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="FilmSearchModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ticket">
+            <EntityTypeMapping TypeName="FilmSearchModel.Ticket">
+              <MappingFragment StoreEntitySet="Ticket">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SitID" ColumnName="SitID" />
+                <ScalarProperty Name="AfishaID" ColumnName="AfishaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="FilmSearchModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

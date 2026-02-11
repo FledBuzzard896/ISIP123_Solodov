@@ -23,6 +23,26 @@ namespace ISIP123_Solodov_WPF.Pages
         public Kinopoisk()
         {
             InitializeComponent();
+
+            List<Films> movies = Core.ContextHome.Films.ToList(); // лист с фильмами из БД
+
+            foreach (var elem in movies) { elem.Cover = "/Image/" + elem.Cover; }
+
+            Films_LB.ItemsSource = movies;
+        }
+
+        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) 
+        {
+            // sender — это Image, его DataContext — объект Films
+            if (sender is FrameworkElement element && element.DataContext is Films movie)
+            {
+                // Передаём ID фильма на страницу с деталями
+                FilmPage page = new FilmPage(movie.ID);
+                NavigationService?.Navigate(page);
+
+                // Останавливаем всплытие события, чтобы оно не дошло до ListBox
+                e.Handled = true;
+            }
         }
     }
 }

@@ -19,11 +19,36 @@
             <ComboBox Margin="15,0,15,0" Height="25" Width="125">
                 <TextBlock Text="По возрастанию"/>
                 <TextBlock Text="По убыванию"/>
+                <TextBlock Text="Рейтинг (↑)"/>
+                <TextBlock Text="Рейтинг (↓)"/>
             </ComboBox>
         </StackPanel>
         <Button x:Name="profile" Height="25" Width="25" HorizontalAlignment="Right" Margin="0,0,20,0" Grid.Row="0">
             <Image Source="/Image/icon.png"/>
         </Button>
-        
+
+        <ListBox x:Name="Films_LB" ItemsSource="{Binding Path=movies}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Height="auto" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Margin="20">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="10,0,10,10" Cursor="Hand">
+                        <Image Width="150" Height="200" Source="{Binding Cover}" MouseLeftButtonDown="Image_MouseLeftButtonDown"/>
+                        <TextBlock HorizontalAlignment="Center" FontSize="14">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} ({1})">
+                                    <Binding Path="Name"/>
+                                    <Binding Path="Rating"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
+
     </Grid>
 </Page>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c890983d23ab47b4a97fdee85a4c7687" Name="Diagram1">
+        <EntityTypeShape EntityType="FilmSearchModel.Afisha" Width="1.5" PointX="5.25" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FilmSearchModel.AfishaSit" Width="1.5" PointX="7.5" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FilmSearchModel.AgeLimit" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FilmSearchModel.CinemaHallType" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="FilmSearchModel.FilmGenres" Width="1.5" PointX="8.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FilmSearchModel.Films" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FilmSearchModel.Genres" Width="1.5" PointX="6" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="FilmSearchModel.History" Width="1.5" PointX="9.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FilmSearchModel.Sit" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FilmSearchModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FilmSearchModel.Ticket" Width="1.5" PointX="7.5" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FilmSearchModel.Users" Width="1.5" PointX="7.5" PointY="10.625" IsExpanded="true" />
+        <AssociationConnector Association="FilmSearchModel.FK_Afisha_CinemaHallType" ManuallyRouted="false" />
+        <AssociationConnector Association="FilmSearchModel.FK_Afisha_Films" ManuallyRouted="false" />
+        <AssociationConnector Association="FilmSearchModel.FK_AfishaSit_Afisha" ManuallyRouted="false" />
+        <AssociationConnector Association="FilmSearchModel.FK_Ticket_Afisha" ManuallyRouted="false" />
+        <AssociationConnector Association="FilmSearchModel.FK_AfishaSit_Sit" ManuallyRouted="false" />
+        <AssociationConnector Association="FilmSearchModel.FK_Films_AgeLimit" ManuallyRouted="false" />
+        <AssociationConnector Association="FilmSearchModel.FK_FilmGenres_Films" ManuallyRouted="false" />
+        <AssociationConnector Association="FilmSearchModel.FK_FilmGenres_Genres" ManuallyRouted="false" />
+        <AssociationConnector Association="FilmSearchModel.FK_History_Ticket" ManuallyRouted="false" />
+        <AssociationConnector Association="FilmSearchModel.FK_History_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="FilmSearchModel.FK_Ticket_Sit" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
