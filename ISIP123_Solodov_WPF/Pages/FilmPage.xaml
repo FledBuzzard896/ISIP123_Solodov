@@ -23,15 +23,27 @@
             <Image Source="/Image/icon.png"/>
         </Button>
 
-        <Image Source="{Binding cover}" Grid.Row="1" Grid.Column="0" Margin="10" Height="auto"/>
-        <StackPanel Grid.Row="1" Grid.Column="1" Margin="10">
-            <TextBlock Text="{Binding name}" FontSize="18" FontWeight="Bold" Width="auto" HorizontalAlignment="Center"/>
-            <TextBlock Text="О фильме: " FontSize="14" FontWeight="Bold" Margin="0,30,0,5"/>
-            <TextBlock Text="{Binding year}" Margin="0,0,0,5"/>
-            <TextBlock Text="{Binding rating}" Margin="0,0,0,5"/>
-            <TextBlock Text="{Binding genres}" Margin="0,0,0,5"/>
-            <TextBlock Text="Описание:" Margin="0,0,0,5"/>
-            <TextBlock Text="{Binding description}"/>
+        <StackPanel Grid.Row="1" Grid.Column="0" Margin="10" Orientation="Vertical">
+            <Image Source="{Binding Cover}" Height="auto" VerticalAlignment="Top"/>
+            <Button x:Name="BackBtn" Content="Назад" Width="100" Height="20" HorizontalAlignment="Center" Margin="0,0,0,0" />
         </StackPanel>
+
+        
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="10">
+            <TextBlock Text="{Binding Name}" FontSize="18" FontWeight="Bold" Width="auto"/>
+
+            <Button x:Name="BuyTicket" Content="Купить билет" Width="100" Height="20" Margin="0,30,0,0" HorizontalAlignment="Left"/>
+
+            <TextBlock Text="О фильме: " FontSize="14" FontWeight="Bold" Margin="0,30,0,5"/>
+            <TextBlock Text="{Binding PremiereDate, StringFormat=Год производства: dd.MM.yyyy}" Margin="0,0,0,5"/>
+            <TextBlock Text="{Binding Rating, StringFormat=Рейтинг: {0}}" Margin="0,0,0,5"/>
+            <TextBlock x:Name="genryTextyGoggy" Margin="0,0,0,5"/>
+            <TextBlock Text="Описание:" Margin="0,0,0,5"/>
+            <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Margin="0,0,0,0"/>
+        </StackPanel>
+        
+        <TextBlock x:Name="test" Text="" FontSize="30"/>
+
+
     </Grid>
 </Page>

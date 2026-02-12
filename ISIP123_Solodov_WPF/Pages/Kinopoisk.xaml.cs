@@ -24,24 +24,32 @@ namespace ISIP123_Solodov_WPF.Pages
         {
             InitializeComponent();
 
-            List<Films> movies = Core.ContextHome.Films.ToList(); // лист с фильмами из БД
+            List<Films> movies = Core.ContextKIP.Films.ToList(); // лист с фильмами из БД
 
             foreach (var elem in movies) { elem.Cover = "/Image/" + elem.Cover; }
 
             Films_LB.ItemsSource = movies;
         }
 
-        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) 
+        private void MouseDoubleClick(object sender, MouseButtonEventArgs e) 
         {
-            // sender — это Image, его DataContext — объект Films
-            if (sender is FrameworkElement element && element.DataContext is Films movie)
-            {
-                FilmPage page = new FilmPage(movie.ID);
-                NavigationService?.Navigate(page);
+            var selectFilm = Films_LB.SelectedItem as Films;
 
-                // Останавливаем всплытие события, чтобы оно не дошло до ListBox
-                e.Handled = true;
-            }
+            if (selectFilm == null) return;
+
+            FilmPage page = new FilmPage(selectFilm);
+
+            NavigationService.Navigate(page);
+
+            //// sender — это Image, его DataContext — объект Films
+            //if (sender is FrameworkElement element && element.DataContext is Films movie)
+            //{
+            //    FilmPage page = new FilmPage(movie.ID);
+            //    NavigationService?.Navigate(page);
+
+            //    // Останавливаем всплытие события, чтобы оно не дошло до ListBox
+            //    e.Handled = true;
+            //}
         }
     }
 }

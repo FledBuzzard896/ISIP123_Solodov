@@ -20,24 +20,25 @@ namespace ISIP123_Solodov_WPF.Pages
     /// </summary>
     public partial class FilmPage : Page
     {
-        private Films _movie; // Выбранный фильм
-        private string res;   // Жанры фильма 
+        public Films movie { get; set; }   // Выбранный фильм
+        public string res;                  // Жанры фильма 
 
         /// <summary>
         /// От сюда берем Binding
         /// </summary>
-        public string year => $"Год производства: {_movie.PremiereDate}";
-        public string rating => $"Рейтинг: {_movie.Rating}";
-        public string genres => $"Жанр: {res}";
-        public string name => _movie.Name ;
-        public string description => _movie.Description ;
-        public string cover => $"/Images/{_movie.Cover}";
+        //public string year => $"Год производства: {_movie.PremiereDate}";
+        //public string rating => $"Рейтинг: {_movie.Rating}";
+        //public string genres => $"Жанр: {res}";
+        //public string name => _movie.Name ;
+        //public string description => _movie.Description ;
+        //public string cover => $"/Images/{_movie.Cover}";
 
-        public FilmPage(int movieID)
+        public FilmPage(Films movie)
         {
             InitializeComponent();
 
-            _movie = Core.ContextHome.Films.Find(movieID);
+            this.movie = movie;
+            DataContext = this.movie;
 
             this.Loaded += MyPage_Loaded;
         }
@@ -45,18 +46,21 @@ namespace ISIP123_Solodov_WPF.Pages
 
         private void MyPage_Loaded(object sender, RoutedEventArgs e) 
         {
-            List<FilmGenres> lstBunch = Core.ContextHome.FilmGenres.ToList(); // Получаем список жанров с привязкой к фильмам
-            List<Genres> lstGenres = Core.ContextHome.Genres.ToList(); // Получаем общий список жанров
+            List<FilmGenres> lstBunch = Core.ContextKIP.FilmGenres.ToList();    // Получаем список жанров с привязкой к фильмам
+            List<Genres> lstGenres = Core.ContextKIP.Genres.ToList();           // Получаем общий список жанров
+
+            res += "Жанры: ";
 
             foreach (var str in lstBunch)
             {
-                if (str.FilmID == _movie.ID)
+                if (str.FilmID == movie.ID)
                 {
                     Genres g = lstGenres.Find(x => x.ID == str.GenreID);
 
                     res += $"{g.Name}, ";
                 }
             }
+            genryTextyGoggy.Text = res.Substring(0, res.Length-2);
         }
 
 

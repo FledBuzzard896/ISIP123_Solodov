@@ -27,11 +27,11 @@
             <Image Source="/Image/icon.png"/>
         </Button>
 
-        <ListBox x:Name="Films_LB" ItemsSource="{Binding Path=movies}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Height="auto" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Margin="20">
+        <ListBox x:Name="Films_LB" MouseDoubleClick="MouseDoubleClick" ItemsSource="{Binding Path=movies}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Height="auto" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Margin="20">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="10,0,10,10" Cursor="Hand">
-                        <Image Width="150" Height="200" Source="{Binding Cover}" MouseLeftButtonDown="Image_MouseLeftButtonDown"/>
+                        <Image Width="150" Height="200" Source="{Binding Cover}"/>
                         <TextBlock HorizontalAlignment="Center" FontSize="14">
                             <TextBlock.Text>
                                 <MultiBinding StringFormat="{}{0} ({1})">
@@ -49,6 +49,5 @@
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
         </ListBox>
-
     </Grid>
 </Page>

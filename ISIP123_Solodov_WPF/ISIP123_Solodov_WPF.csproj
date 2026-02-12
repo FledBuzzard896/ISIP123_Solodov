@@ -68,48 +68,63 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Afisha.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
     <Compile Include="AfishaSit.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
     <Compile Include="AgeLimit.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
     <Compile Include="CinemaHallType.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
     <Compile Include="FilmGenres.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
     <Compile Include="Films.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
     <Compile Include="Genres.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
     <Compile Include="History.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
     <Compile Include="Model.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModelKIP.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelKIP.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelKIP.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelKIP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelKIP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelKIP.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\FilmPage.xaml.cs">
       <DependentUpon>FilmPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Sit.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagrams.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
     <Compile Include="Ticket.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
     <Compile Include="Users.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -171,6 +186,13 @@
     <None Include="Model.edmx.diagram">
       <DependentUpon>Model.edmx</DependentUpon>
     </None>
+    <EntityDeploy Include="ModelKIP.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelKIP.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="ModelKIP.edmx.diagram">
+      <DependentUpon>ModelKIP.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -200,6 +222,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
+    </Content>
+    <Content Include="ModelKIP.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ModelKIP.Context.cs</LastGenOutput>
+      <DependentUpon>ModelKIP.edmx</DependentUpon>
+    </Content>
+    <Content Include="ModelKIP.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelKIP.edmx</DependentUpon>
+      <LastGenOutput>ModelKIP.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
