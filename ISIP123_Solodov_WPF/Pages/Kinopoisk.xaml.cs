@@ -24,7 +24,7 @@ namespace ISIP123_Solodov_WPF.Pages
         {
             InitializeComponent();
 
-            List<Films> movies = Core.ContextKIP.Films.ToList(); // лист с фильмами из БД
+            List<Films> movies = Core.ContextHOME.Films.ToList(); // лист с фильмами из БД
 
             foreach (var elem in movies) { elem.Cover = "/Image/" + elem.Cover; }
 
@@ -40,16 +40,64 @@ namespace ISIP123_Solodov_WPF.Pages
             FilmPage page = new FilmPage(selectFilm);
 
             NavigationService.Navigate(page);
+        }
 
-            //// sender — это Image, его DataContext — объект Films
-            //if (sender is FrameworkElement element && element.DataContext is Films movie)
-            //{
-            //    FilmPage page = new FilmPage(movie.ID);
-            //    NavigationService?.Navigate(page);
+        private void SearchBtnClick(object sender, RoutedEventArgs e)
+        {
+            if (searchBox.Text != "")
+            {
+                List<Films> lst = Core.ContextHOME.Films.Where(x => x.Name.StartsWith(searchBox.Text)).ToList();
 
-            //    // Останавливаем всплытие события, чтобы оно не дошло до ListBox
-            //    e.Handled = true;
-            //}
+                if (lst.Count > 0)
+                {
+                    Films_LB.ItemsSource = lst;
+                }
+                else
+                {
+                    MessageBox.Show("Фильма/Сериала не найдено!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else 
+            {
+                Films_LB.ItemsSource = Core.ContextHOME.Films.ToList();
+            }
+        }
+
+        private void ProfileBtnClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new RegOrLog();
+            dialog.ShowDialog();
+        }
+
+        private void MyComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+            ComboBoxItem selectedItem = comboBox.SelectedItem as ComboBoxItem;
+
+            List<Films> sortedLst = (List<Films>)Films_LB.ItemsSource;
+
+            switch (selectedItem.Content.ToString()) 
+            {
+                case "По возрастанию":
+                    sortedLst = sortedLst.OrderBy(f => f.Name).ToList();
+                    Films_LB.ItemsSource = sortedLst;
+                    break;
+
+                case "По убыванию":
+                    sortedLst = sortedLst.OrderByDescending(f => f.Name).ToList();
+                    Films_LB.ItemsSource = sortedLst;
+                    break;
+
+                case "Рейтинг (↑)":
+                    sortedLst = sortedLst.OrderBy(r => r.Rating).ToList();
+                    Films_LB.ItemsSource = sortedLst;
+                    break;
+
+                case "Рейтинг (↓)":
+                    sortedLst = sortedLst.OrderByDescending(r => r.Rating).ToList();
+                    Films_LB.ItemsSource = sortedLst;
+                    break;
+            }
         }
     }
 }

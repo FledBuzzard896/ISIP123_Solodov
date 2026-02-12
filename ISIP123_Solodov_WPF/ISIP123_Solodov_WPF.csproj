@@ -111,8 +111,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelKIP.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Authorization.xaml.cs">
+      <DependentUpon>Authorization.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\FilmPage.xaml.cs">
       <DependentUpon>FilmPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Registration.xaml.cs">
+      <DependentUpon>Registration.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RegOrLog.xaml.cs">
+      <DependentUpon>RegOrLog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Sit.cs">
       <DependentUpon>ModelKIP.tt</DependentUpon>
@@ -139,11 +148,23 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\Authorization.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\FilmPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Kinopoisk.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Registration.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RegOrLog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -213,6 +234,7 @@
     <Resource Include="Image\The_Shawshank_Redemption_100x250.jpeg" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Image\glass.png" />
     <Content Include="Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model.Context.cs</LastGenOutput>

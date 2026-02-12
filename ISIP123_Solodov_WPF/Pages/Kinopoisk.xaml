@@ -13,17 +13,22 @@
             <RowDefinition Height="13*"/>
             <RowDefinition Height="137*"/>
         </Grid.RowDefinitions>
+        
         <StackPanel Orientation="Horizontal" Grid.Row="0">
             <TextBlock Margin="15,0,0,0" Text="ФильмоПоиск" FontSize="16" VerticalAlignment="Center"/>
-            <TextBox Margin="15,0,0,0" x:Name="search" Height="25" Width="450" ToolTip="Введите название фильма/сериала" VerticalAlignment="Center" FontSize="14"/>
-            <ComboBox Margin="15,0,15,0" Height="25" Width="125">
-                <TextBlock Text="По возрастанию"/>
-                <TextBlock Text="По убыванию"/>
-                <TextBlock Text="Рейтинг (↑)"/>
-                <TextBlock Text="Рейтинг (↓)"/>
+            <TextBox Margin="15,0,0,0" x:Name="searchBox" Height="25" Width="425" ToolTip="Введите название фильма/сериала" VerticalAlignment="Center" FontSize="14"/>
+            <Button x:Name="searchBtn" Height="25" Width="25" Click="SearchBtnClick">
+                <Image Source="/Image/glass.png"/>
+            </Button>
+            <ComboBox Margin="15,0,15,0" Height="25" Width="125" SelectionChanged="MyComboBox_SelectionChanged">
+                <ComboBoxItem Content="По возрастанию"/>
+                <ComboBoxItem Content="По убыванию"/>
+                <ComboBoxItem Content="Рейтинг (↑)"/>
+                <ComboBoxItem Content="Рейтинг (↓)"/>
             </ComboBox>
         </StackPanel>
-        <Button x:Name="profile" Height="25" Width="25" HorizontalAlignment="Right" Margin="0,0,20,0" Grid.Row="0">
+        
+        <Button x:Name="profile" Height="25" Width="25" HorizontalAlignment="Right" Margin="0,0,20,0" Grid.Row="0" Click="ProfileBtnClick">
             <Image Source="/Image/icon.png"/>
         </Button>
 

@@ -15,23 +15,10 @@ using System.Windows.Shapes;
 
 namespace ISIP123_Solodov_WPF.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для FilmPage.xaml
-    /// </summary>
     public partial class FilmPage : Page
     {
         public Films movie { get; set; }   // Выбранный фильм
-        public string res;                  // Жанры фильма 
-
-        /// <summary>
-        /// От сюда берем Binding
-        /// </summary>
-        //public string year => $"Год производства: {_movie.PremiereDate}";
-        //public string rating => $"Рейтинг: {_movie.Rating}";
-        //public string genres => $"Жанр: {res}";
-        //public string name => _movie.Name ;
-        //public string description => _movie.Description ;
-        //public string cover => $"/Images/{_movie.Cover}";
+        public string res;                 // Жанры фильма 
 
         public FilmPage(Films movie)
         {
@@ -46,8 +33,8 @@ namespace ISIP123_Solodov_WPF.Pages
 
         private void MyPage_Loaded(object sender, RoutedEventArgs e) 
         {
-            List<FilmGenres> lstBunch = Core.ContextKIP.FilmGenres.ToList();    // Получаем список жанров с привязкой к фильмам
-            List<Genres> lstGenres = Core.ContextKIP.Genres.ToList();           // Получаем общий список жанров
+            List<FilmGenres> lstBunch = Core.ContextHOME.FilmGenres.ToList();    // Получаем список жанров с привязкой к фильмам
+            List<Genres> lstGenres = Core.ContextHOME.Genres.ToList();           // Получаем общий список жанров
 
             res += "Жанры: ";
 
