@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using ISIP123_Solodov_WPF;
+
 namespace ISIP123_Solodov_WPF.Pages
 {
     /// <summary>
@@ -42,7 +44,16 @@ namespace ISIP123_Solodov_WPF.Pages
                 Core.ContextHOME.Users.Add(newUser);
                 Core.ContextHOME.SaveChanges();
 
+                UserClass.SetLogin(login.Text);
+                UserClass.SetPassword(password.Text);
+                UserClass.SetFIO(fio.Text);
+                UserClass.SetBirthday(selectedDate.Value);
 
+                MessageBoxResult res = MessageBox.Show("Вы были успешно зарагистрированы!", "Succes", MessageBoxButton.OK, MessageBoxImage.Information);
+                if (res == MessageBoxResult.OK) 
+                {
+                    NavigationService.GoBack();
+                }
             }
         }
     }

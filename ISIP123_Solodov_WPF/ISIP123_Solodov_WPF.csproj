@@ -132,6 +132,7 @@
     <Compile Include="Ticket.cs">
       <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserClass.cs" />
     <Compile Include="Users.cs">
       <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
