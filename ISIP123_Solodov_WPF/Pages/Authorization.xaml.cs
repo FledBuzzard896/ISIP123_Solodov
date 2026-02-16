@@ -20,9 +20,53 @@ namespace ISIP123_Solodov_WPF.Pages
     /// </summary>
     public partial class Authorization : Page
     {
-        public Authorization()
+        Page page = null;
+        public Authorization(Page inputPage)
         {
+            page = inputPage;
+
             InitializeComponent();
+        }
+
+        private void enter_Click(object sender, RoutedEventArgs e)
+        {
+            List<Users> data = Core.ContextHOME.Users.ToList();
+
+            //login.Text = data[0].Login;
+            //password.Text = data[0].Password;
+
+            foreach (Users user in data)
+            {
+                if (user.Login == login.Text)
+                {
+                    if (user.Password == password.Text)
+                    {
+                        UserClass.FIO = user.Fullname;
+                        UserClass.Birthday = (DateTime)user.Birthday;
+                        UserClass.Login = user.Login;
+                        UserClass.Password = user.Password;
+
+                        UserClass.IsLogged = true;
+
+                        if (UserClass.IsNextPageIsProfile) 
+                        {
+                            page = new ProfilePage();
+                        }
+
+                        // next page
+                        NavigationService.Navigate(page);
+                        return;
+                    }
+                }
+            }
+            MessageBox.Show("Аккаунт не найден.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            Registration regPage = new Registration(page);
+            NavigationService.Navigate(regPage);
+        }
+
+        private void back_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
         }
     }
 }

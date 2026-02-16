@@ -5,10 +5,21 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ISIP123_Solodov_WPF.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="500" d:DesignWidth="800"
       Title="Authorization">
 
     <Grid>
-        
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Логин: " Margin="0,5,0,0"/>
+            <TextBox x:Name="login" Text="" Width="155" Margin="0,5,0,0" HorizontalAlignment="Left"/>
+            <TextBlock Text="Пароль:" Margin="0,5,0,0"/>
+            <TextBox x:Name="password" Text="" Width="155" Margin="0,5,0,0"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                <Button x:Name="back" Content="Назад" Width="75" Height="20" Margin="0,0,5,0" Click="back_Click"/>
+                <Button x:Name="enter" Content="Войти" Width="75" Height="20" Click="enter_Click"/>
+            </StackPanel>
+            
+        </StackPanel>
     </Grid>
 </Page>

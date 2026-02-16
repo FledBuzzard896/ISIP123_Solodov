@@ -50,6 +50,33 @@ namespace ISIP123_Solodov_WPF.Pages
             genryTextyGoggy.Text = res.Substring(0, res.Length-2);
         }
 
+        private void BuyTicket_Click(object sender, RoutedEventArgs e)
+        {
+            KinoAfishaPage page = new KinoAfishaPage();
+            NavigationService.Navigate(page);
+        }
 
+        private void Profile_CLick(object sender, RoutedEventArgs e) 
+        {
+            if (UserClass.IsLogged == false)
+            {
+                Page next = new ProfilePage();
+
+                var dialog = new RegOrLog(next);
+                dialog.ShowDialog();
+            }
+            else
+            {
+                ProfilePage page = new ProfilePage();
+                NavigationService.Navigate(page);
+            }
+        }
+
+        private void BackBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //Kinopoisk back_page = new Kinopoisk();
+            //NavigationService.Navigate(back_page);
+            NavigationService.GoBack();
+        }
     }
 }

@@ -20,8 +20,10 @@ namespace ISIP123_Solodov_WPF
     /// </summary>
     public partial class RegOrLog : Window
     {
-        public RegOrLog()
+        Page nextPage = null;
+        public RegOrLog(Page inputPage)
         {
+            nextPage = inputPage;
             InitializeComponent();
         }
 
@@ -29,7 +31,7 @@ namespace ISIP123_Solodov_WPF
         {
             if (Application.Current.MainWindow is MainWindow main)
             {
-                main.mainFrame.Navigate(new Authorization());
+                main.mainFrame.Navigate(new Authorization(nextPage));
             }
             this.Close();
         }
@@ -38,8 +40,13 @@ namespace ISIP123_Solodov_WPF
         {
             if (Application.Current.MainWindow is MainWindow main)
             {
-                main.mainFrame.Navigate(new Registration());
+                main.mainFrame.Navigate(new Registration(nextPage));
             }
+            this.Close();
+        }
+
+        private void back_Click(object sender, RoutedEventArgs e)
+        {
             this.Close();
         }
     }

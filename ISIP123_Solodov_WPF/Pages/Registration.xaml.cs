@@ -22,8 +22,11 @@ namespace ISIP123_Solodov_WPF.Pages
     /// </summary>
     public partial class Registration : Page
     {
-        public Registration()
+        Page nextPage = null;
+        public Registration(Page inputPage)
         {
+            nextPage = inputPage;
+
             InitializeComponent();
         }
 
@@ -44,17 +47,24 @@ namespace ISIP123_Solodov_WPF.Pages
                 Core.ContextHOME.Users.Add(newUser);
                 Core.ContextHOME.SaveChanges();
 
-                UserClass.SetLogin(login.Text);
-                UserClass.SetPassword(password.Text);
-                UserClass.SetFIO(fio.Text);
-                UserClass.SetBirthday(selectedDate.Value);
+                UserClass.Login = login.Text;
+                UserClass.Password = password.Text;
+                UserClass.FIO = fio.Text;
+                UserClass.Birthday = selectedDate.Value;
+
+                UserClass.IsLogged = true;
 
                 MessageBoxResult res = MessageBox.Show("Вы были успешно зарагистрированы!", "Succes", MessageBoxButton.OK, MessageBoxImage.Information);
                 if (res == MessageBoxResult.OK) 
                 {
-                    NavigationService.GoBack();
+                    NavigationService.Navigate(nextPage);
                 }
             }
+        }
+
+        private void back_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
         }
     }
 }

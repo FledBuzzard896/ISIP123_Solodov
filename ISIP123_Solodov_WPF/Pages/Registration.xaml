@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ISIP123_Solodov_WPF.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="500" d:DesignWidth="800"
       Title="Registration">
 
     <Grid>
@@ -14,7 +14,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Vertical" Margin="15">
+        <StackPanel Orientation="Vertical" Margin="10">
             <TextBlock Text="ФильмоПоиск" FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,5"/>
             <TextBlock Text="Регестрируемся - не стесняемся" HorizontalAlignment="Center" Margin="0,0,0,5"/>
 
@@ -38,8 +38,13 @@
             <TextBlock Text="Выберите вашу дату рождения: " Margin="0,0,0,5"/>
             <Calendar x:Name="birthday"/>
 
-            <Button x:Name="enterInfo" Content="Зарегистрироваться" Width="150" Margin="0,25,0,0" Click="enterInfo_Click"/>
+            <StackPanel Margin="0,15,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="back" Content="Назад" Width="150" Margin="0,0,15,0" Click="back_Click"/>
+                <Button x:Name="enterInfo" Content="Зарегистрироваться" Width="150" Click="enterInfo_Click"/>
+            </StackPanel>
         </StackPanel>
+
+        
         
     </Grid>
 </Page>

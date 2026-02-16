@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ISIP123_Solodov_WPF"
         mc:Ignorable="d"
-        Title="RegOrLog" Height="150" Width="200">
+        Title="RegOrLog" Height="175" Width="200">
     <Grid>
         <StackPanel Orientation="Vertical">
+            <Button x:Name="back" Content="Назад" Width="30" Height="15" FontSize="8" HorizontalAlignment="Left" Margin="5,5,0,0" Click="back_Click"/>
             <TextBlock Text="Войти или зарегистрироваться?" Height="20" HorizontalAlignment="Center" Margin="0,20,0,0"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,30,0,0">
                 <Button x:Name="autho" Content="Войти" Margin="0,0,10,0" Height="20" Click="autho_Click"/>

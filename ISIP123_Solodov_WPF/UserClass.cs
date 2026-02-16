@@ -8,26 +8,37 @@ namespace ISIP123_Solodov_WPF
 {
     internal static class UserClass
     {
-        private static string Login;
-        private static string Password;
-        private static string FIO;
-        private static DateTime Birthday;
+        private static string _login;
+        private static string _password;
+        private static string _fio;
+        private static DateTime _birthday;
 
-        public static void SetLogin(string input) 
+        public static string Login
         {
-            Login = input;
+            get => _login;
+            set => _login = value;
         }
-        public static void SetPassword(string input)
+
+        public static string Password
         {
-            Password = input;
+            get => _password;
+            set => _password = value;
         }
-        public static void SetFIO(string input)
+
+        public static string FIO
         {
-            FIO = input;
+            get => _fio;
+            set => _fio = value;
         }
-        public static void SetBirthday(DateTime input)
+
+        public static DateTime Birthday
         {
-            Birthday = input;
+            get => _birthday;
+            set => _birthday = value;
         }
+
+        public static bool IsLogged { get; set; }
+
+        public static bool IsNextPageIsProfile { get; set; }
     }
 }

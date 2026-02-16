@@ -24,11 +24,7 @@ namespace ISIP123_Solodov_WPF.Pages
         {
             InitializeComponent();
 
-            List<Films> movies = Core.ContextHOME.Films.ToList(); // лист с фильмами из БД
-
-            foreach (var elem in movies) { elem.Cover = "/Image/" + elem.Cover; }
-
-            Films_LB.ItemsSource = movies;
+            Loaded += Kinopoisk_Loaded;
         }
 
         private void MouseDoubleClick(object sender, MouseButtonEventArgs e) 
@@ -65,8 +61,20 @@ namespace ISIP123_Solodov_WPF.Pages
 
         private void ProfileBtnClick(object sender, RoutedEventArgs e)
         {
-            var dialog = new RegOrLog();
-            dialog.ShowDialog();
+            if (UserClass.IsLogged == false)
+            {
+                UserClass.IsNextPageIsProfile = true;
+
+                Page next = new ProfilePage();
+
+                var dialog = new RegOrLog(next);
+                dialog.ShowDialog();
+            }
+            else 
+            {
+                ProfilePage page = new ProfilePage();
+                NavigationService.Navigate(page);
+            }
         }
 
         private void MyComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -98,6 +106,14 @@ namespace ISIP123_Solodov_WPF.Pages
                     Films_LB.ItemsSource = sortedLst;
                     break;
             }
+        }
+
+
+        private void Kinopoisk_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<Films> movies = Core.ContextHOME.Films.ToList();
+            foreach (var elem in movies) { elem.Cover = "/Image/" + elem.Cover; }
+            Films_LB.ItemsSource = movies;
         }
     }
 }
