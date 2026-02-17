@@ -9,6 +9,25 @@
       Title="KinoAfishaPage">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25*"/>
+            <RowDefinition Height="47*"/>
+            <RowDefinition Height="178*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Расписание" FontSize="24" Grid.Row="0" VerticalAlignment="Center" Margin="25,0,0,0"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="25,0,0,0">
+            <TextBlock x:Name="month" Text="Месяц:" FontSize="16" Width="auto" Height="30"/>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="btn1" Content="XX" Width="30" Height="30" Margin="20,0,10,0"/>
+                <Button x:Name="btn2" Content="XX" Width="30" Height="30" Margin="0,0,10,0"/>
+                <Button x:Name="btn3" Content="XX" Width="30" Height="30" Margin="0,0,10,0"/>
+                <Button x:Name="btn4" Content="XX" Width="30" Height="30" Margin="0,0,10,0"/>
+                <Button x:Name="btn5" Content="XX" Width="30" Height="30" Margin="0,0,10,0"/>
+                <Button x:Name="btn6" Content="XX" Width="30" Height="30" Margin="0,0,10,0"/>
+                <Button x:Name="btn7" Content="XX" Width="30" Height="30"/>
+            </StackPanel>
+        </StackPanel>
         
     </Grid>
 </Page>
