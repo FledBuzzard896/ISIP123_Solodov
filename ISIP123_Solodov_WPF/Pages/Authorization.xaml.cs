@@ -30,7 +30,7 @@ namespace ISIP123_Solodov_WPF.Pages
 
         private void enter_Click(object sender, RoutedEventArgs e)
         {
-            List<Users> data = Core.ContextHOME.Users.ToList();
+            List<Users> data = Core.ContextKIP.Users.ToList();
 
             //login.Text = data[0].Login;
             //password.Text = data[0].Password;

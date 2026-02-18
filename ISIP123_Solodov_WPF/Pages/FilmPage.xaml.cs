@@ -25,6 +25,8 @@ namespace ISIP123_Solodov_WPF.Pages
             InitializeComponent();
 
             this.movie = movie;
+            this.movie.Cover = "/Image/" + this.movie.Cover;
+
             DataContext = this.movie;
 
             this.Loaded += MyPage_Loaded;
@@ -33,8 +35,8 @@ namespace ISIP123_Solodov_WPF.Pages
 
         private void MyPage_Loaded(object sender, RoutedEventArgs e) 
         {
-            List<FilmGenres> lstBunch = Core.ContextHOME.FilmGenres.ToList();    // Получаем список жанров с привязкой к фильмам
-            List<Genres> lstGenres = Core.ContextHOME.Genres.ToList();           // Получаем общий список жанров
+            List<FilmGenres> lstBunch = Core.ContextKIP.FilmGenres.ToList();    // Получаем список жанров с привязкой к фильмам
+            List<Genres> lstGenres = Core.ContextKIP.Genres.ToList();           // Получаем общий список жанров
 
             res += "Жанры: ";
 
@@ -52,7 +54,7 @@ namespace ISIP123_Solodov_WPF.Pages
 
         private void BuyTicket_Click(object sender, RoutedEventArgs e)
         {
-            KinoAfishaPage page = new KinoAfishaPage();
+            KinoAfishaPage page = new KinoAfishaPage(movie);
             NavigationService.Navigate(page);
         }
 
@@ -76,7 +78,13 @@ namespace ISIP123_Solodov_WPF.Pages
         {
             //Kinopoisk back_page = new Kinopoisk();
             //NavigationService.Navigate(back_page);
+            DeletePathGorImages(movie);
             NavigationService.GoBack();
+        }
+
+        private void DeletePathGorImages(Films movie)
+        {
+           movie.Cover = movie.Cover.Substring(7);
         }
     }
 }

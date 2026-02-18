@@ -44,8 +44,8 @@ namespace ISIP123_Solodov_WPF.Pages
                     Birthday = selectedDate.Value,
                 };
 
-                Core.ContextHOME.Users.Add(newUser);
-                Core.ContextHOME.SaveChanges();
+                Core.ContextKIP.Users.Add(newUser);
+                Core.ContextKIP.SaveChanges();
 
                 UserClass.Login = login.Text;
                 UserClass.Password = password.Text;
@@ -57,6 +57,11 @@ namespace ISIP123_Solodov_WPF.Pages
                 MessageBoxResult res = MessageBox.Show("Вы были успешно зарагистрированы!", "Succes", MessageBoxButton.OK, MessageBoxImage.Information);
                 if (res == MessageBoxResult.OK) 
                 {
+                    if (UserClass.IsNextPageIsProfile) 
+                    {
+                        nextPage = new ProfilePage();
+                    }
+                    
                     NavigationService.Navigate(nextPage);
                 }
             }

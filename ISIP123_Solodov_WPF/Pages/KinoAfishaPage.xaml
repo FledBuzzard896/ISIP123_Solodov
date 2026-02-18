@@ -14,20 +14,45 @@
             <RowDefinition Height="47*"/>
             <RowDefinition Height="178*"/>
         </Grid.RowDefinitions>
-
+        
         <TextBlock Text="Расписание" FontSize="24" Grid.Row="0" VerticalAlignment="Center" Margin="25,0,0,0"/>
+        <Button x:Name="back_btn" Content="Назад" Width="80" Height="20" HorizontalAlignment="Right" Margin="0,0,25,0" Click="back_btn_Click"/>
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="25,0,0,0">
-            <TextBlock x:Name="month" Text="Месяц:" FontSize="16" Width="auto" Height="30"/>
-            <StackPanel Orientation="Horizontal">
-                <Button x:Name="btn1" Content="XX" Width="30" Height="30" Margin="20,0,10,0"/>
-                <Button x:Name="btn2" Content="XX" Width="30" Height="30" Margin="0,0,10,0"/>
-                <Button x:Name="btn3" Content="XX" Width="30" Height="30" Margin="0,0,10,0"/>
-                <Button x:Name="btn4" Content="XX" Width="30" Height="30" Margin="0,0,10,0"/>
-                <Button x:Name="btn5" Content="XX" Width="30" Height="30" Margin="0,0,10,0"/>
-                <Button x:Name="btn6" Content="XX" Width="30" Height="30" Margin="0,0,10,0"/>
-                <Button x:Name="btn7" Content="XX" Width="30" Height="30"/>
+            <TextBlock x:Name="month" Text="Февраль:" FontSize="18" Width="auto" Height="30"/>
+            <StackPanel Orientation="Horizontal" Margin="20,0,20,0">
+                <Button x:Name="btnDay1" Content="XX" Width="30" Height="30" Margin="0,0,15,0" Click="DateButton_Click"/>
+                <Button x:Name="btnDay2" Content="XX" Width="30" Height="30" Margin="0,0,15,0" Click="DateButton_Click"/>
+                <Button x:Name="btnDay3" Content="XX" Width="30" Height="30" Margin="0,0,15,0" Click="DateButton_Click"/>
+                <Button x:Name="btnDay4" Content="XX" Width="30" Height="30" Margin="0,0,15,0" Click="DateButton_Click"/>
+                <Button x:Name="btnDay5" Content="XX" Width="30" Height="30" Margin="0,0,15,0" Click="DateButton_Click"/>
+                <Button x:Name="btnDay6" Content="XX" Width="30" Height="30" Margin="0,0,15,0" Click="DateButton_Click"/>
+                <Button x:Name="btnDay7" Content="XX" Width="30" Height="30" Click="DateButton_Click"/>
             </StackPanel>
         </StackPanel>
-        
+        <StackPanel Grid.Row="2" Margin="25">
+            <StackPanel x:Name="cinema" Orientation="Horizontal" Height="40">
+                
+                <TextBlock Text="Сеансы: " FontSize="18" VerticalAlignment="Center"/>
+                <TextBlock x:Name="isEmptyLB" Text="" FontSize="18" VerticalAlignment="Center" Margin="20,0,0,0"/>
+                
+                <ListBox x:Name="Sessions_LB" ItemsSource="{Binding Path=DateOfSession.TimeOfDay}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Height="auto" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="0,0,20,0" Visibility="Hidden">
+                    
+                    <!-- Горизонтальная ориентация -->
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <Button x:Name="dateOfSession" Content="{Binding DateOfSession.TimeOfDay}" Margin="10,0,10,0" Click="TimeButton_Click"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>

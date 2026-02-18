@@ -20,6 +20,7 @@ namespace ISIP123_Solodov_WPF.Pages
     /// </summary>
     public partial class Kinopoisk : Page
     {
+        List<Films> movies;
         public Kinopoisk()
         {
             InitializeComponent();
@@ -27,11 +28,13 @@ namespace ISIP123_Solodov_WPF.Pages
             Loaded += Kinopoisk_Loaded;
         }
 
-        private void MouseDoubleClick(object sender, MouseButtonEventArgs e) 
+        private void MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var selectFilm = Films_LB.SelectedItem as Films;
 
             if (selectFilm == null) return;
+
+            DeletePathGorImages(movies);
 
             FilmPage page = new FilmPage(selectFilm);
 
@@ -42,7 +45,7 @@ namespace ISIP123_Solodov_WPF.Pages
         {
             if (searchBox.Text != "")
             {
-                List<Films> lst = Core.ContextHOME.Films.Where(x => x.Name.StartsWith(searchBox.Text)).ToList();
+                List<Films> lst = Core.ContextKIP.Films.Where(x => x.Name.StartsWith(searchBox.Text)).ToList();
 
                 if (lst.Count > 0)
                 {
@@ -53,14 +56,16 @@ namespace ISIP123_Solodov_WPF.Pages
                     MessageBox.Show("Фильма/Сериала не найдено!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            else 
+            else
             {
-                Films_LB.ItemsSource = Core.ContextHOME.Films.ToList();
+                Films_LB.ItemsSource = Core.ContextKIP.Films.ToList();
             }
         }
 
         private void ProfileBtnClick(object sender, RoutedEventArgs e)
         {
+            DeletePathGorImages(movies);
+
             if (UserClass.IsLogged == false)
             {
                 UserClass.IsNextPageIsProfile = true;
@@ -70,7 +75,7 @@ namespace ISIP123_Solodov_WPF.Pages
                 var dialog = new RegOrLog(next);
                 dialog.ShowDialog();
             }
-            else 
+            else
             {
                 ProfilePage page = new ProfilePage();
                 NavigationService.Navigate(page);
@@ -84,7 +89,7 @@ namespace ISIP123_Solodov_WPF.Pages
 
             List<Films> sortedLst = (List<Films>)Films_LB.ItemsSource;
 
-            switch (selectedItem.Content.ToString()) 
+            switch (selectedItem.Content.ToString())
             {
                 case "По возрастанию":
                     sortedLst = sortedLst.OrderBy(f => f.Name).ToList();
@@ -111,9 +116,14 @@ namespace ISIP123_Solodov_WPF.Pages
 
         private void Kinopoisk_Loaded(object sender, RoutedEventArgs e)
         {
-            List<Films> movies = Core.ContextHOME.Films.ToList();
+            movies = Core.ContextKIP.Films.ToList();
             foreach (var elem in movies) { elem.Cover = "/Image/" + elem.Cover; }
             Films_LB.ItemsSource = movies;
+        }
+
+        private void DeletePathGorImages(List<Films> movies) 
+        {
+            foreach (var elem in movies) { elem.Cover = elem.Cover.Substring(7); }
         }
     }
 }
