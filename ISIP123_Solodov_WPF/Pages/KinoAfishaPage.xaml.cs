@@ -38,7 +38,7 @@ namespace ISIP123_Solodov_WPF.Pages
 
             var btn = sender as Button;
 
-            List<Afisha> afishas = Core.ContextKIP.Afisha
+            List<Afisha> afishas = Core.ContextHOME.Afisha
                 .Where(x => x.FilmID == _movie.ID && x.DateOfSession.Day.ToString() == btn.Content.ToString())
                 .ToList();
 
@@ -51,25 +51,33 @@ namespace ISIP123_Solodov_WPF.Pages
             }
             else
             {
-                Sessions_LB.Visibility = Visibility.Visible; // Не забудьте включить видимость!
-
+                Sessions_LB.Visibility = Visibility.Visible;
             }
         }
 
         private void TimeButton_Click(object sender, RoutedEventArgs e) 
         {
+            Button clickedButton = sender as Button;
+
+            string timeString = clickedButton.Content.ToString();
+
+            List<Afisha> lst = Core.ContextHOME.Afisha.Where(x => x.FilmID == _movie.ID).ToList();
+
+            SessionClass.MovieAfisha = lst.FirstOrDefault(x => x.DateOfSession.ToString("HH:mm:ss") == timeString);
+
             if (UserClass.IsLogged)
             {
-                // NavigationServise.Navigate(страница)
+                CinemaHallPage cinemaHallPage = new CinemaHallPage(clickedButton.Content.ToString());
+                NavigationService.Navigate(cinemaHallPage);
             }
             else 
             {
                 MessageBox.Show("Для перехода на страницу оформления билетов, вы должны зарегистрироваться или войти в аккаунт.", "Бык тупогуб", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                //Page next = new СтраницаМестИБилетов();
+                Page next = new CinemaHallPage(clickedButton.Content.ToString());
 
-                //var dialog = new RegOrLog(next);
-                //dialog.ShowDialog();
+                var dialog = new RegOrLog(next);
+                dialog.ShowDialog();
             }
         }
 

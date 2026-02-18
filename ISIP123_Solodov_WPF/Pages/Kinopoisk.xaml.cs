@@ -45,7 +45,7 @@ namespace ISIP123_Solodov_WPF.Pages
         {
             if (searchBox.Text != "")
             {
-                List<Films> lst = Core.ContextKIP.Films.Where(x => x.Name.StartsWith(searchBox.Text)).ToList();
+                List<Films> lst = Core.ContextHOME.Films.Where(x => x.Name.StartsWith(searchBox.Text)).ToList();
 
                 if (lst.Count > 0)
                 {
@@ -58,7 +58,7 @@ namespace ISIP123_Solodov_WPF.Pages
             }
             else
             {
-                Films_LB.ItemsSource = Core.ContextKIP.Films.ToList();
+                Films_LB.ItemsSource = Core.ContextHOME.Films.ToList();
             }
         }
 
@@ -116,7 +116,7 @@ namespace ISIP123_Solodov_WPF.Pages
 
         private void Kinopoisk_Loaded(object sender, RoutedEventArgs e)
         {
-            movies = Core.ContextKIP.Films.ToList();
+            movies = Core.ContextHOME.Films.ToList();
             foreach (var elem in movies) { elem.Cover = "/Image/" + elem.Cover; }
             Films_LB.ItemsSource = movies;
         }

@@ -117,11 +117,17 @@
     <Compile Include="Pages\Authorization.xaml.cs">
       <DependentUpon>Authorization.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\CinemaHallPage.xaml.cs">
+      <DependentUpon>CinemaHallPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\FilmPage.xaml.cs">
       <DependentUpon>FilmPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\KinoAfishaPage.xaml.cs">
       <DependentUpon>KinoAfishaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PaymentPage.xaml.cs">
+      <DependentUpon>PaymentPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
@@ -132,6 +138,7 @@
     <Compile Include="RegOrLog.xaml.cs">
       <DependentUpon>RegOrLog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SessionClass.cs" />
     <Compile Include="Sit.cs">
       <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
@@ -162,6 +169,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\CinemaHallPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\FilmPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -171,6 +182,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Kinopoisk.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PaymentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

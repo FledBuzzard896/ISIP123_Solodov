@@ -35,8 +35,8 @@ namespace ISIP123_Solodov_WPF.Pages
 
         private void MyPage_Loaded(object sender, RoutedEventArgs e) 
         {
-            List<FilmGenres> lstBunch = Core.ContextKIP.FilmGenres.ToList();    // Получаем список жанров с привязкой к фильмам
-            List<Genres> lstGenres = Core.ContextKIP.Genres.ToList();           // Получаем общий список жанров
+            List<FilmGenres> lstBunch = Core.ContextHOME.FilmGenres.ToList();    // Получаем список жанров с привязкой к фильмам
+            List<Genres> lstGenres = Core.ContextHOME.Genres.ToList();           // Получаем общий список жанров
 
             res += "Жанры: ";
 

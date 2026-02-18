@@ -44,8 +44,8 @@ namespace ISIP123_Solodov_WPF.Pages
                     Birthday = selectedDate.Value,
                 };
 
-                Core.ContextKIP.Users.Add(newUser);
-                Core.ContextKIP.SaveChanges();
+                Core.ContextHOME.Users.Add(newUser);
+                Core.ContextHOME.SaveChanges();
 
                 UserClass.Login = login.Text;
                 UserClass.Password = password.Text;
