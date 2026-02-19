@@ -30,7 +30,7 @@ namespace ISIP123_Solodov_WPF.Pages
 
         private void enter_Click(object sender, RoutedEventArgs e)
         {
-            List<Users> data = Core.ContextHOME.Users.ToList();
+            List<Users> data = Core.ContextKIP.Users.ToList();
 
             //login.Text = data[0].Login;
             //password.Text = data[0].Password;
@@ -66,7 +66,15 @@ namespace ISIP123_Solodov_WPF.Pages
 
         private void back_Click(object sender, RoutedEventArgs e)
         {
+            var movies = Core.ContextKIP.Films.ToList();
+            DeletePathGorImages(movies);
+
             NavigationService.GoBack();
+        }
+
+        private void DeletePathGorImages(List<Films> movies)
+        {
+            foreach (var elem in movies) { elem.Cover = elem.Cover.Substring(7); }
         }
     }
 }

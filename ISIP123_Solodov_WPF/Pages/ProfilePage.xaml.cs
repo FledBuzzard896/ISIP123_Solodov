@@ -28,6 +28,9 @@ namespace ISIP123_Solodov_WPF.Pages
             birthday.Text = UserClass.Birthday.ToString();
             login.Text = UserClass.Login;
             password.Text = UserClass.Password;
+
+
+            History_LB.ItemsSource = Core.ContextKIP.History.ToList();
         }
 
         private void back_btn_Click(object sender, RoutedEventArgs e)

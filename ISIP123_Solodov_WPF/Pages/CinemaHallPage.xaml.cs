@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -39,7 +41,21 @@ namespace ISIP123_Solodov_WPF.Pages
 
             foreach (CheckBox elem in allSeats)
             {
-                if (elem.IsChecked == true)
+                int fDig, sDig, finalID;
+                MatchCollection matches = Regex.Matches(elem.Name, @"\d+");
+                fDig = Convert.ToInt32(matches[0].Value);
+                sDig = Convert.ToInt32(matches[1].Value);
+
+                if (fDig == 1)
+                {
+                    finalID = sDig;
+                }
+                else
+                {
+                    finalID = 10 + sDig;
+                }
+
+                if (elem.IsChecked == true && Core.ContextKIP.AfishaSit.ToList().Contains(Core.ContextKIP.AfishaSit.FirstOrDefault(x => x.SitID == finalID && x.isTaken == true)) == false)
                 {
                     selectedSeats.Add(elem.Name);
                 }
@@ -64,12 +80,36 @@ namespace ISIP123_Solodov_WPF.Pages
             // Все стулья в одном листе
             foreach (CheckBox elem in Row1.Children.OfType<CheckBox>()) { allSeats.Add(elem); elem.IsChecked = false; }
             foreach (CheckBox elem in Row2.Children.OfType<CheckBox>()) { allSeats.Add(elem); elem.IsChecked = false; }
+
+
+            List<AfishaSit> UsedSeatsLst = Core.ContextKIP.AfishaSit.Where(x => x.AfishaID == SessionClass.MovieAfisha.ID).ToList();
+
+            foreach (var elem in UsedSeatsLst) 
+            {
+                foreach (CheckBox sit in Row1.Children.OfType<CheckBox>()) 
+                {
+                    if (Convert.ToInt32(sit.Name.Replace("row1_sit", "")) == elem.SitID && elem.isTaken == true) 
+                    {
+                        sit.IsChecked = true;
+                        sit.IsEnabled = false;
+                    }
+                }
+                foreach (CheckBox sit in Row2.Children.OfType<CheckBox>())
+                {
+                    if (Convert.ToInt32(sit.Name.Replace("row2_sit", "")) + 10 == elem.SitID && elem.isTaken == true)
+                    {
+                        sit.IsChecked = true;
+                        sit.IsEnabled = false;
+                    }
+                }
+            }
         }
 
         private void back_btn_Click(object sender, RoutedEventArgs e)
         {
+            KinoAfishaPage p = new KinoAfishaPage(Core.ContextKIP.Films.First(x => x.ID == SessionClass.MovieAfisha.FilmID));
             SessionClass.ClearAfisha();
-            NavigationService.GoBack();
+            NavigationService.Navigate(p);
         }
     }
 }

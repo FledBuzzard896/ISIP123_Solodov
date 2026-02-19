@@ -44,8 +44,8 @@ namespace ISIP123_Solodov_WPF.Pages
                     Birthday = selectedDate.Value,
                 };
 
-                Core.ContextHOME.Users.Add(newUser);
-                Core.ContextHOME.SaveChanges();
+                Core.ContextKIP.Users.Add(newUser);
+                Core.ContextKIP.SaveChanges();
 
                 UserClass.Login = login.Text;
                 UserClass.Password = password.Text;
@@ -69,7 +69,15 @@ namespace ISIP123_Solodov_WPF.Pages
 
         private void back_Click(object sender, RoutedEventArgs e)
         {
+            var movies = Core.ContextKIP.Films.ToList();
+            DeletePathGorImages(movies);
+
             NavigationService.GoBack();
+        }
+
+        private void DeletePathGorImages(List<Films> movies)
+        {
+            foreach (var elem in movies) { elem.Cover = elem.Cover.Substring(7); }
         }
     }
 }

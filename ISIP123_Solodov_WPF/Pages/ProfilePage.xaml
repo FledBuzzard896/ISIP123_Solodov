@@ -26,8 +26,21 @@
             <TextBlock Text="Пароль" FontSize="10" Foreground="DarkGray"/>
             <Button x:Name="back_btn" Content="На главную" Width="100" Height="20" Margin="0,15,0,0" Click="back_btn_Click"/>
         </StackPanel>
-        <StackPanel Margin="5,40,5,5" Grid.Column="1">
-            <TextBlock Text="История покупки билетов:" FontSize="16" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Center"/>
-        </StackPanel>
+        <TextBlock Text="История покупки билетов:" FontSize="16" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Center" Margin="5,40,5,5" Grid.Column="1"/>
+        
+        <ListBox x:Name="History_LB" ItemsSource="{Binding Path=History}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Height="auto" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Margin="20">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="10,0,10,10">
+                        <TextBlock Text="{Binding ID, StringFormat='Айди билета: {0}'}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
     </Grid>
 </Page>

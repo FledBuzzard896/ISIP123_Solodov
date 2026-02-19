@@ -38,7 +38,7 @@ namespace ISIP123_Solodov_WPF.Pages
 
             var btn = sender as Button;
 
-            List<Afisha> afishas = Core.ContextHOME.Afisha
+            List<Afisha> afishas = Core.ContextKIP.Afisha
                 .Where(x => x.FilmID == _movie.ID && x.DateOfSession.Day.ToString() == btn.Content.ToString())
                 .ToList();
 
@@ -61,17 +61,21 @@ namespace ISIP123_Solodov_WPF.Pages
 
             string timeString = clickedButton.Content.ToString();
 
-            List<Afisha> lst = Core.ContextHOME.Afisha.Where(x => x.FilmID == _movie.ID).ToList();
+            List<Afisha> lst = Core.ContextKIP.Afisha.Where(x => x.FilmID == _movie.ID).ToList();
 
             SessionClass.MovieAfisha = lst.FirstOrDefault(x => x.DateOfSession.ToString("HH:mm:ss") == timeString);
 
             if (UserClass.IsLogged)
             {
+                if (SessionClass.MovieAfisha.ID != 1) { MessageBox.Show("Извините, не доделано! выберите сеанс пораньше пжлст", "Кина не будет!!!", MessageBoxButton.OK, MessageBoxImage.Error); return; }
+
                 CinemaHallPage cinemaHallPage = new CinemaHallPage(clickedButton.Content.ToString());
                 NavigationService.Navigate(cinemaHallPage);
             }
             else 
             {
+                if (SessionClass.MovieAfisha.ID != 1) { MessageBox.Show("Извините, не доделано! выберите сеанс пораньше пжлст", "Кина не будет!!!", MessageBoxButton.OK, MessageBoxImage.Error); return; }
+
                 MessageBox.Show("Для перехода на страницу оформления билетов, вы должны зарегистрироваться или войти в аккаунт.", "Бык тупогуб", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 Page next = new CinemaHallPage(clickedButton.Content.ToString());

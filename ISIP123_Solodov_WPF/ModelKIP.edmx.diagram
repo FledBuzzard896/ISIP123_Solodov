@@ -6,16 +6,16 @@
     <edmx:Diagrams>
       <Diagram DiagramId="381cf48cb2004860b8305b966949e14a" Name="Diagram1">
         <EntityTypeShape EntityType="FilmSearchModelKIP.Afisha" Width="1.5" PointX="5.25" PointY="4.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="FilmSearchModelKIP.AfishaSit" Width="1.5" PointX="7.5" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FilmSearchModelKIP.AfishaSit" Width="1.5" PointX="12.25" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="FilmSearchModelKIP.AgeLimit" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="FilmSearchModelKIP.CinemaHallType" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="FilmSearchModelKIP.FilmGenres" Width="1.5" PointX="8.25" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FilmSearchModelKIP.Films" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FilmSearchModelKIP.Genres" Width="1.5" PointX="6" PointY="14" IsExpanded="true" />
-        <EntityTypeShape EntityType="FilmSearchModelKIP.History" Width="1.5" PointX="9.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FilmSearchModelKIP.History" Width="1.5" PointX="13.875" PointY="6.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FilmSearchModelKIP.Sit" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FilmSearchModelKIP.sysdiagrams" Width="1.5" PointX="0.75" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="FilmSearchModelKIP.Ticket" Width="1.5" PointX="7.5" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FilmSearchModelKIP.Ticket" Width="1.5" PointX="11.875" PointY="6.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FilmSearchModelKIP.Users" Width="1.5" PointX="7.5" PointY="10.625" IsExpanded="true" />
         <AssociationConnector Association="FilmSearchModelKIP.FK_Afisha_CinemaHallType" ManuallyRouted="false" />
         <AssociationConnector Association="FilmSearchModelKIP.FK_Afisha_Films" ManuallyRouted="false" />
