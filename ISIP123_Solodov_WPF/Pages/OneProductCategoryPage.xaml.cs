@@ -32,7 +32,35 @@ namespace ISIP123_Solodov_WPF.Pages
 
         private void MyPageLoaded(object sender, RoutedEventArgs e) 
         {
-            // стоп мне не приятно
+            switch (title)
+            {
+                case "Процессоры":
+                    var cpusID = Core.ContextHOME.cpu.ToList().Select(c => c.id).ToList();
+                    List<basepart> Products = Core.ContextHOME.basepart.Where(x => cpusID.Contains(x.id)).ToList();
+                    Products_LB.ItemsSource = Products;
+                    break;
+
+                case "Видеокарты":
+                    break;
+
+                case "Оперативная память":
+                    break;
+
+                case "Материнская плата":
+                    break;
+
+                case "Корпуса":
+                    break;
+
+                case "Блок питания":
+                    break;
+
+                case "Кулер для ЦП":
+                    break;
+
+                case "Жесткий диск/SSD":
+                    break;
+            }
         }
     }
 }

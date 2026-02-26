@@ -9,6 +9,42 @@
       Title="OneProductCategoryPage">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="{Binding title, StringFormat='Категория: {0}'}" FontSize="18" Height="auto" HorizontalAlignment="Center" TextWrapping="Wrap" Grid.Row="0"/>
         
+        <Grid Grid.Row="1" Margin="15">
+            <ListBox x:Name="Products_LB" ItemsSource="{Binding Path=Products}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Height="auto" Width="auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="10,0,10,10" HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Image Grid.Column="0" Source="{Binding image}" Width="150" Height="150"/>
+
+                            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="15,0,0,0">
+                                <TextBlock Text="Описание:" FontSize="14" Height="auto" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding name}" FontSize="14" Height="auto" TextWrapping="Wrap"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Orientation="Vertical" Margin="15,0,0,0" HorizontalAlignment="Right">
+                                <TextBlock Text="Цена:" FontSize="14" Height="auto" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding price}" FontSize="14" Height="auto" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="1" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+        </Grid>
     </Grid>
 </Page>
