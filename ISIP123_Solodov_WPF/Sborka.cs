@@ -8,27 +8,18 @@ namespace ISIP123_Solodov_WPF
 {
     internal class Sborka
     {
-        //public static int _cpu;
-        //public static int _gpu;
-        //public static int _ram;
-        //public static int _motherboard;
-        //public static int _case;
-        //public static int _powersupply;
-        //public static int _processorcooler;
-        //public static int _storagedevice;
+        //1 - Процессоры
+        //2 - Видеокарты
+        //3 - Оперативная память
+        //4 - Материнская плата
+        //5 - Корпус
+        //6 - Блок питания
+        //7 - Кулер от процессора
+        //8 - HDD/SSD
 
-        //public static void Clear() 
-        //{
-        //    _cpu = 0;
-        //    _gpu = 0;
-        //    _ram = 0;
-        //    _motherboard = 0;
-        //    _case = 0;
-        //    _powersupply = 0;
-        //    _storagedevice = 0;
-        //    _processorcooler = 0;
-        //}
         private static int[] _parts = new int[9]; // индексы от 0 до 8, но будем использовать с 1
+
+        public static int[] GetPartsArray() { return _parts; }
 
         public static int GetPart(int partTypeId)
         {
