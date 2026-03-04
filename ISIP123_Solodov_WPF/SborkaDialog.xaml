@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ISIP123_Solodov_WPF"
         mc:Ignorable="d"
-        Title="SborkaDialog" Height="250" Width="200">
+        Title="SborkaDialog" Height="250" Width="250">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>

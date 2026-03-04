@@ -94,7 +94,8 @@ namespace ISIP123_Solodov_WPF.Pages
 
         private void ShowHistoryBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            var newPage = new HistoryPage();
+            NavigationService.Navigate(newPage);
         }
 
         private void MyPageLoaded(object sender, RoutedEventArgs e)

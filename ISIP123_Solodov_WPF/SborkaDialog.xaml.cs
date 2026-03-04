@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ISIP123_Solodov_WPF
@@ -49,8 +50,9 @@ namespace ISIP123_Solodov_WPF
                     Core.ContextKIP.SaveChanges();
                 }
 
-                MessageBox.Show("Ваша крутая сборка сохранена!!!","Пнятно", MessageBoxButton.OK, MessageBoxImage.Hand);
+                MessageBox.Show("Ваша крутая сборка сохранена!!!","Пнятно", MessageBoxButton.OK, MessageBoxImage.Information);
                 Sborka.Clear();
+                this.Close();
             }
             else { MessageBox.Show("Заполните все поля!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Stop); } 
         }

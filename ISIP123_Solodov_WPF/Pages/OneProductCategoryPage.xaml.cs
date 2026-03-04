@@ -153,7 +153,8 @@ namespace ISIP123_Solodov_WPF.Pages
 
         private void mouseDoubleClick(object sender, MouseButtonEventArgs e) 
         {
-            
+            var selectedItem = Products_LB.SelectedItem as basepart;
+            MessageBox.Show(selectedItem.PrintInfo, "Мини-справочка");
         }
 
         private void CheckAvailabityAndAddAndDelete(basepart inputProduct, int inputPartID) 

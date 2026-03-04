@@ -135,6 +135,9 @@
     <Compile Include="motherboard.cs">
       <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Pages\HistoryPage.xaml.cs">
+      <DependentUpon>HistoryPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="partassembly.cs">
       <DependentUpon>ModelKIP.tt</DependentUpon>
     </Compile>
@@ -196,6 +199,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Pages\CategoriesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\HistoryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
