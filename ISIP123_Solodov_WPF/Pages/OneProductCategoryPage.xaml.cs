@@ -38,50 +38,50 @@ namespace ISIP123_Solodov_WPF.Pages
             switch (title)
             {
                 case "Процессоры":
-                    var cpusID = Core.ContextHOME.cpu.ToList().Select(c => c.id).ToList();
-                    List<basepart> Products = Core.ContextHOME.basepart.Where(x => cpusID.Contains(x.id)).ToList();
+                    var cpusID = Core.ContextKIP.cpu.ToList().Select(c => c.id).ToList();
+                    List<basepart> Products = Core.ContextKIP.basepart.Where(x => cpusID.Contains(x.id)).ToList();
                     Products_LB.ItemsSource = Products;
                     break;
 
                 case "Видеокарты":
-                    var gpusID = Core.ContextHOME.gpu.ToList().Select(g => g.id).ToList();
-                    Products = Core.ContextHOME.basepart.Where(x => gpusID.Contains(x.id)).ToList();
+                    var gpusID = Core.ContextKIP.gpu.ToList().Select(g => g.id).ToList();
+                    Products = Core.ContextKIP.basepart.Where(x => gpusID.Contains(x.id)).ToList();
                     Products_LB.ItemsSource = Products;
                     break;
 
                 case "Оперативная память":
-                    var ramsID = Core.ContextHOME.ram.ToList().Select(r => r.id).ToList();
-                    Products = Core.ContextHOME.basepart.Where(x => ramsID.Contains(x.id)).ToList();
+                    var ramsID = Core.ContextKIP.ram.ToList().Select(r => r.id).ToList();
+                    Products = Core.ContextKIP.basepart.Where(x => ramsID.Contains(x.id)).ToList();
                     Products_LB.ItemsSource = Products;
                     break;
 
                 case "Материнская плата":
-                    var motherboardsID = Core.ContextHOME.motherboard.ToList().Select(m => m.id).ToList();
-                    Products = Core.ContextHOME.basepart.Where(x => motherboardsID.Contains(x.id)).ToList();
+                    var motherboardsID = Core.ContextKIP.motherboard.ToList().Select(m => m.id).ToList();
+                    Products = Core.ContextKIP.basepart.Where(x => motherboardsID.Contains(x.id)).ToList();
                     Products_LB.ItemsSource = Products;
                     break;
 
                 case "Корпуса":
-                    var casesID = Core.ContextHOME.@case.ToList().Select(c => c.id).ToList();
-                    Products = Core.ContextHOME.basepart.Where(x => casesID.Contains(x.id)).ToList();
+                    var casesID = Core.ContextKIP.@case.ToList().Select(c => c.id).ToList();
+                    Products = Core.ContextKIP.basepart.Where(x => casesID.Contains(x.id)).ToList();
                     Products_LB.ItemsSource = Products;
                     break;
 
                 case "Блок питания":
-                    var powersID = Core.ContextHOME.powersupply.ToList().Select(p => p.id).ToList();
-                    Products = Core.ContextHOME.basepart.Where(x => powersID.Contains(x.id)).ToList();
+                    var powersID = Core.ContextKIP.powersupply.ToList().Select(p => p.id).ToList();
+                    Products = Core.ContextKIP.basepart.Where(x => powersID.Contains(x.id)).ToList();
                     Products_LB.ItemsSource = Products;
                     break;
 
                 case "Кулер для ЦП":
-                    var cpucoolersID = Core.ContextHOME.processorcooler.ToList().Select(cc => cc.id).ToList();
-                    Products = Core.ContextHOME.basepart.Where(x => cpucoolersID.Contains(x.id)).ToList();
+                    var cpucoolersID = Core.ContextKIP.processorcooler.ToList().Select(cc => cc.id).ToList();
+                    Products = Core.ContextKIP.basepart.Where(x => cpucoolersID.Contains(x.id)).ToList();
                     Products_LB.ItemsSource = Products;
                     break;
 
                 case "Жесткий диск/SSD":
-                    var storagedevicesID = Core.ContextHOME.storagedevice.ToList().Select(sd => sd.id).ToList();
-                    Products = Core.ContextHOME.basepart.Where(x => storagedevicesID.Contains(x.id)).ToList();
+                    var storagedevicesID = Core.ContextKIP.storagedevice.ToList().Select(sd => sd.id).ToList();
+                    Products = Core.ContextKIP.basepart.Where(x => storagedevicesID.Contains(x.id)).ToList();
                     Products_LB.ItemsSource = Products;
                     break;
             }
@@ -101,53 +101,59 @@ namespace ISIP123_Solodov_WPF.Pages
             // Не изменять стиль но проверять на элемент, если он же самый, то предлагать удалить
             switch (Convert.ToInt32(product.parttypeid)) 
             {
-                case 1: CheckAvailabityAndAddAndDelete(product, 1);  break;
-                case 2: CheckAvailabityAndAddAndDelete(product, 2);  break;
-                case 3: CheckAvailabityAndAddAndDelete(product, 3);  break;
-                case 4: CheckAvailabityAndAddAndDelete(product, 4);  break;
-                case 5: CheckAvailabityAndAddAndDelete(product, 5);  break;
-                case 6: CheckAvailabityAndAddAndDelete(product, 6);  break;
-                case 7: CheckAvailabityAndAddAndDelete(product, 7);  break;
-                case 8: CheckAvailabityAndAddAndDelete(product, 8);  break;
-                }
+                case 1: CheckAvailabityAndAddAndDelete(product, 1); NavigationService.GoBack(); break; 
+                case 2: CheckAvailabityAndAddAndDelete(product, 2); NavigationService.GoBack(); break; 
+                case 3: CheckAvailabityAndAddAndDelete(product, 3); NavigationService.GoBack(); break;
+                case 4: CheckAvailabityAndAddAndDelete(product, 4); NavigationService.GoBack(); break;
+                case 5: CheckAvailabityAndAddAndDelete(product, 5); NavigationService.GoBack(); break;
+                case 6: CheckAvailabityAndAddAndDelete(product, 6); NavigationService.GoBack(); break;
+                case 7: CheckAvailabityAndAddAndDelete(product, 7); NavigationService.GoBack(); break;
+                case 8: CheckAvailabityAndAddAndDelete(product, 8); NavigationService.GoBack(); break;
+            }
         }
+        
         private void CheckSborka_Click(object sender, RoutedEventArgs e)
         {
             int id = Sborka.GetPart(1);
-            var cpu = Core.ContextHOME.basepart.FirstOrDefault(x => x.id == id);
+            var cpu = Core.ContextKIP.basepart.FirstOrDefault(x => x.id == id);
             string _cpuName = cpu?.name ?? "Отсутствует";
 
             id = Sborka.GetPart(2);
-            var gpu = Core.ContextHOME.basepart.FirstOrDefault(x => x.id == id);
+            var gpu = Core.ContextKIP.basepart.FirstOrDefault(x => x.id == id);
             string _gpuName = gpu?.name ?? "Отсутствует";
 
             id = Sborka.GetPart(3);
-            var ram = Core.ContextHOME.basepart.FirstOrDefault(x => x.id == id);
+            var ram = Core.ContextKIP.basepart.FirstOrDefault(x => x.id == id);
             string _ramName = ram?.name ?? "Отсутствует";
 
             id = Sborka.GetPart(4);
-            var motherboard = Core.ContextHOME.basepart.FirstOrDefault(x => x.id == id);
+            var motherboard = Core.ContextKIP.basepart.FirstOrDefault(x => x.id == id);
             string _motherboardName = motherboard?.name ?? "Отсутствует";
 
             id = Sborka.GetPart(5);
-            var caase = Core.ContextHOME.basepart.FirstOrDefault(x => x.id == id);
+            var caase = Core.ContextKIP.basepart.FirstOrDefault(x => x.id == id);
             string _caseName = caase?.name ?? "Отсутствует";
 
             id = Sborka.GetPart(6);
-            var powersuply = Core.ContextHOME.basepart.FirstOrDefault(x => x.id == id);
+            var powersuply = Core.ContextKIP.basepart.FirstOrDefault(x => x.id == id);
             string _powersuplyName = powersuply?.name ?? "Отсутствует";
 
             id = Sborka.GetPart(7);
-            var processorcooler = Core.ContextHOME.basepart.FirstOrDefault(x => x.id == id);
+            var processorcooler = Core.ContextKIP.basepart.FirstOrDefault(x => x.id == id);
             string _processorcoolerName = processorcooler?.name ?? "Отсутствует";
 
             id = Sborka.GetPart(8);
-            var storagedevice = Core.ContextHOME.basepart.FirstOrDefault(x => x.id == id);
+            var storagedevice = Core.ContextKIP.basepart.FirstOrDefault(x => x.id == id);
             string _storagedeviceName = storagedevice?.name ?? "Отсутствует";
 
             string sborkaDescription = $"CPU: \t\t\t{_cpuName}\nGPU: \t\t\t{_gpuName}\nRAM: \t\t\t{_ramName}\nМатеринская плата: \t{_motherboardName}\nКорпус: \t\t\t{_caseName}\nБлок питания: \t\t{_powersuplyName}\nКулер для процессора: \t{_processorcoolerName}\nЖесткий диск/SSD: \t{_storagedeviceName}";
 
             MessageBox.Show(sborkaDescription, "Ваша шедевро-сборка", MessageBoxButton.OK, MessageBoxImage.None);
+        }
+
+        private void mouseDoubleClick(object sender, MouseButtonEventArgs e) 
+        {
+            
         }
 
         private void CheckAvailabityAndAddAndDelete(basepart inputProduct, int inputPartID) 
@@ -178,8 +184,8 @@ namespace ISIP123_Solodov_WPF.Pages
                 else 
                 {
                     int productID = Sborka.GetPart(inputPartID);                                                        // ID товара в сборке
-                    string productName = Core.ContextHOME.basepart.First(x => x.id == productID).name;                  // Название товара в сборке
-                    string productType = Core.ContextHOME.parttype.First(x => x.id == inputProduct.parttypeid).name;    // Тип товара
+                    string productName = Core.ContextKIP.basepart.First(x => x.id == productID).name;                  // Название товара в сборке
+                    string productType = Core.ContextKIP.parttype.First(x => x.id == inputProduct.parttypeid).name;    // Тип товара
 
                     string description = $"В вашей сборке уже добавлен \n{productType}: {productName}\nХотите заменить компонент?";
                     var res = MessageBox.Show(description, "Предупреждение!", MessageBoxButton.YesNo, MessageBoxImage.None);

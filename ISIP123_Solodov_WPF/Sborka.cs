@@ -36,5 +36,21 @@ namespace ISIP123_Solodov_WPF
             for (int i = 0; i < _parts.Length; i++)
                 _parts[i] = 0;
         }
+
+        public static bool IsAnyPart()
+        {
+            bool ans = false;
+
+            for (int i = 1; i < 9; i++) 
+            {
+                if (_parts[i] > 0) 
+                {
+                    ans = true;
+                    break;
+                }
+            }
+
+            return ans;
+        }
     }
 }

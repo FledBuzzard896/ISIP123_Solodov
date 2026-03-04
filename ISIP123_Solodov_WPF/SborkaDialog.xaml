@@ -1,0 +1,24 @@
+﻿<Window x:Class="ISIP123_Solodov_WPF.SborkaDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ISIP123_Solodov_WPF"
+        mc:Ignorable="d"
+        Title="SborkaDialog" Height="250" Width="200">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Окно для сохранения сборки" Grid.Row="0" HorizontalAlignment="Center" TextWrapping="Wrap"/>
+        <StackPanel Grid.Row="1" Margin="5">
+            <TextBlock Text="Введите крутое название сборки:" Margin="0,0,0,5"/>
+            <TextBox x:Name="title" Text="" Margin="0,0,0,5"/>
+            <TextBlock Text="Введите ваше крутое имя:" Margin="0,0,0,5"/>
+            <TextBox x:Name="name" Text=""/>
+        </StackPanel>
+        <Button x:Name="savebtn" Content="Сохранить" Margin="5" Grid.Row="2" Click="savebtn_Click"/>
+    </Grid>
+</Window>
