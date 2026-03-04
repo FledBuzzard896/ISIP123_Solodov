@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,17 +59,17 @@ namespace ISIP123_Solodov_WPF.Pages
 
                 int socketCPU = Core.ContextKIP.cpu.First(x => x.id == n0).socketid;
                 int socketMotherboard = Core.ContextKIP.motherboard.First(x => x.id == n1).socketid;
-                int socketCooler = Core.ContextKIP.socketprocessorcooler.First(x => x.processorcoolerid == n2).socketid;
+                int socketCooler = Core.ContextKIP.socketprocessorcooler.FirstOrDefault(x => x.processorcoolerid == n2 && x.socketid == socketMotherboard)?.socketid ?? 0;
 
                 if (socketCPU != socketMotherboard) { MessageBox.Show("Сокет процессора не совпадает с сокетом материнской платы", "Несостыковка", MessageBoxButton.OK); return; }
-                else if (socketCooler != socketMotherboard) { MessageBox.Show("Сокет кулера не совпадает с сокетом материнской платы", "Несостыковка", MessageBoxButton.OK); return; }
                 else if (socketCPU != socketCooler) { MessageBox.Show("Сокет кулера не совпадает с сокетом процессора", "Несостыковка", MessageBoxButton.OK); return; }
+                else if (socketCooler != socketMotherboard) { MessageBox.Show("Сокет кулера не совпадает с сокетом материнской платы", "Несостыковка", MessageBoxButton.OK); return; }
 
                 // Проверка на формфактор
                 int formfactorMotherboard = Core.ContextKIP.motherboard.First(x => x.id == n1).formfactorid;
                 int formfactorCase = Core.ContextKIP.boardformfactorcase.First(x => x.caseid == n3).formfactorid;
 
-                if (formfactorCase != formfactorMotherboard) { MessageBox.Show("Форм фактор корпуса не совпадает с формфактором материнской платы", "Несостыковка", MessageBoxButton.OK); return; }
+                if (formfactorCase > formfactorMotherboard) { MessageBox.Show("Форм фактор корпуса не совпадает с формфактором материнской платы", "Несостыковка", MessageBoxButton.OK); return; }
 
                 // Проверка на тип памяти
                 int memoryMotherboard = Core.ContextKIP.motherboard.First(x => x.id == n1).memorytypeid;
