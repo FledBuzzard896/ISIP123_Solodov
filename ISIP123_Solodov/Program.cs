@@ -19,7 +19,7 @@ Console.Write(">>> ");
 string choice = Console.ReadLine();
 
 
-Random random = new Random();
+GameRandom random = new GameRandom();
 
 List<Item> lstOfPickUps = new List<Item>();
 List<Enemy> lstOfEnemies = new List<Enemy>();
@@ -132,7 +132,7 @@ if (choice == "1")
                 break;
 
             default:
-                hero = Convert.ToString(random.Next(1, 4));
+                hero = random.RandomHero();
                 break;
         }
     }
@@ -201,7 +201,7 @@ if (choice == "1")
             Console.ResetColor();
         }
 
-        int countOfRooms = random.Next(4, 7); // кол-во комнат от 4 до 6
+        int countOfRooms = random.GenerateRooms(); // кол-во комнат от 4 до 6
 
         while (countOfRooms != 0 && isIsaacAlive == true)
         {
@@ -282,13 +282,10 @@ bool generateRoom(int countOfRooms, Isaac isaac, double MAX_HP)
 
     if (countOfRooms > 1)
     {
-
-        int mobOrChest = random.Next(1, 101);
-
-        if (mobOrChest > 50)
+        if (random.MobOrChest())
         {
 
-            int randomItem = random.Next(0, lstOfPickUps.Count());
+            int randomItem = random.RandomItem(lstOfPickUps);
             string barier = "==========================================";
 
             Console.WriteLine($"\nНа твоём пути встала комната сокровищ");
@@ -343,7 +340,7 @@ bool generateRoom(int countOfRooms, Isaac isaac, double MAX_HP)
         }
         else
         {
-            int randomEnemy = random.Next(0, 3);
+            int randomEnemy = random.RandomEnemy();
 
             var vrag = SimpleFactory.CreateEnemy(randomEnemy);
             
@@ -359,7 +356,7 @@ bool generateRoom(int countOfRooms, Isaac isaac, double MAX_HP)
     }
     else
     {
-        int randomBoss = random.Next(0, lstOfBosses.Count);
+        int randomBoss = random.RandomBoss(lstOfBosses);
 
         Console.Write($"Вы зашли в комнату босса, в комнате оказался ");
         Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -448,11 +445,9 @@ bool Fight(double enemyHP, double enemyDAMAGE, double enemyDEFENCE, double enemy
                 break;
 
             case "2":
-                int chance = random.Next(1, 101);
-
                 var tempCoords = Console.GetCursorPosition();
 
-                if (chance <= 40)
+                if (random.EvasionOrDamage())
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.WriteLine("Вы успешно уклонились");
@@ -470,15 +465,13 @@ bool Fight(double enemyHP, double enemyDAMAGE, double enemyDEFENCE, double enemy
                     System.Threading.Thread.Sleep(5000);
                     Console.WriteLine("                                                                                                     ");
 
-                    chance = random.Next(1, 101);
-
-                    if (chance <= 70)
+                    if (random.MaxDamageOrMinDamage())
                     {
                         isaac.HealthDown(damage - (damage * (70 / 100)));
                     }
                     else
                     {
-                        isaac.HealthDown(damage - (damage * (chance / 100)));
+                        isaac.HealthDown(damage - (damage * (85 / 100)));
                     }
                 }
                 break;
@@ -486,9 +479,7 @@ bool Fight(double enemyHP, double enemyDAMAGE, double enemyDEFENCE, double enemy
 
         if (enemyCRIT_CHANCE != 0)
         {
-            int chance = random.Next(1, 101);
-
-            if (chance <= enemyCRIT_CHANCE)
+            if (random.IsSpecialSkill(enemyCRIT_CHANCE))
             {
                 damage = (enemyDAMAGE * 1.5) - (enemyDAMAGE * 1.5 * isaac.Defence);
                 message = "Враг наносит критический удар!                                   ";
@@ -506,9 +497,7 @@ bool Fight(double enemyHP, double enemyDAMAGE, double enemyDEFENCE, double enemy
         }
         else
         {
-            int chance = random.Next(1, 101);
-
-            if (chance <= enemyFROZEN_CHANCE)
+            if (random.IsSpecialSkill(enemyFROZEN_CHANCE))
             {
                 userMoveSkip = true;
                 message = "Враг использовал заморозку, вы пропускаете ход                   ";
@@ -578,11 +567,9 @@ bool FinalBossFight(Mother boss, Isaac isaac, (int left, int top) MENUcoordinate
                 break;
 
             case "2":
-                int chance = random.Next(1, 101);
-
                 var tempCoords = Console.GetCursorPosition();
 
-                if (chance <= 40)
+                if (random.EvasionOrDamage())
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.WriteLine("Вы успешно уклонились");
@@ -600,28 +587,26 @@ bool FinalBossFight(Mother boss, Isaac isaac, (int left, int top) MENUcoordinate
                     System.Threading.Thread.Sleep(5000);
                     Console.WriteLine("                                                                                                     ");
 
-                    chance = random.Next(1, 101);
-
-                    if (chance <= 70)
+                    if (random.MaxDamageOrMinDamage())
                     {
                         isaac.HealthDown(damage - (damage * (70 / 100)));
                     }
                     else
                     {
-                        isaac.HealthDown(damage - (damage * (chance / 100)));
+                        isaac.HealthDown(damage - (damage * (85 / 100)));
                     }
                 }
                 break;
         }
 
-        int attack = random.Next(1, 101);
+        double attack = random.MotherAttack();
 
-        if (attack <= 33)
+        if (attack <= 0.33)
         {
             message = "Мать наносит обычный удар!       ";
             damage = boss.Damage;
         }
-        else if (33 < attack && attack <= 66)
+        else if (0.33 < attack && attack <= 0.66)
         {
             message = "Мать наносит удар ногой!!!       ";
             damage = boss.LegPunch();

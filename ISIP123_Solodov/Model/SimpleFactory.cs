@@ -13,11 +13,11 @@ namespace ISIP123_Solodov.Model
             switch (type) 
             {
                 case 0:
-                    return new BoomFly(15, 2, 0.1, "Красная Бомбомуха", 10);
+                    return new BoomFly(15, 2, 0.1, "Красная Бомбомуха", 0.1);
                 case 1:
                     return new Gurgling(20, 3, 0.1, "Булькающий", true);
                 case 2:
-                    return new Fatty(20, 2.5, 0.2, "Толстяк", 10);
+                    return new Fatty(20, 2.5, 0.2, "Толстяк", 0.1);
                 default: return null;
             }
         }
