@@ -30,7 +30,7 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <Image Source="/Images/MiniMagdaline.png" Margin="15" Height="200" Grid.Row="0"/>
+            <Image Source="/Images/MiniCharacters/MiniMagdaline.png" Margin="15" Height="200" Grid.Row="0"/>
             <StackPanel Grid.Row="1" Margin="35">
                 <TextBlock Text="HP:       |  |  |  |" FontSize="20" FontWeight="Bold"/>
                 <TextBlock Text="DMG:   |  | " FontSize="20" FontWeight="Bold"/>
@@ -45,7 +45,7 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <Image Source="/Images/MiniIsaac.png" Margin="15" Height="200" Grid.Row="0"/>
+            <Image Source="/Images/MiniCharacters/MiniIsaac.png" Margin="15" Height="200" Grid.Row="0"/>
             <StackPanel Grid.Row="1" Margin="35">
                 <TextBlock Text="HP:       |  |  |" FontSize="20" FontWeight="Bold"/>
                 <TextBlock Text="DMG:   |  | " FontSize="20" FontWeight="Bold"/>
@@ -60,7 +60,7 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <Image Source="/Images/MiniKain.png" Margin="15" Height="200" Grid.Row="0"/>
+            <Image Source="/Images/MiniCharacters/MiniKain.png" Margin="15" Height="200" Grid.Row="0"/>
             <StackPanel Grid.Row="1" Margin="35">
                 <TextBlock Text="HP:       |  |" FontSize="20" FontWeight="Bold"/>
                 <TextBlock Text="DMG    |  |  |" FontSize="20" FontWeight="Bold"/>

@@ -140,22 +140,49 @@
     <Resource Include="Images\IsaacLogo.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\MiniIsaac.png" />
+    <Resource Include="Images\MiniCharacters\MiniIsaac.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\MiniMagdaline.png" />
+    <Resource Include="Images\MiniCharacters\MiniMagdaline.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\MiniKain.png" />
+    <Resource Include="Images\MiniCharacters\MiniKain.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Isaac.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\BasementBack.png" />
+    <Resource Include="Images\Background\BasementBack.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\DepthsBack.png" />
+    <Resource Include="Images\Background\DepthsBack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icons\DamageIcon.png" />
+    <Resource Include="Images\Icons\DefenceIcon.png" />
+    <Resource Include="Images\Icons\HealthIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Images\Boss\" />
+    <Folder Include="Images\Enemy\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Item\bumbo.png" />
+    <Resource Include="Images\Item\darkMatter.png" />
+    <Resource Include="Images\Item\guillotine.png" />
+    <Resource Include="Images\Item\habit.png" />
+    <Resource Include="Images\Item\ipecac.png" />
+    <Resource Include="Images\Item\luckyFoot.png" />
+    <Resource Include="Images\Item\momsUnderwear.png" />
+    <Resource Include="Images\Item\pentagram.png" />
+    <Resource Include="Images\Item\piggyBank.png" />
+    <Resource Include="Images\Item\pjs.png" />
+    <Resource Include="Images\Item\sacredHeart.png" />
+    <Resource Include="Images\Item\stapler.png" />
+    <Resource Include="Images\Item\stye.png" />
+    <Resource Include="Images\Item\synthoil.png" />
+    <Resource Include="Images\Item\theBelt.png" />
+    <Resource Include="Images\Item\yumHeart.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

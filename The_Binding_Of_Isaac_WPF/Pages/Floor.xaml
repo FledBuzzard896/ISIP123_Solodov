@@ -30,9 +30,37 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
+
             <TextBlock Text="Статистика:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Grid.Row="0" Grid.ColumnSpan="2"/>
-            <!-- В первом столбце иконки урона, защиты и хп во второй их значения-->
+            <!-- Здоровье -->
+            <Image Source="/Images/Icons/HealthIcon.png" Margin="30,0,5,5" Width="50" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"/>
+            <TextBlock x:Name="hpBar" Text="test" Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom" Margin="5,0,0,15" FontSize="16" FontWeight="Bold"/>
+            <!-- Урон -->
+            <Image Source="/Images/Icons/DamageIcon.png"  Margin="30,0,5,0" Width="50" Grid.Row="2" Grid.Column="0"/>
+            <TextBlock x:Name="dmgBar" Text="test" Grid.Row="2" Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Center" FontSize="16" FontWeight="Bold"/>
+            <!-- Защита --> 
+            <Image Source="/Images/Icons/DefenceIcon.png"  Margin="30,0,5,0" Width="50" VerticalAlignment="Top" Grid.Row="3" Grid.Column="0"/>
+            <TextBlock x:Name="dfncBar" Text="test" Grid.Row="3" Grid.Column="1" Margin="5,15,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+        </Grid>
+        <Grid x:Name="FieldGrid" Margin="10" Grid.Row="0" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- Здоровье врага -->
+            <TextBlock x:Name="EnemyHealthBar" Text="" Margin="10" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
+            <!-- Урон врага -->
+            <TextBlock x:Name="EnemyDamageBar" Text="" Margin="10" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1"/>
+            <!-- Описание предмета -->
+            <ScrollViewer VerticalScrollBarVisibility="Hidden" Grid.Row="1" Grid.ColumnSpan="2">
+                <TextBlock x:Name="ItemDescriptionBar" Text="" Margin="10" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" TextWrapping="Wrap"/>
+            </ScrollViewer>
+            
         </Grid>
     </Grid>
 </Page>
