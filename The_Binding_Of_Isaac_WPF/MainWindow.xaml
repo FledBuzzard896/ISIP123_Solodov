@@ -6,8 +6,19 @@
         xmlns:local="clr-namespace:The_Binding_Of_Isaac_WPF"
         mc:Ignorable="d"
         Title="The Binding Of Isaac: Rebirth" Height="500" Width="800"
-        Background="#cbc0bc" PreviewKeyDown="Window_PreviewKeyDown">
-    <Grid>
+        PreviewKeyDown="Window_PreviewKeyDown">
+    <Grid x:Name="RootGrid" Background="#cbc0bc">
+
+        <Image x:Name="BasementBackImage" 
+           Source="/Images/BasementBack.png" 
+           Stretch="Fill" 
+           Visibility="Hidden"/>
+
+        <Image x:Name="DepthBackImage" 
+           Source="/Images/DepthsBack.png" 
+           Stretch="Fill" 
+           Visibility="Hidden"/>
+
         <Frame x:Name="MainFrame" Source="Pages/MainMenu.xaml" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

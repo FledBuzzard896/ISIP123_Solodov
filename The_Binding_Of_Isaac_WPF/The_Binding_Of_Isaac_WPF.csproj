@@ -71,6 +71,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Floor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Lore.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -97,6 +101,9 @@
     <Compile Include="Model\Weapon.cs" />
     <Compile Include="Pages\CharacterSelection.xaml.cs">
       <DependentUpon>CharacterSelection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Floor.xaml.cs">
+      <DependentUpon>Floor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Lore.xaml.cs">
       <DependentUpon>Lore.xaml</DependentUpon>
@@ -143,6 +150,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Isaac.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\BasementBack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\DepthsBack.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
