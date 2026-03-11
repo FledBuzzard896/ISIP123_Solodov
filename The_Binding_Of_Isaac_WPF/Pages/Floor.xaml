@@ -80,9 +80,8 @@
             <ListBox x:Name="ToolBar" Grid.Row="1" Margin="5" ItemsSource="{Binding Path=sborochka_items}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" Background="Transparent" BorderThickness="0" Padding="0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Margin="10,0,10,10" Orientation="Vertical">
-                            <Image Source="{Binding image}" Width="100" Height="100"/>
-                            <TextBlock Text="{Binding name}"/>
+                        <StackPanel Margin="5" Orientation="Vertical">
+                            <Image Source="{Binding inventory}" Width="35" Height="35"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -93,5 +92,10 @@
                 </ListBox.ItemsPanel>
             </ListBox>
         </Grid>
+
+        <StackPanel x:Name="Buttons" Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:Name="PozitiveBtn" Content="Атаковать/Взять предмет" Width="125" Height="30" Margin="0,0,20,0" Click="PozitiveBtn_Click"/>
+            <Button x:Name="NegativeBtn" Content="Уклониться/Пропустить предмет" Width="125" Height="30" Click="NegativeBtn_Click"/>
+        </StackPanel>
     </Grid>
 </Page>

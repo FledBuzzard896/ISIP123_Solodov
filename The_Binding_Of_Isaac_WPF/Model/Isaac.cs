@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ISIP123_Solodov.Model
+namespace The_Binding_Of_Isaac_WPF.Model.Model
 {
     internal class Isaac
     {
@@ -12,18 +12,10 @@ namespace ISIP123_Solodov.Model
         private static double damage;
         private static double defence;
         private static string inventory;
-
-        public double Hp => hp;
-        public double Damage => damage;
-        public double Defence => defence;
-
-        //public Isaac(double hp, double damage, double defence, string inventory)
-        //{
-        //    this.hp = hp;
-        //    this.damage = damage;
-        //    this.defence = defence;
-        //    this.inventory = inventory;
-        //}
+        public static bool isIsaacAlive = true;
+        public static double Hp => hp;
+        public static double Damage => damage;
+        public static double Defence => defence;
 
         public static void SetStats(double inputHP, double inputDMG, double inputDFNC, string inputInventory) 
         { 

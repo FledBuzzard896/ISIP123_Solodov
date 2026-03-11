@@ -17,25 +17,20 @@ using System.Windows.Shapes;
 namespace The_Binding_Of_Isaac_WPF.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для Floor.xaml
+    /// Логика взаимодействия для GenerateFloor.xaml
     /// </summary>
-    public partial class Floor : Page
+    public partial class GenerateFloor : Page
     {
-        public Floor()
+        public GenerateFloor()
         {
             InitializeComponent();
-
-            
         }
 
-        private void PozitiveBtn_Click(object sender, RoutedEventArgs e)
+        private void generateFloor_Click(object sender, RoutedEventArgs e)
         {
-            
-        }
-
-        private void NegativeBtn_Click(object sender, RoutedEventArgs e)
-        {
-
+            GameRandom gameRandom = new GameRandom();
+            int countOfRooms = gameRandom.GenerateRooms();
+            NavigationService.Navigate(new MenuNeutralRoom(countOfRooms));
         }
     }
 }

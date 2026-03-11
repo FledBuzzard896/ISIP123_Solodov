@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ISIP123_Solodov.Model
+namespace The_Binding_Of_Isaac_WPF.Model
 {
     internal class BabyPlum : BoomFly
     {

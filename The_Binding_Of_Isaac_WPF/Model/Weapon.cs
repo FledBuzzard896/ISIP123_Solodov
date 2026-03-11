@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ISIP123_Solodov.Model
+namespace The_Binding_Of_Isaac_WPF.Model
 {
     internal class Weapon : Item
     {
         private double weaponDamage;
 
-        public Weapon(string name, double weaponDamage, string description) : base(name, description)
+        public Weapon(string name, double weaponDamage, string description, string imgUrl) : base(name, description, imgUrl)
         {
             this.weaponDamage = weaponDamage;
         }

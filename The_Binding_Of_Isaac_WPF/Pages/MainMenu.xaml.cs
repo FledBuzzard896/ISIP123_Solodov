@@ -28,7 +28,7 @@ namespace The_Binding_Of_Isaac_WPF.Pages
 
         private void startBtn_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new CharacterSelection());
+            NavigationService.Navigate(new Lore());
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ISIP123_Solodov.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -50,7 +51,7 @@ namespace The_Binding_Of_Isaac_WPF.Pages
 
         private void skipLoreBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.Navigate(new CharacterSelection());
         }
     }
 }

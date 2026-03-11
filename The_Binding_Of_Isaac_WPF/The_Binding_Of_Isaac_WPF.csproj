@@ -75,6 +75,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\GenerateFloor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Lore.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -83,13 +87,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\MenuNeutralRoom.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Armor.cs" />
     <Compile Include="Model\BabyPlum.cs" />
     <Compile Include="Model\BoomFly.cs" />
+    <Compile Include="Model\Data.cs" />
     <Compile Include="Model\Enemy.cs" />
     <Compile Include="Model\Fatty.cs" />
+    <Compile Include="Model\GameRandom.cs" />
     <Compile Include="Model\Gurdy.cs" />
     <Compile Include="Model\GurdyJr.cs" />
     <Compile Include="Model\Gurgling.cs" />
@@ -105,11 +115,17 @@
     <Compile Include="Pages\Floor.xaml.cs">
       <DependentUpon>Floor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\GenerateFloor.xaml.cs">
+      <DependentUpon>GenerateFloor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Lore.xaml.cs">
       <DependentUpon>Lore.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MenuNeutralRoom.xaml.cs">
+      <DependentUpon>MenuNeutralRoom.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -186,6 +202,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\chest.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IsaacLike.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
