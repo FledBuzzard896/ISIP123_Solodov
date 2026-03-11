@@ -14,7 +14,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <TextBlock Background="Black" Grid.RowSpan="2"/>
-        <Image x:Name="IsaacNightmare" Width="300" Height="300" Grid.RowSpan="2"/>
+        <Image x:Name="IsaacNightmare"  Width="300" Height="300" Grid.RowSpan="2"/>
         <Button x:Name="generateFloor" Content="Далее" Width="50" Height="20" FontWeight="Bold" HorizontalAlignment="Right" Margin="10" Grid.Row="1" Click="generateFloor_Click"/>
     </Grid>
 </Page>

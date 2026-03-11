@@ -12,13 +12,15 @@ namespace The_Binding_Of_Isaac_WPF.Model
         private double damage;
         private double defence;
         public string description;
+        public string imgUrl;
 
-        public Enemy(double health, double damage, double defence, string description)
+        public Enemy(double health, double damage, double defence, string description, string imgUrl)
         {
             this.health = health;
             this.damage = damage;
             this.defence = defence;
             this.description = description;
+            this.imgUrl = imgUrl;
         }
 
         public double Health => health;

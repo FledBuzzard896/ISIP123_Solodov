@@ -179,8 +179,7 @@
     <Resource Include="Images\Icons\HealthIcon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Images\Boss\" />
-    <Folder Include="Images\Enemy\" />
+    <Resource Include="Images\Boss\attack\megafatty_attack.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Item\bumbo.png" />
@@ -205,6 +204,27 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\IsaacLike.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Boss\neutral\megafatty_neutral.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="babyplum_neutral.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="babyplum_attack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="gurdyjr_neutral.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="gurdyjr_attack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="gurdy_neutral.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="gurdy_attack.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

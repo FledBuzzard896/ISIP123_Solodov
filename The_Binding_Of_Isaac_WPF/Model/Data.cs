@@ -1,28 +1,14 @@
-﻿using The_Binding_Of_Isaac_WPF.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using The_Binding_Of_Isaac_WPF.Model;
 
 namespace The_Binding_Of_Isaac_WPF.Model
 {
     internal class Data
     {
-        
-        public static List<Enemy> lstOfEnemies = new List<Enemy>();
-        public static  List<Enemy> lstOfBosses = new List<Enemy>();
-
-        public static Armor MomsUnderwear = new Armor("Мамино бельё", 0.1, "Снижает получаемый урон на 10%");
-        public static Armor Pjs = new Armor("Пижама", 0.2, "Снижает получаемый урон на 20%");
-        public static Armor Habit = new Armor("Одеяние", 0.1, "Снижает получаемый урон на 10%");
-
-        public static Item YumHeart = new Item("Ням-сердце", "Даёт возможность его съесть когда у персонажа остается меньше 25% здоровья");
-        public static Item LuckyLeg = new Item("Счастливая нога", "+ 1 удача");
-        public static Item TheBelt = new Item("Ремень", "Вы быстрее бегаете");
-        public static Item PiggyBank = new Item("Свинюшка", "+ 3 монеты");
-        public static Item Bumbo = new Item("Бамбо", "Фамильяр, который собирает монетки и растет за счет них, больше он ничего не делает");
-
         public static List<Item> lstOfPickUps = new List<Item>
         {
             new Weapon("Пентаграмма", 1, "+ Урон, + 10% шанс сделки", "Images/Item/pentagram.png"),
@@ -39,10 +25,18 @@ namespace The_Binding_Of_Isaac_WPF.Model
             new Armor("Одеяние", 0.1, "Снижает получаемый урон на 10%", "Images/Item/habit.png"),
 
             new Item("Ням-сердце", "Даёт возможность его съесть когда у персонажа остается меньше 25% здоровья", "Images/Item/yumHeart.png"),
+            new Item("Счастливая нога", "+ 1 удача", "Images/Item/luckyFoot.png"),
+            new Item("Ремень", "Вы быстрее бегаете", "Images/Item/theBelt.png"),
+            new Item("Свинюшка", "+ 3 монеты", "Images/Item/piggyBank.png"),
+            new Item("Бамбо", "Фамильяр, который собирает монетки и растет за счет них, больше он ничего не делает", "Images/Item/bumbo.png")
+        };
 
-            Pentagram, Synthoil, DarkMatter, Barley, Stapler, SacredHeart, Guillotine, Ipecac,
-            MomsUnderwear, Pjs, Habit,
-            YumHeart, LuckyLeg, TheBelt, PiggyBank, Bumbo
+        public static List<Enemy> lstOfBosses = new List<Enemy>() 
+        {
+            new BabyPlum(15, 2, 0.1, "Сливка", 10),
+            new GurdyJr(20, 3, 0.1, "Гёрди Младшая", true),
+            new MegaFatty(20, 2.5, 0.2, "Мега Толстяк", 10),
+            new Gurdy(20, 3, 0.1, "Гёрди", true, 10)
         };
     }
 }

@@ -10,7 +10,7 @@ namespace The_Binding_Of_Isaac_WPF.Model
     {
         private double critChance;
 
-        public BoomFly(double health, double damage, double defence, string description, double crit) : base(health, damage, defence, description)
+        public BoomFly(double health, double damage, double defence, string description, string imgUrl, double crit) : base(health, damage, defence, description, imgUrl)
         {
             this.critChance = crit;
         }

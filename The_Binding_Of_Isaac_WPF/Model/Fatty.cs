@@ -10,7 +10,7 @@ namespace The_Binding_Of_Isaac_WPF.Model
     {
         private double frozenCrit;
 
-        public Fatty(double health, double damage, double defence, string description, double frozenCrit) : base(health, damage, defence, description)
+        public Fatty(double health, double damage, double defence, string description, string imgUrl, double frozenCrit) : base(health, damage, defence, description, imgUrl)
         {
             this.frozenCrit = frozenCrit;
         }
