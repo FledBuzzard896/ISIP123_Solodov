@@ -179,9 +179,6 @@
     <Resource Include="Images\Icons\HealthIcon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Boss\attack\megafatty_attack.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Item\bumbo.png" />
     <Resource Include="Images\Item\darkMatter.png" />
     <Resource Include="Images\Item\guillotine.png" />
@@ -206,25 +203,32 @@
     <Resource Include="Images\IsaacLike.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="nightmare1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Boss\attack\babyplum_attack.png" />
+    <Resource Include="Images\Boss\neutral\babyplum_neutral.png" />
+    <Resource Include="Images\Enemy\attack\fatty_attack.png" />
+    <Resource Include="Images\Enemy\neutral\fatty_neutral.png" />
+    <Resource Include="Images\Boss\attack\gurdyjr_attack.png" />
+    <Resource Include="Images\Boss\neutral\gurdyjr_neutral.png" />
+    <Resource Include="Images\Boss\attack\gurdy_attack.png" />
+    <Resource Include="Images\Boss\neutral\gurdy_neutral.png" />
+    <Resource Include="Images\Enemy\attack\gurgling_attack.png" />
+    <Resource Include="Images\Enemy\neutral\gurgling_neutral.png" />
+    <Resource Include="Images\Boss\attack\megafatty_attack.png" />
     <Resource Include="Images\Boss\neutral\megafatty_neutral.png" />
+    <Resource Include="Images\Enemy\attack\redboomfly_attack.png" />
+    <Resource Include="Images\Enemy\neutral\redboomfly_neutral.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="babyplum_neutral.png" />
+    <Resource Include="nightmare2.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="babyplum_attack.png" />
+    <Resource Include="nightmare3.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="gurdyjr_neutral.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="gurdyjr_attack.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="gurdy_neutral.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="gurdy_attack.png" />
+    <Resource Include="nightmare4.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
