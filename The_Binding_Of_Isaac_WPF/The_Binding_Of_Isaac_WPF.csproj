@@ -168,12 +168,6 @@
     <Resource Include="Images\Isaac.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Background\BasementBack.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Background\DepthsBack.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Icons\DamageIcon.png" />
     <Resource Include="Images\Icons\DefenceIcon.png" />
     <Resource Include="Images\Icons\HealthIcon.png" />
@@ -229,6 +223,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="nightmare4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Background\depths_4K_pixel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Background\basement_4К_pixel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Background\basement_4К_pixel_v2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

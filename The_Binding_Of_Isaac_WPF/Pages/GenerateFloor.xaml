@@ -16,10 +16,5 @@
         <TextBlock Background="Black" Grid.RowSpan="2"/>
         <Image x:Name="IsaacNightmare"  Width="300" Height="300" Grid.RowSpan="2"/>
         <Button x:Name="generateFloor" Content="Далее" Width="50" Height="20" FontWeight="Bold" HorizontalAlignment="Right" Margin="10" Grid.Row="1" Click="generateFloor_Click"/>
-        <Image Margin="0,0,127,16" Grid.RowSpan="2" Source="/Image1.png" Stretch="Fill"/>
-        <Image Margin="0,0,138,8" Grid.RowSpan="2" Source="/Image1.png" Stretch="Fill"/>
-        <Image Margin="0,0,-165,-110" Grid.RowSpan="2" Source="/Image1.png" Stretch="Fill"/>
-        <Image Margin="0,0,-194,-188" Grid.RowSpan="2" Source="/Image1.png" Stretch="Fill"/>
-        <Image Margin="0,0,-183,-177" Grid.RowSpan="2" Source="/Image1.png" Stretch="Fill"/>
     </Grid>
 </Page>
