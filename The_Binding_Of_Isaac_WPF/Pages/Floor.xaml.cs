@@ -25,7 +25,11 @@ namespace The_Binding_Of_Isaac_WPF.Pages
         {
             InitializeComponent();
 
-            
+            ToolBar.ItemsSource = Isaac.inventory;
+
+            hpBar.Text = Isaac.Hp.ToString();
+            dmgBar.Text = Isaac.Damage.ToString();
+            dfncBar.Text = Isaac.Defence.ToString();
         }
 
         private void PozitiveBtn_Click(object sender, RoutedEventArgs e)

@@ -10,12 +10,12 @@
     <Grid x:Name="RootGrid" Background="#cbc0bc">
 
         <Image x:Name="BasementBackImage" 
-           Source="/Images/Background/BasementBack.png" 
+           Source="/Images/Background/basement_4К_pixel_v2.png" 
            Stretch="Fill" 
            Visibility="Hidden"/>
 
         <Image x:Name="DepthBackImage" 
-           Source="/Images/Background/DepthsBack.png" 
+           Source="/Images/Background/depths_4K_pixel.png" 
            Stretch="Fill" 
            Visibility="Hidden"/>
 

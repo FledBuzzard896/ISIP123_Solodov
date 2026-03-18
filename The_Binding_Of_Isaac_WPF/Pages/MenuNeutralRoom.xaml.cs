@@ -24,10 +24,13 @@ namespace The_Binding_Of_Isaac_WPF.Pages
         public MenuNeutralRoom()
         {
             InitializeComponent();
+            var mainWindow = (MainWindow)Application.Current.MainWindow;
 
             if (Isaac.floorsLeft > 1 && Isaac.isIsaacAlive)
             {
                 floorTxtBlck.Text = $"Подвал: {Math.Abs(Isaac.floorsLeft - 5)}";
+                // Обращение к Images в MainWimdow.xaml
+                mainWindow.BasementBackImage.Visibility = Visibility.Visible;
             }
             else if (Isaac.isIsaacAlive && Isaac.floorsLeft == 0) 
             {
@@ -35,6 +38,8 @@ namespace The_Binding_Of_Isaac_WPF.Pages
             }
             else if (Isaac.isIsaacAlive)
             {
+                mainWindow.BasementBackImage.Visibility = Visibility.Collapsed;
+                mainWindow.DepthBackImage.Visibility = Visibility.Visible;  
                 floorTxtBlck.Text = $"Глубины: {Isaac.floorsLeft}";
             }
 
@@ -57,19 +62,21 @@ namespace The_Binding_Of_Isaac_WPF.Pages
             }
         }
 
-        private void UseItem_Click(object sender, RoutedEventArgs e)
+        private void UseItem_Click(object sender, MouseButtonEventArgs e)
         {
-            var button = (Button)sender;
+            var listBox = sender as ListBox;
+            if (listBox == null) return;
 
-            if (button.DataContext is KeyValuePair<string, string> item) 
+            // Получаем выбранный элемент
+            var clickedItem = listBox.SelectedItem as Item;
+
+            if (clickedItem != null && clickedItem.name == "Ням-сердце") // используйте Name, если переименовали свойство
             {
-                string key = item.Key;
-
-                if (key == "Ням-сердце") 
-                {
-                    Isaac.HealthUp();
-                }
+                Isaac.HealthUp();
+                ToolBar.ItemsSource = null;
+                ToolBar.ItemsSource = Isaac.inventory;
             }
+            e.Handled = true;
         }
     }
 }

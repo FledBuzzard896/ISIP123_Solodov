@@ -8,9 +8,9 @@ namespace The_Binding_Of_Isaac_WPF.Model
 {
     internal class Item
     {
-        public string name;
-        public string description;
-        public string imgUrl;
+        public string name { get; set; }
+        public string description { get; set; }
+        public string imgUrl { get; set; }
 
         public Item(string name, string description, string imgUrl)
         {
