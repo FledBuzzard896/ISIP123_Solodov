@@ -29,19 +29,28 @@ namespace The_Binding_Of_Isaac_WPF.Pages
 
         private void MagdalineBtn_Click(object sender, RoutedEventArgs e)
         {
-            Isaac.SetStats(80, 3.5, 0.05, "Ням-сердце");
+            List<Item> inv = new List<Item>()
+            {
+                Data.lstOfPickUps.First(x => x.name == "Ням-сердце")
+            };
+            Isaac.SetStats(80, 80, 3.5, 0.05, inv);
             NavigationService.Navigate(new GenerateFloor());
         }
 
         private void IsaacBtn_Click(object sender, RoutedEventArgs e)
         {
-            Isaac.SetStats(60, 3.5, 0.1, "Девственные слёзы");
+            List<Item> inv = new List<Item>();
+            Isaac.SetStats(60, 60, 3.5, 0.1, inv);
             NavigationService.Navigate(new GenerateFloor());
         }
 
         private void KainBtm_Click(object sender, RoutedEventArgs e)
         {
-            Isaac.SetStats(40, 3.5 * 1.2, 0.25, "Счастливая нога");
+            List<Item> inv = new List<Item>() 
+            {
+                Data.lstOfPickUps.First(x => x.name == "Счастливая нога")
+            };
+            Isaac.SetStats(40, 40, 3.5 * 1.2, 0.25, inv);
             NavigationService.Navigate(new GenerateFloor());
         }
     }

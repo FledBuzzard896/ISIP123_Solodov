@@ -23,17 +23,17 @@
             <Image Source="/Images/IsaacLike.png" Margin="0,15,0,0"/>
         </StackPanel>
         <StackPanel Grid.Column="1" Margin="20" VerticalAlignment="Center">
-            <Button x:Name="UseItem" Content="Использовать предмет" Width="150" Height="25" FontWeight="Bold" Margin="0,0,0,15" Click="UseItem_Click"/>
-            <Button x:Name="GoNextRoom" Content="Зайти в комнату" Width="150" Height="25" FontWeight="Bold" Click="GoNextRoom_Click"/>
+            <!-- <Button x:Name="UseItem" Content="Использовать предмет" Width="150" Height="25" FontWeight="Bold" Margin="0,0,0,15" Click="UseItem_Click"/> -->
+            <Button x:Name="GoNextRoom" Content="Зайти в комнату" Width="200" Height="25" FontWeight="Bold" FontSize="16" Click="GoNextRoom_Click"/>
         </StackPanel>
         <StackPanel Orientation="Vertical" Margin="20" Grid.Column="2">
             <TextBlock Text="Инвентарь:" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
-            <ListBox x:Name="ToolBar" Grid.Row="1" Margin="5" ItemsSource="{Binding Path=sborochka_items}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" Background="Transparent" BorderThickness="0" Padding="0">
+            <ListBox x:Name="ToolBar" Grid.Row="1" Margin="5" ItemsSource="{Binding Path=inventory}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" Background="Transparent" BorderThickness="0" Padding="0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Margin="5" Orientation="Vertical">
-                            <Image Source="{Binding inventory}" Width="35" Height="35"/>
-                            <Button Content="Выбрать" FontWeight="Bold"/>
+                            <Image Source="{Binding ingUrl}" Width="35" Height="35"/>
+                            <Button Content="Выбрать" FontWeight="Bold" Click="UseItem_Click"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

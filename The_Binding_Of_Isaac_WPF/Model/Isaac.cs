@@ -9,11 +9,13 @@ namespace The_Binding_Of_Isaac_WPF.Model
     internal class Isaac
     {
         private static double hp;
+        private static double MAX_HP;
         private static double damage;
         private static double defence;
-        private static string inventory;
-        public static bool isIsaacAlive = true;
 
+        public static bool isIsaacAlive = true;
+        public static int floorsLeft = 4;
+        public static List<Item> inventory = new List<Item>();
         public static List<string> listOfNightmares = new List<string>()
         {
             "/Images/Nightmares/nightmare1.png",
@@ -26,31 +28,18 @@ namespace The_Binding_Of_Isaac_WPF.Model
         public static double Damage => damage;
         public static double Defence => defence;
 
-        public static void SetStats(double inputHP, double inputDMG, double inputDFNC, string inputInventory) 
+        public static void SetStats(double inputHP, double inputMaxHP, double inputDMG, double inputDFNC, List<Item> inputInventory) 
         { 
             hp = inputHP;
+            MAX_HP = inputMaxHP;
             damage = inputDMG;
             defence = inputDFNC;
             inventory = inputInventory;
         }
 
-        public void PrintInfo()
-        {
-            Console.WriteLine($"\n=============== Статистика ===============\nHP: {Math.Round(hp, 1)}\nУрон: {Math.Round(damage, 2)}\nБроня: {Math.Round(defence, 2)}\nPull-up: {inventory}\n==========================================\n");
-        }
-
-        private int count = 1;
         public void AddPickUp(Item pickUp)
         {
-            inventory += ", ";
-
-            if (count % 3 == 0)
-            {
-                inventory += "\n";
-            }
-
-            inventory += pickUp.name;
-            count++;
+            inventory.Add(pickUp);
         }
 
         public void AddDamage(Weapon pickUp)
@@ -63,47 +52,17 @@ namespace The_Binding_Of_Isaac_WPF.Model
             defence += pickUp.GetDefence();
         }
 
-        public void HealthUp(double maxHP)
+        public static void HealthUp()
         {
-            if (hp <= maxHP * 0.25)
-            {
-                hp = maxHP;
+            hp = MAX_HP;
 
-                string newInventory = "";
-                int c = 0;
-
-                for (int i = 0; i < inventory.Length; i++)
-                {
-                    // Проверяем, начинается ли с текущей позиции "Ням-сердце"
-                    if (i <= inventory.Length - "Ням-сердце".Length &&
-                        inventory.Substring(i, "Ням-сердце".Length) == "Ням-сердце" && c == 0)
-                    {
-                        // Пропускаем "Ням-сердце"
-                        i += "Ням-сердце".Length - 1;
-                        c = 1;
-                    }
-                    else
-                    {
-                        newInventory += inventory[i];
-                    }
-                }
-
-                inventory = newInventory;
-            }
-            else
-            {
-                Console.WriteLine("Вы еще не можете использовать этот предмет!");
-            }
+            var heart = inventory.First(x => x.name == "Ням-сердце");
+            inventory.Remove(heart);
         }
 
         public void HealthDown(double damage)
         {
             hp -= damage;
-        }
-
-        public string GetInventory()
-        {
-            return inventory;
         }
     }
 }

@@ -23,9 +23,9 @@ namespace The_Binding_Of_Isaac_WPF.Model
         {
             return _random.Next(4, 7);
         }
-        public int RandomNightmare() 
+        public int RandomNightmare(List<string> list) 
         {
-            return _random.Next(0,3);
+            return _random.Next(0,list.Count);
         }
         public bool MobOrChest() 
         {

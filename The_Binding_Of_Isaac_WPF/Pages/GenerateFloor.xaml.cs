@@ -32,7 +32,7 @@ namespace The_Binding_Of_Isaac_WPF.Pages
             bitmap.EndInit();
             Isaac.Source = bitmap;
 
-            int rn = gameRandom.RandomNightmare();
+            int rn = gameRandom.RandomNightmare(Model.Isaac.listOfNightmares);
             string path = Model.Isaac.listOfNightmares[rn];
             Model.Isaac.listOfNightmares.Remove(path);
 
@@ -45,8 +45,20 @@ namespace The_Binding_Of_Isaac_WPF.Pages
 
         private void generateFloor_Click(object sender, RoutedEventArgs e)
         {
-            int countOfRooms = gameRandom.GenerateRooms();
-            NavigationService.Navigate(new MenuNeutralRoom(1, countOfRooms));
+            if (Model.Isaac.floorsLeft > 0)
+            {
+                // Генерируем комнаты на этаж
+                Model.Floor.THIS_ROOM = 1;
+                Model.Floor.ALL_ROOMS = gameRandom.GenerateRooms();
+
+                NavigationService.Navigate(new MenuNeutralRoom());
+                Model.Isaac.floorsLeft -= 1;
+            }
+            else 
+            {
+                Model.Floor.IS_FINAL_BOSS = true;
+                NavigationService.Navigate(new MenuNeutralRoom());
+            }
         }
     }
 }

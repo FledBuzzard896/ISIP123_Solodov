@@ -99,6 +99,7 @@
     <Compile Include="Model\Data.cs" />
     <Compile Include="Model\Enemy.cs" />
     <Compile Include="Model\Fatty.cs" />
+    <Compile Include="Model\Floor.cs" />
     <Compile Include="Model\GameRandom.cs" />
     <Compile Include="Model\Gurdy.cs" />
     <Compile Include="Model\GurdyJr.cs" />

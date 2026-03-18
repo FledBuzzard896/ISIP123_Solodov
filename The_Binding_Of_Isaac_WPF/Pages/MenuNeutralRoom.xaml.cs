@@ -21,36 +21,55 @@ namespace The_Binding_Of_Isaac_WPF.Pages
     /// </summary>
     public partial class MenuNeutralRoom : Page
     {
-        int THIS_ROOM = 0;
-        int ALL_ROOMS = 0;
-        public MenuNeutralRoom(int thisRoom,int countOfRooms)
+        public MenuNeutralRoom()
         {
             InitializeComponent();
-            ALL_ROOMS = countOfRooms;
-            THIS_ROOM = thisRoom;
 
-            if (THIS_ROOM <= 3 && Isaac.isIsaacAlive)
+            if (Isaac.floorsLeft > 1 && Isaac.isIsaacAlive)
             {
-                floorTxtBlck.Text = $"Подвал: {THIS_ROOM}";
+                floorTxtBlck.Text = $"Подвал: {Math.Abs(Isaac.floorsLeft - 5)}";
+            }
+            else if (Isaac.isIsaacAlive && Isaac.floorsLeft == 0) 
+            {
+                floorTxtBlck.Text = $"Комната матери.";
             }
             else if (Isaac.isIsaacAlive)
             {
-                floorTxtBlck.Text = $"Глубины: {THIS_ROOM}";
+                floorTxtBlck.Text = $"Глубины: {Isaac.floorsLeft}";
             }
 
             hpTxtBlck.Text = $"Здоровье: {Isaac.Hp.ToString()}";
             damageTxtBlck.Text = $"Урон: {Isaac.Damage.ToString()}";
             defenceTxtBlck.Text = $"Защита: {Isaac.Defence.ToString()}";
+
+            ToolBar.ItemsSource = Isaac.inventory;
         }
 
         private void GoNextRoom_Click(object sender, RoutedEventArgs e)
         {
-            //if (THIS_ROOM )
+            if (Model.Floor.IS_FINAL_BOSS)
+            {
+                // Навигация на мать
+            }
+            else 
+            {
+                NavigationService.Navigate(new Floor());
+            }
         }
 
         private void UseItem_Click(object sender, RoutedEventArgs e)
         {
+            var button = (Button)sender;
 
+            if (button.DataContext is KeyValuePair<string, string> item) 
+            {
+                string key = item.Key;
+
+                if (key == "Ням-сердце") 
+                {
+                    Isaac.HealthUp();
+                }
+            }
         }
     }
 }

@@ -29,6 +29,11 @@ namespace The_Binding_Of_Isaac_WPF
         {
             if (e.Key == Key.Escape)
             {
+                if (MainFrame.Content is Pages.GenerateFloor || MainFrame.Content is Pages.Floor || MainFrame.Content is Pages.MenuNeutralRoom)
+                {
+                    return;
+                }
+
                 // Пытаемся получить текущую страницу из фрейма
                 if (MainFrame.Content is Page currentPage)
                 {
