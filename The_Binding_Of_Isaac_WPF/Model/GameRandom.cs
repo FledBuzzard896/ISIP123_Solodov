@@ -23,7 +23,10 @@ namespace The_Binding_Of_Isaac_WPF.Model
         {
             return _random.Next(4, 7);
         }
-
+        public int RandomNightmare() 
+        {
+            return _random.Next(0,3);
+        }
         public bool MobOrChest() 
         {
             return Chance(0.5);

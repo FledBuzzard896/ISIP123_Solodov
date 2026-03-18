@@ -1,4 +1,4 @@
-﻿using ISIP123_Solodov.Model;
+﻿using The_Binding_Of_Isaac_WPF.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -93,10 +93,11 @@
             </ListBox>
         </Grid>
 
+        <TextBlock x:Name="Info" Text="" Margin="5" Grid.Row="1" Grid.Column="0"/>
+
         <StackPanel x:Name="Buttons" Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button x:Name="PozitiveBtn" Content="Атаковать/Взять предмет" Width="125" Height="30" Margin="0,0,20,0" Click="PozitiveBtn_Click"/>
             <Button x:Name="NegativeBtn" Content="Уклониться/Пропустить предмет" Width="125" Height="30" Click="NegativeBtn_Click"/>
         </StackPanel>
-        <Image Grid.ColumnSpan="3" Margin="0,0,126,-291" Grid.RowSpan="2" Source="/Image1.png" Stretch="Fill"/>
     </Grid>
 </Page>

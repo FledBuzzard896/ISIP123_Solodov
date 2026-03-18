@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace The_Binding_Of_Isaac_WPF.Model.Model
+namespace The_Binding_Of_Isaac_WPF.Model
 {
     internal class Isaac
     {
@@ -13,6 +13,15 @@ namespace The_Binding_Of_Isaac_WPF.Model.Model
         private static double defence;
         private static string inventory;
         public static bool isIsaacAlive = true;
+
+        public static List<string> listOfNightmares = new List<string>()
+        {
+            "/Images/Nightmares/nightmare1.png",
+            "/Images/Nightmares/nightmare2.png",
+            "/Images/Nightmares/nightmare3.png",
+            "/Images/Nightmares/nightmare4.png"
+        };
+
         public static double Hp => hp;
         public static double Damage => damage;
         public static double Defence => defence;
@@ -43,14 +52,17 @@ namespace The_Binding_Of_Isaac_WPF.Model.Model
             inventory += pickUp.name;
             count++;
         }
+
         public void AddDamage(Weapon pickUp)
         {
             damage += pickUp.GetDamage();
         }
+
         public void AddDefence(Armor pickUp)
         {
             defence += pickUp.GetDefence();
         }
+
         public void HealthUp(double maxHP)
         {
             if (hp <= maxHP * 0.25)
@@ -83,10 +95,12 @@ namespace The_Binding_Of_Isaac_WPF.Model.Model
                 Console.WriteLine("Вы еще не можете использовать этот предмет!");
             }
         }
+
         public void HealthDown(double damage)
         {
             hp -= damage;
         }
+
         public string GetInventory()
         {
             return inventory;

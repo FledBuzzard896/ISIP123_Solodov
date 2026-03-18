@@ -1,4 +1,4 @@
-﻿using ISIP123_Solodov.Model;
+﻿using The_Binding_Of_Isaac_WPF.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +21,13 @@ namespace The_Binding_Of_Isaac_WPF.Pages
     /// </summary>
     public partial class MenuNeutralRoom : Page
     {
-        int THIS_ROOM = 1;
+        int THIS_ROOM = 0;
         int ALL_ROOMS = 0;
-        public MenuNeutralRoom(int countOfRooms)
+        public MenuNeutralRoom(int thisRoom,int countOfRooms)
         {
             InitializeComponent();
             ALL_ROOMS = countOfRooms;
+            THIS_ROOM = thisRoom;
 
             if (THIS_ROOM <= 3 && Isaac.isIsaacAlive)
             {
@@ -37,14 +38,14 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                 floorTxtBlck.Text = $"Глубины: {THIS_ROOM}";
             }
 
-            hpTxtBlck.Text = Isaac.Hp.ToString();
-            damageTxtBlck.Text = Isaac.Damage.ToString();
-            defenceTxtBlck.Text = Isaac.Defence.ToString();
+            hpTxtBlck.Text = $"Здоровье: {Isaac.Hp.ToString()}";
+            damageTxtBlck.Text = $"Урон: {Isaac.Damage.ToString()}";
+            defenceTxtBlck.Text = $"Защита: {Isaac.Defence.ToString()}";
         }
 
         private void GoNextRoom_Click(object sender, RoutedEventArgs e)
         {
-            if (THIS_ROOM )
+            //if (THIS_ROOM )
         }
 
         private void UseItem_Click(object sender, RoutedEventArgs e)

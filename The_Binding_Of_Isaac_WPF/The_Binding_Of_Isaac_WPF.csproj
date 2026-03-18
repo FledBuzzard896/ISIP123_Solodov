@@ -197,9 +197,6 @@
     <Resource Include="Images\IsaacLike.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="nightmare1.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Boss\attack\babyplum_attack.png" />
     <Resource Include="Images\Boss\neutral\babyplum_neutral.png" />
     <Resource Include="Images\Enemy\attack\fatty_attack.png" />
@@ -216,15 +213,6 @@
     <Resource Include="Images\Enemy\neutral\redboomfly_neutral.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="nightmare2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="nightmare3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="nightmare4.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Background\depths_4K_pixel.png" />
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +220,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Background\basement_4К_pixel_v2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Nightmares\nightmare1.png" />
+    <Resource Include="Images\Nightmares\nightmare2.png" />
+    <Resource Include="Images\Nightmares\nightmare3.png" />
+    <Resource Include="Images\Nightmares\nightmare4.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

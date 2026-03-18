@@ -1,4 +1,4 @@
-﻿using ISIP123_Solodov.Model;
+﻿using The_Binding_Of_Isaac_WPF.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,16 +21,32 @@ namespace The_Binding_Of_Isaac_WPF.Pages
     /// </summary>
     public partial class GenerateFloor : Page
     {
+        GameRandom gameRandom = new GameRandom();
         public GenerateFloor()
         {
             InitializeComponent();
+
+            var bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri("/Images/Isaac.png", UriKind.Relative);
+            bitmap.EndInit();
+            Isaac.Source = bitmap;
+
+            int rn = gameRandom.RandomNightmare();
+            string path = Model.Isaac.listOfNightmares[rn];
+            Model.Isaac.listOfNightmares.Remove(path);
+
+            bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(path, UriKind.Relative);
+            bitmap.EndInit();
+            IsaacNightmare.Source = bitmap;
         }
 
         private void generateFloor_Click(object sender, RoutedEventArgs e)
         {
-            GameRandom gameRandom = new GameRandom();
             int countOfRooms = gameRandom.GenerateRooms();
-            NavigationService.Navigate(new MenuNeutralRoom(countOfRooms));
+            NavigationService.Navigate(new MenuNeutralRoom(1, countOfRooms));
         }
     }
 }

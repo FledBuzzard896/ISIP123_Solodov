@@ -31,12 +31,12 @@ namespace The_Binding_Of_Isaac_WPF.Model
             new Item("Бамбо", "Фамильяр, который собирает монетки и растет за счет них, больше он ничего не делает", "Images/Item/bumbo.png")
         };
 
-        public static List<Enemy> lstOfBosses = new List<Enemy>() 
-        {
-            new BabyPlum(15, 2, 0.1, "Сливка", 10),
-            new GurdyJr(20, 3, 0.1, "Гёрди Младшая", true),
-            new MegaFatty(20, 2.5, 0.2, "Мега Толстяк", 10),
-            new Gurdy(20, 3, 0.1, "Гёрди", true, 10)
-        };
+        //public static List<Enemy> lstOfBosses = new List<Enemy>() 
+        //{
+        //    new BabyPlum(15, 2, 0.1, "Сливка", 10),
+        //    new GurdyJr(20, 3, 0.1, "Гёрди Младшая", true),
+        //    new MegaFatty(20, 2.5, 0.2, "Мега Толстяк", 10),
+        //    new Gurdy(20, 3, 0.1, "Гёрди", true, 10)
+        //};
     }
 }

@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using ISIP123_Solodov.Model;
+using The_Binding_Of_Isaac_WPF.Model;
 
 namespace The_Binding_Of_Isaac_WPF.Pages
 {
