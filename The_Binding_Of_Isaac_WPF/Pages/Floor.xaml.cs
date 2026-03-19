@@ -29,6 +29,7 @@ namespace The_Binding_Of_Isaac_WPF.Pages
         Enemy randomEnemy = null;
         Enemy randomBoss = null;
         Item randomItem = null;
+        double enemyDamage = 0;
         public Floor()
         {
             InitializeComponent();
@@ -36,7 +37,7 @@ namespace The_Binding_Of_Isaac_WPF.Pages
             Loaded += Page_Loaded;
         }
 
-        private void PozitiveBtn_Click(object sender, RoutedEventArgs e)
+        private async void PozitiveBtn_Click(object sender, RoutedEventArgs e)
         {
             if (mobOrChest)
             {
@@ -49,8 +50,20 @@ namespace The_Binding_Of_Isaac_WPF.Pages
             }
             else if (mobOrChest == false && mobIsBoss == false)
             {
+                bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(randomEnemy.imgUrl, UriKind.Relative);
+                bitmap.EndInit();
+                Enemy.Source = bitmap;
+
+                Isaac.HealthDown(enemyDamage);
                 randomEnemy.health -= Isaac.Damage - (Isaac.Damage * randomEnemy.Defence);
+                
                 EnemyHealthBar.Text = $"Здоровье: {randomEnemy.health}";
+                hpBar.Text = $"{Isaac.Hp}";
+                Info.Text = "";
+
+                await Task.Delay(2000);
 
                 if (randomEnemy.health <= 0) 
                 {
@@ -59,6 +72,11 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                 }
                 else 
                 {
+                    bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(Data.FindAttackImageForEnemy(randomEnemy), UriKind.Relative);
+                    bitmap.EndInit();
+                    Enemy.Source = bitmap;
                     OneCicle();
                 }
             }
@@ -84,15 +102,12 @@ namespace The_Binding_Of_Isaac_WPF.Pages
 
         }
 
-        private void OneCicle() 
+        private async void OneCicle() 
         {
             bool userMoveSkip = false;
-            double enemyDamage = 0;
 
             if (mobOrChest == false && mobIsBoss == false) // для обычного моба
             {
-                //if (Isaac.Hp <= Isaac.Max_hp * 0.25) { Isaac.HealthUp(); }
-
                 if (randomEnemy is BoomFly)
                 {
                     // Будет ли крит урон?
@@ -132,7 +147,11 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                 if (userMoveSkip)
                 {
                     Isaac.HealthDown(enemyDamage);
-                    System.Threading.Thread.Sleep(2000);
+                    hpBar.Text = $"{Math.Round(Isaac.Hp,2)}";
+                    hpBar.Foreground = Brushes.Red;
+                    await Task.Delay(1000);
+                    hpBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
+                    await Task.Delay(2000);
                 }
             }
             else if (mobOrChest == false && mobIsBoss == true) // для босса
@@ -208,8 +227,8 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                     Info.Visibility = Visibility.Visible;
                 }
 
-                System.Threading.Thread.Sleep(3000);
-                OneCicle();
+                //System.Threading.Thread.Sleep(3000);
+                //OneCicle();
             }
             else
             {
@@ -230,8 +249,8 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                 NegativeBtn.Content = "Уклониться";
                 Info.Visibility = Visibility.Visible;
 
-                System.Threading.Thread.Sleep(3000);
-                OneCicle();
+                //System.Threading.Thread.Sleep(3000);
+                //OneCicle();
             }
         }
     }

@@ -29,10 +29,10 @@
         </StackPanel>
         <StackPanel Orientation="Vertical" Margin="10" Grid.Column="2">
             <TextBlock Text="Инвентарь:" HorizontalAlignment="Center" FontSize="20" Foreground="#ece0e4" FontWeight="Bold"/>
-            <ListBox x:Name="ToolBar" Grid.Row="1" Margin="5" ItemsSource="{Binding Path=inventory}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" Background="Transparent" BorderThickness="0" Padding="0" MouseDoubleClick="UseItem_Click">
+            <ListBox x:Name="ToolBar" Grid.Row="1" Margin="5" ItemsSource="{Binding Path=inventory}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" Background="Transparent" BorderThickness="0" Padding="0" MouseDoubleClick="UseItem_Click">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Margin="5" Orientation="Vertical">
+                        <StackPanel Margin="5">
                             <Image Source="{Binding imgUrl}" Width="35" Height="35" ToolTip="{Binding description}"/>
                             <!--<Button Content="Выбрать" FontWeight="Bold" Background="#ece0e4" Click="UseItem_Click"/> -->
                         </StackPanel>

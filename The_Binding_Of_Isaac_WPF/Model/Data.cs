@@ -39,10 +39,15 @@ namespace The_Binding_Of_Isaac_WPF.Model
             new Gurdy(20, 3, 0.1, "Гёрди", true, "/Images/neutral/gurdy_neutral.png", 10)
         };
 
-        //public static string FindImageForEnemy(string inputElem) 
-        //{
-        //    switch
-        //    return;
-        //}
+        public static string FindAttackImageForEnemy(Enemy inputEnemy)
+        {
+            if (inputEnemy is BabyPlum) { return "/Images/Boss/attack/babyplum_attack.png"; }
+            else if (inputEnemy is GurdyJr) { return "/Images/Boss/attack/gurdyjr_attack.png"; }
+            else if (inputEnemy is Gurdy) { return "/Images/Boss/attack/gurdy_attack.png"; }
+            else if (inputEnemy is MegaFatty) { return "/Images/Boss/attack/megafatty_attack.png"; }
+            else if (inputEnemy is BoomFly) { return "/Images/Enemy/attack/redboomfly_attack.png"; }
+            else if (inputEnemy is Gurgling) { return "/Images/Enemy/attack/gurgling.png"; }
+            else { return "/Images/Enemy/attack/fatty_attack.png"; }
+        }
     }
 }
