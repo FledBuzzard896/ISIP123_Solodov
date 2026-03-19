@@ -33,7 +33,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Margin="5" Orientation="Vertical">
-                            <Image Source="{Binding imgUrl}" Width="35" Height="35"/>
+                            <Image Source="{Binding imgUrl}" Width="35" Height="35" ToolTip="{Binding description}"/>
                             <!--<Button Content="Выбрать" FontWeight="Bold" Background="#ece0e4" Click="UseItem_Click"/> -->
                         </StackPanel>
                     </DataTemplate>

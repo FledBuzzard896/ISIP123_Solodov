@@ -38,17 +38,17 @@ namespace The_Binding_Of_Isaac_WPF.Model
             inventory = inputInventory;
         }
 
-        public void AddPickUp(Item pickUp)
+        public static void AddPickUp(Item pickUp)
         {
             inventory.Add(pickUp);
         }
 
-        public void AddDamage(Weapon pickUp)
+        public static void AddDamage(Weapon pickUp)
         {
             damage += pickUp.GetDamage();
         }
 
-        public void AddDefence(Armor pickUp)
+        public static void AddDefence(Armor pickUp)
         {
             defence += pickUp.GetDefence();
         }

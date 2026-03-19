@@ -38,17 +38,45 @@ namespace The_Binding_Of_Isaac_WPF.Pages
 
         private void PozitiveBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (mobOrChest) 
+            if (mobOrChest)
             {
                 Isaac.inventory.Add(randomItem);
+
+                if (randomItem is Weapon) { Isaac.AddDamage((Weapon)randomItem); }
+                else if (randomItem is Armor) { Isaac.AddDefence((Armor)randomItem); }
+                
                 NavigationService.Navigate(new MenuNeutralRoom());
             }
-            else if (mobOrChest == false && mobIsBoss == false) 
+            else if (mobOrChest == false && mobIsBoss == false)
             {
                 randomEnemy.health -= Isaac.Damage - (Isaac.Damage * randomEnemy.Defence);
+                EnemyHealthBar.Text = $"Здоровье: {randomEnemy.health}";
+
+                if (randomEnemy.health <= 0) 
+                {
+                    MessageBox.Show("Моб повержен!");
+                    NavigationService.Navigate(new MenuNeutralRoom());
+                }
+                else 
+                {
+                    OneCicle();
+                }
             }
-            // if boss_hp > 0 --> обновляем
-            // иначе --> переход на след страницу
+            else if (mobOrChest == false && mobIsBoss == true) 
+            {
+                randomBoss.health -= Isaac.Damage - (Isaac.Damage * randomBoss.Defence);
+                EnemyHealthBar.Text = $"Здоровье: {randomBoss.health}";
+
+                if (randomBoss.health <= 0)
+                {
+                    MessageBox.Show("Босс повержен!\nПереход на новый этаж...");
+                    NavigationService.Navigate(new GenerateFloor());
+                }
+                else
+                {
+                    OneCicle();
+                }
+            }
         }
 
         private void NegativeBtn_Click(object sender, RoutedEventArgs e)
@@ -116,6 +144,23 @@ namespace The_Binding_Of_Isaac_WPF.Pages
             {
                 //Навигация на концовку
             } 
+        }
+
+        private void UseItem_Click(object sender, MouseButtonEventArgs e)
+        {
+            var listBox = sender as ListBox;
+            if (listBox == null) return;
+
+            // Получаем выбранный элемент
+            var clickedItem = listBox.SelectedItem as Item;
+
+            if (clickedItem != null && clickedItem.name == "Ням-сердце")
+            {
+                Isaac.HealthUp();
+                ToolBar.ItemsSource = null;
+                ToolBar.ItemsSource = Isaac.inventory;
+            }
+            e.Handled = true;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e) 
