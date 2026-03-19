@@ -27,6 +27,7 @@ namespace The_Binding_Of_Isaac_WPF.Model
         public static double Hp => hp;
         public static double Damage => damage;
         public static double Defence => defence;
+        public static double Max_hp => MAX_HP;
 
         public static void SetStats(double inputHP, double inputMaxHP, double inputDMG, double inputDFNC, List<Item> inputInventory) 
         { 
@@ -60,7 +61,7 @@ namespace The_Binding_Of_Isaac_WPF.Model
             inventory.Remove(heart);
         }
 
-        public void HealthDown(double damage)
+        public static void HealthDown(double damage)
         {
             hp -= damage;
         }

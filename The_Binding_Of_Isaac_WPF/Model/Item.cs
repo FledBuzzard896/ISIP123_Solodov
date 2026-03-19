@@ -20,9 +20,9 @@ namespace The_Binding_Of_Isaac_WPF.Model
             this.imgUrl = imgUrl;
         }
 
-        public virtual void PrintInfo()
+        public virtual string PrintInfo()
         {
-            Console.WriteLine(description);
+            return description;
         }
     }
 }

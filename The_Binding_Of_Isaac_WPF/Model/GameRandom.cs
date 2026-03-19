@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using The_Binding_Of_Isaac_WPF.Model.Model;
 
 namespace The_Binding_Of_Isaac_WPF.Model
 {
@@ -39,22 +40,25 @@ namespace The_Binding_Of_Isaac_WPF.Model
         {
             return Chance(0.7);
         }
-        public bool IsSpecialSkill( double specialChance) 
+        public bool IsSpecialSkill(double specialChance) 
         {
             return Chance(specialChance);
         }
-
-        public int RandomItem(List<Item> list) 
+        public Item RandomItem(List<Item> list) 
         {
-            return _random.Next(0, list.Count);
+            var PickUp = Data.lstOfPickUps[_random.Next(0, list.Count)];
+            Data.lstOfPickUps.Remove(PickUp);
+            return PickUp;
         }
-        public int RandomEnemy() 
+        public Enemy RandomEnemy() 
         {
-            return _random.Next(0, 3);
+            var enemy = SimpleFactory.CreateEnemy(_random.Next(0, 3));
+            return enemy;
         }
-        public int RandomBoss(List<Enemy> list) 
+        public Enemy RandomBoss(List<Enemy> list) 
         {
-            return _random.Next(0, list.Count);
+            var boss = Data.lstOfBosses[_random.Next(0, list.Count)];
+            return boss;
         }
 
         public double MotherAttack() 

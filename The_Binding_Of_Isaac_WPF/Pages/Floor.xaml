@@ -63,10 +63,10 @@
 
             <!-- Предмет -->
             <Image x:Name="Item" Width="50" Height="50" VerticalAlignment="Bottom" Grid.Row="0" Grid.ColumnSpan="2" Margin="10,10,10,0"/>
-            <Image x:Name="Chest" Grid.Row="1" Grid.ColumnSpan="2" Margin="10,0,10,10"/>
+            <Image x:Name="Chest" Source="/Images/chest.png" Visibility="Collapsed" Grid.Row="1" Grid.ColumnSpan="2" Margin="10,0,10,10"/>
             <!-- Описание предмета -->
             <ScrollViewer VerticalScrollBarVisibility="Hidden" Grid.Row="2" Grid.ColumnSpan="2">
-                <TextBlock x:Name="ItemDescriptionBar" Text="" Margin="10" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="#ece0e4"/>
+                <TextBlock x:Name="ItemDescriptionBar" Text="" Margin="10" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="#ece0e4" TextAlignment="Center"/>
             </ScrollViewer>
         </Grid>
 
@@ -93,7 +93,7 @@
             </ListBox>
         </Grid>
 
-        <TextBlock x:Name="Info" Text="" Margin="15,15,15,20" Grid.Row="2" Grid.Column="1" Foreground="DarkRed" Background="Black"/>
+        <TextBlock x:Name="Info" Text="" Margin="15,15,15,20" Grid.Row="2" Grid.Column="1" Foreground="DarkRed" Background="Black" Visibility="Hidden" TextAlignment="Center" FontSize="18"/>
         <Button x:Name="PozitiveBtn" Content="Атаковать/Взять предмет" Width="125" Height="30" Grid.Row="2" Grid.Column="0" Click="PozitiveBtn_Click"/>
         <Button x:Name="NegativeBtn" Content="Уклониться/Пропустить предмет" Width="125" Height="30" Grid.Row="2" Grid.Column="2" Click="NegativeBtn_Click"/>
 

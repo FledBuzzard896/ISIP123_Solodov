@@ -14,9 +14,9 @@ namespace The_Binding_Of_Isaac_WPF.Model
         {
             this.armorDefence = armorDefence;
         }
-        public override void PrintInfo()
+        public override string PrintInfo()
         {
-            base.PrintInfo();
+            return base.PrintInfo();
         }
         public double GetDefence()
         {

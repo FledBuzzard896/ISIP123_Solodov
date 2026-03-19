@@ -70,7 +70,7 @@ namespace The_Binding_Of_Isaac_WPF.Pages
             // Получаем выбранный элемент
             var clickedItem = listBox.SelectedItem as Item;
 
-            if (clickedItem != null && clickedItem.name == "Ням-сердце") // используйте Name, если переименовали свойство
+            if (clickedItem != null && clickedItem.name == "Ням-сердце") 
             {
                 Isaac.HealthUp();
                 ToolBar.ItemsSource = null;
