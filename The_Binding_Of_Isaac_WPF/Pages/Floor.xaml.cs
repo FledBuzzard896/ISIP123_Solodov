@@ -26,6 +26,7 @@ namespace The_Binding_Of_Isaac_WPF.Pages
         BitmapImage bitmap = new BitmapImage();
         bool mobOrChest = false;
         bool mobIsBoss = false;
+        bool userMoveSkip = false;
         Enemy randomEnemy = null;
         Enemy randomBoss = null;
         Item randomItem = null;
@@ -43,35 +44,58 @@ namespace The_Binding_Of_Isaac_WPF.Pages
             {
                 Isaac.inventory.Add(randomItem);
 
-                if (randomItem is Weapon) { Isaac.AddDamage((Weapon)randomItem); }
-                else if (randomItem is Armor) { Isaac.AddDefence((Armor)randomItem); }
-                
+                if (randomItem is Weapon) 
+                {
+                    Isaac.AddDamage((Weapon)randomItem);
+                    dmgBar.Text = Isaac.Damage.ToString();
+                }
+                else if (randomItem is Armor) 
+                { 
+                    Isaac.AddDefence((Armor)randomItem);
+                    dfncBar.Text = Isaac.Defence.ToString();
+                }
+
+                Model.Floor.THIS_ROOM += 1;
                 NavigationService.Navigate(new MenuNeutralRoom());
             }
             else if (mobOrChest == false && mobIsBoss == false)
             {
+                // Смена состояния моба
                 bitmap = new BitmapImage();
                 bitmap.BeginInit();
                 bitmap.UriSource = new Uri(randomEnemy.imgUrl, UriKind.Relative);
                 bitmap.EndInit();
                 Enemy.Source = bitmap;
-
-                Isaac.HealthDown(enemyDamage);
+                // Проверка на отрицательное значение хп
                 randomEnemy.health -= Isaac.Damage - (Isaac.Damage * randomEnemy.Defence);
-                
-                EnemyHealthBar.Text = $"Здоровье: {randomEnemy.health}";
-                hpBar.Text = $"{Isaac.Hp}";
-                Info.Text = "";
+                if (randomEnemy.health < 0) { EnemyHealthBar.Text = $"Здоровье: 0"; }
+                else { 
+                    EnemyHealthBar.Text = $"Здоровье: {Math.Round(randomEnemy.health, 2)}";
+                    EnemyHealthBar.Foreground = Brushes.Red;
+                    await Task.Delay(250);
+                    EnemyHealthBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
+                }
 
-                await Task.Delay(2000);
+                // Урон Айзеку
+                if (enemyDamage != 0)
+                {
+                    Isaac.HealthDown(enemyDamage);
+                    hpBar.Text = $"{Math.Round(Isaac.Hp, 2)}";
+                    hpBar.Foreground = Brushes.Red;
+                    await Task.Delay(250);
+                    hpBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
+                }
+                Info.Text = "";
 
                 if (randomEnemy.health <= 0) 
                 {
                     MessageBox.Show("Моб повержен!");
+                    Model.Floor.THIS_ROOM += 1;
                     NavigationService.Navigate(new MenuNeutralRoom());
                 }
                 else 
                 {
+                    await Task.Delay(500);
                     bitmap = new BitmapImage();
                     bitmap.BeginInit();
                     bitmap.UriSource = new Uri(Data.FindAttackImageForEnemy(randomEnemy), UriKind.Relative);
@@ -82,8 +106,33 @@ namespace The_Binding_Of_Isaac_WPF.Pages
             }
             else if (mobOrChest == false && mobIsBoss == true) 
             {
+                // Смена состояния босса
+                bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(randomBoss.imgUrl, UriKind.Relative);
+                bitmap.EndInit();
+                Enemy.Source = bitmap;
+                // Проверка на отрицательное значение хп
                 randomBoss.health -= Isaac.Damage - (Isaac.Damage * randomBoss.Defence);
-                EnemyHealthBar.Text = $"Здоровье: {randomBoss.health}";
+                if (randomBoss.health < 0) { EnemyHealthBar.Text = $"Здоровье: 0"; }
+                else
+                {
+                    EnemyHealthBar.Text = $"Здоровье: {Math.Round(randomBoss.health, 2)}";
+                    EnemyHealthBar.Foreground = Brushes.Red;
+                    await Task.Delay(250);
+                    EnemyHealthBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
+                }
+
+                // Урон Айзеку
+                if (enemyDamage != 0)
+                {
+                    Isaac.HealthDown(enemyDamage);
+                    hpBar.Text = $"{Math.Round(Isaac.Hp, 2)}";
+                    hpBar.Foreground = Brushes.Red;
+                    await Task.Delay(250);
+                    hpBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
+                }
+                Info.Text = "";
 
                 if (randomBoss.health <= 0)
                 {
@@ -92,19 +141,75 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                 }
                 else
                 {
+                    await Task.Delay(500);
+                    bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(Data.FindAttackImageForEnemy(randomBoss), UriKind.Relative);
+                    bitmap.EndInit();
+                    Enemy.Source = bitmap;
                     OneCicle();
                 }
             }
         }
 
-        private void NegativeBtn_Click(object sender, RoutedEventArgs e)
+        private async void NegativeBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (mobOrChest)
+            {
+                Model.Floor.THIS_ROOM += 1;
+                NavigationService.Navigate(new MenuNeutralRoom());
+            }
+            else if (mobOrChest == false && mobIsBoss == false) 
+            {
+                if (random.EvasionOrDamage())
+                {
+                    Info.Text = "Вы успешно уклонились!";
 
+                    // Смена состояния моба
+                    bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(randomEnemy.imgUrl, UriKind.Relative);
+                    bitmap.EndInit();
+                    Enemy.Source = bitmap;
+                    await Task.Delay(500);
+
+                    bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(Data.FindAttackImageForEnemy(randomEnemy), UriKind.Relative);
+                    bitmap.EndInit();
+                    Enemy.Source = bitmap;
+                    OneCicle();
+                }
+                else 
+                {
+                    Info.Text = "Во время уклонения вас задело, получаемый урон снижен на 70 - 100%";
+                    Isaac.HealthDown(enemyDamage - (enemyDamage * (70/100)));
+                    hpBar.Text = $"{Math.Round(Isaac.Hp, 2)}";
+                    hpBar.Foreground = Brushes.Red;
+                    await Task.Delay(250);
+                    hpBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
+
+                    // Смена состояния моба
+                    bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(randomEnemy.imgUrl, UriKind.Relative);
+                    bitmap.EndInit();
+                    Enemy.Source = bitmap;
+                    await Task.Delay(1500);
+
+                    bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(Data.FindAttackImageForEnemy(randomEnemy), UriKind.Relative);
+                    bitmap.EndInit();
+                    Enemy.Source = bitmap;
+                    OneCicle();
+                }
+            }
         }
 
         private async void OneCicle() 
         {
-            bool userMoveSkip = false;
+            userMoveSkip = false;
 
             if (mobOrChest == false && mobIsBoss == false) // для обычного моба
             {
@@ -132,7 +237,6 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                     }
                     else
                     {
-                        userMoveSkip = false;
                         Info.Text = "Враг наносит удар";
                     }
                     enemyDamage = randomEnemy.Damage - (randomEnemy.Damage * Isaac.Defence);
@@ -146,12 +250,28 @@ namespace The_Binding_Of_Isaac_WPF.Pages
 
                 if (userMoveSkip)
                 {
+                    // Урон Айзеку
                     Isaac.HealthDown(enemyDamage);
-                    hpBar.Text = $"{Math.Round(Isaac.Hp,2)}";
+                    hpBar.Text = $"{Math.Round(Isaac.Hp, 2)}";
                     hpBar.Foreground = Brushes.Red;
-                    await Task.Delay(1000);
+                    await Task.Delay(350);
                     hpBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
-                    await Task.Delay(2000);
+
+                    // Смена состояния моба
+                    bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(randomEnemy.imgUrl, UriKind.Relative);
+                    bitmap.EndInit();
+                    Enemy.Source = bitmap;
+
+                    // Возврат в класическое состояние
+                    await Task.Delay(500);
+                    bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(Data.FindAttackImageForEnemy(randomEnemy), UriKind.Relative);
+                    bitmap.EndInit();
+                    Enemy.Source = bitmap;
+                    Info.Text = "Враг наносит удар";
                 }
             }
             else if (mobOrChest == false && mobIsBoss == true) // для босса
@@ -178,6 +298,8 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                 Isaac.HealthUp();
                 ToolBar.ItemsSource = null;
                 ToolBar.ItemsSource = Isaac.inventory;
+
+                hpBar.Text = $"{Math.Round(Isaac.Hp, 2)}";
             }
             e.Handled = true;
         }
@@ -186,14 +308,14 @@ namespace The_Binding_Of_Isaac_WPF.Pages
         {
             ToolBar.ItemsSource = Isaac.inventory;
 
-            hpBar.Text = Isaac.Hp.ToString();
-            dmgBar.Text = Isaac.Damage.ToString();
-            dfncBar.Text = Isaac.Defence.ToString();
+            hpBar.Text = Math.Round(Isaac.Hp, 2).ToString();
+            dmgBar.Text = Math.Round(Isaac.Damage, 2).ToString();
+            dfncBar.Text = Math.Round(Isaac.Defence, 2).ToString();
 
             if (Model.Floor.THIS_ROOM < Model.Floor.ALL_ROOMS)
             {
                 mobIsBoss = false;
-                if (mobOrChest = random.MobOrChest()) // true - сундук; false - моб
+                if (mobOrChest = random.MobOrChest() && Data.lstOfPickUps.Count > 0) // true - сундук; false - моб
                 {
                     randomItem = random.RandomItem(Data.lstOfPickUps);
 
@@ -226,9 +348,6 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                     NegativeBtn.Content = "Уклониться";
                     Info.Visibility = Visibility.Visible;
                 }
-
-                //System.Threading.Thread.Sleep(3000);
-                //OneCicle();
             }
             else
             {
@@ -248,9 +367,6 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                 PozitiveBtn.Content = "Атаковать";
                 NegativeBtn.Content = "Уклониться";
                 Info.Visibility = Visibility.Visible;
-
-                //System.Threading.Thread.Sleep(3000);
-                //OneCicle();
             }
         }
     }

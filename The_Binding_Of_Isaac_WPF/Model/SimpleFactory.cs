@@ -13,11 +13,11 @@ namespace The_Binding_Of_Isaac_WPF.Model.Model
             switch (type) 
             {
                 case 0:
-                    return new BoomFly(15, 2, 0.1, "Красная Бомбомуха", "/Images/Enemy/neutral/redboomfly_neutral.png", 10);
+                    return new BoomFly(15, 2, 0.1, "Красная Бомбомуха", "/Images/Enemy/neutral/redboomfly_neutral.png", 0.1);
                 case 1:
                     return new Gurgling(20, 3, 0.1, "Булькающий", "/Images/Enemy/neutral/gurgling_neutral.png", true);
                 case 2:
-                    return new Fatty(20, 2.5, 0.2, "Толстяк", "/Images/Enemy/neutral/fatty_neutral.png", 10);
+                    return new Fatty(20, 2.5, 0.2, "Толстяк", "/Images/Enemy/neutral/fatty_neutral.png", 0.1);
                 default: return null;
             }
         }

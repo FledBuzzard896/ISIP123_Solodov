@@ -50,9 +50,8 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                 // Генерируем комнаты на этаж
                 Model.Floor.THIS_ROOM = 1;
                 Model.Floor.ALL_ROOMS = gameRandom.GenerateRooms();
-
-                NavigationService.Navigate(new MenuNeutralRoom());
                 Model.Isaac.floorsLeft -= 1;
+                NavigationService.Navigate(new MenuNeutralRoom());
             }
             else 
             {

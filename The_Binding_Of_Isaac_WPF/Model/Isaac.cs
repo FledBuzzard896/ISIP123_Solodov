@@ -14,7 +14,7 @@ namespace The_Binding_Of_Isaac_WPF.Model
         private static double defence;
 
         public static bool isIsaacAlive = true;
-        public static int floorsLeft = 4;
+        public static int floorsLeft = 5;
         public static List<Item> inventory = new List<Item>();
         public static List<string> listOfNightmares = new List<string>()
         {

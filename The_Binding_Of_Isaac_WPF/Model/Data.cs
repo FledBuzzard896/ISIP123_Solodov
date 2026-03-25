@@ -33,10 +33,10 @@ namespace The_Binding_Of_Isaac_WPF.Model
 
         public static List<Enemy> lstOfBosses = new List<Enemy>()
         {
-            new BabyPlum(15, 2, 0.1, "Сливка", "/Images/Boss/neutral/babyplum_neutral.png", 10),
+            new BabyPlum(15, 2, 0.1, "Сливка", "/Images/Boss/neutral/babyplum_neutral.png", 0.1),
             new GurdyJr(20, 3, 0.1, "Гёрди Младшая", "/Images/Boss/neutral/gurdyjr_neutral.png", true),
-            new MegaFatty(20, 2.5, 0.2, "Мега Толстяк", "/Images/neutral/megafatty_neutral.png", 10),
-            new Gurdy(20, 3, 0.1, "Гёрди", true, "/Images/neutral/gurdy_neutral.png", 10)
+            new MegaFatty(20, 2.5, 0.2, "Мега Толстяк", "/Images/Boss/neutral/megafatty_neutral.png", 0.1),
+            new Gurdy(20, 3, 0.1, "Гёрди", true, "/Images/Boss/neutral/gurdy_neutral.png", 0.1)
         };
 
         public static string FindAttackImageForEnemy(Enemy inputEnemy)
@@ -46,7 +46,7 @@ namespace The_Binding_Of_Isaac_WPF.Model
             else if (inputEnemy is Gurdy) { return "/Images/Boss/attack/gurdy_attack.png"; }
             else if (inputEnemy is MegaFatty) { return "/Images/Boss/attack/megafatty_attack.png"; }
             else if (inputEnemy is BoomFly) { return "/Images/Enemy/attack/redboomfly_attack.png"; }
-            else if (inputEnemy is Gurgling) { return "/Images/Enemy/attack/gurgling.png"; }
+            else if (inputEnemy is Gurgling) { return "/Images/Enemy/attack/gurgling_attack.png"; }
             else { return "/Images/Enemy/attack/fatty_attack.png"; }
         }
     }
