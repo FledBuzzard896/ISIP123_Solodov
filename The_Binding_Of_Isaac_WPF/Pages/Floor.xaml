@@ -97,5 +97,6 @@
         <Button x:Name="PozitiveBtn" Content="Атаковать/Взять предмет" Width="125" Height="30" Grid.Row="2" Grid.Column="0" Background="#ece0e4" Click="PozitiveBtn_Click"/>
         <Button x:Name="NegativeBtn" Content="Уклониться/Пропустить предмет" Width="125" Height="30" Grid.Row="2" Grid.Column="2" Background="#ece0e4" Click="NegativeBtn_Click"/>
 
+        <TextBlock Grid.RowSpan="4" Grid.ColumnSpan="4" Background="Black" Text="БУУ" FontSize="200" Foreground="White" TextAlignment="Center" Visibility="Collapsed"/>
     </Grid>
 </Page>

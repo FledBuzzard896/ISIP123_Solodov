@@ -43,9 +43,9 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                 floorTxtBlck.Text = $"Глубины: {Isaac.floorsLeft}";
             }
 
-            hpTxtBlck.Text = $"Здоровье: {Isaac.Hp.ToString()}";
-            damageTxtBlck.Text = $"Урон: {Isaac.Damage.ToString()}";
-            defenceTxtBlck.Text = $"Защита: {Isaac.Defence.ToString()}";
+            hpTxtBlck.Text = $"Здоровье: {Math.Round(Isaac.Hp, 2)}";
+            damageTxtBlck.Text = $"Урон: {Math.Round(Isaac.Damage, 2)}";
+            defenceTxtBlck.Text = $"Защита: {Math.Round(Isaac.Defence, 2)}";
 
             ToolBar.ItemsSource = Isaac.inventory;
         }

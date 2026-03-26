@@ -36,9 +36,11 @@ namespace The_Binding_Of_Isaac_WPF.Model
         {
             return Chance(0.4);
         }
-        public bool MaxDamageOrMinDamage() 
+        public double MaxDamageOrMinDamage() 
         {
-            return Chance(0.7);
+            double dmg = _random.NextDouble();
+            if (dmg > 0.7) { return dmg; }
+            else { return 0.7; }
         }
         public bool IsSpecialSkill(double specialChance) 
         {
@@ -58,6 +60,7 @@ namespace The_Binding_Of_Isaac_WPF.Model
         public Enemy RandomBoss(List<Enemy> list) 
         {
             var boss = Data.lstOfBosses[_random.Next(0, list.Count)];
+            Data.lstOfBosses.Remove(boss);
             return boss;
         }
 

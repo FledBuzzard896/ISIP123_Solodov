@@ -27,7 +27,7 @@ namespace The_Binding_Of_Isaac_WPF.Pages
         bool mobOrChest = false;
         bool mobIsBoss = false;
         bool userMoveSkip = false;
-        Enemy randomEnemy = null;
+        Enemy randomMob = null;
         Enemy randomBoss = null;
         Item randomItem = null;
         double enemyDamage = 0;
@@ -40,7 +40,7 @@ namespace The_Binding_Of_Isaac_WPF.Pages
 
         private async void PozitiveBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (mobOrChest)
+            if (mobOrChest) // сундук
             {
                 Isaac.inventory.Add(randomItem);
 
@@ -58,19 +58,15 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                 Model.Floor.THIS_ROOM += 1;
                 NavigationService.Navigate(new MenuNeutralRoom());
             }
-            else if (mobOrChest == false && mobIsBoss == false)
+            else if (mobOrChest == false && mobIsBoss == false) // моб
             {
                 // Смена состояния моба
-                bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(randomEnemy.imgUrl, UriKind.Relative);
-                bitmap.EndInit();
-                Enemy.Source = bitmap;
+                Enemy.Source = ChangeImageForEnemies(randomMob, true); ;
                 // Проверка на отрицательное значение хп
-                randomEnemy.health -= Isaac.Damage - (Isaac.Damage * randomEnemy.Defence);
-                if (randomEnemy.health < 0) { EnemyHealthBar.Text = $"Здоровье: 0"; }
+                randomMob.health -= Isaac.Damage - (Isaac.Damage * randomMob.Defence);
+                if (randomMob.health < 0) { EnemyHealthBar.Text = $"Здоровье: 0"; }
                 else { 
-                    EnemyHealthBar.Text = $"Здоровье: {Math.Round(randomEnemy.health, 2)}";
+                    EnemyHealthBar.Text = $"Здоровье: {Math.Round(randomMob.health, 2)}";
                     EnemyHealthBar.Foreground = Brushes.Red;
                     await Task.Delay(250);
                     EnemyHealthBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
@@ -87,7 +83,7 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                 }
                 Info.Text = "";
 
-                if (randomEnemy.health <= 0) 
+                if (randomMob.health <= 0) 
                 {
                     MessageBox.Show("Моб повержен!");
                     Model.Floor.THIS_ROOM += 1;
@@ -96,22 +92,14 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                 else 
                 {
                     await Task.Delay(500);
-                    bitmap = new BitmapImage();
-                    bitmap.BeginInit();
-                    bitmap.UriSource = new Uri(Data.FindAttackImageForEnemy(randomEnemy), UriKind.Relative);
-                    bitmap.EndInit();
-                    Enemy.Source = bitmap;
-                    OneCicle();
+                    Enemy.Source = ChangeImageForEnemies(randomMob, false); ;
+                    OneCicle(randomMob);
                 }
             }
-            else if (mobOrChest == false && mobIsBoss == true) 
+            else if (mobOrChest == false && mobIsBoss == true) // босс
             {
                 // Смена состояния босса
-                bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(randomBoss.imgUrl, UriKind.Relative);
-                bitmap.EndInit();
-                Enemy.Source = bitmap;
+                Enemy.Source = ChangeImageForEnemies(randomBoss, true);
                 // Проверка на отрицательное значение хп
                 randomBoss.health -= Isaac.Damage - (Isaac.Damage * randomBoss.Defence);
                 if (randomBoss.health < 0) { EnemyHealthBar.Text = $"Здоровье: 0"; }
@@ -142,186 +130,173 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                 else
                 {
                     await Task.Delay(500);
-                    bitmap = new BitmapImage();
-                    bitmap.BeginInit();
-                    bitmap.UriSource = new Uri(Data.FindAttackImageForEnemy(randomBoss), UriKind.Relative);
-                    bitmap.EndInit();
-                    Enemy.Source = bitmap;
-                    OneCicle();
+                    Enemy.Source = ChangeImageForEnemies(randomBoss, false);
+                    OneCicle(randomBoss);
                 }
             }
         }
 
         private async void NegativeBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (mobOrChest)
+            if (mobOrChest) // сундук
             {
                 Model.Floor.THIS_ROOM += 1;
                 NavigationService.Navigate(new MenuNeutralRoom());
             }
-            else if (mobOrChest == false && mobIsBoss == false) 
+            else if (mobOrChest == false && mobIsBoss == false) // моб
             {
                 if (random.EvasionOrDamage())
                 {
                     Info.Text = "Вы успешно уклонились!";
 
                     // Смена состояния моба
-                    bitmap = new BitmapImage();
-                    bitmap.BeginInit();
-                    bitmap.UriSource = new Uri(randomEnemy.imgUrl, UriKind.Relative);
-                    bitmap.EndInit();
-                    Enemy.Source = bitmap;
+                    Enemy.Source = ChangeImageForEnemies(randomMob, true);
                     await Task.Delay(500);
 
-                    bitmap = new BitmapImage();
-                    bitmap.BeginInit();
-                    bitmap.UriSource = new Uri(Data.FindAttackImageForEnemy(randomEnemy), UriKind.Relative);
-                    bitmap.EndInit();
-                    Enemy.Source = bitmap;
-                    OneCicle();
+                    Enemy.Source = ChangeImageForEnemies(randomMob, false);
+                    OneCicle(randomMob);
                 }
-                else 
+                else
                 {
                     Info.Text = "Во время уклонения вас задело, получаемый урон снижен на 70 - 100%";
-                    Isaac.HealthDown(enemyDamage - (enemyDamage * (70/100)));
+                    Isaac.HealthDown(enemyDamage - (enemyDamage * random.MaxDamageOrMinDamage()));
                     hpBar.Text = $"{Math.Round(Isaac.Hp, 2)}";
                     hpBar.Foreground = Brushes.Red;
                     await Task.Delay(250);
                     hpBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
 
                     // Смена состояния моба
-                    bitmap = new BitmapImage();
-                    bitmap.BeginInit();
-                    bitmap.UriSource = new Uri(randomEnemy.imgUrl, UriKind.Relative);
-                    bitmap.EndInit();
-                    Enemy.Source = bitmap;
+                    Enemy.Source = ChangeImageForEnemies(randomMob, true);
                     await Task.Delay(1500);
 
-                    bitmap = new BitmapImage();
-                    bitmap.BeginInit();
-                    bitmap.UriSource = new Uri(Data.FindAttackImageForEnemy(randomEnemy), UriKind.Relative);
-                    bitmap.EndInit();
-                    Enemy.Source = bitmap;
-                    OneCicle();
+                    Enemy.Source = ChangeImageForEnemies(randomMob, false);
+                    OneCicle(randomMob);
                 }
             }
-        }
-
-        private async void OneCicle() 
-        {
-            userMoveSkip = false;
-
-            if (mobOrChest == false && mobIsBoss == false) // для обычного моба
+            else if (mobOrChest == false && mobIsBoss == true) // босс
             {
-                if (randomEnemy is BoomFly)
+                if (random.EvasionOrDamage())
                 {
-                    // Будет ли крит урон?
-                    if (random.IsSpecialSkill(randomEnemy.GetCritChance()))
-                    {
-                        enemyDamage = (randomEnemy.Damage * 1.5) - (randomEnemy.Damage * 1.5 * Isaac.Defence);
-                        Info.Text = "Враг наносит критический удар!";
-                    }
-                    else
-                    {
-                        enemyDamage = randomEnemy.Damage - (randomEnemy.Damage * Isaac.Defence);
-                        Info.Text = "Враг наносит удар";
-                    }
-                }
-                else if (randomEnemy is Fatty)
-                {
-                    // Будет ли заморозка?
-                    if (random.IsSpecialSkill(randomEnemy.GetFrozenChance()))
-                    {
-                        userMoveSkip = true;
-                        Info.Text = "Враг использовал заморозку, вы пропускаете ход!";
-                    }
-                    else
-                    {
-                        Info.Text = "Враг наносит удар";
-                    }
-                    enemyDamage = randomEnemy.Damage - (randomEnemy.Damage * Isaac.Defence);
+                    Info.Text = "Вы успешно уклонились!";
+
+                    // Смена состояния босса
+                    Enemy.Source = ChangeImageForEnemies(randomBoss, true);
+                    await Task.Delay(500);
+
+                    Enemy.Source = ChangeImageForEnemies(randomBoss, false);
+                    OneCicle(randomBoss);
                 }
                 else
                 {
-                    // Игнор брони
-                    enemyDamage = randomEnemy.Damage;
-                    Info.Text = "Враг наносит удар (игнорируя вашу броню)";
-                }
+                    Info.Text = "Во время уклонения вас задело, получаемый урон снижен на 70 - 100%";
 
-                if (userMoveSkip)
-                {
-                    // Урон Айзеку
-                    Isaac.HealthDown(enemyDamage);
+                    Isaac.HealthDown(enemyDamage - (enemyDamage * random.MaxDamageOrMinDamage()));
                     hpBar.Text = $"{Math.Round(Isaac.Hp, 2)}";
                     hpBar.Foreground = Brushes.Red;
-                    await Task.Delay(350);
+                    await Task.Delay(250);
                     hpBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
 
-                    // Смена состояния моба
-                    bitmap = new BitmapImage();
-                    bitmap.BeginInit();
-                    bitmap.UriSource = new Uri(randomEnemy.imgUrl, UriKind.Relative);
-                    bitmap.EndInit();
-                    Enemy.Source = bitmap;
+                    // Смена состояния босса
+                    Enemy.Source = ChangeImageForEnemies(randomBoss, true);
+                    await Task.Delay(1500);
 
-                    // Возврат в класическое состояние
-                    await Task.Delay(500);
-                    bitmap = new BitmapImage();
-                    bitmap.BeginInit();
-                    bitmap.UriSource = new Uri(Data.FindAttackImageForEnemy(randomEnemy), UriKind.Relative);
-                    bitmap.EndInit();
-                    Enemy.Source = bitmap;
+                    Enemy.Source = ChangeImageForEnemies(randomBoss, false);
+                    OneCicle(randomBoss);
+                }
+            } 
+        }
+
+        private async void OneCicle(Enemy enemy) 
+        {
+            userMoveSkip = false;
+
+            if (enemy is BoomFly || enemy is BoomFly)
+            {
+                // Будет ли крит урон?
+                if (random.IsSpecialSkill(enemy.GetCritChance()))
+                {
+                    enemyDamage = (enemy.Damage * 1.5) - (enemy.Damage * 1.5 * Isaac.Defence);
+                    Info.Text = "Враг наносит критический удар!";
+                }
+                else
+                {
+                    enemyDamage = enemy.Damage - (enemy.Damage * Isaac.Defence);
                     Info.Text = "Враг наносит удар";
                 }
             }
-            else if (mobOrChest == false && mobIsBoss == true) // для босса
+            else if (enemy is Fatty || enemy is MegaFatty)
             {
-                if (randomBoss is BabyPlum)
+                // Будет ли заморозка?
+                if (random.IsSpecialSkill(enemy.GetFrozenChance()))
                 {
-                    if (random.IsSpecialSkill(randomBoss.GetCritChance())) 
-                    {
-                        enemyDamage = (randomBoss.Damage * 1.5) - (randomBoss.Damage * 1.5 * Isaac.Defence);
-                        Info.Text = "Враг наносит критический удар!";
-                    }
-                    else
-                    {
-                        enemyDamage = randomBoss.Damage - (randomBoss.Damage * Isaac.Defence);
-                        Info.Text = "Враг наносит удар";
-                    }
+                    userMoveSkip = true;
+                    Info.Text = "Враг использовал заморозку, вы пропускаете ход!";
                 }
-                else if (randomBoss is GurdyJr)
+                else
                 {
-                    enemyDamage = randomBoss.Damage;
-                    Info.Text = "Враг наносит удар (игнорируя вашу броню)";
+                    Info.Text = "Враг наносит удар";
+                }
+                enemyDamage = enemy.Damage - (enemy.Damage * Isaac.Defence);
+            }
+            else if (enemy is Gurgling || enemy is GurdyJr)
+            {
+                // Игнор брони
+                enemyDamage = enemy.Damage;
+                Info.Text = "Враг наносит удар (игнорируя вашу броню)";
+            }
+            else 
+            {
+                // Игнор брони + возможная заморозка
+                if (random.IsSpecialSkill(enemy.GetFrozenChance()))
+                {
+                    userMoveSkip = true;
+                    Info.Text = "Враг использовал заморозку и игнорируя броню наносит удар!";
+                }
+                enemyDamage = enemy.Damage;
+                Info.Text = "Враг игнорирует броню и наносит удар";
+                    
+            }
 
-                }
-                else if (randomBoss is MegaFatty)
-                {
-                    if (random.IsSpecialSkill(randomBoss.GetFrozenChance()))
-                    {
-                        userMoveSkip = true;
-                        Info.Text = "Враг использовал заморозку, вы пропускаете ход!";
-                    }
-                    else
-                    {
-                        Info.Text = "Враг наносит удар";
-                    }
-                    enemyDamage = randomBoss.Damage - (randomBoss.Damage * Isaac.Defence);
-                }
-                else 
-                {
-                    if (random.IsSpecialSkill(randomBoss.GetFrozenChance())) 
-                    {
-                        userMoveSkip = true;
-                    }
-                    enemyDamage = randomBoss.Damage;
-                }
+            if (userMoveSkip)
+            {
+                // Урон Айзеку
+                Isaac.HealthDown(enemyDamage);
+                hpBar.Text = $"{Math.Round(Isaac.Hp, 2)}";
+                hpBar.Foreground = Brushes.Red;
+                await Task.Delay(350);
+                hpBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
+
+                // Смена состояния моба
+                Enemy.Source = ChangeImageForEnemies(enemy, true);
+
+                // Возврат в класическое состояние
+                await Task.Delay(500);
+                Enemy.Source = ChangeImageForEnemies(enemy, false);
+                Info.Text = "Враг наносит удар";
             }
 
             if (Isaac.Hp <= 0) 
             {
                 //Навигация на концовку
             } 
+        }
+
+        private BitmapImage ChangeImageForEnemies(Enemy enemy, bool isNeutralImage) 
+        {
+            bitmap = new BitmapImage();
+            bitmap.BeginInit();
+
+            if (isNeutralImage)
+            {
+                bitmap.UriSource = new Uri(enemy.imgUrl, UriKind.Relative);
+            }
+            else 
+            {
+                bitmap.UriSource = new Uri(Data.FindAttackImageForEnemy(enemy), UriKind.Relative);
+            }
+
+            bitmap.EndInit();
+            return bitmap;
         }
 
         private void UseItem_Click(object sender, MouseButtonEventArgs e)
@@ -372,17 +347,11 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                 }
                 else
                 {
-                    randomEnemy = random.RandomEnemy();
+                    randomMob = random.RandomEnemy();
+                    Enemy.Source = ChangeImageForEnemies(randomMob, true); ;
 
-                    bitmap = new BitmapImage();
-                    bitmap.BeginInit();
-                    bitmap.UriSource = new Uri(randomEnemy.imgUrl, UriKind.Relative);
-                    bitmap.EndInit();
-                    Enemy.Source = bitmap;
-
-                    EnemyHealthBar.Text = $"Здоровье: {randomEnemy.health}";
-                    EnemyDamageBar.Text = $"Урон: {randomEnemy.Damage}";
-
+                    EnemyHealthBar.Text = $"Здоровье: {randomMob.health}";
+                    EnemyDamageBar.Text = $"Урон: {randomMob.Damage}";
                     PozitiveBtn.Content = "Атаковать";
                     NegativeBtn.Content = "Уклониться";
                     Info.Visibility = Visibility.Visible;
@@ -391,19 +360,17 @@ namespace The_Binding_Of_Isaac_WPF.Pages
             else
             {
                 // Загрузка VS экрана
+                // тута
+                
+
                 mobOrChest = false;
                 mobIsBoss = true;
-                randomBoss = random.RandomBoss(Data.lstOfBosses);
 
-                bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(randomBoss.imgUrl, UriKind.Relative);
-                bitmap.EndInit();
-                Enemy.Source = bitmap;
+                randomBoss = random.RandomBoss(Data.lstOfBosses);
+                Enemy.Source = ChangeImageForEnemies(randomBoss, true); ;
 
                 EnemyHealthBar.Text = $"Здоровье: {randomBoss.health}";
                 EnemyDamageBar.Text = $"Урон: {randomBoss.Damage}";
-
                 PozitiveBtn.Content = "Атаковать";
                 NegativeBtn.Content = "Уклониться";
                 Info.Visibility = Visibility.Visible;
