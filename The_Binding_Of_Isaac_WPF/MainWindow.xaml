@@ -19,6 +19,11 @@
            Stretch="Fill" 
            Visibility="Hidden"/>
 
+        <Image x:Name="MomsBackImage" 
+           Source="/Images/Background/finalbossbg_4K_pixel.png" 
+           Stretch="Fill" 
+           Visibility="Hidden"/>
+
         <Frame x:Name="MainFrame" Source="Pages/MainMenu.xaml" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

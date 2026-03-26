@@ -38,12 +38,12 @@
             <!-- Урон Персонажа -->
             <Image Source="/Images/Icons/DamageIcon.png"  Margin="30,0,5,0" Width="50" Grid.Row="2" Grid.Column="0"/>
             <TextBlock x:Name="dmgBar" Text="test" Grid.Row="2" Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="#ece0e4"/>
-            <!-- Защита Персонажа --> 
+            <!-- Защита Персонажа -->
             <Image Source="/Images/Icons/DefenceIcon.png"  Margin="30,0,5,0" Width="50" VerticalAlignment="Top" Grid.Row="3" Grid.Column="0"/>
             <TextBlock x:Name="dfncBar" Text="test" Grid.Row="3" Grid.Column="1" Margin="5,15,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Foreground="#ece0e4"/>
         </Grid>
-        
-        <Grid x:Name="FieldGrid" Margin="10" Grid.Row="0" Grid.Column="1">
+
+        <Grid x:Name="FieldGrid_Enemies" Margin="10" Grid.Row="0" Grid.Column="1" Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -53,7 +53,7 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            
+
             <!-- Враг -->
             <Image x:Name="Enemy" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="10"/>
             <!-- Здоровье врага -->
@@ -68,6 +68,42 @@
             <ScrollViewer VerticalScrollBarVisibility="Hidden" Grid.Row="2" Grid.ColumnSpan="2">
                 <TextBlock x:Name="ItemDescriptionBar" Text="" Margin="10" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="#ece0e4" TextAlignment="Center"/>
             </ScrollViewer>
+        </Grid>
+
+        <!-- Грид для финального босса -->
+        <Grid x:Name="FieldGrid_Mom" Margin="10,0,10,10" Grid.Row="0" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Айзек -->
+            <Image x:Name="IsaacOnTheField" VerticalAlignment="Bottom" Source="/Images/IsaacBossFight.png" Width="75" Grid.Row="0" Grid.ColumnSpan="2"/>
+
+            <!-- Дверь -->
+            <Image x:Name="Door" VerticalAlignment="Top" Source="/Images/door_v2.png" Width="175" Grid.Row="0" Grid.ColumnSpan="2"/>
+
+            <!-- Рука -->
+            <Image x:Name="MomsHand" VerticalAlignment="Top" Source="/Images/Mom/neutral/MomsHand_neutral.png" Width="125" Margin="35" Visibility="Collapsed" Grid.Row="0" Grid.ColumnSpan="2"/>
+            <Image x:Name="MomsHandAttack" VerticalAlignment="Top" Source="/Images/Mom/attack/MomsHand_attack.png" Width="170" Margin="0,25,0,0" Visibility="Collapsed" Grid.Row="0" Grid.ColumnSpan="2" />
+
+            <!-- Глаз и Лазер -->
+            <Image x:Name="MomsEye" VerticalAlignment="Top" Source="/Images/Mom/neutral/MomsEye_neutral.png" Width="125" Margin="35" Visibility="Collapsed" Grid.Row="0" Grid.ColumnSpan="2"/>
+            <Image x:Name="MomsEyeAttack" VerticalAlignment="Top" Source="/Images/Mom/attack/MomsEye_attack.png" Width="125" Margin="25" Visibility="Collapsed" Grid.Row="0" Grid.ColumnSpan="2"/>
+            <Image x:Name="Laser" Source="/Images/laser_no_bg.png" Visibility="Collapsed" Grid.ColumnSpan="2" Height="150" Margin="10,40,0,0"/>
+
+            <!-- Нога -->
+            <Image x:Name="MomsLeg" VerticalAlignment="Top" Source="/Images/Mom/neutral/MomsLeg_neutral.png" Width="200" Visibility="Collapsed" Grid.Row="0" Grid.ColumnSpan="2"/>
+            <Image x:Name="MomsLegAttack" VerticalAlignment="Top" Source="/Images/Mom/attack/MomsLeg_neutral.png" Width="200"   Visibility="Collapsed" Grid.Row="0" Grid.ColumnSpan="2"/>
+
+            <!-- Здоровье -->
+            <TextBlock x:Name="MomsHealth" Text="" Margin="10" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#ece0e4" Grid.Row="1" Grid.Column="0"/>
+            <!-- Урон -->
+            <TextBlock x:Name="MomsDamage" Text="" Margin="10" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#ece0e4" Grid.Row="1" Grid.Column="1"/>
         </Grid>
 
         <Grid x:Name="ToolBarGrid" Margin="10" Grid.Row="0" Grid.Column="2">

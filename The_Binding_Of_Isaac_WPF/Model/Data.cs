@@ -39,6 +39,8 @@ namespace The_Binding_Of_Isaac_WPF.Model
             new Gurdy(20, 3, 0.1, "Гёрди", true, "/Images/Boss/neutral/gurdy_neutral.png", 0.1)
         };
 
+        public static Mother Mom = new Mother("Мама, желает тебе всего лучшего, готова тебя растоптать ради искупления грехов!");
+
         public static string FindAttackImageForEnemy(Enemy inputEnemy)
         {
             if (inputEnemy is BabyPlum) { return "/Images/Boss/attack/babyplum_attack.png"; }

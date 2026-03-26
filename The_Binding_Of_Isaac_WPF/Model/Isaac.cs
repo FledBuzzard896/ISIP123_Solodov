@@ -21,7 +21,8 @@ namespace The_Binding_Of_Isaac_WPF.Model
             "/Images/Nightmares/nightmare1.png",
             "/Images/Nightmares/nightmare2.png",
             "/Images/Nightmares/nightmare3.png",
-            "/Images/Nightmares/nightmare4.png"
+            "/Images/Nightmares/nightmare4.png",
+            "/Images/Nightmares/nightmare5.png"
         };
 
         public static double Hp => hp;

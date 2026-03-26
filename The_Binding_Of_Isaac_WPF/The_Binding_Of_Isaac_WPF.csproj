@@ -91,10 +91,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\MomsFightRoom.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Armor.cs" />
@@ -131,9 +127,6 @@
     </Compile>
     <Compile Include="Pages\MenuNeutralRoom.xaml.cs">
       <DependentUpon>MenuNeutralRoom.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\MomsFightRoom.xaml.cs">
-      <DependentUpon>MomsFightRoom.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -234,6 +227,46 @@
     <Resource Include="Images\Nightmares\nightmare2.png" />
     <Resource Include="Images\Nightmares\nightmare3.png" />
     <Resource Include="Images\Nightmares\nightmare4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\VS\isaacVSbabyplum.png" />
+    <Resource Include="Images\VS\isaacVSgurdy.png" />
+    <Resource Include="Images\VS\isaacVSgurdyJr.png" />
+    <Resource Include="Images\VS\isaacVSmegafatty.png" />
+    <Resource Include="Images\VS\isaacVSmom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Nightmares\nightmare5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\door.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Mom\neutral\MomsEye_neutral.png" />
+    <Resource Include="Images\Mom\neutral\MomsHand_neutral.png" />
+    <Resource Include="Images\Mom\attack\MomsLeg_neutral.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Mom\attack\MomsEye_attack.png" />
+    <Resource Include="Images\Mom\attack\MomsLeg_attack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Background\finalbossbg_4K_pixel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\door_v2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Mom\neutral\MomsLeg_neutral.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IsaacBossFight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\laser_no_bg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Mom\attack\MomsHand_attack.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
