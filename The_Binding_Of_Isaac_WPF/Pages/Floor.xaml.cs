@@ -243,7 +243,7 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                 }
                 else
                 {
-                    // Игнор брони + добавить заморозку для босса герди
+                    // Игнор брони
                     enemyDamage = randomEnemy.Damage;
                     Info.Text = "Враг наносит удар (игнорируя вашу броню)";
                 }
@@ -276,7 +276,46 @@ namespace The_Binding_Of_Isaac_WPF.Pages
             }
             else if (mobOrChest == false && mobIsBoss == true) // для босса
             {
+                if (randomBoss is BabyPlum)
+                {
+                    if (random.IsSpecialSkill(randomBoss.GetCritChance())) 
+                    {
+                        enemyDamage = (randomBoss.Damage * 1.5) - (randomBoss.Damage * 1.5 * Isaac.Defence);
+                        Info.Text = "Враг наносит критический удар!";
+                    }
+                    else
+                    {
+                        enemyDamage = randomBoss.Damage - (randomBoss.Damage * Isaac.Defence);
+                        Info.Text = "Враг наносит удар";
+                    }
+                }
+                else if (randomBoss is GurdyJr)
+                {
+                    enemyDamage = randomBoss.Damage;
+                    Info.Text = "Враг наносит удар (игнорируя вашу броню)";
 
+                }
+                else if (randomBoss is MegaFatty)
+                {
+                    if (random.IsSpecialSkill(randomBoss.GetFrozenChance()))
+                    {
+                        userMoveSkip = true;
+                        Info.Text = "Враг использовал заморозку, вы пропускаете ход!";
+                    }
+                    else
+                    {
+                        Info.Text = "Враг наносит удар";
+                    }
+                    enemyDamage = randomBoss.Damage - (randomBoss.Damage * Isaac.Defence);
+                }
+                else 
+                {
+                    if (random.IsSpecialSkill(randomBoss.GetFrozenChance())) 
+                    {
+                        userMoveSkip = true;
+                    }
+                    enemyDamage = randomBoss.Damage;
+                }
             }
 
             if (Isaac.Hp <= 0) 
@@ -351,6 +390,7 @@ namespace The_Binding_Of_Isaac_WPF.Pages
             }
             else
             {
+                // Загрузка VS экрана
                 mobOrChest = false;
                 mobIsBoss = true;
                 randomBoss = random.RandomBoss(Data.lstOfBosses);
