@@ -31,6 +31,7 @@ namespace The_Binding_Of_Isaac_WPF.Pages
         Enemy randomBoss = null;
         Item randomItem = null;
         double enemyDamage = 0;
+
         public Floor()
         {
             InitializeComponent();
@@ -135,7 +136,6 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                 }
             }
         }
-
         private async void NegativeBtn_Click(object sender, RoutedEventArgs e)
         {
             if (mobOrChest) // сундук
@@ -280,7 +280,64 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                 //Навигация на концовку
             } 
         }
+        private async void ShowVSImage(Enemy boss) 
+        {
+            if (boss is BabyPlum)
+            {
+                VS_Image.Visibility = Visibility.Visible;
 
+                bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(BabyPlum.VS_SCREEN, UriKind.Relative);
+                bitmap.EndInit();
+                VS_Image.Source = bitmap;
+
+                await Task.Delay(2000);
+                VS_Image.Visibility = Visibility.Collapsed;
+            }
+            else if (boss is MegaFatty)
+            {
+                VS_Image.Visibility = Visibility.Visible;
+
+                bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(MegaFatty.VS_SCREEN, UriKind.Relative);
+                bitmap.EndInit();
+                VS_Image.Source = bitmap;
+
+                VS_Image.Source = bitmap;
+                await Task.Delay(2000);
+                VS_Image.Visibility = Visibility.Collapsed;
+            }
+            else if (boss is GurdyJr)
+            {
+                VS_Image.Visibility = Visibility.Visible;
+
+                bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(GurdyJr.VS_SCREEN, UriKind.Relative);
+                bitmap.EndInit();
+                VS_Image.Source = bitmap;
+
+                VS_Image.Source = bitmap;
+                await Task.Delay(2000);
+                VS_Image.Visibility = Visibility.Collapsed;
+            }
+            else 
+            {
+                VS_Image.Visibility = Visibility.Visible;
+
+                bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(Gurdy.VS_SCREEN, UriKind.Relative);
+                bitmap.EndInit();
+                VS_Image.Source = bitmap;
+
+                VS_Image.Source = bitmap;
+                await Task.Delay(2000);
+                VS_Image.Visibility = Visibility.Collapsed;
+            }
+        }
         private BitmapImage ChangeImageForEnemies(Enemy enemy, bool isNeutralImage) 
         {
             bitmap = new BitmapImage();
@@ -298,7 +355,7 @@ namespace The_Binding_Of_Isaac_WPF.Pages
             bitmap.EndInit();
             return bitmap;
         }
-
+        
         private void UseItem_Click(object sender, MouseButtonEventArgs e)
         {
             var listBox = sender as ListBox;
@@ -317,7 +374,6 @@ namespace The_Binding_Of_Isaac_WPF.Pages
             }
             e.Handled = true;
         }
-
         private void Page_Loaded(object sender, RoutedEventArgs e) 
         {
             ToolBar.ItemsSource = Isaac.inventory;
@@ -359,14 +415,12 @@ namespace The_Binding_Of_Isaac_WPF.Pages
             }
             else
             {
-                // Загрузка VS экрана
-                // тута
-                
-
                 mobOrChest = false;
                 mobIsBoss = true;
 
                 randomBoss = random.RandomBoss(Data.lstOfBosses);
+                // Загрузка VS экрана
+                ShowVSImage(randomBoss);
                 Enemy.Source = ChangeImageForEnemies(randomBoss, true); ;
 
                 EnemyHealthBar.Text = $"Здоровье: {randomBoss.health}";
