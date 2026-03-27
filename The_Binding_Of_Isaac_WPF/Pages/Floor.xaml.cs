@@ -27,11 +27,15 @@ namespace The_Binding_Of_Isaac_WPF.Pages
         bool mobOrChest = false;
         bool mobIsBoss = false;
         bool userMoveSkip = false;
+        bool handAttack = false;
+        bool eyeAttack = false;
+        bool legAttack = false;
         Enemy randomMob = null;
         Enemy randomBoss = null;
-        Mother mom = Model.Data.Mom;
+        Mother mom = Data.Mom;
         Item randomItem = null;
         double enemyDamage = 0;
+        double chance = 0;
 
         public Floor()
         {
@@ -49,7 +53,7 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                 {
                     mom.HealthDown(Isaac.Damage / 2);
                 }
-                else 
+                else
                 {
                     mom.HealthDown(Isaac.Damage);
                 }
@@ -64,16 +68,74 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                     EnemyHealthBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
                 }
 
-                // Урон Айзеку
-                if (enemyDamage != 0)
+                if (handAttack)
                 {
-                    Isaac.HealthDown(enemyDamage);
-                    hpBar.Text = $"{Math.Round(Isaac.Hp, 2)}";
-                    hpBar.Foreground = Brushes.Red;
-                    await Task.Delay(250);
-                    hpBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
+                    MomsHand.Visibility = Visibility.Collapsed;
+                    MomsHandAttack.Visibility = Visibility.Visible;
+
+                    // Урон Айзеку
+                    if (enemyDamage != 0)
+                    {
+                        Isaac.HealthDown(enemyDamage);
+                        hpBar.Text = $"{Math.Round(Isaac.Hp, 2)}";
+                        hpBar.Foreground = Brushes.Red;
+                        await Task.Delay(250);
+                        hpBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
+                    }
+                    Info.Text = "";
+
+                    MomsHandAttack.Visibility = Visibility.Collapsed;
+                    MomsHand.Visibility = Visibility.Visible;
+                    await Task.Delay(150);
+                    MomsHand.Visibility = Visibility.Collapsed;
+
                 }
-                Info.Text = "";
+                else if (legAttack)
+                {
+                    MomsLeg.Visibility = Visibility.Collapsed;
+                    MomsLegAttack.Visibility = Visibility.Visible;
+
+                    // Урон Айзеку
+                    if (enemyDamage != 0)
+                    {
+                        Isaac.HealthDown(enemyDamage);
+                        hpBar.Text = $"{Math.Round(Isaac.Hp, 2)}";
+                        hpBar.Foreground = Brushes.Red;
+                        await Task.Delay(250);
+                        hpBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
+                    }
+                    Info.Text = "";
+
+                    MomsLegAttack.Visibility = Visibility.Collapsed;
+                    MomsLeg.Visibility = Visibility.Visible;
+                    await Task.Delay(150);
+                    MomsLeg.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    MomsEye.Visibility = Visibility.Collapsed;
+                    MomsEyeAttack.Visibility = Visibility.Visible;
+                    await Task.Delay(150);
+                    Laser.Visibility = Visibility.Visible;
+
+                    // Урон Айзеку
+                    if (enemyDamage != 0)
+                    {
+                        Isaac.HealthDown(enemyDamage);
+                        hpBar.Text = $"{Math.Round(Isaac.Hp, 2)}";
+                        hpBar.Foreground = Brushes.Red;
+                        await Task.Delay(250);
+                        hpBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
+                    }
+                    Info.Text = "";
+
+                    Laser.Visibility = Visibility.Collapsed;
+                    await Task.Delay(150);
+                    MomsEyeAttack.Visibility = Visibility.Collapsed;
+                    MomsEye.Visibility = Visibility.Visible;
+                    await Task.Delay(150);
+                    MomsEye.Visibility = Visibility.Collapsed;
+                }
 
                 if (mom.Hp <= 0)
                 {
@@ -82,106 +144,105 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                 else
                 {
                     await Task.Delay(500);
-                    // ===================== Смена на атаку =========================
-                    //Enemy.Source = ChangeImageForEnemies(randomMob, false); ;
-                    OneCicle(randomMob);
+                    MomsOneCicle();
                 }
-
-                await Task.Delay(2000);
-                MomsOneCicle();
             }
-            if (mobOrChest) // сундук
+            else
             {
-                Isaac.inventory.Add(randomItem);
-
-                if (randomItem is Weapon) 
+                if (mobOrChest) // сундук
                 {
-                    Isaac.AddDamage((Weapon)randomItem);
-                    dmgBar.Text = Isaac.Damage.ToString();
-                }
-                else if (randomItem is Armor) 
-                { 
-                    Isaac.AddDefence((Armor)randomItem);
-                    dfncBar.Text = Isaac.Defence.ToString();
-                }
+                    Isaac.inventory.Add(randomItem);
 
-                Model.Floor.THIS_ROOM += 1;
-                NavigationService.Navigate(new MenuNeutralRoom());
-            }
-            else if (mobOrChest == false && mobIsBoss == false) // моб
-            {
-                // Смена состояния моба
-                Enemy.Source = ChangeImageForEnemies(randomMob, true); ;
-                // Проверка на отрицательное значение хп
-                randomMob.health -= Isaac.Damage - (Isaac.Damage * randomMob.Defence);
-                if (randomMob.health < 0) { EnemyHealthBar.Text = $"Здоровье: 0"; }
-                else { 
-                    EnemyHealthBar.Text = $"Здоровье: {Math.Round(randomMob.health, 2)}";
-                    EnemyHealthBar.Foreground = Brushes.Red;
-                    await Task.Delay(250);
-                    EnemyHealthBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
-                }
+                    if (randomItem is Weapon)
+                    {
+                        Isaac.AddDamage((Weapon)randomItem);
+                        dmgBar.Text = Isaac.Damage.ToString();
+                    }
+                    else if (randomItem is Armor)
+                    {
+                        Isaac.AddDefence((Armor)randomItem);
+                        dfncBar.Text = Isaac.Defence.ToString();
+                    }
 
-                // Урон Айзеку
-                if (enemyDamage != 0)
-                {
-                    Isaac.HealthDown(enemyDamage);
-                    hpBar.Text = $"{Math.Round(Isaac.Hp, 2)}";
-                    hpBar.Foreground = Brushes.Red;
-                    await Task.Delay(250);
-                    hpBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
-                }
-                Info.Text = "";
-
-                if (randomMob.health <= 0) 
-                {
-                    MessageBox.Show("Моб повержен!");
                     Model.Floor.THIS_ROOM += 1;
                     NavigationService.Navigate(new MenuNeutralRoom());
                 }
-                else 
+                else if (mobOrChest == false && mobIsBoss == false) // моб
                 {
-                    await Task.Delay(500);
-                    Enemy.Source = ChangeImageForEnemies(randomMob, false); ;
-                    OneCicle(randomMob);
-                }
-            }
-            else if (mobOrChest == false && mobIsBoss == true) // босс
-            {
-                // Смена состояния босса
-                Enemy.Source = ChangeImageForEnemies(randomBoss, true);
-                // Проверка на отрицательное значение хп
-                randomBoss.health -= Isaac.Damage - (Isaac.Damage * randomBoss.Defence);
-                if (randomBoss.health < 0) { EnemyHealthBar.Text = $"Здоровье: 0"; }
-                else
-                {
-                    EnemyHealthBar.Text = $"Здоровье: {Math.Round(randomBoss.health, 2)}";
-                    EnemyHealthBar.Foreground = Brushes.Red;
-                    await Task.Delay(250);
-                    EnemyHealthBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
-                }
+                    // Смена состояния моба
+                    Enemy.Source = ChangeImageForEnemies(randomMob, true); ;
+                    // Проверка на отрицательное значение хп
+                    randomMob.health -= Isaac.Damage - (Isaac.Damage * randomMob.Defence);
+                    if (randomMob.health < 0) { EnemyHealthBar.Text = $"Здоровье: 0"; }
+                    else
+                    {
+                        EnemyHealthBar.Text = $"Здоровье: {Math.Round(randomMob.health, 2)}";
+                        EnemyHealthBar.Foreground = Brushes.Red;
+                        await Task.Delay(250);
+                        EnemyHealthBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
+                    }
 
-                // Урон Айзеку
-                if (enemyDamage != 0)
-                {
-                    Isaac.HealthDown(enemyDamage);
-                    hpBar.Text = $"{Math.Round(Isaac.Hp, 2)}";
-                    hpBar.Foreground = Brushes.Red;
-                    await Task.Delay(250);
-                    hpBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
-                }
-                Info.Text = "";
+                    // Урон Айзеку
+                    if (enemyDamage != 0)
+                    {
+                        Isaac.HealthDown(enemyDamage);
+                        hpBar.Text = $"{Math.Round(Isaac.Hp, 2)}";
+                        hpBar.Foreground = Brushes.Red;
+                        await Task.Delay(250);
+                        hpBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
+                    }
+                    Info.Text = "";
 
-                if (randomBoss.health <= 0)
-                {
-                    MessageBox.Show("Босс повержен!\nПереход на новый этаж...");
-                    NavigationService.Navigate(new GenerateFloor());
+                    if (randomMob.health <= 0)
+                    {
+                        MessageBox.Show("Моб повержен!");
+                        Model.Floor.THIS_ROOM += 1;
+                        NavigationService.Navigate(new MenuNeutralRoom());
+                    }
+                    else
+                    {
+                        await Task.Delay(500);
+                        Enemy.Source = ChangeImageForEnemies(randomMob, false); ;
+                        OneCicle(randomMob);
+                    }
                 }
-                else
+                else if (mobOrChest == false && mobIsBoss == true) // босс
                 {
-                    await Task.Delay(500);
-                    Enemy.Source = ChangeImageForEnemies(randomBoss, false);
-                    OneCicle(randomBoss);
+                    // Смена состояния босса
+                    Enemy.Source = ChangeImageForEnemies(randomBoss, true);
+                    // Проверка на отрицательное значение хп
+                    randomBoss.health -= Isaac.Damage - (Isaac.Damage * randomBoss.Defence);
+                    if (randomBoss.health < 0) { EnemyHealthBar.Text = $"Здоровье: 0"; }
+                    else
+                    {
+                        EnemyHealthBar.Text = $"Здоровье: {Math.Round(randomBoss.health, 2)}";
+                        EnemyHealthBar.Foreground = Brushes.Red;
+                        await Task.Delay(250);
+                        EnemyHealthBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
+                    }
+
+                    // Урон Айзеку
+                    if (enemyDamage != 0)
+                    {
+                        Isaac.HealthDown(enemyDamage);
+                        hpBar.Text = $"{Math.Round(Isaac.Hp, 2)}";
+                        hpBar.Foreground = Brushes.Red;
+                        await Task.Delay(250);
+                        hpBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
+                    }
+                    Info.Text = "";
+
+                    if (randomBoss.health <= 0)
+                    {
+                        MessageBox.Show("Босс повержен!\nПереход на новый этаж...");
+                        NavigationService.Navigate(new GenerateFloor());
+                    }
+                    else
+                    {
+                        await Task.Delay(500);
+                        Enemy.Source = ChangeImageForEnemies(randomBoss, false);
+                        OneCicle(randomBoss);
+                    }
                 }
             }
         }
@@ -331,21 +392,24 @@ namespace The_Binding_Of_Isaac_WPF.Pages
         }
         private async void MomsOneCicle() 
         {
-            double chance = random.MotherAttack();
+            handAttack = false;
+            legAttack = false;
+            eyeAttack = false;
 
+            chance = random.MotherAttack();
             if (chance <= 0.33)
             {
                 Info.Text = "Мать наносит удар рукой";
                 MomsHand.Visibility = Visibility.Visible;
-
+                handAttack = true;
                 enemyDamage = mom.Damage;
                 EnemyDamageBar.Text = $"Урон: {enemyDamage}";
             }
-            else if (chance <= 66)
+            else if (chance <= 0.66)
             {
                 Info.Text = "Мать наносит удар ногой";
                 MomsLeg.Visibility = Visibility.Visible;
-
+                legAttack = true;
                 enemyDamage = mom.LegPunch();
                 EnemyDamageBar.Text = $"Урон: {enemyDamage}";
             }
@@ -353,7 +417,7 @@ namespace The_Binding_Of_Isaac_WPF.Pages
             {
                 Info.Text = "Мать готовится стрельнуть лазером";
                 MomsEye.Visibility = Visibility.Visible;
-
+                eyeAttack = true;
                 enemyDamage += mom.EyeLazer();
                 EnemyDamageBar.Text = $"Урон: {enemyDamage}";
             }
@@ -469,9 +533,34 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                 EnemyDamageBar.Text = $"Урон: {Data.Mom.Damage}";
                 PozitiveBtn.Content = "Атаковать";
                 NegativeBtn.Content = "Уклониться";
-                Info.Text = Data.Mom.GetDescription();
 
                 Info.Visibility = Visibility.Visible;
+                chance = random.MotherAttack();
+
+                if (chance <= 0.33)
+                {
+                    Info.Text = "Мать наносит удар рукой";
+                    MomsHand.Visibility = Visibility.Visible;
+                    enemyDamage = mom.Damage;
+                    EnemyDamageBar.Text = $"Урон: {enemyDamage}";
+                    handAttack = true;
+                }
+                else if (chance <= 66)
+                {
+                    Info.Text = "Мать наносит удар ногой";
+                    MomsLeg.Visibility = Visibility.Visible;
+                    enemyDamage = mom.LegPunch();
+                    EnemyDamageBar.Text = $"Урон: {enemyDamage}";
+                    legAttack = true;
+                }
+                else
+                {
+                    Info.Text = "Мать готовится стрельнуть лазером";
+                    MomsEye.Visibility = Visibility.Visible;
+                    enemyDamage = mom.EyeLazer();
+                    EnemyDamageBar.Text = $"Урон: {enemyDamage}";
+                    eyeAttack = true;
+                }
             }
             else
             {
