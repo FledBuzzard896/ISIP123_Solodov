@@ -35,6 +35,8 @@ namespace The_Binding_Of_Isaac_WPF.Pages
             else if (Isaac.isIsaacAlive && Isaac.floorsLeft == 0) 
             {
                 floorTxtBlck.Text = $"Комната матери.";
+                mainWindow.DepthBackImage.Visibility = Visibility.Collapsed;
+                mainWindow.MomsBackImage.Visibility = Visibility.Visible;
             }
             else if (Isaac.isIsaacAlive)
             {
@@ -48,18 +50,16 @@ namespace The_Binding_Of_Isaac_WPF.Pages
             defenceTxtBlck.Text = $"Защита: {Math.Round(Isaac.Defence, 2)}";
 
             ToolBar.ItemsSource = Isaac.inventory;
+
+            // ============================= тест (потом удалить) ========================================
+            Model.Floor.IS_FINAL_BOSS = true;
+            mainWindow.BasementBackImage.Visibility = Visibility.Collapsed;
+            mainWindow.MomsBackImage.Visibility = Visibility.Visible;
         }
 
         private void GoNextRoom_Click(object sender, RoutedEventArgs e)
         {
-            if (Model.Floor.IS_FINAL_BOSS)
-            {
-                // Навигация на мать
-            }
-            else 
-            {
-                NavigationService.Navigate(new Floor());
-            }
+            NavigationService.Navigate(new Floor());
         }
 
         private void UseItem_Click(object sender, MouseButtonEventArgs e)

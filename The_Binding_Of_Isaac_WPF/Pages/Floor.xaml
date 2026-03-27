@@ -98,7 +98,7 @@
 
             <!-- Нога -->
             <Image x:Name="MomsLeg" VerticalAlignment="Top" Source="/Images/Mom/neutral/MomsLeg_neutral.png" Width="200" Visibility="Collapsed" Grid.Row="0" Grid.ColumnSpan="2"/>
-            <Image x:Name="MomsLegAttack" VerticalAlignment="Top" Source="/Images/Mom/attack/MomsLeg_neutral.png" Width="200"   Visibility="Collapsed" Grid.Row="0" Grid.ColumnSpan="2"/>
+            <Image x:Name="MomsLegAttack" VerticalAlignment="Top" Source="/Images/Mom/attack/MomsLeg_attack_short.png" Width="200" Visibility="Collapsed" Grid.Row="0" Grid.ColumnSpan="2"/>
 
             <!-- Здоровье -->
             <TextBlock x:Name="MomsHealth" Text="" Margin="10" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#ece0e4" Grid.Row="1" Grid.Column="0"/>

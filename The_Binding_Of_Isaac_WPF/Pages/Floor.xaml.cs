@@ -29,6 +29,7 @@ namespace The_Binding_Of_Isaac_WPF.Pages
         bool userMoveSkip = false;
         Enemy randomMob = null;
         Enemy randomBoss = null;
+        Mother mom = Model.Data.Mom;
         Item randomItem = null;
         double enemyDamage = 0;
 
@@ -41,6 +42,54 @@ namespace The_Binding_Of_Isaac_WPF.Pages
 
         private async void PozitiveBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (Model.Floor.IS_FINAL_BOSS)
+            {
+                // Нёрф урона
+                if (Isaac.Damage > 30)
+                {
+                    mom.HealthDown(Isaac.Damage / 2);
+                }
+                else 
+                {
+                    mom.HealthDown(Isaac.Damage);
+                }
+
+                // Проверка + анимка
+                if (mom.Hp < 0) { EnemyHealthBar.Text = $"Здоровье: 0"; }
+                else
+                {
+                    EnemyHealthBar.Text = $"Здоровье: {Math.Round(mom.Hp, 2)}";
+                    EnemyHealthBar.Foreground = Brushes.Red;
+                    await Task.Delay(250);
+                    EnemyHealthBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
+                }
+
+                // Урон Айзеку
+                if (enemyDamage != 0)
+                {
+                    Isaac.HealthDown(enemyDamage);
+                    hpBar.Text = $"{Math.Round(Isaac.Hp, 2)}";
+                    hpBar.Foreground = Brushes.Red;
+                    await Task.Delay(250);
+                    hpBar.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ece0e4"));
+                }
+                Info.Text = "";
+
+                if (mom.Hp <= 0)
+                {
+                    // Навигация на концовку.
+                }
+                else
+                {
+                    await Task.Delay(500);
+                    // ===================== Смена на атаку =========================
+                    //Enemy.Source = ChangeImageForEnemies(randomMob, false); ;
+                    OneCicle(randomMob);
+                }
+
+                await Task.Delay(2000);
+                MomsOneCicle();
+            }
             if (mobOrChest) // сундук
             {
                 Isaac.inventory.Add(randomItem);
@@ -280,6 +329,35 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                 //Навигация на концовку
             } 
         }
+        private async void MomsOneCicle() 
+        {
+            double chance = random.MotherAttack();
+
+            if (chance <= 0.33)
+            {
+                Info.Text = "Мать наносит удар рукой";
+                MomsHand.Visibility = Visibility.Visible;
+
+                enemyDamage = mom.Damage;
+                EnemyDamageBar.Text = $"Урон: {enemyDamage}";
+            }
+            else if (chance <= 66)
+            {
+                Info.Text = "Мать наносит удар ногой";
+                MomsLeg.Visibility = Visibility.Visible;
+
+                enemyDamage = mom.LegPunch();
+                EnemyDamageBar.Text = $"Урон: {enemyDamage}";
+            }
+            else 
+            {
+                Info.Text = "Мать готовится стрельнуть лазером";
+                MomsEye.Visibility = Visibility.Visible;
+
+                enemyDamage += mom.EyeLazer();
+                EnemyDamageBar.Text = $"Урон: {enemyDamage}";
+            }
+        }
         private async void ShowVSImage(Enemy boss) 
         {
             if (boss is BabyPlum)
@@ -381,53 +459,69 @@ namespace The_Binding_Of_Isaac_WPF.Pages
             hpBar.Text = Math.Round(Isaac.Hp, 2).ToString();
             dmgBar.Text = Math.Round(Isaac.Damage, 2).ToString();
             dfncBar.Text = Math.Round(Isaac.Defence, 2).ToString();
-
-            if (Model.Floor.THIS_ROOM < Model.Floor.ALL_ROOMS)
+            
+            if (Model.Floor.IS_FINAL_BOSS)
             {
-                mobIsBoss = false;
-                if (mobOrChest = random.MobOrChest() && Data.lstOfPickUps.Count > 0) // true - сундук; false - моб
+                Door.Visibility = Visibility.Visible;
+                IsaacOnTheField.Visibility = Visibility.Visible;
+
+                EnemyHealthBar.Text = $"Здоровье: {Data.Mom.Hp}";
+                EnemyDamageBar.Text = $"Урон: {Data.Mom.Damage}";
+                PozitiveBtn.Content = "Атаковать";
+                NegativeBtn.Content = "Уклониться";
+                Info.Text = Data.Mom.GetDescription();
+
+                Info.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                if (Model.Floor.THIS_ROOM < Model.Floor.ALL_ROOMS)
                 {
-                    randomItem = random.RandomItem(Data.lstOfPickUps);
+                    mobIsBoss = false;
+                    if (mobOrChest = random.MobOrChest() && Data.lstOfPickUps.Count > 0) // true - сундук; false - моб
+                    {
+                        randomItem = random.RandomItem(Data.lstOfPickUps);
 
-                    Chest.Visibility = Visibility.Visible;
-                    bitmap = new BitmapImage();
-                    bitmap.BeginInit();
-                    bitmap.UriSource = new Uri(randomItem.imgUrl, UriKind.Relative);
-                    bitmap.EndInit();
-                    Item.Source = bitmap;
+                        Chest.Visibility = Visibility.Visible;
+                        bitmap = new BitmapImage();
+                        bitmap.BeginInit();
+                        bitmap.UriSource = new Uri(randomItem.imgUrl, UriKind.Relative);
+                        bitmap.EndInit();
+                        Item.Source = bitmap;
 
-                    ItemDescriptionBar.Text = $"Описание:\n{randomItem.PrintInfo()}";
+                        ItemDescriptionBar.Text = $"Описание:\n{randomItem.PrintInfo()}";
 
-                    PozitiveBtn.Content = "Взять";
-                    NegativeBtn.Content = "Пропустить";
+                        PozitiveBtn.Content = "Взять";
+                        NegativeBtn.Content = "Пропустить";
+                    }
+                    else
+                    {
+                        randomMob = random.RandomEnemy();
+                        Enemy.Source = ChangeImageForEnemies(randomMob, true); ;
+
+                        EnemyHealthBar.Text = $"Здоровье: {randomMob.health}";
+                        EnemyDamageBar.Text = $"Урон: {randomMob.Damage}";
+                        PozitiveBtn.Content = "Атаковать";
+                        NegativeBtn.Content = "Уклониться";
+                        Info.Visibility = Visibility.Visible;
+                    }
                 }
                 else
                 {
-                    randomMob = random.RandomEnemy();
-                    Enemy.Source = ChangeImageForEnemies(randomMob, true); ;
+                    mobOrChest = false;
+                    mobIsBoss = true;
 
-                    EnemyHealthBar.Text = $"Здоровье: {randomMob.health}";
-                    EnemyDamageBar.Text = $"Урон: {randomMob.Damage}";
+                    randomBoss = random.RandomBoss(Data.lstOfBosses);
+                    // Загрузка VS экрана
+                    ShowVSImage(randomBoss);
+                    Enemy.Source = ChangeImageForEnemies(randomBoss, true); ;
+
+                    EnemyHealthBar.Text = $"Здоровье: {randomBoss.health}";
+                    EnemyDamageBar.Text = $"Урон: {randomBoss.Damage}";
                     PozitiveBtn.Content = "Атаковать";
                     NegativeBtn.Content = "Уклониться";
                     Info.Visibility = Visibility.Visible;
                 }
-            }
-            else
-            {
-                mobOrChest = false;
-                mobIsBoss = true;
-
-                randomBoss = random.RandomBoss(Data.lstOfBosses);
-                // Загрузка VS экрана
-                ShowVSImage(randomBoss);
-                Enemy.Source = ChangeImageForEnemies(randomBoss, true); ;
-
-                EnemyHealthBar.Text = $"Здоровье: {randomBoss.health}";
-                EnemyDamageBar.Text = $"Урон: {randomBoss.Damage}";
-                PozitiveBtn.Content = "Атаковать";
-                NegativeBtn.Content = "Уклониться";
-                Info.Visibility = Visibility.Visible;
             }
         }
     }

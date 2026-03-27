@@ -244,7 +244,7 @@
   <ItemGroup>
     <Resource Include="Images\Mom\neutral\MomsEye_neutral.png" />
     <Resource Include="Images\Mom\neutral\MomsHand_neutral.png" />
-    <Resource Include="Images\Mom\attack\MomsLeg_neutral.png" />
+    <Resource Include="Images\Mom\attack\MomsLeg_attack_short.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Mom\attack\MomsEye_attack.png" />
