@@ -64,7 +64,7 @@ namespace The_Binding_Of_Isaac_WPF.Model
 
         public static void HealthDown(double damage)
         {
-            hp -= damage;
+            hp -= (damage - (damage * defence));
         }
     }
 }

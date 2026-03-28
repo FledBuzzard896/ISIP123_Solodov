@@ -12,7 +12,7 @@ namespace The_Binding_Of_Isaac_WPF.Model
         private double damage;
         private string description;
 
-        public const string VS_SCREEN = "/Images/Boss/VS/isaacVSmom.png";
+        public const string VS_SCREEN = "/Images/VS/isaacVSmom.png";
 
         public double Hp => hp;
         public double Damage => damage;
