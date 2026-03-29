@@ -35,6 +35,7 @@ namespace The_Binding_Of_Isaac_WPF.Pages
             else if (Isaac.isIsaacAlive && Isaac.floorsLeft == 0) 
             {
                 floorTxtBlck.Text = $"Комната матери.";
+                Model.Floor.IS_FINAL_BOSS = true;
                 mainWindow.DepthBackImage.Visibility = Visibility.Collapsed;
                 mainWindow.MomsBackImage.Visibility = Visibility.Visible;
             }
@@ -51,10 +52,7 @@ namespace The_Binding_Of_Isaac_WPF.Pages
 
             ToolBar.ItemsSource = Isaac.inventory;
 
-            // ============================= тест (потом удалить) ========================================
-            Model.Floor.IS_FINAL_BOSS = true;
-            mainWindow.BasementBackImage.Visibility = Visibility.Collapsed;
-            mainWindow.MomsBackImage.Visibility = Visibility.Visible;
+
         }
 
         private void GoNextRoom_Click(object sender, RoutedEventArgs e)

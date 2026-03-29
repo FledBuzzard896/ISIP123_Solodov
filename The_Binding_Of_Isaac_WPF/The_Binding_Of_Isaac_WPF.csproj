@@ -71,6 +71,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Ending.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Floor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -112,6 +116,9 @@
     <Compile Include="Model\Weapon.cs" />
     <Compile Include="Pages\CharacterSelection.xaml.cs">
       <DependentUpon>CharacterSelection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Ending.xaml.cs">
+      <DependentUpon>Ending.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Floor.xaml.cs">
       <DependentUpon>Floor.xaml</DependentUpon>
@@ -267,6 +274,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Mom\attack\MomsHand_attack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\titlemenu_2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -125,15 +125,9 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                     MomsEye.Visibility = Visibility.Collapsed;
                 }
 
-                if (Isaac.Hp <= 0) 
-                { 
-                    // Навигация на грустную концовку
-                }
+                if (Isaac.Hp <= 0) NavigationService.Navigate(new Ending());
 
-                if (mom.Hp <= 0)
-                {
-                    // Навигация на весёлую концовку.
-                }
+                if (mom.Hp <= 0) NavigationService.Navigate(new Ending());
                 else
                 {
                     await Task.Delay(500);
@@ -179,10 +173,7 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                     if (enemyDamage != 0) await ApplyDamage(enemyDamage);
                     Info.Text = "";
 
-                    if (Isaac.Hp <= 0) 
-                    {
-                        // Навигация на грустную концовку
-                    }
+                    if (Isaac.Hp <= 0) NavigationService.Navigate(new Ending());
 
                     if (randomMob.health <= 0)
                     {
@@ -216,10 +207,7 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                     if (enemyDamage != 0) await ApplyDamage(enemyDamage);
                     Info.Text = "";
 
-                    if (Isaac.Hp <= 0)
-                    {
-                        // Навигация на грустную концовку
-                    }
+                    if (Isaac.Hp <= 0) NavigationService.Navigate(new Ending());
 
                     if (randomBoss.health <= 0)
                     {
@@ -333,10 +321,7 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                         MomsEye.Visibility = Visibility.Collapsed;
                     }
 
-                    if (Isaac.Hp <= 0)
-                    {
-                        // Навигация на грустную концовку
-                    }
+                    if (Isaac.Hp <= 0) NavigationService.Navigate(new Ending());
                 }
                 await Task.Delay(1500);
                 MomsOneCicle();
@@ -366,10 +351,7 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                         // Урон Айзеку
                         ApplyDamage(enemyDamage, random.MaxDamageOrMinDamage);
 
-                        if (Isaac.Hp <= 0)
-                        {
-                            // Навигация на грустную концовку
-                        }
+                        if (Isaac.Hp <= 0) NavigationService.Navigate(new Ending());
 
                         // Смена состояния моба
                         Enemy.Source = ChangeImageForEnemies(randomMob, true);
@@ -396,10 +378,7 @@ namespace The_Binding_Of_Isaac_WPF.Pages
                         // Урон Айзеку
                         ApplyDamage(enemyDamage, random.MaxDamageOrMinDamage);
 
-                        if (Isaac.Hp <= 0)
-                        {
-                            // Навигация на грустную концовку
-                        }
+                        if (Isaac.Hp <= 0) NavigationService.Navigate(new Ending());
 
                         // Смена состояния босса
                         Enemy.Source = ChangeImageForEnemies(randomBoss, true);
@@ -467,22 +446,23 @@ namespace The_Binding_Of_Isaac_WPF.Pages
 
             if (userMoveSkip)
             {
+                _isProcessing = true;
+
                 // Урон Айзеку
                 await ApplyDamage(enemyDamage);
 
                 // Смена состояния моба
                 Enemy.Source = ChangeImageForEnemies(enemy, true);
 
+                if (Isaac.Hp <= 0) NavigationService.Navigate(new Ending());
+
                 // Возврат в класическое состояние
                 await Task.Delay(500);
                 Enemy.Source = ChangeImageForEnemies(enemy, false);
                 Info.Text = "Враг наносит удар";
-            }
 
-            if (Isaac.Hp <= 0) 
-            {
-                //Навигация на концовку
-            } 
+                _isProcessing = false;
+            }
         }
         private void MomsOneCicle() 
         {

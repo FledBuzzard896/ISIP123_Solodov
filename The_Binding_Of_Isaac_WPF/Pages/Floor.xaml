@@ -82,10 +82,10 @@
             </Grid.ColumnDefinitions>
 
             <!-- Айзек -->
-            <Image x:Name="IsaacOnTheField" VerticalAlignment="Bottom" Source="/Images/IsaacBossFight.png" Width="75" Grid.Row="0" Grid.ColumnSpan="2"/>
+            <Image x:Name="IsaacOnTheField" VerticalAlignment="Bottom" Source="/Images/IsaacBossFight.png" Visibility="Collapsed" Width="75" Grid.Row="0" Grid.ColumnSpan="2"/>
 
             <!-- Дверь -->
-            <Image x:Name="Door" VerticalAlignment="Top" Source="/Images/door_v2.png" Width="175" Grid.Row="0" Grid.ColumnSpan="2"/>
+            <Image x:Name="Door" VerticalAlignment="Top" Source="/Images/door_v2.png" Visibility="Collapsed" Width="175" Grid.Row="0" Grid.ColumnSpan="2"/>
 
             <!-- Рука -->
             <Image x:Name="MomsHand" VerticalAlignment="Top" Source="/Images/Mom/neutral/MomsHand_neutral.png" Width="125" Margin="35" Visibility="Collapsed" Grid.Row="0" Grid.ColumnSpan="2"/>
