@@ -24,6 +24,7 @@ namespace Nail_nail.Pages
         public MainPage()
         {
             InitializeComponent();
+            Loaded += PageLoaded;
         }
 
         private void Shop_ButtonClick(object sender, RoutedEventArgs e)
@@ -37,11 +38,25 @@ namespace Nail_nail.Pages
         }
         private void Account_ButtonClick(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Authorization());
+            if (!User.isAuthorizated) NavigationService.Navigate(new Authorization());
+            else NavigationService.Navigate(new Account());
         }
         private void SignUp_ButtonClick(object sender, RoutedEventArgs e) 
         {
             
+        }
+        private void PageLoaded(object sender, RoutedEventArgs e) 
+        {
+            if (User.isAuthorizated)
+            {
+                AccountLogIn.Visibility = Visibility.Collapsed;
+                Account.Visibility = Visibility.Visible;
+            }
+            else 
+            {
+                AccountLogIn.Visibility = Visibility.Visible;
+                Account.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }
