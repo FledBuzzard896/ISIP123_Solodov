@@ -43,7 +43,8 @@ namespace Nail_nail.Pages
         }
         private void SignUp_ButtonClick(object sender, RoutedEventArgs e) 
         {
-            
+            // записать мастера
+            NavigationService.Navigate(new );
         }
         private void PageLoaded(object sender, RoutedEventArgs e) 
         {

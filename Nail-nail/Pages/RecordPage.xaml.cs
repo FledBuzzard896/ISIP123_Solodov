@@ -1,5 +1,4 @@
-﻿using Nail_nail.Classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,26 +16,18 @@ using System.Windows.Shapes;
 namespace Nail_nail.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для Account.xaml
+    /// Логика взаимодействия для RecordPage.xaml
     /// </summary>
-    public partial class Account : Page
+    public partial class RecordPage : Page
     {
-        public Account()
+        public RecordPage()
         {
-
             InitializeComponent();
-            DataContext = IUser.AppUser;
-
         }
 
-        private void PageLoaded(object sender, RoutedEventArgs e)
+        private void SignUp_Click(object sender, RoutedEventArgs e) 
         {
-            // загрузка данных из бд
-        }
-
-        private void BackBtn_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.GoBack();
+            
         }
     }
 }
