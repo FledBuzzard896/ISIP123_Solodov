@@ -1,3 +1,4 @@
+```sql
 use Solodov_NailNail;
 
 create table _User
@@ -17,3 +18,4 @@ create table Roles
 	ID int identity(1,1) primary key,
 	Title nvarchar(50)
 );
+```
