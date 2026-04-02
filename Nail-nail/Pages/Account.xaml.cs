@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nail_nail.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,15 @@ namespace Nail_nail.Pages
     {
         public Account()
         {
+
             InitializeComponent();
+            DataContext = IUser.AppUser;
+
+        }
+
+        private void PageLoaded(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

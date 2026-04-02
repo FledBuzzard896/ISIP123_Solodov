@@ -6,14 +6,20 @@ using System.Threading.Tasks;
 
 namespace Nail_nail.Classes
 {
-    internal static class User
+
+    public static class IUser
     {
-        public static string FullName { get; set; }
-        public static string PhoneNumber { get; set; }
+        public static User AppUser { get; set; } = new User();
+    }
 
-        public static string Login { get; set; }
-        public static string Password { get; set; }
+    public class User
+    {
+        public  string FullName { get; set; }
+        public  string PhoneNumber { get; set; }
 
-        public static bool isAuthorizated { get; set; } = false; 
+        public  string Login { get; set; }
+        public  string Password { get; set; }
+
+        public  bool isAuthorizated { get; set; } = false; 
     }
 }

@@ -58,11 +58,11 @@ namespace Nail_nail.Pages
             {
                 if (LoginTBox.Text != "" && PasswordTBox.Password != "" && NameTBox.Text != "" && PhoneTBox.Text != "")
                 {
-                    User.Login = LoginTBox.Text;
-                    User.Password = PasswordTBox.Password;
-                    User.FullName = NameTBox.Text;
-                    User.PhoneNumber = PhoneTBox.Text;
-                    User.isAuthorizated = true;
+                    IUser.AppUser.Login = LoginTBox.Text;
+                    IUser.AppUser.Password = PasswordTBox.Password;
+                    IUser.AppUser.FullName = NameTBox.Text;
+                    IUser.AppUser.PhoneNumber = PhoneTBox.Text;
+                    IUser.AppUser.isAuthorizated = true;
 
                     // Запись данных в БД
                     NavigationService.Navigate(new MainPage());

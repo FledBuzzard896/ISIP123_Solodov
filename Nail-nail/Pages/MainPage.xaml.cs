@@ -29,7 +29,7 @@ namespace Nail_nail.Pages
 
         private void Shop_ButtonClick(object sender, RoutedEventArgs e)
         {
-            if (!User.isAuthorizated) 
+            if (!IUser.AppUser.isAuthorizated) 
             {
                 MessageBox.Show("Войдите в аккаунт", "Отказано в доступе", MessageBoxButton.OK, MessageBoxImage.Stop);
                 return;
@@ -38,7 +38,7 @@ namespace Nail_nail.Pages
         }
         private void Account_ButtonClick(object sender, RoutedEventArgs e)
         {
-            if (!User.isAuthorizated) NavigationService.Navigate(new Authorization());
+            if (!IUser.AppUser.isAuthorizated) NavigationService.Navigate(new Authorization());
             else NavigationService.Navigate(new Account());
         }
         private void SignUp_ButtonClick(object sender, RoutedEventArgs e) 
@@ -47,7 +47,7 @@ namespace Nail_nail.Pages
         }
         private void PageLoaded(object sender, RoutedEventArgs e) 
         {
-            if (User.isAuthorizated)
+            if (IUser.AppUser.isAuthorizated)
             {
                 AccountLogIn.Visibility = Visibility.Collapsed;
                 Account.Visibility = Visibility.Visible;

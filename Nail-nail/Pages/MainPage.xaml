@@ -17,7 +17,7 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="Shop" Content="Магазин" Width="70" Height="20" Margin="0,0,10,0" Click="Shop_ButtonClick"/>
             <Button x:Name="AccountLogIn" Content="Войти" Width="70" Height="20" Visibility="Visible" Click="Account_ButtonClick"/>
-            <Button x:Name="Account" Width="30" Height="30" Visibility="Collapsed">
+            <Button x:Name="Account" Width="30" Height="30" Visibility="Collapsed" Click="Account_ButtonClick">
                 <Image Source="/Images/incognita.png"/>
             </Button>
         </StackPanel>
