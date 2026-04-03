@@ -20,7 +20,7 @@ create table Roles
 );
 ```
 
-```
+```sql
 -- Создание базы данных (если нужна)
 -- CREATE DATABASE BeautySalonManagement;
 -- GO
