@@ -1,3 +1,4 @@
+Скрипт создания БД
 ```sql
 -- create database Solodov_NailNail
 use Solodov_NailNail
@@ -142,4 +143,24 @@ create table ProductReviews (
 
     unique (ProductID, UserID) -- один пользователь - один отзыв на товар
 );
+```
+
+Вставка данных
+```sql
+insert into Roles
+values 
+(
+	N'Client',
+	N'Master',
+	N'Manager',
+	N'Admin'
+);
+
+insert into Users (Login, Password, FullName, PhoneNumber, Role, CreatedAt)
+values 
+	(N'sobaka224', N'kot12345!', N'Барабанов Пётр Александрович', N'+9 826 123 4567', 1, '2026-04-07T14:12:00'),
+	(N'BirRussianBoss', N'moneymoneybaby', N'Богатый Макс Максбетович', N'+111 999 521 6711', 4, '2025-08-25T19:30:00'),
+	(N'Burmalda123', ),
+	(N'Popka228', ),
+	(N'VovaShkroba', );
 ```
