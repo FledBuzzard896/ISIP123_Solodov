@@ -58,6 +58,20 @@ namespace Nail_nail.Pages
                 AccountLogIn.Visibility = Visibility.Visible;
                 Account.Visibility = Visibility.Collapsed;
             }
+
+            // Берём ID строки, где роль = Master
+            var MasterRoleID = Core.ContextKIP.Roles.Where(x => x.RoleName == "Master").First().ID;
+            // Получем список мастеров
+            var MastersFromDB = Core.ContextKIP.Users.Where(u => u.Role == MasterRoleID).ToList();
+
+            // Создаём новый ItemsSource
+            ListOfMasters_LB.ItemsSource = MastersFromDB
+                .Select(x => new
+                {
+                    FullName = x.FullName,
+                    ServicesList = string.Join(", ", x.MasterServices.Select(ms => ms.ServiceTypes.ServiceName)),
+                    MasterObject = x
+                }).ToList();
         }
     }
 }
