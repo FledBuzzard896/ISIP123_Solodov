@@ -147,20 +147,18 @@ create table ProductReviews (
 
 Вставка данных
 ```sql
-insert into Roles
+insert into Roles (RoleName)
 values 
-(
-	N'Client',
-	N'Master',
-	N'Manager',
-	N'Admin'
-);
+	(N'Client'),
+	(N'Master'),
+	(N'Manager'),
+	(N'Admin');
 
 insert into Users (Login, Password, FullName, PhoneNumber, Role, CreatedAt)
 values 
-	(N'sobaka224', N'kot12345!', N'Барабанов Пётр Александрович', N'+9 826 123 4567', 1, '2026-04-07T14:12:00'),
-	(N'BirRussianBoss', N'moneymoneybaby', N'Богатый Макс Максбетович', N'+111 999 521 6711', 4, '2025-08-25T19:30:00'),
-	(N'Burmalda123', ),
-	(N'Popka228', ),
-	(N'VovaShkroba', );
+	(N'sobaka224', N'kot12345!', N'Барабанов Пётр Александрович', N'+9 826 123 4567', 1, N'2026-04-07T14:12:00'),
+	(N'BirRussianBoss', N'moneymoneybaby', N'Богатый Макс Максбетович', N'+111 999 521 6711', 4, N'2025-08-25T19:30:00'),
+	(N'Burmalda123', N'mellstroyWIN', N'Андреевский Андрей Андреевич', N'8 922 123 3223', 3, N'2025-12-12T20:30:00' ),
+	(N'Popka228', N'pipka114', N'Асхаб Кулдыр Банманович', N'1 231 231 2312', 2, N'2026-01-01T12:30:00' ),
+	(N'VovaShkroba', N'vovashkrobaPassword', N'Вова Шкроба Гламурович', N'8 800 555 3535', 3, N'2000-01-01T00:00:01' );
 ```
