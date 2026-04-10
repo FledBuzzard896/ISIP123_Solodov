@@ -209,6 +209,9 @@
     <Resource Include="Images\incognita.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\serjay_zverev.png" />
+    <Resource Include="Images\vlad_saveliev.png" />
+    <Resource Include="Images\rayan_gosling.png" />
     <Content Include="Model_KIP.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model_KIP.Context.cs</LastGenOutput>

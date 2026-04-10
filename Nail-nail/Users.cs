@@ -32,6 +32,7 @@ namespace Nail_nail
         public string PhoneNumber { get; set; }
         public int Role { get; set; }
         public Nullable<System.DateTime> CreatedAt { get; set; }
+        public string Cover { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Appointments> Appointments { get; set; }

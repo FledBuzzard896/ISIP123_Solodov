@@ -20,6 +20,8 @@ namespace Nail_nail.Classes
         public  string Login { get; set; }
         public  string Password { get; set; }
 
+        public string Cover { get; set; } = "/Images/rayan_gosling.png";
+
         public  bool isAuthorizated { get; set; } = false; 
     }
 }

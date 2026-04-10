@@ -44,8 +44,11 @@ namespace Nail_nail.Pages
         private void SignUp_ButtonClick(object sender, RoutedEventArgs e) 
         {
             // записать мастера
-            NavigationService.Navigate(new RecordPage());
+            if (IUser.AppUser.isAuthorizated) NavigationService.Navigate(new RecordPage());
+            else MessageBox.Show("Войдите в аккаунт.", "Отказано", MessageBoxButton.OK, MessageBoxImage.Stop);
         }
+
+
         private void PageLoaded(object sender, RoutedEventArgs e) 
         {
             if (IUser.AppUser.isAuthorizated)
@@ -68,6 +71,7 @@ namespace Nail_nail.Pages
             ListOfMasters_LB.ItemsSource = MastersFromDB
                 .Select(x => new
                 {
+                    Cover = x.Cover,
                     FullName = x.FullName,
                     ServicesList = string.Join(", ", x.MasterServices.Select(ms => ms.ServiceTypes.ServiceName)),
                     MasterObject = x

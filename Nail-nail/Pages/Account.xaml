@@ -24,7 +24,7 @@
 
             <Button x:Name="BackBtn" Content="Назад" Width="55" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Click="BackBtn_Click"/>
 
-            <Image Source="/Images/incognita.png" Grid.Row="1"/>
+            <Image Source="{Binding Cover}" Grid.Row="1" Stretch="Fill"/>
             <StackPanel Orientation="Vertical" Margin="0,10,0,0" Grid.Row="2">
                 <TextBlock Text="Имя: " Margin="0,0,0,10" FontSize="14"/>
                 <TextBlock Text="{Binding FullName}" Margin="0,0,0,10" FontSize="14"/>

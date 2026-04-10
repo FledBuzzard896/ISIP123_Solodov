@@ -23,6 +23,9 @@ namespace Nail_nail.Pages
         public RecordPage()
         {
             InitializeComponent();
+           
+            var MasterName = Core.ContextKIP.Users.Where(x => x.FullName == )
+            Core.ContextKIP.ServiceTypes.Where
         }
 
         private void SignUp_Click(object sender, RoutedEventArgs e) 

@@ -14,6 +14,7 @@
             <RowDefinition Height="450*"/>
         </Grid.RowDefinitions>
 
+        <TextBlock Text="Салон Страсти и Гламура - NailNail" FontSize="20" VerticalAlignment="Center" FontStyle="Italic"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="Shop" Content="Магазин" Width="70" Height="20" Margin="0,0,10,0" Click="Shop_ButtonClick"/>
             <Button x:Name="AccountLogIn" Content="Войти" Width="70" Height="20" Visibility="Visible" Click="Account_ButtonClick"/>
@@ -35,7 +36,7 @@
                     <DataTemplate>
                         <StackPanel Margin="5" Orientation="Horizontal">
                             <!-- Иконка -->
-                            <Image x:Name="IncognitaImage" Source="/Images/incognita.png" Width="100" Height="100" Margin="0,0,15,0"/>
+                            <Image x:Name="IncognitaImage" Source="{Binding Cover}" Width="100" Height="100" Stretch="Fill" Margin="0,0,15,0"/>
                             <!-- Имя -->
                             <TextBlock x:Name="NameTB" Text="{Binding FullName}" FontSize="14" Width="200" Margin="0,0,15,0"/>
                             <!-- Услуги -->
