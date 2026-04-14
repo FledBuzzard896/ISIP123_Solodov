@@ -21,6 +21,7 @@ namespace Nail_nail.Pages
     /// </summary>
     public partial class Account : Page
     {
+        string _products = "";
         public Account()
         {
 
@@ -32,6 +33,13 @@ namespace Nail_nail.Pages
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
             // загрузка данных из бд
+            // OrderHistory --> Orders + OrderItems
+            // RecordHistory --> Appointments 
+
+            var orders = Core.ContextHOME.Orders.Where(x => x.UserID == IUser.AppUser.UserID);
+            var appointmets = Core.ContextHOME.Appointments.Where(x => x.ClientID == IUser.AppUser.UserID);
+
+            var orderProducts = Core.ContextHOME.OrderItems.Where(x => x.OrderID == )
         }
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)

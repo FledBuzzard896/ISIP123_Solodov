@@ -43,24 +43,55 @@
             <StackPanel Grid.Column="0" Margin="5,0,5,0">
                 <TextBlock Text="История заказов" FontSize="14" Margin="0,0,0,10"/>
                 <ListBox x:Name="OrderHistory" Height="auto">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <!-- Вместо WrapPanel используем VirtualizingStackPanel для вертикального списка -->
+                            <VirtualizingStackPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="5">
-                                <Button x:Name="OneOrder" Content="{Binding}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Дата оформления заказа: "/>
+                                    <TextBlock Text="{Binding время1}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Дата доставки заказа: "/>
+                                    <TextBlock Text="{Binding время2}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Способ оплаты: "/>
+                                    <TextBlock Text="{Binding оплата}"/>
+                                </StackPanel>
+                                <TextBlock Text="{Binding товары+стоимость}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Общая стоимость: "/>
+                                    <TextBlock Text="{Binding общстоимость}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Выдан ли заказ: "/>
+                                    <TextBlock Text="{Binding выданли}"/>
+                                </StackPanel>
+                                <TextBlock Text="Комментарий к заказу:"/>
+                                <TextBlock Text="{Binding комментарий}"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel/>
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
                 </ListBox>
             </StackPanel>
 
             <StackPanel Grid.Column="1" Margin="5,0,5,0">
                 <TextBlock Text="История записей" FontSize="14" Margin="0,0,0,10"/>
                 <ListBox x:Name="RecordHistory" Height="auto">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <!-- Вместо WrapPanel используем VirtualizingStackPanel для вертикального списка -->
+                            <VirtualizingStackPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="5">
@@ -68,11 +99,6 @@
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel/>
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
                 </ListBox>
             </StackPanel>
         </Grid>

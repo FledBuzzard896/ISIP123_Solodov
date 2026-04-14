@@ -68,17 +68,32 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Appointments.cs">
-      <DependentUpon>Model_KIP.tt</DependentUpon>
+      <DependentUpon>Model_HOME.tt</DependentUpon>
     </Compile>
     <Compile Include="Carts.cs">
-      <DependentUpon>Model_KIP.tt</DependentUpon>
+      <DependentUpon>Model_HOME.tt</DependentUpon>
     </Compile>
     <Compile Include="Core.cs" />
     <Compile Include="Manufacturers.cs">
-      <DependentUpon>Model_KIP.tt</DependentUpon>
+      <DependentUpon>Model_HOME.tt</DependentUpon>
     </Compile>
     <Compile Include="MasterServices.cs">
-      <DependentUpon>Model_KIP.tt</DependentUpon>
+      <DependentUpon>Model_HOME.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_HOME.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_HOME.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_HOME.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_HOME.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_HOME.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_HOME.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model_KIP.Context.cs">
       <AutoGen>True</AutoGen>
@@ -96,34 +111,34 @@
       <DependentUpon>Model_KIP.edmx</DependentUpon>
     </Compile>
     <Compile Include="OrderItems.cs">
-      <DependentUpon>Model_KIP.tt</DependentUpon>
+      <DependentUpon>Model_HOME.tt</DependentUpon>
     </Compile>
     <Compile Include="Orders.cs">
-      <DependentUpon>Model_KIP.tt</DependentUpon>
+      <DependentUpon>Model_HOME.tt</DependentUpon>
     </Compile>
     <Compile Include="ProductReviews.cs">
-      <DependentUpon>Model_KIP.tt</DependentUpon>
+      <DependentUpon>Model_HOME.tt</DependentUpon>
     </Compile>
     <Compile Include="Products.cs">
-      <DependentUpon>Model_KIP.tt</DependentUpon>
+      <DependentUpon>Model_HOME.tt</DependentUpon>
     </Compile>
     <Compile Include="ProductTypes.cs">
-      <DependentUpon>Model_KIP.tt</DependentUpon>
+      <DependentUpon>Model_HOME.tt</DependentUpon>
     </Compile>
     <Compile Include="RecordInformation.xaml.cs">
       <DependentUpon>RecordInformation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Roles.cs">
-      <DependentUpon>Model_KIP.tt</DependentUpon>
+      <DependentUpon>Model_HOME.tt</DependentUpon>
     </Compile>
     <Compile Include="ServiceTypes.cs">
-      <DependentUpon>Model_KIP.tt</DependentUpon>
+      <DependentUpon>Model_HOME.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagrams.cs">
       <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
     <Compile Include="Users.cs">
-      <DependentUpon>Model_KIP.tt</DependentUpon>
+      <DependentUpon>Model_HOME.tt</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -193,6 +208,13 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model_KIP.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="Model_HOME.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_HOME.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model_HOME.edmx.diagram">
+      <DependentUpon>Model_HOME.edmx</DependentUpon>
+    </None>
     <None Include="Model_KIP.edmx.diagram">
       <DependentUpon>Model_KIP.edmx</DependentUpon>
     </None>
@@ -212,6 +234,16 @@
     <Resource Include="Images\serjay_zverev.png" />
     <Resource Include="Images\vlad_saveliev.png" />
     <Resource Include="Images\rayan_gosling.png" />
+    <Content Include="Model_HOME.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_HOME.edmx</DependentUpon>
+      <LastGenOutput>Model_HOME.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_HOME.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_HOME.edmx</DependentUpon>
+      <LastGenOutput>Model_HOME.cs</LastGenOutput>
+    </Content>
     <Content Include="Model_KIP.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model_KIP.Context.cs</LastGenOutput>

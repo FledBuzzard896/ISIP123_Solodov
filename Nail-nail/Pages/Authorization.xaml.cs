@@ -58,13 +58,23 @@ namespace Nail_nail.Pages
             {
                 if (LoginTBox.Text != "" && PasswordTBox.Password != "" && NameTBox.Text != "" && PhoneTBox.Text != "")
                 {
-                    IUser.AppUser.Login = LoginTBox.Text;
-                    IUser.AppUser.Password = PasswordTBox.Password;
-                    IUser.AppUser.FullName = NameTBox.Text;
-                    IUser.AppUser.PhoneNumber = PhoneTBox.Text;
-                    IUser.AppUser.isAuthorizated = true;
+                    // Запись пользователя в класс
+                    RegUser(LoginTBox.Text, PasswordTBox.Password, NameTBox.Text, PhoneTBox.Text);
 
                     // Запись данных в БД
+                    var newUser = new Users() 
+                    {
+                        Login = LoginTBox.Text,
+                        Password = PasswordTBox.Password,
+                        FullName = NameTBox.Text,
+                        PhoneNumber = PhoneTBox.Text,
+                        Role = 1,
+                        CreatedAt = DateTime.Now,
+                        Cover = null,
+                    };
+                    Core.ContextHOME.Users.Add(newUser);
+                    Core.ContextHOME.SaveChanges();
+
                     NavigationService.Navigate(new MainPage());
                 }
                 else MessageBox.Show("Заполните все поля!", "Отказ", MessageBoxButton.OK, MessageBoxImage.Stop);
@@ -73,13 +83,34 @@ namespace Nail_nail.Pages
             {
                 if (LoginTBox.Text != "" && PasswordTBox.Password != "") 
                 {
-                    // Проверка на аккаунты
-                    // Если да -> норм
-                    // Если нет -> messagebox
+                    var users = Core.ContextHOME.Users.Where(x => x.Role == 1).ToList();
+                    if (users.Any(x => x.Login == LoginTBox.Text)) 
+                    {
+                        if (users.Any(x => x.Password == PasswordTBox.Password))
+                        {
+                            // Запись пользователя из БД
+                            var user = users.First(x => x.Login == LoginTBox.Text);
+                            RegUser(user.Login, user.Password, user.FullName, user.PhoneNumber);
+
+                            NavigationService.Navigate(new MainPage());
+                        }
+                        else MessageBox.Show("Неправильный логин или пароль!", "Отказ", MessageBoxButton.OK, MessageBoxImage.Stop);
+                    }
+                    else MessageBox.Show("Неправильный логин или пароль!", "Отказ", MessageBoxButton.OK, MessageBoxImage.Stop);
                 }
                 else MessageBox.Show("Заполните все поля!", "Отказ", MessageBoxButton.OK, MessageBoxImage.Stop);
             }
         }
+
+        private void RegUser(string login, string password, string fullname, string phonenum) 
+        {
+            IUser.AppUser.Login = login;
+            IUser.AppUser.Password = password;
+            IUser.AppUser.FullName = fullname;
+            IUser.AppUser.PhoneNumber = phonenum;
+            IUser.AppUser.isAuthorizated = true;
+        }
+
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             e.Handled = !IsTextAllowed(e.Text);
@@ -88,6 +119,7 @@ namespace Nail_nail.Pages
         {
             return text.All(char.IsDigit);
         }
+
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();

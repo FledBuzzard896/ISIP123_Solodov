@@ -9,6 +9,6 @@ namespace Nail_nail
     internal class Core
     {
         public static Solodov_NailNailEntities ContextKIP = new Solodov_NailNailEntities();
-        // public static Solodov_NailNailEntities ContextHOME = new Solodov_NailNailEntities();
+        public static Solodov_NailNailEntities1 ContextHOME = new Solodov_NailNailEntities1();
     }
 }
