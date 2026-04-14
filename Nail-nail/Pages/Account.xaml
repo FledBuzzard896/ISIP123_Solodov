@@ -27,7 +27,7 @@
             <Image Source="{Binding Cover}" Grid.Row="1" Stretch="Fill"/>
             <StackPanel Orientation="Vertical" Margin="0,10,0,0" Grid.Row="2">
                 <TextBlock Text="Имя: " Margin="0,0,0,10" FontSize="14"/>
-                <TextBlock Text="{Binding FullName}" Margin="0,0,0,10" FontSize="14"/>
+                <TextBlock Text="{Binding FullName}" TextWrapping="Wrap" Margin="0,0,0,10" FontSize="14"/>
                 <TextBlock Text="Телефон: " Margin="0,0,0,10" FontSize="14"/>
                 <TextBlock Text="{Binding PhoneNumber}" Margin="0,0,0,10" FontSize="14"/>
             </StackPanel>
@@ -52,30 +52,43 @@
                     
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Margin="5">
+                            <StackPanel Margin="0,5,0,5">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Дата оформления заказа: "/>
-                                    <TextBlock Text="{Binding время1}"/>
+                                    <TextBlock Text="{Binding OrderDateTime}"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Дата доставки заказа: "/>
-                                    <TextBlock Text="{Binding время2}"/>
+                                    <TextBlock Text="{Binding DeliveryDate}"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Способ оплаты: "/>
-                                    <TextBlock Text="{Binding оплата}"/>
-                                </StackPanel>
-                                <TextBlock Text="{Binding товары+стоимость}"/>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Общая стоимость: "/>
-                                    <TextBlock Text="{Binding общстоимость}"/>
+                                    <TextBlock Text="{Binding PaymentMethod}"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Выдан ли заказ: "/>
-                                    <TextBlock Text="{Binding выданли}"/>
+                                    <TextBlock Text="{Binding IsIssued}"/>
                                 </StackPanel>
+                                <TextBlock Text=""/>
+
+                                <TextBlock Text="=========== Товары: ==========="/>
+                                <ItemsControl ItemsSource="{Binding Products}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Общая стоимость: "/>
+                                    <TextBlock Text="{Binding TotalPrice, StringFormat={}{0} ₽}"/>
+                                </StackPanel>
+                                <TextBlock Text=""/>
+                                
                                 <TextBlock Text="Комментарий к заказу:"/>
-                                <TextBlock Text="{Binding комментарий}"/>
+                                <TextBlock Text="{Binding Comment}"/>
+                                <TextBlock Text=""/>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

@@ -23,6 +23,6 @@ namespace Nail_nail.Classes
         public string Cover { get; set; } = "/Images/rayan_gosling.png";
 
         public  bool isAuthorizated { get; set; } = false;
-        public int UserID { get; set; } = Core.ContextHOME.Users.First(x => x.Login == IUser.AppUser.Login).ID;
+        public int UserID { get; set; } 
     }
 }

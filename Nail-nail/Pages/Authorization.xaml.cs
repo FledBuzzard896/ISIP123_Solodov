@@ -59,7 +59,7 @@ namespace Nail_nail.Pages
                 if (LoginTBox.Text != "" && PasswordTBox.Password != "" && NameTBox.Text != "" && PhoneTBox.Text != "")
                 {
                     // Запись пользователя в класс
-                    RegUser(LoginTBox.Text, PasswordTBox.Password, NameTBox.Text, PhoneTBox.Text);
+                    RegUser(LoginTBox.Text, PasswordTBox.Password, NameTBox.Text, PhoneTBox.Text, Core.ContextHOME.Users.Last().ID + 1);
 
                     // Запись данных в БД
                     var newUser = new Users() 
@@ -90,7 +90,7 @@ namespace Nail_nail.Pages
                         {
                             // Запись пользователя из БД
                             var user = users.First(x => x.Login == LoginTBox.Text);
-                            RegUser(user.Login, user.Password, user.FullName, user.PhoneNumber);
+                            RegUser(user.Login, user.Password, user.FullName, user.PhoneNumber, user.ID);
 
                             NavigationService.Navigate(new MainPage());
                         }
@@ -102,13 +102,15 @@ namespace Nail_nail.Pages
             }
         }
 
-        private void RegUser(string login, string password, string fullname, string phonenum) 
+        private void RegUser(string login, string password, string fullname, string phonenum, int userID) 
         {
             IUser.AppUser.Login = login;
             IUser.AppUser.Password = password;
             IUser.AppUser.FullName = fullname;
             IUser.AppUser.PhoneNumber = phonenum;
             IUser.AppUser.isAuthorizated = true;
+
+            IUser.AppUser.UserID = userID;
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
