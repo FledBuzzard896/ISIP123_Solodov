@@ -15,73 +15,29 @@
         </Grid.RowDefinitions>
 
         <Button x:Name="BackBtn" Content="Назад" Width="55" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Click="BackBtn_Click"/>
-        <TextBlock x:Name="master_name" Text="МАСТЕР:" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+        <TextBlock x:Name="master_name" Text="" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
 
         <StackPanel Grid.Row="1" Margin="10">
             <TextBlock Text="Услуги: " FontSize="14"/>
             <ListBox x:Name="Services_LB" Grid.Row="1" Margin="0,10,0,10" ItemsSource="{Binding Path=ListOfServices}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" Padding="0" >
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <!-- Вместо WrapPanel используем VirtualizingStackPanel для вертикального списка -->
+                        <VirtualizingStackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Margin="5">
-                            <TextBlock Text="{Binding ServiceName}" FontSize="14" HorizontalAlignment="Center"/>
-                            <TextBlock Text="Число:" FontSize="14" Margin="0,0,5,0"/>
-                            <ComboBox x:Name="day_combo" Margin="0,0,5,0">
-                                <TextBlock Text="1" FontSize="10"/>
-                                <TextBlock Text="2" FontSize="10"/>
-                                <TextBlock Text="3" FontSize="10"/>
-                                <TextBlock Text="4" FontSize="10"/>
-                                <TextBlock Text="5" FontSize="10"/>
-                                <TextBlock Text="6" FontSize="10"/>
-                                <TextBlock Text="7" FontSize="10"/>
-                                <TextBlock Text="8" FontSize="10"/>
-                                <TextBlock Text="9" FontSize="10"/>
-                                <TextBlock Text="10" FontSize="10"/>
-                                <TextBlock Text="11" FontSize="10"/>
-                                <TextBlock Text="12" FontSize="10"/>
-                                <TextBlock Text="13" FontSize="10"/>
-                                <TextBlock Text="14" FontSize="10"/>
-                                <TextBlock Text="15" FontSize="10"/>
-                                <TextBlock Text="16" FontSize="10"/>
-                                <TextBlock Text="17" FontSize="10"/>
-                                <TextBlock Text="18" FontSize="10"/>
-                                <TextBlock Text="19" FontSize="10"/>
-                                <TextBlock Text="20" FontSize="10"/>
-                                <TextBlock Text="21" FontSize="10"/>
-                                <TextBlock Text="22" FontSize="10"/>
-                                <TextBlock Text="23" FontSize="10"/>
-                                <TextBlock Text="24" FontSize="10"/>
-                                <TextBlock Text="25" FontSize="10"/>
-                                <TextBlock Text="26" FontSize="10"/>
-                                <TextBlock Text="27" FontSize="10"/>
-                                <TextBlock Text="28" FontSize="10"/>
-                                <TextBlock Text="29" FontSize="10"/>
-                                <TextBlock Text="30" FontSize="10"/>
-                            </ComboBox>
-                            <TextBlock Text="Месяц: " FontSize="14" Margin="0,0,5,0"/>
-                            <ComboBox x:Name="month_combo" Margin="0,0,5,0">
-                                <TextBlock Text="Января" FontSize="10"/>
-                                <TextBlock Text="Февраль" FontSize="10"/>
-                                <TextBlock Text="Марь" FontSize="10"/>
-                                <TextBlock Text="Апрель" FontSize="10"/>
-                                <TextBlock Text="Май" FontSize="10"/>
-                                <TextBlock Text="Июнь" FontSize="10"/>
-                                <TextBlock Text="Июль" FontSize="10"/>
-                                <TextBlock Text="Август" FontSize="10"/>
-                                <TextBlock Text="Сентябрь" FontSize="10"/>
-                                <TextBlock Text="Октябрь" FontSize="10"/>
-                                <TextBlock Text="Ноябрь" FontSize="10"/>
-                                <TextBlock Text="Декабрь" FontSize="10"/>
-                            </ComboBox>
+                        <StackPanel Margin="0,5,0,5" Orientation="Horizontal" >
+                            <TextBlock Text="{Binding ServiceName}" FontSize="14" Width="150" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <TextBlock Text="{Binding DurationMinutes, StringFormat={}Продолжительность: {0}}" FontSize="14" Width="175" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <TextBlock Text="{Binding Price, StringFormat={}Цена: {0} ₽}" FontSize="14" Width="100" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0,0,10,0"/>
                             <!-- Кнопка записи -->
                             <Button x:Name="SignUp" Content="Записаться" Width="75" Height="20" FontSize="14" HorizontalAlignment="Center" Click="SignUp_Click"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel/>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
             </ListBox>
         </StackPanel>
     </Grid>

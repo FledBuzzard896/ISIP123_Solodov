@@ -43,9 +43,16 @@ namespace Nail_nail.Pages
         }
         private void SignUp_ButtonClick(object sender, RoutedEventArgs e) 
         {
-            // записать мастера
-            if (IUser.AppUser.isAuthorizated) NavigationService.Navigate(new RecordPage());
-            else MessageBox.Show("Войдите в аккаунт.", "Отказано", MessageBoxButton.OK, MessageBoxImage.Stop);
+            Button button = sender as Button;
+            if (button != null) 
+            {
+                var master = button.Tag as Users;
+                if (master != null) 
+                {
+                    if (IUser.AppUser.isAuthorizated) NavigationService.Navigate(new RecordPage(master));
+                    else MessageBox.Show("Войдите в аккаунт.", "Отказано", MessageBoxButton.OK, MessageBoxImage.Stop);
+                }
+            }
         }
 
 

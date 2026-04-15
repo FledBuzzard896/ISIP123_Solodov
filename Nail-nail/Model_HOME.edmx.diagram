@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="61387e70c39f44d9b90e374d9c9a5827" Name="Diagram1">
-        <EntityTypeShape EntityType="Solodov_NailNailModel_HOME.Appointments" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Solodov_NailNailModel_HOME.Appointments" Width="2" PointX="5.25" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Solodov_NailNailModel_HOME.Carts" Width="1.5" PointX="8.25" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Solodov_NailNailModel_HOME.Manufacturers" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
         <EntityTypeShape EntityType="Solodov_NailNailModel_HOME.MasterServices" Width="1.5" PointX="8.25" PointY="6" IsExpanded="true" />

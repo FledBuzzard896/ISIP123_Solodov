@@ -38,7 +38,7 @@ namespace Nail_nail.Pages
             // RecordHistory --> Appointments 
 
             var orders = Core.ContextHOME.Orders.Where(x => x.UserID == IUser.AppUser.UserID).ToList();
-            var appointmets = Core.ContextHOME.Appointments.Where(x => x.ClientID == IUser.AppUser.UserID);
+            var appointmets = Core.ContextHOME.Appointments.Where(x => x.ClientID == IUser.AppUser.UserID).ToList();
 
             OrderHistory.ItemsSource = orders
                 .Select(x => new
@@ -52,7 +52,18 @@ namespace Nail_nail.Pages
                     Comment = x.Comment,
                 });
 
-            //RecordHistory.ItemsSource = appointmets;
+            RecordHistory.ItemsSource = appointmets
+                .Select(x => new
+                {
+                    Master = Core.ContextHOME.Users.First(y => y.ID == x.MasterID).FullName,
+                    Service = Core.ContextHOME.ServiceTypes.First(y => y.ID == x.ServiceTypeID).ServiceName,
+                    AppointmentDateTime = x.AppointmentDateTime,
+                    PaymentMethod = x.PaymentMethod,
+                    Comment = x.Comment,
+                    TotalPrice = x.TotalPrice,
+                    IsCompleted = x.IsCompleted,
+                    IsCancelled = x.IsCancelled,
+                });
         }
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)

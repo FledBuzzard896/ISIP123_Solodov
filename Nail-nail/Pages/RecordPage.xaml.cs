@@ -20,21 +20,32 @@ namespace Nail_nail.Pages
     /// </summary>
     public partial class RecordPage : Page
     {
-        public RecordPage()
+        private Users _master;
+        public RecordPage(Users inputMaster)
         {
             InitializeComponent();
-           
-            
+            _master = inputMaster;
+            Loaded += PageLoaded;
         }
 
-        private void SignUp_Click(object sender, RoutedEventArgs e) 
+        private void SignUp_Click(object sender, RoutedEventArgs e)
         {
-            
-        }
 
-        private void BackBtn_Click(object sender, RoutedEventArgs e)
+        }
+        private void BackBtn_Click(object sender, RoutedEventArgs e) { NavigationService.GoBack(); }
+
+        private void PageLoaded(object sender, RoutedEventArgs e)
         {
-            NavigationService.GoBack();
+            master_name.Text = $"МАСТЕР: {_master.FullName}";
+
+            var servicesOfMaster = Core.ContextHOME.MasterServices.Where(x => x.MasterID == _master.ID).ToList();
+            Services_LB.ItemsSource = servicesOfMaster
+                .Select(x => new
+                {
+                    ServiceName = x.ServiceTypes.ServiceName,
+                    DurationMinutes = x.ServiceTypes.DurationMinutes,
+                    Price = x.ServiceTypes.Price,
+                });
         }
     }
 }

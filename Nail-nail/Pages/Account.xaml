@@ -40,30 +40,35 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0" Margin="5,0,5,0">
-                <TextBlock Text="История заказов" FontSize="14" Margin="0,0,0,10"/>
-                <ListBox x:Name="OrderHistory" Height="auto">
+            <Grid Grid.Column="0" Margin="5,0,5,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="История заказов" FontSize="14" Margin="0,0,0,10" Grid.Row="0"/>
+                <ListBox x:Name="OrderHistory" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="False" Grid.Row="1">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <!-- Вместо WrapPanel используем VirtualizingStackPanel для вертикального списка -->
                             <VirtualizingStackPanel Orientation="Vertical"/>
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
-                    
+
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="0,5,0,5">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Дата оформления заказа: "/>
-                                    <TextBlock Text="{Binding OrderDateTime}"/>
+                                    <TextBlock Text="Дата оформления: "/>
+                                    <TextBlock Text="{Binding OrderDateTime}" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Дата доставки заказа: "/>
-                                    <TextBlock Text="{Binding DeliveryDate}"/>
+                                    <TextBlock Text="Дата доставки: "/>
+                                    <TextBlock Text="{Binding DeliveryDate}" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Способ оплаты: "/>
-                                    <TextBlock Text="{Binding PaymentMethod}"/>
+                                    <TextBlock Text="{Binding PaymentMethod}" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Выдан ли заказ: "/>
@@ -79,41 +84,60 @@
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
-                                
+
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Общая стоимость: "/>
-                                    <TextBlock Text="{Binding TotalPrice, StringFormat={}{0} ₽}"/>
+                                    <TextBlock Text="Общая стоимость: " Foreground="DarkGreen"/>
+                                    <TextBlock Text="{Binding TotalPrice, StringFormat={}{0} ₽}" Foreground="DarkGreen"/>
                                 </StackPanel>
                                 <TextBlock Text=""/>
-                                
+
                                 <TextBlock Text="Комментарий к заказу:"/>
-                                <TextBlock Text="{Binding Comment}"/>
+                                <TextBlock Text="{Binding Comment}" Foreground="Gray"/>
                                 <TextBlock Text=""/>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-            </StackPanel>
+            </Grid>
 
-            <StackPanel Grid.Column="1" Margin="5,0,5,0">
-                <TextBlock Text="История записей" FontSize="14" Margin="0,0,0,10"/>
-                <ListBox x:Name="RecordHistory" Height="auto">
+            <Grid Grid.Column="1" Margin="5,0,5,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <TextBlock Text="История записей" FontSize="14" Margin="0,0,0,10" Grid.Row="0"/>
+                <ListBox x:Name="RecordHistory" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="False" Grid.Row="1">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <!-- Вместо WrapPanel используем VirtualizingStackPanel для вертикального списка -->
                             <VirtualizingStackPanel Orientation="Vertical"/>
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
-                    
+
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Margin="5">
-                                <Button x:Name="OneRecord" Content="{Binding}"/>
+                            <StackPanel Margin="0,5,0,5">
+                                <TextBlock Text="{Binding Master, StringFormat={}Мастер: {0}}"/>
+                                <TextBlock Text="{Binding Service, StringFormat={}Услуга: {0}}"/>
+                                <TextBlock Text="{Binding AppointmentDateTime, StringFormat={}Дата записи: {0}}"/>
+                                <TextBlock Text="{Binding PaymentMethod, StringFormat={}Способ оплаты: {0}}"/>
+                                <TextBlock Text=""/>
+                                <StackPanel>
+                                    <TextBlock Text="Комментарий: "/>
+                                    <TextBlock Text="{Binding Comment}" Foreground="Gray"/>
+                                </StackPanel>
+                                <TextBlock Text=""/>
+                                <TextBlock Text="{Binding TotalPrice, StringFormat={}Стоимость: {0} ₽}" Foreground="DarkGreen"/>
+                                <TextBlock Text=""/>
+                                <TextBlock Text="{Binding IsCompleted, StringFormat={}Выполнена ли услуга: {0}}"/>
+                                <TextBlock Text="{Binding IsCancelled, StringFormat={}Отменена ли услуга: {0}}"/>
+                                <TextBlock Text=""/>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-            </StackPanel>
+            </Grid>
         </Grid>
     </Grid>
 </Page>
