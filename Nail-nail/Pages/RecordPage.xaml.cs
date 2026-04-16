@@ -33,7 +33,22 @@ namespace Nail_nail.Pages
             if (Convert.ToDateTime(DateCalendar.Text).Date < DateTime.Now.Date) { MessageBox.Show("Вы не можете забронировать прошедшее число!", "Отказ", MessageBoxButton.OK, MessageBoxImage.Stop); }
             if (TimeCalendar.Text == null) { MessageBox.Show("Заполните время приёма!", "Отказ", MessageBoxButton.OK, MessageBoxImage.Stop); }
 
-            // Сохранение данных в БД
+            // Берем объект который выбрали кнопкой
+            var serviceName = (sender as Button).Tag as string;
+            ServiceTypes service = Core.ContextKIP.ServiceTypes.FirstOrDefault(x => x.ServiceName == serviceName);
+
+            // Соедняем дату + время
+            DateTime date = DateCalendar.SelectedDate.Value;
+            string timeString = (TimeCalendar.SelectedItem as ComboBoxItem).Content.ToString();
+            TimeSpan time = TimeSpan.Parse(timeString);
+            DateTime fullDateTime = date.Date.Add(time);
+
+            RecordInformation dialog = new RecordInformation(_master, fullDateTime.ToString(), service);
+
+            if (dialog.ShowDialog() == true) 
+            {
+                MessageBox.Show("Запись подтверждена!", "Ладно, проходи", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
         private void BackBtn_Click(object sender, RoutedEventArgs e) { NavigationService.GoBack(); }
 

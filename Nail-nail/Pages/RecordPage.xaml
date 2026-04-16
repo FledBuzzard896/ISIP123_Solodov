@@ -34,7 +34,7 @@
                             <TextBlock Text="{Binding DurationMinutes, StringFormat={}Продолжительность: {0}}" FontSize="14" Width="175" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0,0,10,0"/>
                             <TextBlock Text="{Binding Price, StringFormat={}Цена: {0} ₽}" FontSize="14" Width="100" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0,0,10,0"/>
                             <!-- Кнопка записи -->
-                            <Button x:Name="SignUp" Content="Записаться" Width="75" Height="20" FontSize="14" HorizontalAlignment="Center" Click="SignUp_Click"/>
+                            <Button x:Name="SignUp" Content="Записаться" Width="75" Height="20" FontSize="14" HorizontalAlignment="Center" Click="SignUp_Click" Tag="{Binding ServiceName}"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
