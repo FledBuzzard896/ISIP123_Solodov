@@ -75,7 +75,6 @@
                                     <TextBlock Text="{Binding IsIssued}"/>
                                 </StackPanel>
                                 <TextBlock Text=""/>
-
                                 <TextBlock Text="=========== Товары: ==========="/>
                                 <ItemsControl ItemsSource="{Binding Products}">
                                     <ItemsControl.ItemTemplate>
