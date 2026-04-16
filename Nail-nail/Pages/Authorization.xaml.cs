@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -21,6 +22,8 @@ namespace Nail_nail.Pages
     /// </summary>
     public partial class Authorization : Page
     {
+        private string url = "https://vkvideo.ru/video-226161773_456239017";
+
         private bool _isChange = false;
         public Authorization()
         {
@@ -58,24 +61,29 @@ namespace Nail_nail.Pages
             {
                 if (LoginTBox.Text != "" && PasswordTBox.Password != "" && NameTBox.Text != "" && PhoneTBox.Text != "")
                 {
-                    // Запись пользователя в класс
-                    RegUser(LoginTBox.Text, PasswordTBox.Password, NameTBox.Text, PhoneTBox.Text, Core.ContextHOME.Users.Last().ID + 1);
-
-                    // Запись данных в БД
-                    var newUser = new Users() 
+                    if (Core.ContextKIP.Users.First(x => x.Login == LoginTBox.Text) is null)
                     {
-                        Login = LoginTBox.Text,
-                        Password = PasswordTBox.Password,
-                        FullName = NameTBox.Text,
-                        PhoneNumber = PhoneTBox.Text,
-                        Role = 1,
-                        CreatedAt = DateTime.Now,
-                        Cover = null,
-                    };
-                    Core.ContextHOME.Users.Add(newUser);
-                    Core.ContextHOME.SaveChanges();
+                        // Запись пользователя в класс
+                        RegUser(LoginTBox.Text, PasswordTBox.Password, NameTBox.Text, PhoneTBox.Text, Core.ContextKIP.Users.Last().ID + 1);
 
-                    NavigationService.Navigate(new MainPage());
+                        // Запись данных в БД
+                        var newUser = new Users()
+                        {
+                            Login = LoginTBox.Text,
+                            Password = PasswordTBox.Password,
+                            FullName = NameTBox.Text,
+                            PhoneNumber = PhoneTBox.Text,
+                            Role = 1,
+                            CreatedAt = DateTime.Now,
+                            Cover = null,
+                        };
+                        Core.ContextKIP.Users.Add(newUser);
+                        Core.ContextKIP.SaveChanges();
+
+                        NavigationService.Navigate(new MainPage());
+                    }
+                    else MessageBox.Show("Данный логин уже используется!", "Отказ", MessageBoxButton.OK, MessageBoxImage.Stop);
+                    
                 }
                 else MessageBox.Show("Заполните все поля!", "Отказ", MessageBoxButton.OK, MessageBoxImage.Stop);
             }
@@ -83,13 +91,26 @@ namespace Nail_nail.Pages
             {
                 if (LoginTBox.Text != "" && PasswordTBox.Password != "") 
                 {
-                    var users = Core.ContextHOME.Users.Where(x => x.Role == 1).ToList();
+
+                    // Прикольчик 
+                    if (LoginTBox.Text == "Rick" && PasswordTBox.Password == "Roll") 
+                    {
+                        Process.Start(new ProcessStartInfo
+                        {
+                            FileName = url,
+                            UseShellExecute = true,
+                        });
+                        MessageBox.Show("Вы были успешно заRickRollены!!!\nАХХАХАХАХАХАХХАХААХХА", "Пасхалко", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+
+
+                    var users = Core.ContextKIP.Users.Where(x => x.Role == 1).ToList();
                     if (users.Any(x => x.Login == LoginTBox.Text)) 
                     {
-                        if (users.Any(x => x.Password == PasswordTBox.Password))
+                        var user = users.First(x => x.Login == LoginTBox.Text);
+                        if (user.Password == PasswordTBox.Password)
                         {
                             // Запись пользователя из БД
-                            var user = users.First(x => x.Login == LoginTBox.Text);
                             RegUser(user.Login, user.Password, user.FullName, user.PhoneNumber, user.ID);
 
                             NavigationService.Navigate(new MainPage());

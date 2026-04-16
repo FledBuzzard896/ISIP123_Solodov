@@ -39,6 +39,26 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            <DatePicker x:Name="DateCalendar" IsDropDownOpen="False" SelectedDateFormat="Short" Margin="0,0,0,10" SelectedDateChanged="DateCalendar_SelectedDateChanged"/>
+            <ComboBox x:Name="TimeCalendar" Width="200">
+                <ComboBoxItem Content="12:00" IsEnabled="True"/>
+                <ComboBoxItem Content="12:30" IsEnabled="True"/>
+                <ComboBoxItem Content="13:00" IsEnabled="True"/>
+                <ComboBoxItem Content="13:30" IsEnabled="True"/>
+                <ComboBoxItem Content="14:00" IsEnabled="True"/>
+                <ComboBoxItem Content="14:30" IsEnabled="True"/>
+                <ComboBoxItem Content="15:00" IsEnabled="True"/>
+                <ComboBoxItem Content="15:30" IsEnabled="True"/>
+                <ComboBoxItem Content="16:00" IsEnabled="True"/>
+                <ComboBoxItem Content="16:30" IsEnabled="True"/>
+                <ComboBoxItem Content="17:00" IsEnabled="True"/>
+                <ComboBoxItem Content="17:30" IsEnabled="True"/>
+                <ComboBoxItem Content="18:00" IsEnabled="True"/>
+                <ComboBoxItem Content="18:30" IsEnabled="True"/>
+                <ComboBoxItem Content="19:00" IsEnabled="True"/>
+                <ComboBoxItem Content="19:30" IsEnabled="True"/>
+                <ComboBoxItem Content="20:00" IsEnabled="True"/>
+            </ComboBox>
         </StackPanel>
     </Grid>
 </Page>
