@@ -42,9 +42,9 @@ namespace Nail_nail
         {
             // Подсчет тыкнутых кнопочек
             int count_rbox = 0;
-            if (sbp_method.IsChecked == true || mir_method.IsChecked == true) count_rbox++;
+            if (sbp_method.IsChecked == true || mir_method.IsChecked == true || cash_method.IsChecked == true) count_rbox++;
 
-            // Если какая-та кнопочка не тыкнута --> отказ
+            // Если кнопочка не тыкнута --> отказ
             if (count_rbox < 1) return;
             // Иначе:
             if (sbp_method.IsChecked == true) _payment = "Online";
@@ -66,8 +66,8 @@ namespace Nail_nail
                 CreatedAt = DateTime.Now, 
             };
 
-            Core.ContextKIP.Appointments.Add(newApp);
-            Core.ContextKIP.SaveChanges();
+            Core.ContextHOME.Appointments.Add(newApp);
+            Core.ContextHOME.SaveChanges();
 
             this.DialogResult = true;
         }

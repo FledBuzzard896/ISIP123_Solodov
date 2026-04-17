@@ -116,6 +116,9 @@
     <Compile Include="Orders.cs">
       <DependentUpon>Model_HOME.tt</DependentUpon>
     </Compile>
+    <Compile Include="Pages\AdminConsole.xaml.cs">
+      <DependentUpon>AdminConsole.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ProductReviews.cs">
       <DependentUpon>Model_HOME.tt</DependentUpon>
     </Compile>
@@ -154,6 +157,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Pages\Account.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AdminConsole.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

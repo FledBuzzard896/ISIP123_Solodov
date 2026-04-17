@@ -30,12 +30,13 @@ namespace Nail_nail.Pages
 
         private void SignUp_Click(object sender, RoutedEventArgs e)
         {
-            if (Convert.ToDateTime(DateCalendar.Text).Date < DateTime.Now.Date) { MessageBox.Show("Вы не можете забронировать прошедшее число!", "Отказ", MessageBoxButton.OK, MessageBoxImage.Stop); }
-            if (TimeCalendar.Text == null) { MessageBox.Show("Заполните время приёма!", "Отказ", MessageBoxButton.OK, MessageBoxImage.Stop); }
+            if (DateCalendar.SelectedDate == null) { MessageBox.Show("Выберите дату для записи!", "Отказ", MessageBoxButton.OK, MessageBoxImage.Stop); return; }
+            if (DateCalendar.SelectedDate.Value.Date < DateTime.Now.Date) { MessageBox.Show("Вы не можете забронировать прошедшее число!", "Отказ", MessageBoxButton.OK, MessageBoxImage.Stop); return; }
+            if (TimeCalendar.SelectedItem == null) { MessageBox.Show("Заполните время приёма!", "Отказ", MessageBoxButton.OK, MessageBoxImage.Stop); return; }
 
             // Берем объект который выбрали кнопкой
             var serviceName = (sender as Button).Tag as string;
-            ServiceTypes service = Core.ContextKIP.ServiceTypes.FirstOrDefault(x => x.ServiceName == serviceName);
+            ServiceTypes service = Core.ContextHOME.ServiceTypes.FirstOrDefault(x => x.ServiceName == serviceName);
 
             // Соедняем дату + время
             DateTime date = DateCalendar.SelectedDate.Value;
@@ -48,6 +49,7 @@ namespace Nail_nail.Pages
             if (dialog.ShowDialog() == true) 
             {
                 MessageBox.Show("Запись подтверждена!", "Ладно, проходи", MessageBoxButton.OK, MessageBoxImage.Information);
+                NavigationService.GoBack();
             }
         }
         private void BackBtn_Click(object sender, RoutedEventArgs e) { NavigationService.GoBack(); }
@@ -62,7 +64,7 @@ namespace Nail_nail.Pages
                     foreach (ComboBoxItem item in TimeCalendar.Items)
                     {
                         item.IsEnabled = false;
-                        item.Foreground = Brushes.LightGray;
+                        item.Foreground = Brushes.DarkRed;
                     }
                 }
                 else
@@ -75,7 +77,7 @@ namespace Nail_nail.Pages
                     DateTime date = selectedDate.Value.Date;
 
                     // Проверка на то, какое время и когда свободно
-                    var MasterAppointments = Core.ContextKIP.Appointments.Where(x => x.MasterID == _master.ID).ToList();
+                    var MasterAppointments = Core.ContextHOME.Appointments.Where(x => x.MasterID == _master.ID).ToList();
                     foreach (var appointment in MasterAppointments)
                     {
                         if (appointment.AppointmentDateTime.Date != date) { continue; }
@@ -93,7 +95,7 @@ namespace Nail_nail.Pages
                                 if (slotTime >= start && slotTime <= end)
                                 {
                                     time.IsEnabled = false;
-                                    time.Foreground = Brushes.LightGray;
+                                    time.Foreground = Brushes.DarkRed;
                                 }
                             }
                         }
@@ -105,7 +107,10 @@ namespace Nail_nail.Pages
         {
             master_name.Text = $"МАСТЕР: {_master.FullName}";
 
-            var servicesOfMaster = Core.ContextKIP.MasterServices.Where(x => x.MasterID == _master.ID).ToList();
+            DateCalendar.SelectedDate = null;
+            TimeCalendar.SelectedItem = null;
+
+            var servicesOfMaster = Core.ContextHOME.MasterServices.Where(x => x.MasterID == _master.ID).ToList();
             Services_LB.ItemsSource = servicesOfMaster
                 .Select(x => new
                 {
