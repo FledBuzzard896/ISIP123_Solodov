@@ -13,14 +13,41 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="main" Foreground="White" TextWrapping="Wrap" Grid.Row="0" Margin="5,5,5,0"/>
+
+        <ScrollViewer x:Name="ConsoleScroll" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" Grid.Row="0" Margin="5,5,5,0">
+            <TextBlock x:Name="ConsoleTB" FontSize="14" FontFamily="Cascadia Code" Foreground="White" TextWrapping="Wrap">
+                <Run Text="=================================== AdminConsole ==================================="/> <LineBreak/>
+                <Run Text="Приветсвуем вас в AdminConsole для управление пользователями."/> <LineBreak/>
+                <Run Text="Ниже представлены всевозможные команды команды:"/> <LineBreak/>
+                <LineBreak/> <Run Text="Базовые команды:"/> <LineBreak/>
+                <Run Text="&#x9;adm&#x9;" Foreground="Purple"/>
+                <Run Text="Вывод всех команд"/> <LineBreak/>
+                <Run Text="&#x9;clear&#x9;" Foreground="Purple"/>
+                <Run Text="Очистить консоль"/> <LineBreak/>
+                <Run Text="&#x9;exit&#x9;" Foreground="Purple"/>
+                <Run Text="Закрыть консоль"/> <LineBreak/>
+                <LineBreak/> <Run Text="Команды для взаимодейтсвия с пользователями:"/> <LineBreak/>
+                <Run Text="&#x9;adm users&#x9;&#x9;&#x9;" Foreground="Purple"/>
+                <Run Text="Вывод пользователей и небольшой информации о них"/> <LineBreak/>
+                <Run Text="&#x9;adm dlt_user [id]&#x9;&#x9;" Foreground="Purple"/>
+                <Run Text="Удаление пользователя по аргументу (id)"/> <LineBreak/>
+                <Run Text="&#x9;adm chng_user [id]&#x9;&#x9;" Foreground="Purple"/>
+                <Run Text="Изменение пользователя по аргументу (id)"/> <LineBreak/>
+                <Run Text="&#x9;adm chng_user_role [id]&#x9;" Foreground="Purple"/>
+                <Run Text="Изменение роли пользователя по аргументу (id)"/> <LineBreak/>
+                <Run Text="&#x9;adm crt_user&#x9;&#x9;&#x9;" Foreground="Purple"/>
+                <Run Text="Создание пользователя"/> <LineBreak/>
+                <Run Text="==================================================================================="/> <LineBreak/><LineBreak/>
+            </TextBlock>
+        </ScrollViewer>
+
         <Grid Grid.Row="1" Margin="5,10,5,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text=">>>" Foreground="Green" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" Grid.Column="0" Margin="0,0,2,0"/>
-            <TextBox Foreground="Purple" Background="Transparent" BorderBrush="Transparent" Grid.Column="1"/>
+            <TextBlock x:Name="path" Text="C:/Users/{0}>>>" FontSize="14" FontFamily="Cascadia Code" Foreground="Green" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,2,0"/>
+            <TextBox x:Name="inputCommands" FontSize="14" FontFamily="Cascadia Code" Foreground="Purple" CaretBrush="Purple" Background="Transparent" BorderBrush="Transparent" TextWrapping="Wrap" KeyDown="InputTextBox_KeyDown" Grid.Column="1"/>
         </Grid>
     </Grid>
 </Page>
