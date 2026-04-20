@@ -48,7 +48,7 @@ namespace Nail_nail.Pages
                     string[] parts = command.Split(' ');
                     if (parts.Length == 3 && int.TryParse(parts[2], out int userId))
                     {
-                        // Команда удаления юзеров
+                        DeleteUser(Convert.ToInt32(parts[2]));
                     }
                     else
                     {
@@ -60,7 +60,7 @@ namespace Nail_nail.Pages
                     string[] parts = command.Split(' ');
                     if (parts.Length == 3 && int.TryParse(parts[2], out int userId))
                     {
-                        // Команда изменения юзеров
+                        ChangeUser(Convert.ToInt32(parts[2]), e);
                     }
                     else
                     {
@@ -93,10 +93,8 @@ namespace Nail_nail.Pages
                 }
                 else 
                 {
-                    ConsoleTB.Inlines.Add(new Run($"Error: {command}: Комманда не найдена\n") { Foreground = Brushes.DarkRed });
+                    ConsoleTB.Inlines.Add(new Run($"Error: {command}: Комманда не найдена\n\n") { Foreground = Brushes.DarkRed });
                 }
-
-                
                 inputCommands.Clear();
                 e.Handled = true;
             }
@@ -123,6 +121,15 @@ namespace Nail_nail.Pages
             ConsoleTB.Inlines.Add(new Run("\tadm crt_user\t\t\t") { Foreground = Brushes.Purple });
             ConsoleTB.Inlines.Add(new Run("Создание пользователя\n\n"));
         }
+        private void PrintUser(Users user) 
+        {
+            AutoEqualPrint($"FullName:\t {user.FullName}", "Пользователь", 1);
+            ConsoleTB.Inlines.Add(new Run($"Login:\t\t {user.Login}\n") { Foreground = Brushes.Yellow });
+            ConsoleTB.Inlines.Add(new Run($"FullName:\t {user.FullName}\n") { Foreground = Brushes.Yellow });
+            ConsoleTB.Inlines.Add(new Run($"PhoneNum:\t {user.PhoneNumber}\n") { Foreground = Brushes.Yellow });
+            ConsoleTB.Inlines.Add(new Run($"Role:\t\t {user.Roles.RoleName}\n") { Foreground = Brushes.Yellow });
+            ConsoleTB.Inlines.Add(new Run($"CreatedAt:\t {user.CreatedAt}\n") { Foreground = Brushes.Yellow });
+        }
         private void PrintUsers() 
         {
             var users = Core.ContextKIP.Users.Where(x => x.ID != IUser.AppUser.UserID).ToList();
@@ -138,9 +145,70 @@ namespace Nail_nail.Pages
             {
                 ConsoleTB.Inlines.Add(new Run($"RoleID: {role.ID}\tНазвание роли: {role.RoleName}\n"));
             }
+            ConsoleTB.Inlines.Add(new Run("\n"));
+        }
+        private void DeleteUser(int id) 
+        {
+            var deleteUser = Core.ContextKIP.Users.FirstOrDefault(x => x.ID == id);
+            if (deleteUser != null) 
+            {
+                Core.ContextKIP.Users.Remove(deleteUser);
+                return;
+            }
+            ConsoleTB.Inlines.Add(new Run($"Error: adm dlt_user {id}: Пользователь с таким ID не найден\n\n") { Foreground = Brushes.DarkRed });
+        }
+        private void ChangeUser(int id, KeyEventArgs e) 
+        {
+            var changeUser = Core.ContextKIP.Users.FirstOrDefault(x => x.ID == id);
+            if (changeUser != null)
+            {
+                PrintUser(changeUser);
+                ConsoleTB.Inlines.Add(new Run("Введите параметр, который хотите изменить...\n"));
+                ConsoleTB.Inlines.Add(new Run("\tLogin (1)\n"));
+                ConsoleTB.Inlines.Add(new Run("\tFullName (2)\n"));
+                ConsoleTB.Inlines.Add(new Run("\tPhoneNum (3)\n"));
 
+                while (e.Key == Key.Enter) 
+                {
+                    string choice = inputCommands.Text;
+                    switch (choice) 
+                    {
+                        case "1":
+                            // написать продолжение туататататта
+                            break;
+                        case "2":
+                            break;
+                        case "3":
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                return;
+            }
         }
 
+        private void AutoEqualPrint(string longestLine, string title, int countOfTab) 
+        {
+            int lenOfLine = longestLine.Length + (4 * countOfTab);
+            int lenOfTitle = title.Length + 2;
+
+            int difference = lenOfLine - lenOfTitle;
+            int center = difference / 2;
+
+            string filler = "";
+            for (int i = 0; i != center; i++) 
+            {
+                filler += "=";
+            }
+
+            // Подбор под чет/нечет
+            string finalTitle = "";
+            if (difference % 2 != 0) { finalTitle = filler + " " + title + " " + filler + "="; }
+            else { finalTitle = filler + " " + title + " " + filler; }
+
+            ConsoleTB.Inlines.Add(new Run(finalTitle + "\n"));
+        }
         private void AddConsole(string path, string command)
         {
             ConsoleTB.Inlines.Add(new Run(path) { Foreground = Brushes.DarkGreen });
