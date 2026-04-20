@@ -66,8 +66,8 @@ namespace Nail_nail
                 CreatedAt = DateTime.Now, 
             };
 
-            Core.ContextHOME.Appointments.Add(newApp);
-            Core.ContextHOME.SaveChanges();
+            Core.ContextKIP.Appointments.Add(newApp);
+            Core.ContextKIP.SaveChanges();
 
             this.DialogResult = true;
         }

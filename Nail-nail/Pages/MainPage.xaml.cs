@@ -70,9 +70,9 @@ namespace Nail_nail.Pages
             }
 
             // Берём ID строки, где роль = Master
-            var MasterRoleID = Core.ContextHOME.Roles.Where(x => x.RoleName == "Master").First().ID;
+            var MasterRoleID = Core.ContextKIP.Roles.Where(x => x.RoleName == "Master").First().ID;
             // Получем список мастеров
-            var MastersFromDB = Core.ContextHOME.Users.Where(u => u.Role == MasterRoleID).ToList();
+            var MastersFromDB = Core.ContextKIP.Users.Where(u => u.Role == MasterRoleID).ToList();
 
             // Создаём новый ItemsSource
             ListOfMasters_LB.ItemsSource = MastersFromDB

@@ -43,7 +43,7 @@ namespace Nail_nail.Pages
                 {
                     PrintUsers();
                 }
-                else if (command.StartsWith("adm dlt_user "))
+                else if (command.StartsWith("adm dlt_user"))
                 {
                     string[] parts = command.Split(' ');
                     if (parts.Length == 3 && int.TryParse(parts[2], out int userId))
@@ -55,7 +55,7 @@ namespace Nail_nail.Pages
                         ConsoleTB.Inlines.Add(new Run("Error: adm dlt_user [целое число]: Введите целое число\n") { Foreground = Brushes.DarkRed });
                     }
                 }
-                else if (command.StartsWith("adm chng_user "))
+                else if (command.StartsWith("adm chng_user"))
                 {
                     string[] parts = command.Split(' ');
                     if (parts.Length == 3 && int.TryParse(parts[2], out int userId))
@@ -67,7 +67,7 @@ namespace Nail_nail.Pages
                         ConsoleTB.Inlines.Add(new Run("Error: adm chng_user [целое число]: Введите целое число\n") { Foreground = Brushes.DarkRed });
                     }
                 }
-                else if (command.StartsWith("adm chng_user_role "))
+                else if (command.StartsWith("adm chng_user_role"))
                 {
                     string[] parts = command.Split(' ');
                     if (parts.Length == 3 && int.TryParse(parts[2], out int userId))
@@ -125,14 +125,14 @@ namespace Nail_nail.Pages
         }
         private void PrintUsers() 
         {
-            var users = Core.ContextHOME.Users.Where(x => x.ID != IUser.AppUser.UserID).ToList();
+            var users = Core.ContextKIP.Users.Where(x => x.ID != IUser.AppUser.UserID).ToList();
             ConsoleTB.Inlines.Add(new Run("Список всех пользователей:\n"));
             foreach (var user in users) 
             {
                 ConsoleTB.Inlines.Add(new Run($"ID: {user.ID}\t\tLogin: {user.Login}\t\tРоль: {user.Role}\n"));
             }
 
-            var roles = Core.ContextHOME.Roles.ToList();
+            var roles = Core.ContextKIP.Roles.ToList();
             ConsoleTB.Inlines.Add(new Run("\nСписок всех ролей:\n"));
             foreach (var role in roles) 
             {
