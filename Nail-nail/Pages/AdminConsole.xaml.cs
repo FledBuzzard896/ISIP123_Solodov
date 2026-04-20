@@ -29,6 +29,9 @@ namespace Nail_nail.Pages
         private bool CHANGE_FLAG_input = false;
         private int edited_field = 0;
 
+        private List<string> command_history = new List<string>();
+        private int history_idx = 0;
+
         public AdminConsole()
         {
             InitializeComponent();
@@ -37,6 +40,17 @@ namespace Nail_nail.Pages
 
         private void InputTextBox_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.Key == Key.Up) 
+            {
+                if (command_history.Count > 0 && history_idx > 0)
+                {
+                    history_idx--;
+                    inputCommands.Text = command_history[history_idx];
+                    inputCommands.CaretIndex = inputCommands.Text.Length;
+                }
+                e.Handled = true; 
+            }
+
             if (CHANGE_FLAG_input) 
             {
                 if (e.Key == Key.Enter) 
@@ -51,7 +65,11 @@ namespace Nail_nail.Pages
                 if (e.Key == Key.Enter) 
                 {
                     string choice = inputCommands.Text;
+
                     AddConsole(pathToCommand, choice);
+                    command_history.Add(choice);
+                    history_idx = command_history.Count;
+
                     ChangeUser_Flags(choice);
                     inputCommands.Clear();
                 }
@@ -61,7 +79,10 @@ namespace Nail_nail.Pages
             if (e.Key == Key.Enter)
             {
                 string command = inputCommands.Text.Trim();
+
                 AddConsole(pathToCommand, command);
+                command_history.Add(command);
+                history_idx = command_history.Count;
 
                 if (command == "adm") PrintConsoleCommands(); 
                 else if (command == "adm users") PrintUsers(); 
@@ -246,6 +267,8 @@ namespace Nail_nail.Pages
                 case 1:
                     string newLogin = inputCommands.Text;
                     AddConsole(pathToCommand, newLogin);
+                    command_history.Add(newLogin);
+                    history_idx = command_history.Count;
 
                     mainUser.Login = newLogin;
                     Core.ContextHOME.SaveChanges();
@@ -256,6 +279,8 @@ namespace Nail_nail.Pages
                 case 2:
                     string newName = inputCommands.Text;
                     AddConsole(pathToCommand, newName);
+                    command_history.Add(newName);
+                    history_idx = command_history.Count;
 
                     mainUser.FullName = newName;
                     Core.ContextHOME.SaveChanges();
@@ -266,6 +291,8 @@ namespace Nail_nail.Pages
                 case 3:
                     string newPhonenum = inputCommands.Text;
                     AddConsole(pathToCommand, newPhonenum);
+                    command_history.Add(newPhonenum);
+                    history_idx = command_history.Count;
 
                     mainUser.PhoneNumber = newPhonenum;
                     Core.ContextHOME.SaveChanges();
@@ -278,6 +305,8 @@ namespace Nail_nail.Pages
                     {
                         int newRoleID = Convert.ToInt32(inputCommands.Text);
                         AddConsole(pathToCommand, newRoleID.ToString());
+                        command_history.Add(newRoleID.ToString());
+                        history_idx = command_history.Count;
 
                         if (newRoleID < 0 || newRoleID > 4) { ConsoleTB.Inlines.Add(new Run($"ID роли должен быть в диапазоне от 1 до 4\n\n") { Foreground = Brushes.DarkRed }); break; }
                         mainUser.Role = newRoleID;
