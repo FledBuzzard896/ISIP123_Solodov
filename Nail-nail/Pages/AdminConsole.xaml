@@ -14,7 +14,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <ScrollViewer x:Name="ConsoleScroll" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" Grid.Row="0" Margin="5,5,5,0">
+        <ScrollViewer x:Name="ConsoleScroll" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" Grid.Row="0" Margin="5,5,5,0" Visibility="Visible">
             <TextBlock x:Name="ConsoleTB" FontSize="14" FontFamily="Cascadia Code" Foreground="White" TextWrapping="Wrap">
                 <Run Text="=================================== AdminConsole ==================================="/> <LineBreak/>
                 <Run Text="Приветсвуем вас в AdminConsole для управление пользователями."/> <LineBreak/>
@@ -33,15 +33,42 @@
                 <Run Text="Удаление пользователя по аргументу (id)"/> <LineBreak/>
                 <Run Text="&#x9;adm chng_user [id]&#x9;&#x9;" Foreground="Purple"/>
                 <Run Text="Изменение пользователя по аргументу (id)"/> <LineBreak/>
-                <Run Text="&#x9;adm chng_user_role [id]&#x9;" Foreground="Purple"/>
-                <Run Text="Изменение роли пользователя по аргументу (id)"/> <LineBreak/>
                 <Run Text="&#x9;adm crt_user&#x9;&#x9;&#x9;" Foreground="Purple"/>
                 <Run Text="Создание пользователя"/> <LineBreak/>
                 <Run Text="==================================================================================="/> <LineBreak/><LineBreak/>
             </TextBlock>
         </ScrollViewer>
 
-        <Grid Grid.Row="1" Margin="5,10,5,5">
+        <Grid x:Name="createUser" Grid.Row="0" Margin="5,5,5,0" Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Логин: " FontSize="14" FontFamily="Cascadia Code" Foreground="White" Grid.Row="0" Grid.Column="0" Margin="0,0,0,5"/>
+            <TextBox x:Name="loginTB" FontSize="14" FontFamily="Cascadia Code" Foreground="Purple" CaretBrush="Purple" Background="Transparent" BorderBrush="Transparent" TextWrapping="Wrap" Margin="0,0,0,5" KeyDown="newUserTB_KeyDown" Grid.Row="0" Grid.Column="1"/>
+            <TextBlock Text="Пароль: " FontSize="14" FontFamily="Cascadia Code" Foreground="White" Grid.Row="1" Grid.Column="0" Margin="0,0,0,5"/>
+            <TextBox x:Name="passwordTB" FontSize="14" FontFamily="Cascadia Code" Foreground="Purple" CaretBrush="Purple" Background="Transparent" BorderBrush="Transparent" TextWrapping="Wrap" Margin="0,0,0,5" KeyDown="newUserTB_KeyDown" Grid.Row="1" Grid.Column="1"/>
+            <TextBlock Text="Полное имя: " FontSize="14" FontFamily="Cascadia Code" Foreground="White" Grid.Row="2" Grid.Column="0" Margin="0,0,0,5"/>
+            <TextBox x:Name="nameTB" FontSize="14" FontFamily="Cascadia Code" Foreground="Purple" CaretBrush="Purple" Background="Transparent" BorderBrush="Transparent" TextWrapping="Wrap" Margin="0,0,0,5" KeyDown="newUserTB_KeyDown" Grid.Row="2" Grid.Column="1"/>
+            <TextBlock Text="Номер телефона: " FontSize="14" FontFamily="Cascadia Code" Foreground="White" Grid.Row="3" Grid.Column="0" Margin="0,0,0,5"/>
+            <TextBox x:Name="phoneTB" FontSize="14" FontFamily="Cascadia Code" Foreground="Purple" CaretBrush="Purple" Background="Transparent" BorderBrush="Transparent" TextWrapping="Wrap" Margin="0,0,0,5" KeyDown="newUserTB_KeyDown" Grid.Row="3" Grid.Column="1"/>
+            <TextBlock Text="Роль: " FontSize="14" FontFamily="Cascadia Code" Foreground="White" Grid.Row="4" Grid.Column="0" Margin="0,0,0,5"/>
+            <TextBox x:Name="roleTB" FontSize="14" FontFamily="Cascadia Code" Foreground="Purple" CaretBrush="Purple" Background="Transparent" BorderBrush="Transparent" TextWrapping="Wrap" Margin="0,0,0,5" KeyDown="newUserTB_KeyDown" Grid.Row="4" Grid.Column="1"/>
+
+            <TextBlock x:Name="ErrorTB" Foreground="DarkRed" FontSize="14" FontFamily="Cascadia Code" Grid.Row="5" Grid.ColumnSpan="2"/>
+        </Grid>
+
+        <Grid x:Name="mainFrame" Visibility="Visible" Grid.Row="1" Margin="5,10,5,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>

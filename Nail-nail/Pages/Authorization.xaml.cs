@@ -61,10 +61,10 @@ namespace Nail_nail.Pages
             {
                 if (LoginTBox.Text != "" && PasswordTBox.Password != "" && NameTBox.Text != "" && PhoneTBox.Text != "")
                 {
-                    if (Core.ContextKIP.Users.First(x => x.Login == LoginTBox.Text) is null)
+                    if (Core.ContextHOME.Users.First(x => x.Login == LoginTBox.Text) is null)
                     {
                         // Запись пользователя в класс
-                        RegUser(LoginTBox.Text, PasswordTBox.Password, NameTBox.Text, PhoneTBox.Text, Core.ContextKIP.Users.Last().ID + 1);
+                        RegUser(LoginTBox.Text, PasswordTBox.Password, NameTBox.Text, PhoneTBox.Text, Core.ContextHOME.Users.Last().ID + 1);
 
                         // Запись данных в БД
                         var newUser = new Users()
@@ -77,8 +77,8 @@ namespace Nail_nail.Pages
                             CreatedAt = DateTime.Now,
                             Cover = null,
                         };
-                        Core.ContextKIP.Users.Add(newUser);
-                        Core.ContextKIP.SaveChanges();
+                        Core.ContextHOME.Users.Add(newUser);
+                        Core.ContextHOME.SaveChanges();
 
                         NavigationService.Navigate(new MainPage());
                     }
@@ -104,7 +104,7 @@ namespace Nail_nail.Pages
                     }
 
 
-                    var users = Core.ContextKIP.Users.Where(x => x.Role == 1).ToList();
+                    var users = Core.ContextHOME.Users.Where(x => x.Role == 1).ToList();
                     if (users.Any(x => x.Login == LoginTBox.Text)) 
                     {
                         var user = users.First(x => x.Login == LoginTBox.Text);
