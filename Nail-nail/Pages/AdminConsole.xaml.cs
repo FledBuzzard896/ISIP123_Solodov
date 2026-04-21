@@ -27,7 +27,7 @@ namespace Nail_nail.Pages
 
         private bool CHANGE_FLAG_choice = false;
         private bool CHANGE_FLAG_input = false;
-        private int edited_field = 0;
+        private int EDITED_FIELD = 0;
 
         private List<string> command_history = new List<string>();
         private int history_idx = 0;
@@ -40,17 +40,6 @@ namespace Nail_nail.Pages
 
         private void InputTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Up) 
-            {
-                if (command_history.Count > 0 && history_idx > 0)
-                {
-                    history_idx--;
-                    inputCommands.Text = command_history[history_idx];
-                    inputCommands.CaretIndex = inputCommands.Text.Length;
-                }
-                e.Handled = true; 
-            }
-
             if (CHANGE_FLAG_input) 
             {
                 if (e.Key == Key.Enter) 
@@ -67,9 +56,11 @@ namespace Nail_nail.Pages
                     string choice = inputCommands.Text;
 
                     AddConsole(pathToCommand, choice);
-                    command_history.Add(choice);
-                    history_idx = command_history.Count;
 
+                    //Добавление в историю команд
+                    CheckNull_AddCommand(choice);
+
+                    //Смена флагов для правильной навигации
                     ChangeUser_Flags(choice);
                     inputCommands.Clear();
                 }
@@ -81,8 +72,9 @@ namespace Nail_nail.Pages
                 string command = inputCommands.Text.Trim();
 
                 AddConsole(pathToCommand, command);
-                command_history.Add(command);
-                history_idx = command_history.Count;
+
+                //Добавление в историю команд
+                CheckNull_AddCommand(command);
 
                 if (command == "adm") PrintConsoleCommands(); 
                 else if (command == "adm users") PrintUsers(); 
@@ -119,19 +111,39 @@ namespace Nail_nail.Pages
                 e.Handled = true;
             }
         }
-        private void newUserTB_KeyDown(object sender, KeyEventArgs e) 
+        private void InputTextBox_CommandsHistory_KeyDown(object sender, KeyEventArgs e) 
+        {
+            if (e.Key == Key.Up)
+            {
+                if (command_history.Count > 0 && history_idx > 0)
+                {
+                    history_idx--;
+                    inputCommands.Text = command_history[history_idx];
+                    inputCommands.CaretIndex = inputCommands.Text.Length;
+                }
+                e.Handled = true;
+            }
+        }
+        private void InputTextBox_CheckEmptyStr(object sender, EventArgs e)  
+        {
+            if (string.IsNullOrWhiteSpace(inputCommands.Text)) 
+            {
+                history_idx = command_history.Count;
+            }
+        }
+        private void newUserTB_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key != Key.Enter) { return; }
-            else 
+            else
             {
                 int roleID = -1;
 
                 if (loginTB.Text == "" || passwordTB.Text == "" || nameTB.Text == "" || phoneTB.Text == "" || roleTB.Text == "") { return; }
-                if (Core.ContextHOME.Users.FirstOrDefault(x => x.Login == loginTB.Text) != null) { ErrorTB.Text = $"Пользователь с логином {loginTB.Text} уже существует"; return; }
+                if (Core.ContextKIP.Users.FirstOrDefault(x => x.Login == loginTB.Text) != null) { ErrorTB.Text = $"Пользователь с логином {loginTB.Text} уже существует"; return; }
                 try { roleID = Convert.ToInt32(roleTB.Text); } catch { ErrorTB.Text = "В поле \"Роль\" нужно вписать ID роли (целочисленное значение)"; return; }
                 if (roleID < 0 || roleID > 4) { ErrorTB.Text = $"ID роли пользователя может быть только в диапазоне от 1 до 4"; return; }
 
-                Users newUser = new Users() 
+                Users newUser = new Users()
                 {
                     Login = loginTB.Text,
                     Password = passwordTB.Text,
@@ -141,8 +153,8 @@ namespace Nail_nail.Pages
                     CreatedAt = DateTime.Now,
                     Cover = null,
                 };
-                Core.ContextHOME.Users.Add(newUser);
-                Core.ContextHOME.SaveChanges();
+                Core.ContextKIP.Users.Add(newUser);
+                Core.ContextKIP.SaveChanges();
 
                 createUser.Visibility = Visibility.Collapsed;
                 mainFrame.Visibility = Visibility.Visible;
@@ -151,7 +163,7 @@ namespace Nail_nail.Pages
                 ConsoleTB.Inlines.Add(new Run("Пользователь был успешно добавлен!\n\n") { Foreground = Brushes.Yellow });
             }
         }
-
+        
         private void PrintConsoleCommands() 
         {
             ConsoleTB.Inlines.Add(new Run("Базовые команды:\n"));
@@ -183,14 +195,14 @@ namespace Nail_nail.Pages
         }
         private void PrintUsers() 
         {
-            var users = Core.ContextHOME.Users.Where(x => x.ID != IUser.AppUser.UserID).ToList();
+            var users = Core.ContextKIP.Users.Where(x => x.ID != IUser.AppUser.UserID).ToList();
             ConsoleTB.Inlines.Add(new Run("Список всех пользователей:\n"));
             foreach (var user in users) 
             {
                 ConsoleTB.Inlines.Add(new Run($"ID: {user.ID}\t\tLogin: {user.Login}\t\tРоль: {user.Role}\n"));
             }
 
-            var roles = Core.ContextHOME.Roles.ToList();
+            var roles = Core.ContextKIP.Roles.ToList();
             ConsoleTB.Inlines.Add(new Run("\nСписок всех ролей:\n"));
             foreach (var role in roles) 
             {
@@ -201,11 +213,11 @@ namespace Nail_nail.Pages
 
         private void DeleteUser(int id) 
         {
-            var deleteUser = Core.ContextHOME.Users.FirstOrDefault(x => x.ID == id);
+            var deleteUser = Core.ContextKIP.Users.FirstOrDefault(x => x.ID == id);
             if (deleteUser != null) 
             {
-                Core.ContextHOME.Users.Remove(deleteUser);
-                Core.ContextHOME.SaveChanges();
+                Core.ContextKIP.Users.Remove(deleteUser);
+                Core.ContextKIP.SaveChanges();
                 ConsoleTB.Inlines.Add(new Run("Пользователь был успешно удалён!\n\n") { Foreground = Brushes.Yellow });
                 return;
             }
@@ -214,7 +226,7 @@ namespace Nail_nail.Pages
 
         private void ChangeUser_Choice(int id) 
         {
-            mainUser = Core.ContextHOME.Users.FirstOrDefault(x => x.ID == id);
+            mainUser = Core.ContextKIP.Users.FirstOrDefault(x => x.ID == id);
             if (mainUser != null)
             {
                 PrintUser(mainUser);
@@ -222,7 +234,8 @@ namespace Nail_nail.Pages
                 ConsoleTB.Inlines.Add(new Run(" - Login (1)\n"));
                 ConsoleTB.Inlines.Add(new Run(" - FullName (2)\n"));
                 ConsoleTB.Inlines.Add(new Run(" - PhoneNum (3)\n"));
-                ConsoleTB.Inlines.Add(new Run(" - Role (4)\n\n"));
+                ConsoleTB.Inlines.Add(new Run(" - Role (4)\n"));
+                ConsoleTB.Inlines.Add(new Run("*для того, чтобы отменить ввод и вернуться назад ведите \"back\"\n\n") { Foreground = Brushes.Yellow });
                 return;
             }
             ConsoleTB.Inlines.Add(new Run($"Error: adm chng_user {id}: Пользователь с таким ID не найден\n\n") { Foreground = Brushes.DarkRed });
@@ -235,25 +248,29 @@ namespace Nail_nail.Pages
                     ConsoleTB.Inlines.Add(new Run("Введите новый логин...\n\n") { Foreground = Brushes.Yellow });
                     CHANGE_FLAG_choice = false;
                     CHANGE_FLAG_input = true;
-                    edited_field = 1;
+                    EDITED_FIELD = 1;
                     break;
                 case "2":
                     ConsoleTB.Inlines.Add(new Run("Введите новое имя...\n\n") { Foreground = Brushes.Yellow });
                     CHANGE_FLAG_choice = false;
                     CHANGE_FLAG_input = true;
-                    edited_field = 2;
+                    EDITED_FIELD = 2;
                     break;
                 case "3":
                     ConsoleTB.Inlines.Add(new Run("Ввыдите новый номер телефона...\n\n") { Foreground = Brushes.Yellow });
                     CHANGE_FLAG_choice = false;
                     CHANGE_FLAG_input = true;
-                    edited_field = 3;
+                    EDITED_FIELD = 3;
                     break;
                 case "4":
                     ConsoleTB.Inlines.Add(new Run("Задайте новую роль (id)...\n\n") { Foreground = Brushes.Yellow });
                     CHANGE_FLAG_choice = false;
                     CHANGE_FLAG_input = true;
-                    edited_field = 4;
+                    EDITED_FIELD = 4;
+                    break;
+                case "back":
+                    ConsoleTB.Inlines.Add(new Run("Вы вернулись в главное меню консоли!\n\n"));
+                    CHANGE_FLAG_choice = false;
                     break;
                 default:
                     ConsoleTB.Inlines.Add(new Run($"Error: Ввод нераспознан\n\n") { Foreground = Brushes.DarkRed });
@@ -262,40 +279,43 @@ namespace Nail_nail.Pages
         }
         private void ChangeUser_FinalProcess() 
         {
-            switch (edited_field)
+            switch (EDITED_FIELD)
             {
                 case 1:
+                    // Изменение логина
                     string newLogin = inputCommands.Text;
-                    AddConsole(pathToCommand, newLogin);
-                    command_history.Add(newLogin);
-                    history_idx = command_history.Count;
-
                     mainUser.Login = newLogin;
-                    Core.ContextHOME.SaveChanges();
+                    Core.ContextKIP.SaveChanges();
+
+                    //Вывод в консоль и добавление в историю команд
+                    AddConsole(pathToCommand, newLogin);
+                    CheckNull_AddCommand(newLogin);
 
                     ConsoleTB.Inlines.Add(new Run($"Логин успешно изменён!\n\n") { Foreground = Brushes.Yellow });
                     CHANGE_FLAG_input = false;
                     break;
                 case 2:
+                    //Изменение имени
                     string newName = inputCommands.Text;
-                    AddConsole(pathToCommand, newName);
-                    command_history.Add(newName);
-                    history_idx = command_history.Count;
-
                     mainUser.FullName = newName;
-                    Core.ContextHOME.SaveChanges();
+                    Core.ContextKIP.SaveChanges();
+
+                    //Вывод в консоль и добавление в историю команд
+                    AddConsole(pathToCommand, newName);
+                    CheckNull_AddCommand(newName);
 
                     ConsoleTB.Inlines.Add(new Run($"Имя пользователя успешно изменёно!\n\n") { Foreground = Brushes.Yellow });
                     CHANGE_FLAG_input = false;
                     break;
                 case 3:
+                    //Изменение номера телефона
                     string newPhonenum = inputCommands.Text;
-                    AddConsole(pathToCommand, newPhonenum);
-                    command_history.Add(newPhonenum);
-                    history_idx = command_history.Count;
-
                     mainUser.PhoneNumber = newPhonenum;
-                    Core.ContextHOME.SaveChanges();
+                    Core.ContextKIP.SaveChanges();
+
+                    //Вывод в консоль и добавление в историю команд
+                    AddConsole(pathToCommand, newPhonenum);
+                    CheckNull_AddCommand(newPhonenum);
 
                     ConsoleTB.Inlines.Add(new Run($"Номер телефона успешно изменён!\n\n") { Foreground = Brushes.Yellow });
                     CHANGE_FLAG_input = false;
@@ -304,13 +324,19 @@ namespace Nail_nail.Pages
                     try
                     {
                         int newRoleID = Convert.ToInt32(inputCommands.Text);
-                        AddConsole(pathToCommand, newRoleID.ToString());
-                        command_history.Add(newRoleID.ToString());
-                        history_idx = command_history.Count;
 
-                        if (newRoleID < 0 || newRoleID > 4) { ConsoleTB.Inlines.Add(new Run($"ID роли должен быть в диапазоне от 1 до 4\n\n") { Foreground = Brushes.DarkRed }); break; }
+                        //Вывод в консоль и добавление в историю команд
+                        AddConsole(pathToCommand, newRoleID.ToString());
+                        CheckNull_AddCommand(newRoleID.ToString());
+
+                        //Проверка ID и изменение роли
+                        if (newRoleID < 0 || newRoleID > 4)
+                        {
+                            ConsoleTB.Inlines.Add(new Run($"ID роли должен быть в диапазоне от 1 до 4\n\n") { Foreground = Brushes.DarkRed });
+                            break;
+                        }
                         mainUser.Role = newRoleID;
-                        Core.ContextHOME.SaveChanges();
+                        Core.ContextKIP.SaveChanges();
 
                         ConsoleTB.Inlines.Add(new Run($"Роль пользователя успешно изменёна!\n\n") { Foreground = Brushes.Yellow });
                         CHANGE_FLAG_input = false;
@@ -327,6 +353,13 @@ namespace Nail_nail.Pages
             }
         }
 
+        private void CheckNull_AddCommand(string command) 
+        {
+            if (string.IsNullOrWhiteSpace(command)) return;
+
+            command_history.Add(command);
+            history_idx = command_history.Count;
+        }
         private void AutoEqualPrint(string longestLine, string title, int countOfTab) 
         {
             int lenOfLine = longestLine.Length + (4 * countOfTab);

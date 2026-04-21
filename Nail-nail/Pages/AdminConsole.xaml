@@ -74,7 +74,15 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="path" Text="C:/Users/{0}>>>" FontSize="14" FontFamily="Cascadia Code" Foreground="Green" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,2,0"/>
-            <TextBox x:Name="inputCommands" FontSize="14" FontFamily="Cascadia Code" Foreground="Purple" CaretBrush="Purple" Background="Transparent" BorderBrush="Transparent" TextWrapping="Wrap" KeyDown="InputTextBox_KeyDown" Grid.Column="1"/>
+            <TextBox x:Name="inputCommands"
+                     FontSize="14" FontFamily="Cascadia Code"
+                     Foreground="Purple" CaretBrush="Purple"
+                     Background="Transparent" BorderBrush="Transparent"
+                     TextWrapping="Wrap"
+                     PreviewKeyDown="InputTextBox_CommandsHistory_KeyDown"
+                     KeyDown="InputTextBox_KeyDown"
+                     TextChanged="InputTextBox_CheckEmptyStr"
+                     Grid.Column="1"/>
         </Grid>
     </Grid>
 </Page>

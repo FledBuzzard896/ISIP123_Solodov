@@ -36,7 +36,7 @@ namespace Nail_nail.Pages
 
             // Берем объект который выбрали кнопкой
             var serviceName = (sender as Button).Tag as string;
-            ServiceTypes service = Core.ContextHOME.ServiceTypes.FirstOrDefault(x => x.ServiceName == serviceName);
+            ServiceTypes service = Core.ContextKIP.ServiceTypes.FirstOrDefault(x => x.ServiceName == serviceName);
 
             // Соедняем дату + время
             DateTime date = DateCalendar.SelectedDate.Value;
@@ -77,7 +77,7 @@ namespace Nail_nail.Pages
                     DateTime date = selectedDate.Value.Date;
 
                     // Проверка на то, какое время и когда свободно
-                    var MasterAppointments = Core.ContextHOME.Appointments.Where(x => x.MasterID == _master.ID).ToList();
+                    var MasterAppointments = Core.ContextKIP.Appointments.Where(x => x.MasterID == _master.ID).ToList();
                     foreach (var appointment in MasterAppointments)
                     {
                         if (appointment.AppointmentDateTime.Date != date) { continue; }
@@ -110,7 +110,7 @@ namespace Nail_nail.Pages
             DateCalendar.SelectedDate = null;
             TimeCalendar.SelectedItem = null;
 
-            var servicesOfMaster = Core.ContextHOME.MasterServices.Where(x => x.MasterID == _master.ID).ToList();
+            var servicesOfMaster = Core.ContextKIP.MasterServices.Where(x => x.MasterID == _master.ID).ToList();
             Services_LB.ItemsSource = servicesOfMaster
                 .Select(x => new
                 {

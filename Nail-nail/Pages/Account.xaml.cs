@@ -37,8 +37,8 @@ namespace Nail_nail.Pages
             // OrderHistory --> Orders + OrderItems
             // RecordHistory --> Appointments 
 
-            var orders = Core.ContextHOME.Orders.Where(x => x.UserID == IUser.AppUser.UserID).ToList();
-            var appointmets = Core.ContextHOME.Appointments.Where(x => x.ClientID == IUser.AppUser.UserID).ToList();
+            var orders = Core.ContextKIP.Orders.Where(x => x.UserID == IUser.AppUser.UserID).ToList();
+            var appointmets = Core.ContextKIP.Appointments.Where(x => x.ClientID == IUser.AppUser.UserID).ToList();
 
             OrderHistory.ItemsSource = orders
                 .Select(x => new
@@ -55,8 +55,8 @@ namespace Nail_nail.Pages
             RecordHistory.ItemsSource = appointmets
                 .Select(x => new
                 {
-                    Master = Core.ContextHOME.Users.First(y => y.ID == x.MasterID).FullName,
-                    Service = Core.ContextHOME.ServiceTypes.First(y => y.ID == x.ServiceTypeID).ServiceName,
+                    Master = Core.ContextKIP.Users.First(y => y.ID == x.MasterID).FullName,
+                    Service = Core.ContextKIP.ServiceTypes.First(y => y.ID == x.ServiceTypeID).ServiceName,
                     AppointmentDateTime = x.AppointmentDateTime,
                     PaymentMethod = x.PaymentMethod,
                     Comment = x.Comment,
