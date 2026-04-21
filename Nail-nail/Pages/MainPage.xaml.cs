@@ -34,7 +34,7 @@ namespace Nail_nail.Pages
                 MessageBox.Show("Войдите в аккаунт", "Отказано в доступе", MessageBoxButton.OK, MessageBoxImage.Stop);
                 return;
             }
-            NavigationService.Navigate(new AdminConsole());
+            NavigationService.Navigate(new Shop());
         }
         private void Account_ButtonClick(object sender, RoutedEventArgs e)
         {

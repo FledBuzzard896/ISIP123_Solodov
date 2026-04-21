@@ -113,7 +113,14 @@ namespace Nail_nail.Pages
                             // Запись пользователя из БД
                             RegUser(user.Login, user.Password, user.FullName, user.PhoneNumber, user.ID);
 
-                            NavigationService.Navigate(new MainPage());
+                            if (user.Role == 4)
+                            {
+                                NavigationService.Navigate(new AdminConsole());
+                            }
+                            else 
+                            {
+                                NavigationService.Navigate(new MainPage());
+                            }  
                         }
                         else MessageBox.Show("Неправильный логин или пароль!", "Отказ", MessageBoxButton.OK, MessageBoxImage.Stop);
                     }
