@@ -26,6 +26,6 @@ namespace Nail_nail.Classes
         public int UserID { get; set; }
 
 
-        public List<Products> ProductsInCart { get; set; }
+        public List<Products> ProductsInCart { get; set; } = new List<Products>();
     }
 }

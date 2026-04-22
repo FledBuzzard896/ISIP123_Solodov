@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nail_nail.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace Nail_nail.Pages
         public Cart()
         {
             InitializeComponent();
+            Loaded += PageLoaded;
         }
 
         private void PaymentBtn_Click(object sender, RoutedEventArgs e)
@@ -33,6 +35,34 @@ namespace Nail_nail.Pages
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
+        }
+
+        private void PageLoaded(object sender, RoutedEventArgs e)
+        {
+            var Products = IUser.AppUser.ProductsInCart
+                .Select(x => new
+                {
+                    ProductName = x.ProductName,
+                    Rating = x.Rating,
+                    Description = x.Description,
+                    TypeName = x.ProductTypes.TypeName,
+                    ManufacturerName = x.Manufacturers.ManufacturerName,
+                    RawPrice = x.Price,
+                    DiscountPercent = x.DiscountPercent,
+                }).ToList()
+                .Select(x => new
+                {
+                    x.ProductName,
+                    x.Rating,
+                    x.Description,
+                    x.TypeName,
+                    x.ManufacturerName,
+                    Price = Math.Round(x.RawPrice - (x.RawPrice * x.DiscountPercent / 100), 2), // Расчет цены со скидкой
+                    x.DiscountPercent,
+                    IsHighDiscount = x.DiscountPercent > 15
+                }).ToList();
+
+            ShoppingCart_LB.ItemsSource = Products;
         }
     }
 }

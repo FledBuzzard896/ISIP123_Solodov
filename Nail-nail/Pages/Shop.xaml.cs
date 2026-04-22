@@ -70,9 +70,25 @@ namespace Nail_nail.Pages
             }
             ApplyFiltersAndSort();
         }
-        private void BuyProduct_Click(object sender, RoutedEventArgs e) 
+        private void BuyDeleteProduct_Click(object sender, RoutedEventArgs e) 
         {
-            NavigationService.Navigate();
+            Button button = sender as Button;
+            Products product = button?.Tag as Products;
+            if (product == null) return;
+
+            var cart = IUser.AppUser.ProductsInCart;
+            if (button.Content.ToString() == "Купить")
+            {
+                button.Background = Brushes.DarkRed;
+                button.Content = $"Удалить";
+                cart.Add(product);
+            }
+            else
+            {
+                button.Background = Brushes.LightGray;
+                button.Content = "Купить";
+                cart.Remove(product);
+            }
         }
 
         private void filter_box_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -130,6 +146,7 @@ namespace Nail_nail.Pages
             // Нужная выборка
             var Products = inputLst
                 .Select(x => new {
+                    ProductObject = x,
                     ProductName = x.ProductName,
                     Rating = x.Rating,
                     Description = x.Description,
@@ -139,6 +156,7 @@ namespace Nail_nail.Pages
                     DiscountPercent = x.DiscountPercent,
                 }).ToList()
                 .Select(x => new {
+                    x.ProductObject,
                     x.ProductName,
                     x.Rating,
                     x.Description,
@@ -182,13 +200,10 @@ namespace Nail_nail.Pages
                 "Рейтинг (возрастание)"
             };
         }
+
+        private void GoToCart_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Cart());
+        }
     }
 }
-
-//< StackPanel Orientation = "Horizontal" HorizontalAlignment = "Center" >
-//    < Button x: Name = "AddItem" Content = "Добавить в корзину" Height = "20" Width = "120" Background = "Green" Click = "AddItem_Click" />
-//    < Button x: Name = "DeleteItem" Content = "Удалить (1)" Height = "20" Width = "120" Background = "DarkRed" Margin = "20,0,0,0" Click = "DeleteItem_Click" Visibility = "Collapsed" />
-//</ StackPanel >
-
-//< Button x: Name = "GoToCart" Content = "Перейти в корзину" HorizontalAlignment = "Center" Height = "20" Width = "120" Margin = "0,10,0,0" Click = "GoToCart_Click" />
-// { DeleteItem.Visibility = Visibility.Visible; DeleteItem.Content = $"Удалить ({shopCart.soyz})"; }
