@@ -139,7 +139,7 @@ namespace Nail_nail.Pages
                 int roleID = -1;
 
                 if (loginTB.Text == "" || passwordTB.Text == "" || nameTB.Text == "" || phoneTB.Text == "" || roleTB.Text == "") { return; }
-                if (Core.ContextKIP.Users.FirstOrDefault(x => x.Login == loginTB.Text) != null) { ErrorTB.Text = $"Пользователь с логином {loginTB.Text} уже существует"; return; }
+                if (Core.ContextHOME.Users.FirstOrDefault(x => x.Login == loginTB.Text) != null) { ErrorTB.Text = $"Пользователь с логином {loginTB.Text} уже существует"; return; }
                 try { roleID = Convert.ToInt32(roleTB.Text); } catch { ErrorTB.Text = "В поле \"Роль\" нужно вписать ID роли (целочисленное значение)"; return; }
                 if (roleID < 0 || roleID > 4) { ErrorTB.Text = $"ID роли пользователя может быть только в диапазоне от 1 до 4"; return; }
 
@@ -153,8 +153,8 @@ namespace Nail_nail.Pages
                     CreatedAt = DateTime.Now,
                     Cover = null,
                 };
-                Core.ContextKIP.Users.Add(newUser);
-                Core.ContextKIP.SaveChanges();
+                Core.ContextHOME.Users.Add(newUser);
+                Core.ContextHOME.SaveChanges();
 
                 createUser.Visibility = Visibility.Collapsed;
                 mainFrame.Visibility = Visibility.Visible;
@@ -195,14 +195,14 @@ namespace Nail_nail.Pages
         }
         private void PrintUsers() 
         {
-            var users = Core.ContextKIP.Users.Where(x => x.ID != IUser.AppUser.UserID).ToList();
+            var users = Core.ContextHOME.Users.Where(x => x.ID != IUser.AppUser.UserID).ToList();
             ConsoleTB.Inlines.Add(new Run("Список всех пользователей:\n"));
             foreach (var user in users) 
             {
                 ConsoleTB.Inlines.Add(new Run($"ID: {user.ID}\t\tLogin: {user.Login}\t\tРоль: {user.Role}\n"));
             }
 
-            var roles = Core.ContextKIP.Roles.ToList();
+            var roles = Core.ContextHOME.Roles.ToList();
             ConsoleTB.Inlines.Add(new Run("\nСписок всех ролей:\n"));
             foreach (var role in roles) 
             {
@@ -213,11 +213,11 @@ namespace Nail_nail.Pages
 
         private void DeleteUser(int id) 
         {
-            var deleteUser = Core.ContextKIP.Users.FirstOrDefault(x => x.ID == id);
+            var deleteUser = Core.ContextHOME.Users.FirstOrDefault(x => x.ID == id);
             if (deleteUser != null) 
             {
-                Core.ContextKIP.Users.Remove(deleteUser);
-                Core.ContextKIP.SaveChanges();
+                Core.ContextHOME.Users.Remove(deleteUser);
+                Core.ContextHOME.SaveChanges();
                 ConsoleTB.Inlines.Add(new Run("Пользователь был успешно удалён!\n\n") { Foreground = Brushes.Yellow });
                 return;
             }
@@ -226,7 +226,7 @@ namespace Nail_nail.Pages
 
         private void ChangeUser_Choice(int id) 
         {
-            mainUser = Core.ContextKIP.Users.FirstOrDefault(x => x.ID == id);
+            mainUser = Core.ContextHOME.Users.FirstOrDefault(x => x.ID == id);
             if (mainUser != null)
             {
                 PrintUser(mainUser);
@@ -285,7 +285,7 @@ namespace Nail_nail.Pages
                     // Изменение логина
                     string newLogin = inputCommands.Text;
                     mainUser.Login = newLogin;
-                    Core.ContextKIP.SaveChanges();
+                    Core.ContextHOME.SaveChanges();
 
                     //Вывод в консоль и добавление в историю команд
                     AddConsole(pathToCommand, newLogin);
@@ -298,7 +298,7 @@ namespace Nail_nail.Pages
                     //Изменение имени
                     string newName = inputCommands.Text;
                     mainUser.FullName = newName;
-                    Core.ContextKIP.SaveChanges();
+                    Core.ContextHOME.SaveChanges();
 
                     //Вывод в консоль и добавление в историю команд
                     AddConsole(pathToCommand, newName);
@@ -311,7 +311,7 @@ namespace Nail_nail.Pages
                     //Изменение номера телефона
                     string newPhonenum = inputCommands.Text;
                     mainUser.PhoneNumber = newPhonenum;
-                    Core.ContextKIP.SaveChanges();
+                    Core.ContextHOME.SaveChanges();
 
                     //Вывод в консоль и добавление в историю команд
                     AddConsole(pathToCommand, newPhonenum);
@@ -336,7 +336,7 @@ namespace Nail_nail.Pages
                             break;
                         }
                         mainUser.Role = newRoleID;
-                        Core.ContextKIP.SaveChanges();
+                        Core.ContextHOME.SaveChanges();
 
                         ConsoleTB.Inlines.Add(new Run($"Роль пользователя успешно изменёна!\n\n") { Foreground = Brushes.Yellow });
                         CHANGE_FLAG_input = false;

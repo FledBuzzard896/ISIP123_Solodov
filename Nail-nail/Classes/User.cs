@@ -24,5 +24,8 @@ namespace Nail_nail.Classes
 
         public  bool isAuthorizated { get; set; } = true; // ПОМЕНЯТЬ НА FALSE
         public int UserID { get; set; }
+
+
+        public List<Products> ProductsInCart { get; set; }
     }
 }
