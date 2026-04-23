@@ -1,4 +1,5 @@
 ﻿using ShutAndKing.Classes;
+using ShutAndKing.DB_Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -36,7 +37,7 @@ namespace ShutAndKing.Pages
             if (_isChange)
             {
                 FIO_StackPanel.Visibility = Visibility.Visible;
-                Phone_StackPanel.Visibility = Visibility.Visible;
+                Email_StackPanel.Visibility = Visibility.Visible;
 
                 ChangeTBlock.Text = "Если у вас уже есть аккаунт: ";
                 ChangeBtn.Content = "войти";
@@ -46,7 +47,7 @@ namespace ShutAndKing.Pages
             else
             {
                 FIO_StackPanel.Visibility = Visibility.Collapsed;
-                Phone_StackPanel.Visibility = Visibility.Collapsed;
+                Email_StackPanel.Visibility = Visibility.Collapsed;
 
                 ChangeTBlock.Text = "Если у вас нет аккаунта: ";
                 ChangeBtn.Content = "зарегистрироваться";
@@ -58,84 +59,58 @@ namespace ShutAndKing.Pages
         {
             if (_isChange)
             {
-                if (LoginTBox.Text != "" && PasswordTBox.Password != "" && NameTBox.Text != "" && PhoneTBox.Text != "")
+                if (LoginTBox.Text != "" && PasswordTBox.Password != "" && NameTBox.Text != "" && EmailTBox.Text != "")
                 {
-                    //if (Core.ContextKIP.Users.First(x => x.Login == LoginTBox.Text) is null)
-                    //{
-                    //    // Запись пользователя в класс
-                    //    RegUser(LoginTBox.Text, PasswordTBox.Password, NameTBox.Text, PhoneTBox.Text, Core.ContextKIP.Users.Last().ID + 1);
+                    if (Core.ContextKIP.Users.FirstOrDefault(x => x.Login == LoginTBox.Text) is null)
+                    {
+                        if (EmailTBox.Text.Contains("@") && EmailTBox.Text.Contains("."))
+                        {
+                            var newUser = new Users()
+                            {
+                                Login = LoginTBox.Text,
+                                Password = PasswordTBox.Password,
+                                Name = NameTBox.Text,
+                                Email = EmailTBox.Text,
+                                RegisteredOn = DateTime.Now,
+                                RoleID = 1,
+                                Status = "Активен",
+                            };
+                            Core.ContextKIP.Users.Add(newUser);
+                            Core.ContextKIP.SaveChanges();
 
-                    //    // Запись данных в БД
-                    //    var newUser = new Users()
-                    //    {
-                    //        Login = LoginTBox.Text,
-                    //        Password = PasswordTBox.Password,
-                    //        FullName = NameTBox.Text,
-                    //        PhoneNumber = PhoneTBox.Text,
-                    //        Role = 1,
-                    //        CreatedAt = DateTime.Now,
-                    //        Cover = null,
-                    //    };
-                    //    Core.ContextKIP.Users.Add(newUser);
-                    //    Core.ContextKIP.SaveChanges();
+                            SetUser(newUser.ID, newUser.Login, newUser.Password, newUser.Name, newUser.Email, (DateTime)newUser.RegisteredOn, newUser.RoleID, newUser.Status);
 
-                    //    NavigationService.Navigate(new MainPage());
-                    //}
-                    //else MessageBox.Show("Данный логин уже используется!", "Отказ", MessageBoxButton.OK, MessageBoxImage.Stop);
-
+                            MessageBox.Show("Пользователь успешно зарегистрирован!", "Ладно, проходи", MessageBoxButton.OK, MessageBoxImage.Information);
+                            // Навигация на mainpage
+                        }
+                        else MessageBox.Show("Неправильный формат почты!", "Опа, ошибочная", MessageBoxButton.OK, MessageBoxImage.Stop);
+                    }
+                    else MessageBox.Show("Данный логин уже используется!", "Опа, ошибочная", MessageBoxButton.OK, MessageBoxImage.Stop);
                 }
-                else MessageBox.Show("Заполните все поля!", "Отказ", MessageBoxButton.OK, MessageBoxImage.Stop);
+                else MessageBox.Show("Заполните все поля!", "Опа, ошибочная", MessageBoxButton.OK, MessageBoxImage.Stop);
             }
             else
             {
                 if (LoginTBox.Text != "" && PasswordTBox.Password != "")
                 {
-                    //var users = Core.ContextKIP.Users.ToList();
-                    //if (users.Any(x => x.Login == LoginTBox.Text))
-                    //{
-                    //    var user = users.First(x => x.Login == LoginTBox.Text);
-                    //    if (user.Password == PasswordTBox.Password)
-                    //    {
-                    //        // Запись пользователя из БД
-                    //        RegUser(user.Login, user.Password, user.FullName, user.PhoneNumber, user.ID);
+                    var Users = Core.ContextKIP.Users.ToList();
+                    if (Users.Any(x => x.Login == LoginTBox.Text))
+                    {
+                        var User = Users.First(x => x.Login == LoginTBox.Text);
+                        if (User.Password == PasswordTBox.Password)
+                        {
+                            SetUser(User.ID, User.Login, User.Password, User.Name, User.Email, (DateTime)User.RegisteredOn, User.RoleID, User.Status);
 
-                    //        if (user.Role == 4)
-                    //        {
-                    //            NavigationService.Navigate(new AdminConsole());
-                    //        }
-                    //        else
-                    //        {
-                    //            NavigationService.Navigate(new MainPage());
-                    //        }
-                    //    }
-                    //    else MessageBox.Show("Неправильный логин или пароль!", "Отказ", MessageBoxButton.OK, MessageBoxImage.Stop);
-                    //}
-                    //else MessageBox.Show("Неправильный логин или пароль!", "Отказ", MessageBoxButton.OK, MessageBoxImage.Stop);
+                            MessageBox.Show("Вы вошли в систему!", "Ладно, проходи", MessageBoxButton.OK, MessageBoxImage.Information);
+                            // Навигация на mainpage
+                        }
+                        else MessageBox.Show("Неправильный логин или пароль!", "Опа, ошибочная", MessageBoxButton.OK, MessageBoxImage.Stop);
+                    }
+                    else MessageBox.Show("Неправильный логин или пароль!", "Опа, ошибочная", MessageBoxButton.OK, MessageBoxImage.Stop);
                 }
                 else MessageBox.Show("Заполните все поля!", "Отказ", MessageBoxButton.OK, MessageBoxImage.Stop);
             }
         }
-
-        //private void RegUser(string login, string password, string fullname, string phonenum, int userID)
-        //{
-        //    IUser.AppUser.Login = login;
-        //    IUser.AppUser.Password = password;
-        //    IUser.AppUser.FullName = fullname;
-        //    IUser.AppUser.PhoneNumber = phonenum;
-        //    IUser.AppUser.isAuthorizated = true;
-
-        //    IUser.AppUser.UserID = userID;
-        //}
-
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = !IsTextAllowed(e.Text);
-        }
-        private static bool IsTextAllowed(string text)
-        {
-            return text.All(char.IsDigit);
-        }
-
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
             var answer = MessageBox.Show("Вы перепишите на меня вашу нынешнюю/будущую квартиру?", "Доп. проверка", MessageBoxButton.YesNo, MessageBoxImage.Information);
@@ -143,6 +118,18 @@ namespace ShutAndKing.Pages
             {
                 Application.Current.Shutdown();
             }
+        }
+        
+        private void SetUser(int id, string login, string password, string fullname, string email, DateTime registeredOn, int roleID,  string status)
+        {
+            User.ID = id;
+            User.Login = login;
+            User.Password = password;
+            User.Name = fullname;
+            User.Email = email;
+            User.RegisteredOn = registeredOn;
+            User.RoleID = roleID;
+            User.Status = status;
         }
     }
 }

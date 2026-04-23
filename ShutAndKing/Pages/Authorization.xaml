@@ -31,10 +31,10 @@
                     <TextBlock Text="ФИО" FontSize="20" Height="30" Foreground="Gray" Margin="0,0,0,10"/>
                     <TextBox x:Name="NameTBox" FontSize="20" Height="30" Margin="0,0,0,10"/>
                 </StackPanel>
-                <!-- Телефон -->
-                <StackPanel x:Name="Phone_StackPanel" Visibility="Collapsed">
-                    <TextBlock Text="Телефон" FontSize="20" Height="30" Foreground="Gray" Margin="0,0,0,10"/>
-                    <TextBox x:Name="PhoneTBox" FontSize="20" Height="30" Margin="0,0,0,10" PreviewTextInput="NumberValidationTextBox"/>
+                <!-- Почта -->
+                <StackPanel x:Name="Email_StackPanel" Visibility="Collapsed">
+                    <TextBlock Text="Почта" FontSize="20" Height="30" Foreground="Gray" Margin="0,0,0,10"/>
+                    <TextBox x:Name="EmailTBox" FontSize="20" Height="30" Margin="0,0,0,10"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

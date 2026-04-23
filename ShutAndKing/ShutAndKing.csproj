@@ -76,6 +76,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Classes\Core.cs" />
+    <Compile Include="Classes\User.cs" />
     <Compile Include="DB_Models\AuthorApplication.cs">
       <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
@@ -132,10 +133,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Pages\Authorization.xaml.cs">
       <DependentUpon>Authorization.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -182,6 +190,7 @@
       <DependentUpon>Model_KIP.edmx</DependentUpon>
       <LastGenOutput>Model_KIP.cs</LastGenOutput>
     </Content>
+    <Resource Include="Images\squidward.png" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
