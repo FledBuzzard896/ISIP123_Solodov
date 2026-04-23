@@ -23,7 +23,6 @@
         <Button x:Name="AccountBtn" Grid.Column="2" Margin="10" Click="AccountBtn_Click">
             <Image Source="/Images/squidward.png" IsHitTestVisible="False"/>
         </Button>
-
         <ScrollViewer VerticalScrollBarVisibility="Hidden" Grid.Row="1" Grid.Column="2" Margin="10">
             <StackPanel Orientation="Vertical">
                 <Button x:Name="BooksCatalogBtn" ToolTip="Каталог книг" Margin="10,5,10,5" ToolTipService.InitialShowDelay="0" Click="BooksCatalogBtn_Click">
