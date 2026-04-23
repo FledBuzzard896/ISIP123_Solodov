@@ -34,7 +34,7 @@ namespace Nail_nail.Pages
                 MessageBox.Show("Войдите в аккаунт", "Отказано в доступе", MessageBoxButton.OK, MessageBoxImage.Stop);
                 return;
             }
-            NavigationService.Navigate(new Shop());
+            NavigationService.Navigate(new AdminConsole());
         }
         private void Account_ButtonClick(object sender, RoutedEventArgs e)
         {
@@ -70,9 +70,9 @@ namespace Nail_nail.Pages
             }
 
             // Берём ID строки, где роль = Master
-            var MasterRoleID = Core.ContextHOME.Roles.Where(x => x.RoleName == "Master").First().ID;
+            var MasterRoleID = Core.ContextKIP.Roles.Where(x => x.RoleName == "Master").First().ID;
             // Получем список мастеров
-            var MastersFromDB = Core.ContextHOME.Users.Where(u => u.Role == MasterRoleID).ToList();
+            var MastersFromDB = Core.ContextKIP.Users.Where(u => u.Role == MasterRoleID).ToList();
 
             // Создаём новый ItemsSource
             ListOfMasters_LB.ItemsSource = MastersFromDB

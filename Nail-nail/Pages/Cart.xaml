@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Nail_nail.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="500" d:DesignWidth="800"
       Title="Cart">
 
     <Grid Margin="15">
@@ -62,9 +62,9 @@
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <Button x:Name="minus" Content="-" Width="20" Height="20" Grid.Column="0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-                                <TextBlock Text="1" Grid.Column="1" Margin="5,0,5,0" FontSize="14" VerticalAlignment="Center"/>
-                                <Button x:Name="plus" Content="+" Width="20" Height="20" Grid.Column="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                <Button x:Name="minus" Content="-" Width="20" Height="20" Grid.Column="0" VerticalAlignment="Center" VerticalContentAlignment="Center" Click="MinusClick"/>
+                                <TextBlock x:Name="count" Text="1" Grid.Column="1" Margin="5,0,5,0" FontSize="14" VerticalAlignment="Center"/>
+                                <Button x:Name="plus" Content="+" Width="20" Height="20" Grid.Column="2" VerticalAlignment="Center" VerticalContentAlignment="Center" Click="PlusClick"/>
                             </Grid>
 
                             <Grid Margin="0,5,5,5" Grid.Column="5" HorizontalAlignment="Right">

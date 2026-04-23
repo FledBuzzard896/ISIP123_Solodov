@@ -22,7 +22,7 @@ namespace Nail_nail.Classes
 
         public string Cover { get; set; } = "/Images/rayan_gosling.png";
 
-        public  bool isAuthorizated { get; set; } = true; // ПОМЕНЯТЬ НА FALSE
+        public  bool isAuthorizated { get; set; } = false; // ПОМЕНЯТЬ НА FALSE
         public int UserID { get; set; }
 
 

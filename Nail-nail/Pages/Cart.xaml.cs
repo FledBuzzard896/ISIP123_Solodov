@@ -31,7 +31,14 @@ namespace Nail_nail.Pages
         {
 
         }
-
+        private void PlusClick(object sender, RoutedEventArgs e) 
+        {
+            
+        }
+        private void MinusClick(object sender, RoutedEventArgs e) 
+        {
+        
+        }
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();

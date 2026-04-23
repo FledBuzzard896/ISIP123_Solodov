@@ -60,11 +60,11 @@ namespace Nail_nail.Pages
             string searchQuery = searchTB.Text.Trim();
             if (string.IsNullOrEmpty(searchQuery))
             {
-                _allProducts = Core.ContextHOME.Products.ToList();
+                _allProducts = Core.ContextKIP.Products.ToList();
             }
             else
             {
-                _allProducts = Core.ContextHOME.Products
+                _allProducts = Core.ContextKIP.Products
                     .Where(p => p.ProductName.Contains(searchQuery))
                     .ToList();
             }
@@ -183,13 +183,13 @@ namespace Nail_nail.Pages
                 Account.Visibility = Visibility.Collapsed;
             }
 
-            _allProducts = Core.ContextHOME.Products.ToList();
+            _allProducts = Core.ContextKIP.Products.ToList();
             ApplyFiltersAndSort();
 
             List<string> filterItems = new List<string> { "Все" };
-            foreach (var type in Core.ContextHOME.ProductTypes.ToList())
+            foreach (var type in Core.ContextKIP.ProductTypes.ToList())
                 filterItems.Add($"{type.TypeName} (тип)");
-            foreach (var manuf in Core.ContextHOME.Manufacturers.ToList())
+            foreach (var manuf in Core.ContextKIP.Manufacturers.ToList())
                 filterItems.Add($"{manuf.ManufacturerName} (производитель)");
             filter_box.ItemsSource = filterItems;
 
