@@ -24,5 +24,45 @@ namespace ShutAndKing.Pages
         {
             InitializeComponent();
         }
+
+        private void ExitBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void AccountBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // Навигация на страницу профиля
+        }
+
+        private void BooksCatalogBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BooksListsBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AdministrationBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AuthorPageBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void GreenFlagBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RedFlagBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

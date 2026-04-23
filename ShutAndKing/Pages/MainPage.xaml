@@ -19,18 +19,31 @@
             <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
         
-        <Button x:Name="ExitBtn" Grid.Column="0" Content="Выйти" Margin="10"/>
-        <Button x:Name="AccountBtn" Grid.Column="2" Margin="10">
-            <Image Source="/Images/squidward.png"/>
+        <Button x:Name="ExitBtn" Grid.Column="0" Content="Выйти" Margin="10" Click="ExitBtn_Click"/>
+        <Button x:Name="AccountBtn" Grid.Column="2" Margin="10" Click="AccountBtn_Click">
+            <Image Source="/Images/squidward.png" IsHitTestVisible="False"/>
         </Button>
 
         <ScrollViewer VerticalScrollBarVisibility="Hidden" Grid.Row="1" Grid.Column="2" Margin="10">
             <StackPanel Orientation="Vertical">
-                <Button Height="35" Width="35" Margin="0,5,0,5"/>
-                <Button Height="35" Width="35" Margin="0,5,0,5"/>
-                <Button Height="35" Width="35" Margin="0,5,0,5"/>
-                <Button Height="35" Width="35" Margin="0,5,0,5"/>
-                <Button Height="35" Width="35" Margin="0,5,0,5"/>
+                <Button x:Name="BooksCatalogBtn" ToolTip="Каталог книг" Margin="10,5,10,5" ToolTipService.InitialShowDelay="0" Click="BooksCatalogBtn_Click">
+                    <Image Source="/Images/book.jpg" IsHitTestVisible="False"/>
+                </Button>
+                <Button x:Name="BooksListsBtn" ToolTip="Списки книг" Margin="10,5,10,5" ToolTipService.InitialShowDelay="0" Click="BooksListsBtn_Click">
+                    <Image Source="/Images/lists.jpg" IsHitTestVisible="False"/>
+                </Button>
+                <Button x:Name="AdministrationBtn" ToolTip="Администрирование" Margin="10,5,10,5" ToolTipService.InitialShowDelay="0" Click="AdministrationBtn_Click">
+                    <Image Source="/Images/admin.png" IsHitTestVisible="False"/>
+                </Button>
+                <Button x:Name="AuthorPageBtn" ToolTip="Страница автора" Margin="10,5,10,5" ToolTipService.InitialShowDelay="0" Click="AuthorPageBtn_Click">
+                    <Image Source="/Images/author.png" IsHitTestVisible="False"/>
+                </Button>
+                <Button x:Name="GreenFlagBtn" ToolTip="Аккаунт не заморожен" Margin="10,5,10,5" ToolTipService.InitialShowDelay="0" Visibility="Visible" Click="GreenFlagBtn_Click">
+                    <Image Source="/Images/greenflag.jpg" IsHitTestVisible="False"/>
+                </Button>
+                <Button x:Name="RedFlagBtn" ToolTip="Аккаунт заморожен" Margin="10,5,10,5" ToolTipService.InitialShowDelay="0" Visibility="Collapsed" Click="RedFlagBtn_Click">
+                    <Image Source="/Images/redflag.png" IsHitTestVisible="False"/>
+                </Button>
             </StackPanel>
         </ScrollViewer>
     </Grid>

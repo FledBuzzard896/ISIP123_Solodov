@@ -10,5 +10,6 @@ namespace ShutAndKing.Classes
     internal class Core
     {
         public static KIP_ReadWriteAndTakeYourTimeEntities ContextKIP = new KIP_ReadWriteAndTakeYourTimeEntities();
+        public static HOME_ReadWriteAndTakeYourTimeEntities ContextHOME = new HOME_ReadWriteAndTakeYourTimeEntities();
     }
 }
