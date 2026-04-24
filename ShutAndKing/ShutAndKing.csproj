@@ -67,15 +67,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="AddToLists_Dialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="AddToLists_Dialog.xaml.cs">
+      <DependentUpon>AddToLists_Dialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Classes\Core.cs" />
+    <Compile Include="Classes\ReadingListViewModel.cs" />
     <Compile Include="Classes\User.cs" />
     <Compile Include="DB_Models\AuthorApplication.cs">
       <DependentUpon>Model_KIP.tt</DependentUpon>

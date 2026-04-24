@@ -10,7 +10,7 @@
         <EntityTypeShape EntityType="ReadWriteAndTakeYourTimeModel_KIP.Complaints" Width="1.5" PointX="7.5" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ReadWriteAndTakeYourTimeModel_KIP.DefrostingApplication" Width="3.5" PointX="10.5" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ReadWriteAndTakeYourTimeModel_KIP.Genres" Width="1.5" PointX="7.5" PointY="17.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ReadWriteAndTakeYourTimeModel_KIP.ReadingListSection" Width="1.5" PointX="5.25" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReadWriteAndTakeYourTimeModel_KIP.ReadingListSection" Width="2.25" PointX="3.125" PointY="14.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ReadWriteAndTakeYourTimeModel_KIP.Roles" Width="1.5" PointX="0.75" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ReadWriteAndTakeYourTimeModel_KIP.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ReadWriteAndTakeYourTimeModel_KIP.UserReadingList" Width="1.5" PointX="7.5" PointY="13.75" IsExpanded="true" />

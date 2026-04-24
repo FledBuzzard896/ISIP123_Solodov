@@ -135,28 +135,39 @@ namespace ShutAndKing.Pages
 
         }
 
+        private void AddToList_Click(object sender, RoutedEventArgs e) 
+        {
+            Button button = sender as Button;
+            dynamic selectedElem = button.DataContext;
+            var book = selectedElem.BookObject;
 
+
+            AddToLists_Dialog dialog = new AddToLists_Dialog(book);
+            if (dialog.ShowDialog() == true)
+            {
+
+            }
+            else 
+            {
+            
+            }
+        }
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
-            switch (mainMenu) 
-            {
-                case "каталог":
-                    List<Books> booksList = Core.ContextKIP.Books.ToList();
+            Catalog_Grid.Visibility = Visibility.Visible;
 
-                    var new_bookList = booksList
-                        .Select(x => new {
-                            BookObject = x,
-                            Title = x.Title,
-                            Name = x.Users.Name,
-                        }).ToList();
-
-                    Books_LB.ItemsSource = new_bookList;
-                    break;
-            }
+            List<Books> booksList = Core.ContextKIP.Books.ToList();
+            var new_bookList = booksList
+                .Select(x => new {
+                    BookObject = x,
+                    Title = x.Title,
+                    Name = x.Users.Name,
+                }).ToList();
+            Books_LB.ItemsSource = new_bookList;
         }
     }
 }
