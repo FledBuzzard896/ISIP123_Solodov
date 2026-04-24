@@ -78,19 +78,19 @@
     <Compile Include="Classes\Core.cs" />
     <Compile Include="Classes\User.cs" />
     <Compile Include="DB_Models\AuthorApplication.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\Books.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\Complaints.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\DefrostingApplication.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\Genres.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\Model_HOME.Context.cs">
       <AutoGen>True</AutoGen>
@@ -123,22 +123,22 @@
       <DependentUpon>Model_KIP.edmx</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\ReadingListSection.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\Roles.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\sysdiagrams.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\UserReadingList.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\UserReviews.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\Users.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -222,6 +222,7 @@
       <DependentUpon>Model_KIP.edmx</DependentUpon>
       <LastGenOutput>Model_KIP.cs</LastGenOutput>
     </Content>
+    <Resource Include="Images\no_image.png" />
     <Resource Include="Images\admin.png" />
     <Resource Include="Images\author.png" />
     <Resource Include="Images\book.jpg" />

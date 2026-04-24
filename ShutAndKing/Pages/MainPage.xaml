@@ -30,7 +30,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0">
+            <Grid Grid.Row="0" Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <!-- Текст "Найти:" -->
@@ -48,6 +48,33 @@
                     <ComboBox x:Name="sorting_box" Width="auto" ToolTip="Сортировка" FontSize="14" Margin="5" SelectionChanged="sorting_box_SelectionChanged"/>
                 </StackPanel>
             </Grid>
+            <ListBox x:Name="Books_LB" Margin="5" BorderThickness="0" Padding="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <!-- Этот элемент отвечает за перенос строк -->
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Height="200" Width="125">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Image Source="/Images/no_image.png" Stretch="Fill" Margin="10,0" Grid.Row="0" HorizontalAlignment="Center"/>
+                            <ScrollViewer Margin="10,0" Grid.Row="1" MaxHeight="50" VerticalScrollBarVisibility="Hidden">
+                                <TextBlock x:Name="BookName" Text="{Binding Title}" FontWeight="Bold" FontSize="16" TextWrapping="Wrap"/>
+                            </ScrollViewer>
+                            <TextBlock x:Name="AuthorName" Text="{Binding Name}" FontSize="12"  MaxHeight="25" Margin="10,0" TextWrapping="Wrap" Grid.Row="2"/>
+                            <Button x:Name="AddToListBtn" Margin="10,0" Content="Добавить" Grid.Row="3"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Grid>
         
         <ScrollViewer VerticalScrollBarVisibility="Hidden" Grid.Row="1" Grid.Column="2" Margin="10">
