@@ -23,6 +23,33 @@
         <Button x:Name="AccountBtn" Grid.Column="2" Margin="10" Click="AccountBtn_Click">
             <Image Source="/Images/squidward.png" IsHitTestVisible="False"/>
         </Button>
+
+        <Grid x:Name="Catalog_Grid" Margin="5" Grid.Row="1" Grid.Column="1" Visibility="Visible">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <!-- Текст "Найти:" -->
+                    <ColumnDefinition Width="*"/>
+                    <!-- Поле ввода (занимает все оставшееся место) -->
+                    <ColumnDefinition Width="Auto"/>
+                    <!-- Выпадающие списки -->
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Найти: " FontSize="16" VerticalAlignment="Center" Grid.Column="0"/>
+                <TextBox x:Name="searchTB" Margin="5" Height="20" Grid.Column="1" VerticalAlignment="Center" KeyDown="Enter_Click"/>
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                    <ComboBox x:Name="filter_box" Width="auto" ToolTip="Фильтрация" FontSize="14" Margin="5" SelectionChanged="filter_box_SelectionChanged"/>
+                    <ComboBox x:Name="sorting_box" Width="auto" ToolTip="Сортировка" FontSize="14" Margin="5" SelectionChanged="sorting_box_SelectionChanged"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        
         <ScrollViewer VerticalScrollBarVisibility="Hidden" Grid.Row="1" Grid.Column="2" Margin="10">
             <StackPanel Orientation="Vertical">
                 <Button x:Name="BooksCatalogBtn" ToolTip="Каталог книг" Margin="10,5,10,5" ToolTipService.InitialShowDelay="0" Click="BooksCatalogBtn_Click">
