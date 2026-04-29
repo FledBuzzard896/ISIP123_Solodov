@@ -70,7 +70,7 @@
                                 <TextBlock x:Name="BookName" Text="{Binding Title}" FontWeight="Bold" FontSize="16" TextWrapping="Wrap"/>
                             </ScrollViewer>
                             <TextBlock x:Name="AuthorName" Text="{Binding Users.Name}" FontSize="12"  MaxHeight="25" Margin="10,0" TextWrapping="Wrap" Grid.Row="2"/>
-                            <Button x:Name="AddToListBtn" Margin="10,0" Content="Добавить" Grid.Row="3" Click="AddToList_Click"/>
+                            <Button x:Name="AddToListBtn" Margin="10,0" Content="Добавить" Grid.Row="3" Tag="{Binding}" Click="AddToList_Click"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
