@@ -135,23 +135,16 @@ namespace ShutAndKing.Pages
 
         }
 
-        private void AddToList_Click(object sender, RoutedEventArgs e) 
+        private void AddToList_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
-            dynamic selectedElem = button.DataContext;
-            var book = selectedElem.BookObject;
-
-
-            AddToLists_Dialog dialog = new AddToLists_Dialog(book);
-            if (dialog.ShowDialog() == true)
+            if (button?.Tag is Books book) 
             {
-
-            }
-            else 
-            {
-            
+                AddToLists_Dialog dialog = new AddToLists_Dialog(book);
+                dialog.ShowDialog();
             }
         }
+        
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
