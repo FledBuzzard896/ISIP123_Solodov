@@ -160,14 +160,14 @@ namespace ShutAndKing.Pages
         {
             Catalog_Grid.Visibility = Visibility.Visible;
 
-            List<Books> booksList = Core.ContextKIP.Books.ToList();
-            var new_bookList = booksList
-                .Select(x => new {
-                    BookObject = x,
-                    Title = x.Title,
-                    Name = x.Users.Name,
-                }).ToList();
-            Books_LB.ItemsSource = new_bookList;
+            // List<Books> booksList = Core.ContextKIP.Books.ToList();
+            // var new_bookList = booksList
+            //     .Select(x => new {
+            //         BookObject = x,
+            //         Title = x.Title,
+            //         Name = x.Users.Name,
+            //     }).ToList();
+            Books_LB.ItemsSource = Core.ContextKIP.Books.Include(b => b.Users).ToList();
         }
     }
 }
