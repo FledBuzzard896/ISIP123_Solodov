@@ -69,7 +69,7 @@
                             <ScrollViewer Margin="10,0" Grid.Row="1" MaxHeight="50" VerticalScrollBarVisibility="Hidden">
                                 <TextBlock x:Name="BookName" Text="{Binding Title}" FontWeight="Bold" FontSize="16" TextWrapping="Wrap"/>
                             </ScrollViewer>
-                            <TextBlock x:Name="AuthorName" Text="{Binding Name}" FontSize="12"  MaxHeight="25" Margin="10,0" TextWrapping="Wrap" Grid.Row="2"/>
+                            <TextBlock x:Name="AuthorName" Text="{Binding Users.Name}" FontSize="12"  MaxHeight="25" Margin="10,0" TextWrapping="Wrap" Grid.Row="2"/>
                             <Button x:Name="AddToListBtn" Margin="10,0" Content="Добавить" Grid.Row="3" Click="AddToList_Click"/>
                         </Grid>
                     </DataTemplate>
