@@ -67,7 +67,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="AddToLists_Dialog.xaml">
+    <Page Include="Dialogs\AddToLists_Dialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\AuthorApplication_Dialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\ChangeListForBook_Dialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\ChangePassword_Dialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\ChangeRole_Dialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\DefrostingApplication_Dialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\ReviewComplaint_Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -75,7 +99,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="AddToLists_Dialog.xaml.cs">
+    <Compile Include="Dialogs\AddToLists_Dialog.xaml.cs">
       <DependentUpon>AddToLists_Dialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
@@ -148,11 +172,45 @@
     <Compile Include="DB_Models\Users.cs">
       <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\AuthorApplication_Dialog.xaml.cs">
+      <DependentUpon>AuthorApplication_Dialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ChangeListForBook_Dialog.xaml.cs">
+      <DependentUpon>ChangeListForBook_Dialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ChangePassword_Dialog.xaml.cs">
+      <DependentUpon>ChangePassword_Dialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ChangeRole_Dialog.xaml.cs">
+      <DependentUpon>ChangeRole_Dialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DefrostingApplication_Dialog.xaml.cs">
+      <DependentUpon>DefrostingApplication_Dialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ReviewComplaint_Dialog.xaml.cs">
+      <DependentUpon>ReviewComplaint_Dialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\AdministrationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Authorization.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AuthorPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\BooksCatalog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\BooksLists.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -160,13 +218,46 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\PageOfBook.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Profile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\WorkWithBookPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pages\AdministrationPage.xaml.cs">
+      <DependentUpon>AdministrationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Authorization.xaml.cs">
       <DependentUpon>Authorization.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\AuthorPage.xaml.cs">
+      <DependentUpon>AuthorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\BooksCatalog.xaml.cs">
+      <DependentUpon>BooksCatalog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\BooksLists.xaml.cs">
+      <DependentUpon>BooksLists.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageOfBook.xaml.cs">
+      <DependentUpon>PageOfBook.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Profile.xaml.cs">
+      <DependentUpon>Profile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\WorkWithBookPage.xaml.cs">
+      <DependentUpon>WorkWithBookPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
