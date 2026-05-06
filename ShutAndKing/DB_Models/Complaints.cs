@@ -19,9 +19,10 @@ namespace ShutAndKing.DB_Models
         public Nullable<int> BookID { get; set; }
         public Nullable<int> ReviewID { get; set; }
         public string Reason { get; set; }
+        public Nullable<int> AuthorID { get; set; }
     
         public virtual Books Books { get; set; }
-        public virtual Users Users { get; set; }
         public virtual UserReviews UserReviews { get; set; }
+        public virtual Users Users { get; set; }
     }
 }

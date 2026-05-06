@@ -1,5 +1,6 @@
 ﻿using ShutAndKing.Classes;
 using ShutAndKing.DB_Models;
+using ShutAndKing.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace ShutAndKing.Pages
 {
@@ -45,6 +47,11 @@ namespace ShutAndKing.Pages
 
         private void FreezeReview_Click(object sender, RoutedEventArgs e)
         {
+            if (User.RoleID != 3) {
+                MessageBox.Show("Вы не являетесь Администратором", "Отказано!", MessageBoxButton.OK, MessageBoxImage.Stop); 
+                return;
+            }
+
             var button = sender as Button;
             if (button?.Tag is UserReviews review)
             {
@@ -96,7 +103,7 @@ namespace ShutAndKing.Pages
                 UserID = User.ID,
                 BookID = null,
                 ReviewID = null,
-                AuthorID = Core.ContextHOME.Users.First(x => x.ID == book.AuthorID);
+                AuthorID = Convert.ToInt32(Core.ContextHOME.Users.First(x => x.ID == book.AuthorID)),
                 Reason = author_complaint.Text.Trim()
             };
 
@@ -115,7 +122,7 @@ namespace ShutAndKing.Pages
         }
 
 
-        private void AddToList_Clock(object sender, RoutedEventArgs e)
+        private void AddToList_Click(object sender, RoutedEventArgs e)
         {
             AddToLists_Dialog dialog = new AddToLists_Dialog(book);
             if (dialog.ShowDialog() == true)
@@ -156,7 +163,7 @@ namespace ShutAndKing.Pages
 
             // Отзывы
             var usersReviews = Core.ContextHOME.UserReviews
-                .Include(x => x.User) // загружаем автора отзыва
+                .Include(x => x.Users) // загружаем автора отзыва
                 .Where(x => x.BookID == book.ID)
                 .ToList();
 
@@ -166,14 +173,10 @@ namespace ShutAndKing.Pages
             // ...
 
             // Проверка роли администратора
-            if (User.RoleID == 1)
+            if (User.RoleID == 3)
             {
                 freezeBookBtn.Visibility = Visibility.Visible;
-                freezeReviewBtn.Visibility = Visibility.Visible;
             }
         }
-
-        // !!!!!!!!!!!!!!!!!!!!!!
-        // Добавить в БД в таблицу Complaints поле AuthorID nullable int
     }
 }

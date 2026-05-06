@@ -32,7 +32,7 @@
                 <ComboBox x:Name="sorting_box" Width="auto" ToolTip="Сортировка" FontSize="14" Margin="5" SelectionChanged="sorting_box_SelectionChanged"/>
             </StackPanel>
         </Grid>
-        <ListBox x:Name="Books_LB" Margin="5" BorderThickness="0" Padding="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1">
+        <ListBox x:Name="Books_LB" Margin="5" BorderThickness="0" Padding="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1" MouseDoubleClick="Books_LB_MouseDoubleClick">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <!-- Этот элемент отвечает за перенос строк -->

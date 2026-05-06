@@ -44,8 +44,8 @@ namespace ShutAndKing
                     BookID = _thisBook.ID,
                     SectionID = thisCategory.SectionID,
                 };
-                Core.ContextKIP.UserReadingList.Add(newLine);
-                Core.ContextKIP.SaveChanges();
+                Core.ContextHOME.UserReadingList.Add(newLine);
+                Core.ContextHOME.SaveChanges();
                 this.DialogResult = true;
             }
             else 
@@ -60,16 +60,16 @@ namespace ShutAndKing
 
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
-            var existingSectionTitles = Core.ContextKIP.UserReadingList
+            var existingSectionTitles = Core.ContextHOME.UserReadingList
                 .Where(x => x.UserID == User.ID && x.BookID == _thisBook.ID)
                 .Select(x => x.ReadingListSection.Title)
                 .ToList();
 
-            var RL_Titles = Core.ContextKIP.ReadingListSection.ToList()
+            var RL_Titles = Core.ContextHOME.ReadingListSection.ToList()
                 .Select(x => new ReadingListViewModel
                 {
                     Title = x.Title,
-                    IsSelected = Core.ContextKIP.UserReadingList.Any(u => u.UserID == User.ID && u.ReadingListSection.Title == x.Title && u.BookID == _thisBook.ID)
+                    IsSelected = Core.ContextHOME.UserReadingList.Any(u => u.UserID == User.ID && u.ReadingListSection.Title == x.Title && u.BookID == _thisBook.ID)
                 }).ToList();
 
             lists.ItemsSource = RL_Titles;

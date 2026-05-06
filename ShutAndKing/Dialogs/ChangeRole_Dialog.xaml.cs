@@ -19,7 +19,7 @@ namespace ShutAndKing.Dialogs
     /// </summary>
     public partial class ChangeRole_Dialog : Window
     {
-        public ChangeRole_Dialog()
+        public ChangeRole_Dialog(int inputUserID)
         {
             InitializeComponent();
         }

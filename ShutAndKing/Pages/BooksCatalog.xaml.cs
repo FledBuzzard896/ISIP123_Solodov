@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.EntityFrameworkCore;
 
 namespace ShutAndKing.Pages
 {
@@ -39,11 +40,11 @@ namespace ShutAndKing.Pages
             string searchQuery = searchTB.Text.Trim();
             if (string.IsNullOrEmpty(searchQuery))
             {
-                _allBooks = Core.ContextKIP.Books.ToList();
+                _allBooks = Core.ContextHOME.Books.ToList();
             }
             else
             {
-                _allBooks = Core.ContextKIP.Books
+                _allBooks = Core.ContextHOME.Books
                     .Where(p => p.Title.Contains(searchQuery) || p.Users.Name.Contains(searchQuery))
                     .ToList();
             }
@@ -62,44 +63,48 @@ namespace ShutAndKing.Pages
             ApplyFiltersAndSort();
         }
 
+        private double GetAverageRating(Books book)
+        {
+            // Если отзывы не загружены или их нет – возвращаем 0
+            if (book.UserReviews == null || !book.UserReviews.Any())
+                return 0;
+
+            return book.UserReviews.Average(r => r.Rating);
+        }
+
         private void ApplyFiltersAndSort()
         {
             if (_allBooks == null) return;
 
             IEnumerable<Books> query = _allBooks;
 
-            //// --- Фильтрация ---
-            //if (_currentFilter != "Все")
-            //{
-            //    // Определяем, что выбрано: тип или производитель (по суффиксу в скобках)
-            //    if (_currentFilter.EndsWith("(тип)"))
-            //    {
-            //        string typeName = _currentFilter.Replace("(тип)", "").Trim();
-            //        query = query.Where(p => p.ProductTypes.TypeName == typeName);
-            //    }
-            //    else if (_currentFilter.EndsWith("(производитель)"))
-            //    {
-            //        string manufName = _currentFilter.Replace("(производитель)", "").Trim();
-            //        query = query.Where(p => p.Manufacturers.ManufacturerName == manufName);
-            //    }
-            //}
+            // --- Фильтрация ---
+            if (_currentFilter != "Все")
+            {
+                query = query.Where(book => book.Genres.Any(g => g.Title == _currentFilter)).ToList();
+            }
 
-            //// --- Сортировка ---
-            //switch (_currentSort)
-            //{
-            //    case "Рейтинг (убывание)":
-            //        query = query.OrderByDescending(p => p.Rating);
-            //        break;
-            //    case "Рейтинг (возрастание)":
-            //        query = query.OrderBy(p => p.Rating);
-            //        break;
-            //    default:
-            //        query = query.OrderBy(p => p.ProductName);
-            //        break;
-            //}
+            // Сортировка
+            switch (_currentSort)
+            {
+                case "Название (убывание)":
+                    query = query.OrderByDescending(b => b.Title, StringComparer.CurrentCultureIgnoreCase);
+                    break;
+                case "Название (возрастание)":
+                    query = query.OrderBy(b => b.Title, StringComparer.CurrentCultureIgnoreCase);
+                    break;
+                case "Оценка (убывание)":
+                    query = query.OrderByDescending(b => GetAverageRating(b));
+                    break;
+                case "Оценка (возрастание)":
+                    query = query.OrderBy(b => GetAverageRating(b));
+                    break;
+                default:
+                    query = query.OrderBy(b => b.Title);
+                    break;
+            }
 
             // Применяем к UI
-            //Assignment(query.ToList());
             Books_LB.ItemsSource = query;
         }
 
@@ -113,16 +118,35 @@ namespace ShutAndKing.Pages
             }
         }
 
+        private void Books_LB_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Books selectedBook = Books_LB.SelectedItem as Books;
+            if (selectedBook == null) return;
+
+            PageOfBook page = new PageOfBook(selectedBook);
+            NavigationService.Navigate(page);
+        }
+
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
-            // List<Books> booksList = Core.ContextKIP.Books.ToList();
-            // var new_bookList = booksList
-            //     .Select(x => new {
-            //         BookObject = x,
-            //         Title = x.Title,
-            //         Name = x.Users.Name,
-            //     }).ToList();
-            Books_LB.ItemsSource = Core.ContextKIP.Books.Include(b => b.Users).ToList();
+            Books_LB.ItemsSource = Core.ContextHOME.Books.Include(b => b.Users).ToList();
+            _allBooks = Core.ContextHOME.Books.ToList();
+
+            // Жанры
+            List<string> filterItems = new List<string> { "Все" };
+            foreach (var genre in Core.ContextHOME.Genres.ToList())
+                filterItems.Add($"{genre.Title}");
+            filter_box.ItemsSource = filterItems;
+
+            // Сортиров4ка
+            sorting_box.ItemsSource = new List<string>
+            {
+                "Без сортировки",
+                "Название (убывание)",
+                "Навзание (возрастание)",
+                "Оценка (убывание)",
+                "Оценка (возрастание)"
+            };
         }
     }
 }

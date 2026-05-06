@@ -32,7 +32,7 @@
             </Grid.RowDefinitions>
 
             <TextBlock Text="Переместить из:" FontSize="14" Margin="5" Grid.Row="0"/>
-            <ComboBox x:Name="From_ComboBox" Width="auto" Margin="5" Grid.Row="1" SelectionChanged="FromList"/>
+            <ComboBox x:Name="From_ComboBox" Width="auto" Margin="5" Grid.Row="1"/>
         </Grid>
 
         <Grid Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">
@@ -42,7 +42,7 @@
             </Grid.RowDefinitions>
 
             <TextBlock Text="Переместить в:" FontSize="14" Margin="5" Grid.Row="0"/>
-            <ComboBox x:Name="To_ComboBox" Width="auto" Margin="5" Grid.Row="1" SelectionChanged="ToList"/>
+            <ComboBox x:Name="To_ComboBox" Width="auto" Margin="5" Grid.Row="1"/>
         </Grid>
 
         <Button x:Name="ChangeBtn"

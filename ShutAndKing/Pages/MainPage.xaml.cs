@@ -37,7 +37,7 @@ namespace ShutAndKing.Pages
         }
         private void BooksListsBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            MainFrame.NavigationService.Navigate(new BooksLists());
         }
         private void AdministrationBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -58,7 +58,11 @@ namespace ShutAndKing.Pages
         
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            var answer = MessageBox.Show("Вы перепишите на меня вашу нынешнюю/будущую квартиру?", "Доп. проверка", MessageBoxButton.YesNo, MessageBoxImage.Information);
+            if (answer == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown();
+            }
         }
     }
 }

@@ -17,27 +17,27 @@
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="0">
             <Button x:Name="trashBtn"
-			Content="Заброшено" FontSize="14"
-			Height="20" Width="80"
-			IsEnabled="True"
-			Click="trashBtn_Click"/>
+			    Content="Заброшено" FontSize="14"
+			    Height="20" Width="80"
+			    IsEnabled="True"
+			    Click="trashBtn_Click"/>
             <Button x:Name="plansBtn"
-			Content="В планах" FontSize="14"
-			Margin="10,0,5,0"
-			Height="20" Width="80"
-			IsEnabled="True"
-			Click="plansBtn_Click"/>
+			    Content="В планах" FontSize="14"
+			    Margin="10,0,5,0"
+			    Height="20" Width="80"
+			    IsEnabled="True"
+			    Click="plansBtn_Click"/>
             <Button x:Name="readingBtn"
-			Content="Читаю" FontSize="14"
-			Margin="5,0,10,0"
-			Height="20" Width="80"
-			IsEnabled="False"
-			Click="readingBtn_CLick"/>
+			    Content="Читаю" FontSize="14"
+			    Margin="5,0,10,0"
+			    Height="20" Width="80"
+			    IsEnabled="False"
+			    Click="readingBtn_CLick"/>
             <Button x:Name="alreadyReadBtn"
-			Content="Прочитано" FontSize="14"
-			Height="20" Width="80"
-			IsEnabled="True"
-			Click="alreadyReadBtn_Click"/>
+			    Content="Прочитано" FontSize="14"
+			    Height="20" Width="80"
+			    IsEnabled="True"
+			    Click="alreadyReadBtn_Click"/>
         </StackPanel>
 
         <Grid Grid.Row="1">
@@ -78,27 +78,27 @@
                         </Grid.RowDefinitions>
 
                         <Image Source="/Images/no_image.png"
-						Stretch="Fill"
-						Margin="10,0"
-						Grid.Row="0"
-						HorizontalAlignment="Center"/>
+						    Stretch="Fill"
+						    Margin="10,0"
+						    Grid.Row="0"
+						    HorizontalAlignment="Center"/>
 
                         <ScrollViewer Margin="10,0" Grid.Row="1" MaxHeight="50" VerticalScrollBarVisibility="Hidden">
                             <TextBlock x:Name="BookName" Text="{Binding Title}" FontWeight="Bold" FontSize="16" TextWrapping="Wrap"/>
                         </ScrollViewer>
 
                         <TextBlock x:Name="AuthorName"
-						Text="{Binding Users.Name}" FontSize="12"
-						MaxHeight="25"
-						Margin="10,0"
-						TextWrapping="Wrap"
-						Grid.Row="2"/>
+						    Text="{Binding Users.Name}" FontSize="12"
+						    MaxHeight="25"
+						    Margin="10,0"
+						    TextWrapping="Wrap"
+						    Grid.Row="2"/>
                         <Button x:Name="ChangeListBtn"
-						Margin="10,0"
-						Content="Переместить в"
-						Grid.Row="3" 
-						Tag="{Binding}" 
-						Click="ChangeList_Click"/>
+						    Margin="10,0"
+						    Content="Переместить в"
+						    Grid.Row="3" 
+						    Tag="{Binding}" 
+						    Click="ChangeList_Click"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

@@ -40,11 +40,11 @@ namespace ShutAndKing.Pages
             readingBtn.IsEnabled = true;
             alreadyReadBtn.IsEnabled = true;
 
-            var books = Core.ContextHOME.UserReadingList
+            _allBooks = Core.ContextHOME.UserReadingList
                 .Where(x => x.UserID == User.ID && x.ReadingListSection.Title == "Заброшено")
                 .Select(x => x.Books)
                 .ToList();
-            BooksInLists_LB.ItemsSource = books;
+            BooksInLists_LB.ItemsSource = _allBooks;
         }
         private void plansBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -53,24 +53,24 @@ namespace ShutAndKing.Pages
             readingBtn.IsEnabled = true;
             alreadyReadBtn.IsEnabled = true;
 
-            var books = Core.ContextHOME.UserReadingList
+            _allBooks = Core.ContextHOME.UserReadingList
                 .Where(x => x.UserID == User.ID && x.ReadingListSection.Title == "В планах")
                 .Select(x => x.Books)
                 .ToList();
-            BooksInLists_LB.ItemsSource = books;
+            BooksInLists_LB.ItemsSource = _allBooks;
         }
-        private void readingBtn_Click(object sender, RoutedEventArgs e)
+        private void readingBtn_CLick(object sender, RoutedEventArgs e)
         {
             trashBtn.IsEnabled = true;
             plansBtn.IsEnabled = true;
             readingBtn.IsEnabled = false;
             alreadyReadBtn.IsEnabled = true;
 
-            var books = Core.ContextHOME.UserReadingList
+            _allBooks = Core.ContextHOME.UserReadingList
                 .Where(x => x.UserID == User.ID && x.ReadingListSection.Title == "Читаю")
                 .Select(x => x.Books)
                 .ToList();
-            BooksInLists_LB.ItemsSource = books;
+            BooksInLists_LB.ItemsSource = _allBooks;
         }
         private void alreadyReadBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -79,11 +79,11 @@ namespace ShutAndKing.Pages
             readingBtn.IsEnabled = true;
             alreadyReadBtn.IsEnabled = false;
 
-            var books = Core.ContextHOME.UserReadingList
+            _allBooks = Core.ContextHOME.UserReadingList
                 .Where(x => x.UserID == User.ID && x.ReadingListSection.Title == "Прочитано")
                 .Select(x => x.Books)
                 .ToList();
-            BooksInLists_LB.ItemsSource = books;
+            BooksInLists_LB.ItemsSource = _allBooks;
         }
 
         private void ChangeList_Click(object sender, RoutedEventArgs e)
@@ -177,14 +177,14 @@ namespace ShutAndKing.Pages
 
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
-            var books = Core.ContextHOME.UserReadingList
+            _allBooks = Core.ContextHOME.UserReadingList
                 .Where(x => x.UserID == User.ID && x.ReadingListSection.Title == "Читаю")
                 .Select(x => x.Books)   // сразу берём объекты книг
                 .ToList();
-            BooksInLists_LB.ItemsSource = books;
+            BooksInLists_LB.ItemsSource = _allBooks;
 
             List<string> filterItems = new List<string> { "Все" };
-            foreach (var genre in Core.ContextKIP.Genres.ToList())
+            foreach (var genre in Core.ContextHOME.Genres.ToList())
                 filterItems.Add($"{genre.Title}");
             filter_box.ItemsSource = filterItems;
 
