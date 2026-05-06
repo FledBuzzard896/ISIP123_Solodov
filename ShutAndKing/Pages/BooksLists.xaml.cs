@@ -24,8 +24,10 @@ namespace ShutAndKing.Pages
     public partial class BooksLists : Page
     {
         private IEnumerable<Books> _allBooks;
+        private List<Books> _booksInSection;
         private string _currentFilter = "Все";
         private string _currentSort = "Без сортировки";
+        private string _currentSectionTitle = "Читаю"; // по умолчанию
 
         public BooksLists()
         {
@@ -33,18 +35,17 @@ namespace ShutAndKing.Pages
             Loaded += PageLoaded;
         }
 
+
+        #region Переключение списков книг
         private void trashBtn_Click(object sender, RoutedEventArgs e)
         {
             trashBtn.IsEnabled = false;
             plansBtn.IsEnabled = true;
             readingBtn.IsEnabled = true;
             alreadyReadBtn.IsEnabled = true;
+            _currentSectionTitle = "Заброшено";
 
-            _allBooks = Core.ContextHOME.UserReadingList
-                .Where(x => x.UserID == User.ID && x.ReadingListSection.Title == "Заброшено")
-                .Select(x => x.Books)
-                .ToList();
-            BooksInLists_LB.ItemsSource = _allBooks;
+            RefreshCurrentCategory();
         }
         private void plansBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -52,12 +53,9 @@ namespace ShutAndKing.Pages
             plansBtn.IsEnabled = false;
             readingBtn.IsEnabled = true;
             alreadyReadBtn.IsEnabled = true;
+            _currentSectionTitle = "В планах";
 
-            _allBooks = Core.ContextHOME.UserReadingList
-                .Where(x => x.UserID == User.ID && x.ReadingListSection.Title == "В планах")
-                .Select(x => x.Books)
-                .ToList();
-            BooksInLists_LB.ItemsSource = _allBooks;
+            RefreshCurrentCategory();
         }
         private void readingBtn_CLick(object sender, RoutedEventArgs e)
         {
@@ -65,12 +63,9 @@ namespace ShutAndKing.Pages
             plansBtn.IsEnabled = true;
             readingBtn.IsEnabled = false;
             alreadyReadBtn.IsEnabled = true;
+            _currentSectionTitle = "Читаю";
 
-            _allBooks = Core.ContextHOME.UserReadingList
-                .Where(x => x.UserID == User.ID && x.ReadingListSection.Title == "Читаю")
-                .Select(x => x.Books)
-                .ToList();
-            BooksInLists_LB.ItemsSource = _allBooks;
+            RefreshCurrentCategory();
         }
         private void alreadyReadBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -78,13 +73,22 @@ namespace ShutAndKing.Pages
             plansBtn.IsEnabled = true;
             readingBtn.IsEnabled = true;
             alreadyReadBtn.IsEnabled = false;
+            _currentSectionTitle = "Прочитано";
 
+            RefreshCurrentCategory();
+        }
+        private void RefreshCurrentCategory()
+        {
             _allBooks = Core.ContextHOME.UserReadingList
-                .Where(x => x.UserID == User.ID && x.ReadingListSection.Title == "Прочитано")
+                .Where(x => x.UserID == User.ID && x.ReadingListSection.Title == _currentSectionTitle)
                 .Select(x => x.Books)
                 .ToList();
             BooksInLists_LB.ItemsSource = _allBooks;
+
+            _booksInSection = _allBooks.ToList();
         }
+        #endregion
+
 
         private void ChangeList_Click(object sender, RoutedEventArgs e)
         {
@@ -92,15 +96,17 @@ namespace ShutAndKing.Pages
             if (btn?.Tag is Books book)
             {
                 ChangeListForBook_Dialog dialog = new ChangeListForBook_Dialog(book);
-                dialog.ShowDialog();
+
+                if (dialog.ShowDialog() == true) 
+                {
+                    RefreshCurrentCategory();
+                }
             }
             else
             {
                 MessageBox.Show("Не удалось получить книгу", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Stop);
             }
         }
-
-
         private void Enter_Click(object sender, KeyEventArgs e)
         {
             if (e.Key != Key.Enter) return;
@@ -108,17 +114,19 @@ namespace ShutAndKing.Pages
             string searchQuery = searchTBox.Text.Trim();
             if (string.IsNullOrEmpty(searchQuery))
             {
-                _allBooks = Core.ContextHOME.Books.ToList();
+                _allBooks = _booksInSection;
             }
             else
             {
-                _allBooks = Core.ContextHOME.Books
+                _allBooks = _booksInSection
                     .Where(x => x.Title.Contains(searchQuery) || x.Users.Name.Contains(searchQuery))
                     .ToList();
             }
             ApplyFiltersAndSort();
         }
 
+
+        #region Изменение параметров "Сортировки" и "Фильтрации"
         private void filter_box_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             _currentFilter = filter_box.SelectedItem?.ToString() ?? "Все";
@@ -129,16 +137,6 @@ namespace ShutAndKing.Pages
             _currentSort = sorting_box.SelectedItem?.ToString() ?? "Без сортировки";
             ApplyFiltersAndSort();
         }
-
-        private double GetAverageRating(Books book)
-        {
-            // Если отзывы не загружены или их нет – возвращаем 0
-            if (book.UserReviews == null || !book.UserReviews.Any())
-                return 0;
-
-            return book.UserReviews.Average(r => r.Rating);
-        }
-
         private void ApplyFiltersAndSort()
         {
             if (_allBooks == null) return;
@@ -174,6 +172,16 @@ namespace ShutAndKing.Pages
             // Применяем к UI
             BooksInLists_LB.ItemsSource = query;
         }
+        private double GetAverageRating(Books book)
+        {
+            // Если отзывы не загружены или их нет – возвращаем 0
+            if (book.UserReviews == null || !book.UserReviews.Any())
+                return 0;
+
+            return book.UserReviews.Average(r => r.Rating);
+        }
+        #endregion
+
 
         private void PageLoaded(object sender, RoutedEventArgs e)
         {

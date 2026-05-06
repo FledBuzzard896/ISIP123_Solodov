@@ -48,7 +48,7 @@ namespace ShutAndKing.Pages
         private void FreezeReview_Click(object sender, RoutedEventArgs e)
         {
             if (User.RoleID != 3) {
-                MessageBox.Show("Вы не являетесь Администратором", "Отказано!", MessageBoxButton.OK, MessageBoxImage.Stop); 
+                MessageBox.Show("Вы не являетесь Администратором\nНо если хотите им стать, то отправьте заявку на главной странице :)", "Отказано!", MessageBoxButton.OK, MessageBoxImage.Stop); 
                 return;
             }
 
@@ -166,11 +166,15 @@ namespace ShutAndKing.Pages
                 .Include(x => x.Users) // загружаем автора отзыва
                 .Where(x => x.BookID == book.ID)
                 .ToList();
-
             Reviews_LB.ItemsSource = usersReviews;
 
             // Жанры (оставлено для вас)
-            // ...
+            string GenresList = "";
+            foreach (var elem in book.Genres) 
+            {
+                GenresList += elem.Title;
+            }
+            book_genres.Text = GenresList;
 
             // Проверка роли администратора
             if (User.RoleID == 3)

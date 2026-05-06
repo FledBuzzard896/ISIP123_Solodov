@@ -32,27 +32,49 @@ namespace ShutAndKing
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
-            var dataList = lists.ItemsSource as IEnumerable<dynamic>;
-            bool isAnyChecked = dataList.Any(x => x.IsSelected == true);
+            // Получаем список моделей с правильным типом
+            var dataList = lists.ItemsSource as List<ReadingListViewModel>;
+            if (dataList == null) return;
 
-            if (isAnyChecked)
+            var selectedCategory = dataList.FirstOrDefault(x => x.IsSelected);
+            if (selectedCategory != null)
             {
-                var thisCategory = dataList.First(x => x.IsSelected == true);
-                var newLine = new UserReadingList
+                // Проверяем, не добавлена ли уже книга в этот раздел (защита от дубликатов)
+                bool alreadyExists = Core.ContextHOME.UserReadingList
+                    .Any(ur => ur.UserID == User.ID && ur.BookID == _thisBook.ID && ur.SectionID == selectedCategory.SectionID);
+
+                if (alreadyExists)
                 {
-                    UserID = User.ID,
-                    BookID = _thisBook.ID,
-                    SectionID = thisCategory.SectionID,
-                };
-                Core.ContextHOME.UserReadingList.Add(newLine);
+                    MessageBox.Show("Эта книга уже находится в выбранном списке.", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+
+                var flag = Core.ContextHOME.UserReadingList.FirstOrDefault(x => x.UserID == User.ID && x.BookID == _thisBook.ID);
+                if (flag != null)
+                {
+                    // Изменяем
+                    flag.SectionID = selectedCategory.SectionID;
+                }
+                else 
+                {
+                    // Добавляем
+                    var newLine = new UserReadingList
+                    {
+                        UserID = User.ID,
+                        BookID = _thisBook.ID,
+                        SectionID = selectedCategory.SectionID,
+                    };
+                    Core.ContextHOME.UserReadingList.Add(newLine);
+                }
                 Core.ContextHOME.SaveChanges();
                 this.DialogResult = true;
             }
-            else 
+            else
             {
                 MessageBox.Show("Вы не выбрали ни одну категорию!", "Не мороси", MessageBoxButton.OK, MessageBoxImage.Stop);
             }
         }
+
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
@@ -60,19 +82,22 @@ namespace ShutAndKing
 
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
-            var existingSectionTitles = Core.ContextHOME.UserReadingList
+            // Получаем ID разделов, в которых книга уже находится
+            var existingSectionIDs = Core.ContextHOME.UserReadingList
                 .Where(x => x.UserID == User.ID && x.BookID == _thisBook.ID)
-                .Select(x => x.ReadingListSection.Title)
+                .Select(x => x.SectionID)
                 .ToList();
 
-            var RL_Titles = Core.ContextHOME.ReadingListSection.ToList()
+            // Создаём список моделей для отображения с проставленными флагами IsSelected
+            var categories = Core.ContextHOME.ReadingListSection.ToList()
                 .Select(x => new ReadingListViewModel
                 {
                     Title = x.Title,
-                    IsSelected = Core.ContextHOME.UserReadingList.Any(u => u.UserID == User.ID && u.ReadingListSection.Title == x.Title && u.BookID == _thisBook.ID)
+                    SectionID = x.ID,
+                    IsSelected = existingSectionIDs.Contains(x.ID)   // если уже добавлена – ставим галочку
                 }).ToList();
 
-            lists.ItemsSource = RL_Titles;
+            lists.ItemsSource = categories;
         }
     }
 }

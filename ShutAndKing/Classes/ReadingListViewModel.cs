@@ -10,5 +10,6 @@ namespace ShutAndKing.Classes
     {
         public string Title { get; set; }
         public bool IsSelected { get; set; }
+        public int SectionID { get; set; }
     }
 }
