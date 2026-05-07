@@ -41,7 +41,7 @@
                 <Button x:Name="freezeBookBtn" 
                     Content="Заморозить книгу" 
                     Width="120" Height="25" 
-                    HorizontalAlignment="Right" 
+                    HorizontalAlignment="Center" 
                     Margin="5"
                     Visibility="Collapsed"
                     Click="FreezeBook_Click"/>

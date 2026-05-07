@@ -34,9 +34,12 @@ namespace ShutAndKing.Dialogs
         {
             ReadingListSection toLst = To_ComboBox.SelectedItem as ReadingListSection;
 
-            var bookLine = Core.ContextHOME.UserReadingList.FirstOrDefault(x => x.UserID == User.ID && x.BookID == book.ID);
+            // Обработка нулевого значения
+            if (toLst == null) { MessageBox.Show("Выберите список, куда хотите переместить книгу.", "Отказано", MessageBoxButton.OK, MessageBoxImage.Stop); return; }
+
+            var bookLine = Core.ContextKIP.UserReadingList.FirstOrDefault(x => x.UserID == User.ID && x.BookID == book.ID);
             bookLine.SectionID = toLst.ID;
-            Core.ContextHOME.SaveChanges();
+            Core.ContextKIP.SaveChanges();
 
             MessageBox.Show("Книга перемещена в другой список", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
             this.DialogResult = true;
@@ -50,19 +53,19 @@ namespace ShutAndKing.Dialogs
 
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
-            var userReadingEntry = Core.ContextHOME.UserReadingList
-                .FirstOrDefault(x => x.UserID == User.ID && x.BookID == book.ID);
-            string currentListTitle = null;
+            var userReadingEntry = Core.ContextKIP.UserReadingList.Where(x => x.UserID == User.ID && x.BookID == book.ID).ToList();
+            var elem = userReadingEntry[0];
+
+            From_ComboBox.SelectedValuePath = "ReadingListSection.Title";
 
             if (userReadingEntry != null)
             {
-                currentListTitle = userReadingEntry.ReadingListSection?.Title;
+                From_ComboBox.ItemsSource = userReadingEntry;
+                From_ComboBox.SelectedValue = elem.ReadingListSection.Title;
+                From_ComboBox.DisplayMemberPath = "ReadingListSection.Title";
             }
-            else currentListTitle = "Не в списках";
-            From_ComboBox.SelectedItem = currentListTitle;
 
-
-            var sections = Core.ContextHOME.ReadingListSection.Where(x => x.Title != userReadingEntry.ReadingListSection.Title).ToList();
+            var sections = Core.ContextKIP.ReadingListSection.Where(x => x.Title != elem.ReadingListSection.Title).ToList();
             To_ComboBox.ItemsSource = sections;
             To_ComboBox.DisplayMemberPath = "Title";
         }

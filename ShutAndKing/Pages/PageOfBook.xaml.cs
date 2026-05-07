@@ -26,7 +26,7 @@ namespace ShutAndKing.Pages
     public partial class PageOfBook : Page
     {
         private Books book = null;
-
+        private bool isFreeze = false;
         public PageOfBook(Books inputBook)
         {
             InitializeComponent();
@@ -41,8 +41,21 @@ namespace ShutAndKing.Pages
 
         private void FreezeBook_Click(object sender, RoutedEventArgs e)
         {
-            book.Status = "Заморожен";
-            Core.ContextHOME.SaveChanges();
+            if (isFreeze)
+            {
+                book.Status = "Активна";
+                freezeBookBtn.Content = "Заморозить книгу";
+                isFreeze = false;
+            }
+            else
+            {
+                book.Status = "Заморожена";
+                freezeBookBtn.Content = "Разморозить книгу";
+                isFreeze = true;
+            }
+
+            MessageBox.Show("Операция выполнена!", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
+            Core.ContextKIP.SaveChanges();
         }
 
         private void FreezeReview_Click(object sender, RoutedEventArgs e)
@@ -55,8 +68,8 @@ namespace ShutAndKing.Pages
             var button = sender as Button;
             if (button?.Tag is UserReviews review)
             {
-                Core.ContextHOME.UserReviews.Remove(review);
-                Core.ContextHOME.SaveChanges();
+                Core.ContextKIP.UserReviews.Remove(review);
+                Core.ContextKIP.SaveChanges();
 
                 MessageBox.Show("Отзыв заморожен (удалён навсегда, вы его больше никогда не увидите, прощай, земля тебе пуховик)", "Операция выполнена", MessageBoxButton.OK, MessageBoxImage.Information);
             }
@@ -83,8 +96,8 @@ namespace ShutAndKing.Pages
                 AuthorID = null,
                 Reason = book_complaint.Text.Trim()
             };
-            Core.ContextHOME.Complaints.Add(newComplaint);
-            Core.ContextHOME.SaveChanges();
+            Core.ContextKIP.Complaints.Add(newComplaint);
+            Core.ContextKIP.SaveChanges();
 
             MessageBox.Show("Жалоба на книгу отправлена администратору.", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
             book_complaint.Clear();
@@ -103,7 +116,7 @@ namespace ShutAndKing.Pages
                 UserID = User.ID,
                 BookID = null,
                 ReviewID = null,
-                AuthorID = Convert.ToInt32(Core.ContextHOME.Users.First(x => x.ID == book.AuthorID)),
+                AuthorID = Convert.ToInt32(Core.ContextKIP.Users.First(x => x.ID == book.AuthorID)),
                 Reason = author_complaint.Text.Trim()
             };
 
@@ -149,7 +162,7 @@ namespace ShutAndKing.Pages
             book_text.Text = book.Text;
 
             // Рейтинг
-            var ratingList = Core.ContextHOME.UserReviews.Where(x => x.BookID == book.ID).ToList();
+            var ratingList = Core.ContextKIP.UserReviews.Where(x => x.BookID == book.ID).ToList();
             if (ratingList.Any())
             {
                 double avgRating = ratingList.Average(x => x.Rating);
@@ -158,11 +171,11 @@ namespace ShutAndKing.Pages
             else book_rating.Text = "Нет оценок";
 
             // Автор
-            var author = Core.ContextHOME.Users.First(x => x.ID == book.AuthorID);
+            var author = Core.ContextKIP.Users.First(x => x.ID == book.AuthorID);
             book_author.Text = author.Name;
 
             // Отзывы
-            var usersReviews = Core.ContextHOME.UserReviews
+            var usersReviews = Core.ContextKIP.UserReviews
                 .Include(x => x.Users) // загружаем автора отзыва
                 .Where(x => x.BookID == book.ID)
                 .ToList();
@@ -180,6 +193,12 @@ namespace ShutAndKing.Pages
             if (User.RoleID == 3)
             {
                 freezeBookBtn.Visibility = Visibility.Visible;
+
+                if (book.Status == "Заморожена") 
+                {
+                    freezeBookBtn.Content = "Разморозить книгу";
+                    isFreeze = true;
+                }
             }
         }
     }

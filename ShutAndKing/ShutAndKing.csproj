@@ -180,19 +180,19 @@
     <Compile Include="Classes\ReadingListViewModel.cs" />
     <Compile Include="Classes\User.cs" />
     <Compile Include="DB_Models\AuthorApplication.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\Books.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\Complaints.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\DefrostingApplication.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\Genres.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\Model_HOME.Context.cs">
       <AutoGen>True</AutoGen>
@@ -225,22 +225,22 @@
       <DependentUpon>Model_KIP.edmx</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\ReadingListSection.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\Roles.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\sysdiagrams.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\UserReadingList.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\UserReviews.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\Users.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP.tt</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\AuthorApplication_Dialog.xaml.cs">
       <DependentUpon>AuthorApplication_Dialog.xaml</DependentUpon>

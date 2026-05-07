@@ -77,7 +77,7 @@ namespace ShutAndKing.Pages
         #region Загрузка данных
         private void LoadComplaints()
         {
-            var list = Core.ContextHOME.Complaints
+            var list = Core.ContextKIP.Complaints
                 .Include(c => c.Users)       // подгружаем пользователя
                 .Include(c => c.Books)       // подгружаем книгу
                 .Include(c => c.UserReviews) // подгружаем отзыв
@@ -96,7 +96,7 @@ namespace ShutAndKing.Pages
 
         private void LoadDefrostRequests()
         {
-            var list = Core.ContextHOME.DefrostingApplication
+            var list = Core.ContextKIP.DefrostingApplication
                 .Include(d => d.Users)
                 .Include(d => d.Books)
                 .ToList()
@@ -113,7 +113,7 @@ namespace ShutAndKing.Pages
 
         private void LoadAuthorRequests()
         {
-            var list = Core.ContextHOME.AuthorApplication
+            var list = Core.ContextKIP.AuthorApplication
                 .Include(a => a.Users)
                 .Select(a => new
                 {
@@ -126,10 +126,10 @@ namespace ShutAndKing.Pages
 
         private void LoadFrozenData()
         {
-            var frozenBooks = Core.ContextHOME.Books.Where(b => b.Status == "Frozen").ToList();
+            var frozenBooks = Core.ContextKIP.Books.Where(b => b.Status == "Frozen").ToList();
             FrozenBooksGrid.ItemsSource = frozenBooks;
 
-            var frozenUsers = Core.ContextHOME.Users.Where(u => u.Status == "Frozen").ToList();
+            var frozenUsers = Core.ContextKIP.Users.Where(u => u.Status == "Frozen").ToList();
             FrozenUsersGrid.ItemsSource = frozenUsers;
 
             // Если добавили поле IsFrozen в UserReviews – раскомментировать
@@ -139,7 +139,7 @@ namespace ShutAndKing.Pages
 
         private void LoadUsers()
         {
-            var users = Core.ContextHOME.Users
+            var users = Core.ContextKIP.Users
                 .Include(u => u.Roles)
                 .Select(u => new
                 {
@@ -164,12 +164,12 @@ namespace ShutAndKing.Pages
             }
             int complaintId = (int)ComplaintsGrid.SelectedItem.GetType().GetProperty("ID").GetValue(ComplaintsGrid.SelectedItem);
 
-            var complaint = Core.ContextHOME.Complaints.Find(complaintId);
+            var complaint = Core.ContextKIP.Complaints.Find(complaintId);
             if (complaint != null)
             {
                 if (complaint.BookID != null)
                 {
-                    var book = Core.ContextHOME.Books.Find(complaint.BookID);
+                    var book = Core.ContextKIP.Books.Find(complaint.BookID);
                     if (book != null) book.Status = "Frozen";
                 }
                 else if (complaint.ReviewID != null)
@@ -178,8 +178,8 @@ namespace ShutAndKing.Pages
                     // var review = Core.ContextHOME.UserReviews.Find(complaint.ReviewID);
                     // if (review != null) review.IsFrozen = true;
                 }
-                Core.ContextHOME.Complaints.Remove(complaint);
-                Core.ContextHOME.SaveChanges();
+                Core.ContextKIP.Complaints.Remove(complaint);
+                Core.ContextKIP.SaveChanges();
             }
             LoadComplaints();
         }
@@ -189,9 +189,9 @@ namespace ShutAndKing.Pages
             if (ComplaintsGrid.SelectedItem is null) return;
             int complaintId = (int)ComplaintsGrid.SelectedItem.GetType().GetProperty("ID").GetValue(ComplaintsGrid.SelectedItem);
 
-            var complaint = Core.ContextHOME.Complaints.Find(complaintId);
-            if (complaint != null) Core.ContextHOME.Complaints.Remove(complaint);
-            Core.ContextHOME.SaveChanges();
+            var complaint = Core.ContextKIP.Complaints.Find(complaintId);
+            if (complaint != null) Core.ContextKIP.Complaints.Remove(complaint);
+            Core.ContextKIP.SaveChanges();
             LoadComplaints();
         }
         #endregion
@@ -206,23 +206,23 @@ namespace ShutAndKing.Pages
             }
 
             int requestId = (int)DefrostRequestsGrid.SelectedItem.GetType().GetProperty("ID").GetValue(DefrostRequestsGrid.SelectedItem);
-            var request = Core.ContextHOME.DefrostingApplication.Find(requestId);
+            var request = Core.ContextKIP.DefrostingApplication.Find(requestId);
             if (request == null) return;
 
             if (request.BookID != null)
             {
-                var book = Core.ContextHOME.Books.Find(request.BookID);
+                var book = Core.ContextKIP.Books.Find(request.BookID);
                 if (book != null && book.Status == "Frozen")
                     book.Status = "Active";
             }
             else if (request.AccountID != null)
             {
-                var user = Core.ContextHOME.Users.Find(request.AccountID);
+                var user = Core.ContextKIP.Users.Find(request.AccountID);
                 if (user != null && user.Status == "Frozen")
                     user.Status = "Active";
             }
-            Core.ContextHOME.DefrostingApplication.Remove(request);
-            Core.ContextHOME.SaveChanges();
+            Core.ContextKIP.DefrostingApplication.Remove(request);
+            Core.ContextKIP.SaveChanges();
 
             LoadDefrostRequests();
             MessageBox.Show("Заявка принята, объект разморожен.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -237,11 +237,11 @@ namespace ShutAndKing.Pages
             }
 
             int requestId = (int)DefrostRequestsGrid.SelectedItem.GetType().GetProperty("ID").GetValue(DefrostRequestsGrid.SelectedItem);
-            var request = Core.ContextHOME.DefrostingApplication.Find(requestId);
+            var request = Core.ContextKIP.DefrostingApplication.Find(requestId);
             if (request != null)
             {
-                Core.ContextHOME.DefrostingApplication.Remove(request);
-                Core.ContextHOME.SaveChanges();
+                Core.ContextKIP.DefrostingApplication.Remove(request);
+                Core.ContextKIP.SaveChanges();
             }
             LoadDefrostRequests();
             MessageBox.Show("Заявка отклонена.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -258,10 +258,10 @@ namespace ShutAndKing.Pages
             }
 
             int requestId = (int)AuthorRequestsGrid.SelectedItem.GetType().GetProperty("ID").GetValue(AuthorRequestsGrid.SelectedItem);
-            var request = Core.ContextHOME.AuthorApplication.Include(a => a.Users).FirstOrDefault(a => a.ID == requestId);
+            var request = Core.ContextKIP.AuthorApplication.Include(a => a.Users).FirstOrDefault(a => a.ID == requestId);
             if (request == null) return;
 
-            var authorRole = Core.ContextHOME.Roles.FirstOrDefault(r => r.Title == "Author");
+            var authorRole = Core.ContextKIP.Roles.FirstOrDefault(r => r.Title == "Author");
             if (authorRole == null)
             {
                 MessageBox.Show("Роль 'Author' не найдена в базе данных.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -271,8 +271,8 @@ namespace ShutAndKing.Pages
             if (request.Users != null)
                 request.Users.RoleID = authorRole.ID;
 
-            Core.ContextHOME.AuthorApplication.Remove(request);
-            Core.ContextHOME.SaveChanges();
+            Core.ContextKIP.AuthorApplication.Remove(request);
+            Core.ContextKIP.SaveChanges();
 
             LoadAuthorRequests();
             LoadUsers();
@@ -288,11 +288,11 @@ namespace ShutAndKing.Pages
             }
 
             int requestId = (int)AuthorRequestsGrid.SelectedItem.GetType().GetProperty("ID").GetValue(AuthorRequestsGrid.SelectedItem);
-            var request = Core.ContextHOME.AuthorApplication.Find(requestId);
+            var request = Core.ContextKIP.AuthorApplication.Find(requestId);
             if (request != null)
             {
-                Core.ContextHOME.AuthorApplication.Remove(request);
-                Core.ContextHOME.SaveChanges();
+                Core.ContextKIP.AuthorApplication.Remove(request);
+                Core.ContextKIP.SaveChanges();
             }
             LoadAuthorRequests();
             MessageBox.Show("Заявка отклонена.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);

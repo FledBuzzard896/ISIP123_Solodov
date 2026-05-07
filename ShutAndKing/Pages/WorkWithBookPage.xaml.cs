@@ -48,7 +48,7 @@ namespace ShutAndKing.Pages
                 };
     
 
-            Core.ContextHOME.Books.Add(newBook);
+            Core.ContextKIP.Books.Add(newBook);
             }
             else
             {
@@ -56,7 +56,7 @@ namespace ShutAndKing.Pages
                 book.Description = DescriptionTBox.Text;
                 book.Text = TextTBox.Text;
             }
-            Core.ContextHOME.SaveChanges();
+            Core.ContextKIP.SaveChanges();
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
@@ -70,8 +70,8 @@ namespace ShutAndKing.Pages
                 var ans = MessageBox.Show($"Вы точно хотите удалить книгу: {book.Title}", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (ans == MessageBoxResult.Yes)
                 {
-                    Core.ContextHOME.Books.Remove(book);
-                    Core.ContextHOME.SaveChanges();
+                    Core.ContextKIP.Books.Remove(book);
+                    Core.ContextKIP.SaveChanges();
                 }
                 else
                 {

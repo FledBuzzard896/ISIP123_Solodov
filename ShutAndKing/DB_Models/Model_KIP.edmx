@@ -42,6 +42,7 @@
           <Property Name="BookID" Type="int" />
           <Property Name="ReviewID" Type="int" />
           <Property Name="Reason" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="AuthorID" Type="int" />
         </EntityType>
         <EntityType Name="DefrostingApplication">
           <Key>
@@ -431,6 +432,7 @@
           <NavigationProperty Name="Books" Relationship="Self.FK__Complaint__BookI__787EE5A0" FromRole="Complaints" ToRole="Books" />
           <NavigationProperty Name="Users" Relationship="Self.FK__Complaint__UserI__7A672E12" FromRole="Complaints" ToRole="Users" />
           <NavigationProperty Name="UserReviews" Relationship="Self.FK_Complaints_UserReviews" FromRole="Complaints" ToRole="UserReviews" />
+          <Property Name="AuthorID" Type="Int32" />
         </EntityType>
         <EntityType Name="DefrostingApplication">
           <Key>
@@ -803,6 +805,7 @@
           <EntitySetMapping Name="Complaints">
             <EntityTypeMapping TypeName="ReadWriteAndTakeYourTimeModel_KIP.Complaints">
               <MappingFragment StoreEntitySet="Complaints">
+                <ScalarProperty Name="AuthorID" ColumnName="AuthorID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="BookID" ColumnName="BookID" />
