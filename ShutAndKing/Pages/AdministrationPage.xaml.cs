@@ -25,51 +25,49 @@ namespace ShutAndKing.Pages
     {
         public AdministrationPage()
         {
-            InitializeComponent();
             Loaded += Page_Loaded;
+            InitializeComponent();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            // Установить выбранный элемент по умолчанию (без вызова SelectionChanged)
+            MenuListBox.SelectedIndex = 0;
+            // Явно показать панель для выбранного элемента
+            SetActivePanel("Complaints");
+
             LoadComplaints();
             LoadDefrostRequests();
             LoadAuthorRequests();
             LoadFrozenData();
             LoadUsers();
         }
+        private void SetActivePanel(string panelTag)
+        {
+            Panel_Complaints.Visibility = panelTag == "Complaints" ? Visibility.Visible : Visibility.Collapsed;
+            Panel_DefrostRequests.Visibility = panelTag == "Defrost" ? Visibility.Visible : Visibility.Collapsed;
+            Panel_AuthorRequests.Visibility = panelTag == "AuthorRole" ? Visibility.Visible : Visibility.Collapsed;
+            Panel_Frozen.Visibility = panelTag == "Frozen" ? Visibility.Visible : Visibility.Collapsed;
+            Panel_Users.Visibility = panelTag == "Users" ? Visibility.Visible : Visibility.Collapsed;
+        }
 
         private void MenuListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Panel_Complaints.Visibility = Visibility.Collapsed;
-            Panel_DefrostRequests.Visibility = Visibility.Collapsed;
-            Panel_AuthorRequests.Visibility = Visibility.Collapsed;
-            Panel_Frozen.Visibility = Visibility.Collapsed;
-            Panel_Users.Visibility = Visibility.Collapsed;
+            if (!IsLoaded) return;
 
             if (MenuListBox.SelectedItem is ListBoxItem item)
             {
-                switch (item.Tag.ToString())
+                string tag = item.Tag.ToString();
+                SetActivePanel(tag);
+
+                // Опционально: обновить данные только для выбранной панели
+                switch (tag)
                 {
-                    case "Complaints":
-                        Panel_Complaints.Visibility = Visibility.Visible;
-                        LoadComplaints();
-                        break;
-                    case "Defrost":
-                        Panel_DefrostRequests.Visibility = Visibility.Visible;
-                        LoadDefrostRequests();
-                        break;
-                    case "AuthorRole":
-                        Panel_AuthorRequests.Visibility = Visibility.Visible;
-                        LoadAuthorRequests();
-                        break;
-                    case "Frozen":
-                        Panel_Frozen.Visibility = Visibility.Visible;
-                        LoadFrozenData();
-                        break;
-                    case "Users":
-                        Panel_Users.Visibility = Visibility.Visible;
-                        LoadUsers();
-                        break;
+                    case "Complaints": LoadComplaints(); break;
+                    case "Defrost": LoadDefrostRequests(); break;
+                    case "AuthorRole": LoadAuthorRequests(); break;
+                    case "Frozen": LoadFrozenData(); break;
+                    case "Users": LoadUsers(); break;
                 }
             }
         }
@@ -126,10 +124,10 @@ namespace ShutAndKing.Pages
 
         private void LoadFrozenData()
         {
-            var frozenBooks = Core.ContextKIP.Books.Where(b => b.Status == "Frozen").ToList();
+            var frozenBooks = Core.ContextKIP.Books.Where(b => b.Status == "Заморожена").ToList();
             FrozenBooksGrid.ItemsSource = frozenBooks;
 
-            var frozenUsers = Core.ContextKIP.Users.Where(u => u.Status == "Frozen").ToList();
+            var frozenUsers = Core.ContextKIP.Users.Where(u => u.Status == "Заморожена").ToList();
             FrozenUsersGrid.ItemsSource = frozenUsers;
 
             // Если добавили поле IsFrozen в UserReviews – раскомментировать
@@ -170,7 +168,7 @@ namespace ShutAndKing.Pages
                 if (complaint.BookID != null)
                 {
                     var book = Core.ContextKIP.Books.Find(complaint.BookID);
-                    if (book != null) book.Status = "Frozen";
+                    if (book != null) book.Status = "Заморожена";
                 }
                 else if (complaint.ReviewID != null)
                 {
@@ -212,14 +210,14 @@ namespace ShutAndKing.Pages
             if (request.BookID != null)
             {
                 var book = Core.ContextKIP.Books.Find(request.BookID);
-                if (book != null && book.Status == "Frozen")
-                    book.Status = "Active";
+                if (book != null && book.Status == "Заморожена")
+                    book.Status = "Активна";
             }
             else if (request.AccountID != null)
             {
                 var user = Core.ContextKIP.Users.Find(request.AccountID);
-                if (user != null && user.Status == "Frozen")
-                    user.Status = "Active";
+                if (user != null && user.Status == "Заморожена")
+                    user.Status = "Активна";
             }
             Core.ContextKIP.DefrostingApplication.Remove(request);
             Core.ContextKIP.SaveChanges();
@@ -261,10 +259,10 @@ namespace ShutAndKing.Pages
             var request = Core.ContextKIP.AuthorApplication.Include(a => a.Users).FirstOrDefault(a => a.ID == requestId);
             if (request == null) return;
 
-            var authorRole = Core.ContextKIP.Roles.FirstOrDefault(r => r.Title == "Author");
+            var authorRole = Core.ContextKIP.Roles.FirstOrDefault(r => r.Title == "Автор");
             if (authorRole == null)
             {
-                MessageBox.Show("Роль 'Author' не найдена в базе данных.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Роль 'Автор' не найдена в базе данных.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 

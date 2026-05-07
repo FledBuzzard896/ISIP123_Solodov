@@ -41,7 +41,11 @@ namespace ShutAndKing.Pages
         }
         private void AdministrationBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            if (User.RoleID == 3)
+            {
+                MainFrame.NavigationService.Navigate(new AdministrationPage());
+            }
+            else MessageBox.Show("Тебе тут делать нечего.", "Отказано", MessageBoxButton.OK, MessageBoxImage.Stop);
         }
         private void AuthorPageBtn_Click(object sender, RoutedEventArgs e)
         {
