@@ -104,6 +104,7 @@
           <Property Name="BookID" Type="int" Nullable="false" />
           <Property Name="Comment" Type="nvarchar(max)" />
           <Property Name="Rating" Type="int" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -505,6 +506,7 @@
           <NavigationProperty Name="Books" Relationship="Self.FK__UserRevie__BookI__5BE2A6F2" FromRole="UserReviews" ToRole="Books" />
           <NavigationProperty Name="Complaints" Relationship="Self.FK__Complaint__Revie__6754599E" FromRole="UserReviews" ToRole="Complaints" />
           <NavigationProperty Name="Users" Relationship="Self.FK__UserRevie__UserI__5AEE82B9" FromRole="UserReviews" ToRole="Users" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -871,6 +873,7 @@
           <EntitySetMapping Name="UserReviews">
             <EntityTypeMapping TypeName="ReadWriteAndTakeYourTimeModel_HOME.UserReviews">
               <MappingFragment StoreEntitySet="UserReviews">
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="BookID" ColumnName="BookID" />

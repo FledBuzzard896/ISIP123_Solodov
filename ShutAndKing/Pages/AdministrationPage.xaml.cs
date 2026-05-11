@@ -31,9 +31,7 @@ namespace ShutAndKing.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            // Установить выбранный элемент по умолчанию (без вызова SelectionChanged)
             MenuListBox.SelectedIndex = 0;
-            // Явно показать панель для выбранного элемента
             SetActivePanel("Complaints");
 
             LoadComplaints();
@@ -75,43 +73,47 @@ namespace ShutAndKing.Pages
         #region Загрузка данных
         private void LoadComplaints()
         {
-            var list = Core.ContextKIP.Complaints
-                .Include(c => c.Users)       // подгружаем пользователя
-                .Include(c => c.Books)       // подгружаем книгу
-                .Include(c => c.UserReviews) // подгружаем отзыв
-                .Select(c => new             // ← обязательно new { }
+            var list = Core.ContextHOME.Complaints
+                .Include(c => c.Users)
+                .Include(c => c.Books)
+                .Include(c => c.UserReviews)
+                .Include(c => c.Users)  
+                .ToList()
+                .Select(c => new
                 {
                     c.ID,
-                    UserName = c.Users.Name,           // имя пользователя из связанной таблицы
-                    BookTitle = c.Books.Title,         // название книги (если жалоба на книгу)
-                    c.Reason,
-                    // Если нужно картинку – возьмите из Books или Users
-                    CoverPath = c.Books.PathToCover
+                    UserName = c.Users.Name ?? "Unknown",
+                    Target = c.BookID != null ? $"Книга: {c.Books.Title}" :
+                             c.ReviewID != null ? $"Отзыв #{c.ReviewID} от {c.UserReviews.Users.Name}" :
+                             c.AuthorID != null ? $"Автор: {c.Users.Name}" :
+                             "Неизвестно",
+                    c.Reason
                 })
                 .ToList();
-            ComplaintsGrid.ItemsSource = list;
+            Panel_Complaints.ItemsSource = list;
         }
 
         private void LoadDefrostRequests()
         {
-            var list = Core.ContextKIP.DefrostingApplication
-                .Include(d => d.Users)
+            var list = Core.ContextHOME.DefrostingApplication
+                .Include(d => d.Users)   // возможно, для AccountID
+                .Include(d => d.Users1)  // для UserID
                 .Include(d => d.Books)
                 .ToList()
                 .Select(d => new
                 {
                     d.ID,
-                    UserName = d.Users?.Name ?? "Unknown",
+                    UserName = d.Users1.Name ?? d.Users.Name ?? "Unknown",
                     TargetType = d.BookID != null ? "Книга" : "Пользователь",
                     TargetID = d.BookID ?? d.AccountID ?? 0,
                     d.Reason
                 }).ToList();
-            DefrostRequestsGrid.ItemsSource = list;
+            Panel_DefrostRequests.ItemsSource = list;
         }
 
         private void LoadAuthorRequests()
         {
-            var list = Core.ContextKIP.AuthorApplication
+            var list = Core.ContextHOME.AuthorApplication
                 .Include(a => a.Users)
                 .Select(a => new
                 {
@@ -119,55 +121,41 @@ namespace ShutAndKing.Pages
                     UserName = a.Users.Name,
                     a.Reason
                 }).ToList();
-            AuthorRequestsGrid.ItemsSource = list;
+            Panel_AuthorRequests.ItemsSource = list;
         }
 
         private void LoadFrozenData()
         {
-            var frozenBooks = Core.ContextKIP.Books.Where(b => b.Status == "Заморожена").ToList();
+            var frozenBooks = Core.ContextHOME.Books.Where(b => b.Status == "Заморожена").ToList();
             FrozenBooksGrid.ItemsSource = frozenBooks;
 
-            var frozenUsers = Core.ContextKIP.Users.Where(u => u.Status == "Заморожена").ToList();
+            var frozenUsers = Core.ContextHOME.Users.Where(u => u.Status == "Заморожен").ToList();
             FrozenUsersGrid.ItemsSource = frozenUsers;
-
-            // Если добавили поле IsFrozen в UserReviews – раскомментировать
-            // var frozenReviews = Core.ContextHOME.UserReviews.Where(r => r.IsFrozen == true).ToList();
-            // FrozenReviewsGrid.ItemsSource = frozenReviews;
         }
 
         private void LoadUsers()
         {
-            var users = Core.ContextKIP.Users
-                .Include(u => u.Roles)
-                .Select(u => new
-                {
-                    u.ID,
-                    u.Login,
-                    u.Name,
-                    u.Email,
-                    RoleName = u.Roles.Title,
-                    u.Status
-                }).ToList();
-            UsersGrid.ItemsSource = users;
+            var users = Core.ContextHOME.Users.ToList();
+            Users_LB.ItemsSource = users;
         }
         #endregion
 
         #region Обработчики для жалоб
         private void AcceptComplaint_Click(object sender, RoutedEventArgs e)
         {
-            if (ComplaintsGrid.SelectedItem is null)
+            if (Panel_Complaints.SelectedItem is null)
             {
                 MessageBox.Show("Выберите жалобу");
                 return;
             }
-            int complaintId = (int)ComplaintsGrid.SelectedItem.GetType().GetProperty("ID").GetValue(ComplaintsGrid.SelectedItem);
+            int complaintId = (int)Panel_Complaints.SelectedItem.GetType().GetProperty("ID").GetValue(Panel_Complaints.SelectedItem);
 
-            var complaint = Core.ContextKIP.Complaints.Find(complaintId);
+            var complaint = Core.ContextHOME.Complaints.Find(complaintId);
             if (complaint != null)
             {
                 if (complaint.BookID != null)
                 {
-                    var book = Core.ContextKIP.Books.Find(complaint.BookID);
+                    var book = Core.ContextHOME.Books.Find(complaint.BookID);
                     if (book != null) book.Status = "Заморожена";
                 }
                 else if (complaint.ReviewID != null)
@@ -176,20 +164,20 @@ namespace ShutAndKing.Pages
                     // var review = Core.ContextHOME.UserReviews.Find(complaint.ReviewID);
                     // if (review != null) review.IsFrozen = true;
                 }
-                Core.ContextKIP.Complaints.Remove(complaint);
-                Core.ContextKIP.SaveChanges();
+                Core.ContextHOME.Complaints.Remove(complaint);
+                Core.ContextHOME.SaveChanges();
             }
             LoadComplaints();
         }
 
         private void RejectComplaint_Click(object sender, RoutedEventArgs e)
         {
-            if (ComplaintsGrid.SelectedItem is null) return;
-            int complaintId = (int)ComplaintsGrid.SelectedItem.GetType().GetProperty("ID").GetValue(ComplaintsGrid.SelectedItem);
+            if (Panel_Complaints.SelectedItem is null) return;
+            int complaintId = (int)Panel_Complaints.SelectedItem.GetType().GetProperty("ID").GetValue(Panel_Complaints.SelectedItem);
 
-            var complaint = Core.ContextKIP.Complaints.Find(complaintId);
-            if (complaint != null) Core.ContextKIP.Complaints.Remove(complaint);
-            Core.ContextKIP.SaveChanges();
+            var complaint = Core.ContextHOME.Complaints.Find(complaintId);
+            if (complaint != null) Core.ContextHOME.Complaints.Remove(complaint);
+            Core.ContextHOME.SaveChanges();
             LoadComplaints();
         }
         #endregion
@@ -197,30 +185,30 @@ namespace ShutAndKing.Pages
         #region Заявки на разморозку
         private void AcceptDefrost_Click(object sender, RoutedEventArgs e)
         {
-            if (DefrostRequestsGrid.SelectedItem is null)
+            if (Panel_DefrostRequests.SelectedItem is null)
             {
                 MessageBox.Show("Выберите заявку на разморозку.", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            int requestId = (int)DefrostRequestsGrid.SelectedItem.GetType().GetProperty("ID").GetValue(DefrostRequestsGrid.SelectedItem);
-            var request = Core.ContextKIP.DefrostingApplication.Find(requestId);
+            int requestId = (int)Panel_DefrostRequests.SelectedItem.GetType().GetProperty("ID").GetValue(Panel_DefrostRequests.SelectedItem);
+            var request = Core.ContextHOME.DefrostingApplication.Find(requestId);
             if (request == null) return;
 
             if (request.BookID != null)
             {
-                var book = Core.ContextKIP.Books.Find(request.BookID);
+                var book = Core.ContextHOME.Books.Find(request.BookID);
                 if (book != null && book.Status == "Заморожена")
                     book.Status = "Активна";
             }
             else if (request.AccountID != null)
             {
-                var user = Core.ContextKIP.Users.Find(request.AccountID);
+                var user = Core.ContextHOME.Users.Find(request.AccountID);
                 if (user != null && user.Status == "Заморожена")
                     user.Status = "Активна";
             }
-            Core.ContextKIP.DefrostingApplication.Remove(request);
-            Core.ContextKIP.SaveChanges();
+            Core.ContextHOME.DefrostingApplication.Remove(request);
+            Core.ContextHOME.SaveChanges();
 
             LoadDefrostRequests();
             MessageBox.Show("Заявка принята, объект разморожен.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -228,18 +216,18 @@ namespace ShutAndKing.Pages
 
         private void RejectDefrost_Click(object sender, RoutedEventArgs e)
         {
-            if (DefrostRequestsGrid.SelectedItem is null)
+            if (Panel_DefrostRequests.SelectedItem is null)
             {
                 MessageBox.Show("Выберите заявку на разморозку.", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            int requestId = (int)DefrostRequestsGrid.SelectedItem.GetType().GetProperty("ID").GetValue(DefrostRequestsGrid.SelectedItem);
-            var request = Core.ContextKIP.DefrostingApplication.Find(requestId);
+            int requestId = (int)Panel_DefrostRequests.SelectedItem.GetType().GetProperty("ID").GetValue(Panel_DefrostRequests.SelectedItem);
+            var request = Core.ContextHOME.DefrostingApplication.Find(requestId);
             if (request != null)
             {
-                Core.ContextKIP.DefrostingApplication.Remove(request);
-                Core.ContextKIP.SaveChanges();
+                Core.ContextHOME.DefrostingApplication.Remove(request);
+                Core.ContextHOME.SaveChanges();
             }
             LoadDefrostRequests();
             MessageBox.Show("Заявка отклонена.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -249,17 +237,17 @@ namespace ShutAndKing.Pages
         #region Заявки на авторство
         private void AcceptAuthorRole_Click(object sender, RoutedEventArgs e)
         {
-            if (AuthorRequestsGrid.SelectedItem is null)
+            if (Panel_AuthorRequests.SelectedItem is null)
             {
                 MessageBox.Show("Выберите заявку на роль автора.", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            int requestId = (int)AuthorRequestsGrid.SelectedItem.GetType().GetProperty("ID").GetValue(AuthorRequestsGrid.SelectedItem);
-            var request = Core.ContextKIP.AuthorApplication.Include(a => a.Users).FirstOrDefault(a => a.ID == requestId);
+            int requestId = (int)Panel_AuthorRequests.SelectedItem.GetType().GetProperty("ID").GetValue(Panel_AuthorRequests.SelectedItem);
+            var request = Core.ContextHOME.AuthorApplication.Include(a => a.Users).FirstOrDefault(a => a.ID == requestId);
             if (request == null) return;
 
-            var authorRole = Core.ContextKIP.Roles.FirstOrDefault(r => r.Title == "Автор");
+            var authorRole = Core.ContextHOME.Roles.FirstOrDefault(r => r.Title == "Автор");
             if (authorRole == null)
             {
                 MessageBox.Show("Роль 'Автор' не найдена в базе данных.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -269,8 +257,8 @@ namespace ShutAndKing.Pages
             if (request.Users != null)
                 request.Users.RoleID = authorRole.ID;
 
-            Core.ContextKIP.AuthorApplication.Remove(request);
-            Core.ContextKIP.SaveChanges();
+            Core.ContextHOME.AuthorApplication.Remove(request);
+            Core.ContextHOME.SaveChanges();
 
             LoadAuthorRequests();
             LoadUsers();
@@ -279,18 +267,18 @@ namespace ShutAndKing.Pages
 
         private void RejectAuthorRole_Click(object sender, RoutedEventArgs e)
         {
-            if (AuthorRequestsGrid.SelectedItem is null)
+            if (Panel_AuthorRequests.SelectedItem is null)
             {
                 MessageBox.Show("Выберите заявку на роль автора.", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            int requestId = (int)AuthorRequestsGrid.SelectedItem.GetType().GetProperty("ID").GetValue(AuthorRequestsGrid.SelectedItem);
-            var request = Core.ContextKIP.AuthorApplication.Find(requestId);
+            int requestId = (int)Panel_AuthorRequests.SelectedItem.GetType().GetProperty("ID").GetValue(Panel_AuthorRequests.SelectedItem);
+            var request = Core.ContextHOME.AuthorApplication.Find(requestId);
             if (request != null)
             {
-                Core.ContextKIP.AuthorApplication.Remove(request);
-                Core.ContextKIP.SaveChanges();
+                Core.ContextHOME.AuthorApplication.Remove(request);
+                Core.ContextHOME.SaveChanges();
             }
             LoadAuthorRequests();
             MessageBox.Show("Заявка отклонена.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -320,12 +308,6 @@ namespace ShutAndKing.Pages
             ChangeRole_Dialog dialog = new ChangeRole_Dialog(userId);
             if (dialog.ShowDialog() == true)
                 LoadUsers(); // обновить после изменения роли
-        }
-
-        private void AddUser_Click(object sender, RoutedEventArgs e)
-        {
-            // TODO: реализовать диалог добавления пользователя
-            MessageBox.Show("Открыть диалог добавления пользователя", "TODO", MessageBoxButton.OK);
         }
         #endregion
     }

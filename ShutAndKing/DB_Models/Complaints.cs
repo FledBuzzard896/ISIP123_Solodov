@@ -22,7 +22,7 @@ namespace ShutAndKing.DB_Models
         public Nullable<int> AuthorID { get; set; }
     
         public virtual Books Books { get; set; }
-        public virtual Users Users { get; set; }
         public virtual UserReviews UserReviews { get; set; }
+        public virtual Users Users { get; set; }
     }
 }

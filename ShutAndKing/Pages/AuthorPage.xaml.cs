@@ -58,8 +58,8 @@ namespace ShutAndKing.Pages
 
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
-            var publishedBooks = Core.ContextKIP.Books.Where(x => x.AuthorID == User.ID && x.Status != "Заморожен").ToList();
-            var frozenBooks = Core.ContextKIP.Books.Where(x => x.AuthorID == User.ID && x.Status == "Заморожен").ToList();
+            var publishedBooks = Core.ContextHOME.Books.Where(x => x.AuthorID == User.ID && x.Status != "Заморожен").ToList();
+            var frozenBooks = Core.ContextHOME.Books.Where(x => x.AuthorID == User.ID && x.Status == "Заморожен").ToList();
 
             PublishedBooks_LB.ItemsSource = publishedBooks;
             FrozenBooks_LB.ItemsSource = frozenBooks;
