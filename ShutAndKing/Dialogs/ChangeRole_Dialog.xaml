@@ -13,7 +13,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Текущая роль пользователя: РОЛЬ" Margin="10" Grid.Row="0"/>
+        <TextBlock x:Name="top" Text="Текущая роль пользователя: РОЛЬ" Margin="10" Grid.Row="0"/>
         <StackPanel Margin="10" Grid.Row="1">
             <TextBlock Text="Выберите другую роль:" Margin="0,0,0,5"/>
             <ComboBox x:Name="RoleCombo" DisplayMemberPath="Title" SelectedValuePath="ID"/>

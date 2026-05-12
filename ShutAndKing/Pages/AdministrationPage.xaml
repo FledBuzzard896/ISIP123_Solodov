@@ -110,8 +110,8 @@
                                     </ScrollViewer>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Grid.Column="4" HorizontalAlignment="Right">
-                                    <Button Content="✓" Background="DarkGreen" Width="20" Height="20" Margin="5" Click="AcceptComplaint_Click"/>
-                                    <Button Content="×" Background="DarkRed" Width="20" Height="20" Margin="5" Click="RejectComplaint_Click"/>
+                                    <Button Content="✓" Background="DarkGreen" Width="20" Height="20" Margin="5" Click="AcceptDefrost_Click"/>
+                                    <Button Content="×" Background="DarkRed" Width="20" Height="20" Margin="5" Click="RejectDefrost_Click"/>
                                 </StackPanel>
                             </Grid>
                         </DataTemplate>
@@ -146,8 +146,8 @@
                                     </ScrollViewer>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right">
-                                    <Button Content="✓" Background="DarkGreen" Width="20" Height="20" Margin="5" Click="AcceptComplaint_Click"/>
-                                    <Button Content="×" Background="DarkRed" Width="20" Height="20" Margin="5" Click="RejectComplaint_Click"/>
+                                    <Button Content="✓" Background="DarkGreen" Width="20" Height="20" Margin="5" Click="AcceptAuthorRole_Click"/>
+                                    <Button Content="×" Background="DarkRed" Width="20" Height="20" Margin="5" Click="RejectAuthorRole_Click"/>
                                 </StackPanel>
                             </Grid>
                         </DataTemplate>
@@ -303,7 +303,7 @@
                                     </StackPanel>
                                     <StackPanel Orientation="Vertical" Grid.Column="5">
                                         <TextBlock Text="Статус:" FontSize="12" Margin="5"/>
-                                        <TextBlock Text="{Binding Roles.Title}" FontSize="12" Margin="5,0,5,5"/>
+                                        <TextBlock Text="{Binding Status}" FontSize="12" Margin="5,0,5,5"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Grid.Column="6">
                                         <Button Content="Сменить пароль" Height="20" Width="100" Margin="5" Click="ChangePassword_Click" Tag="{Binding}"/>

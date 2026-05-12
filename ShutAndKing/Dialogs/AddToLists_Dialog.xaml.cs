@@ -40,7 +40,7 @@ namespace ShutAndKing
             if (selectedCategory != null)
             {
                 // Проверяем, не добавлена ли уже книга в этот раздел (защита от дубликатов)
-                bool alreadyExists = Core.ContextKIP.UserReadingList
+                bool alreadyExists = Core.ContextHOME.UserReadingList
                     .Any(ur => ur.UserID == User.ID && ur.BookID == _thisBook.ID && ur.SectionID == selectedCategory.SectionID);
 
                 if (alreadyExists)
@@ -49,7 +49,7 @@ namespace ShutAndKing
                     return;
                 }
 
-                var flag = Core.ContextKIP.UserReadingList.FirstOrDefault(x => x.UserID == User.ID && x.BookID == _thisBook.ID);
+                var flag = Core.ContextHOME.UserReadingList.FirstOrDefault(x => x.UserID == User.ID && x.BookID == _thisBook.ID);
                 if (flag != null)
                 {
                     // Изменяем
@@ -64,9 +64,9 @@ namespace ShutAndKing
                         BookID = _thisBook.ID,
                         SectionID = selectedCategory.SectionID,
                     };
-                    Core.ContextKIP.UserReadingList.Add(newLine);
+                    Core.ContextHOME.UserReadingList.Add(newLine);
                 }
-                Core.ContextKIP.SaveChanges();
+                Core.ContextHOME.SaveChanges();
                 this.DialogResult = true;
             }
             else
@@ -83,13 +83,13 @@ namespace ShutAndKing
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
             // Получаем ID разделов, в которых книга уже находится
-            var existingSectionIDs = Core.ContextKIP.UserReadingList
+            var existingSectionIDs = Core.ContextHOME.UserReadingList
                 .Where(x => x.UserID == User.ID && x.BookID == _thisBook.ID)
                 .Select(x => x.SectionID)
                 .ToList();
 
             // Создаём список моделей для отображения с проставленными флагами IsSelected
-            var categories = Core.ContextKIP.ReadingListSection.ToList()
+            var categories = Core.ContextHOME.ReadingListSection.ToList()
                 .Select(x => new ReadingListViewModel
                 {
                     Title = x.Title,

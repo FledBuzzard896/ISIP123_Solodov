@@ -44,7 +44,7 @@
             <TextBlock x:Name="isFrozen" Text="Не заморожен" ToolTip="Индикатор заморозки аккаунта" HorizontalAlignment="Center" FontSize="14" Margin="5"/>
             <Button x:Name="UnFreezeBtn"
 			    Content="Оспорить заморозку" FontSize="14"
-			    Width="100" Height="25"
+			    Width="125" Height="25"
 			    Margin="5"
 			    Click="UnFreezeBtn_Click" 
 			    Visibility="Collapsed"/>
@@ -59,13 +59,12 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Margin="5">
-                        <TextBlock Text="{Binding User.Name}" FontSize="14"/>
-                        <TextBlock Text="{Binding Books.Title, StringFormat={}Книга: {0}}" FontSize="14" Margin="5,0,0,0"/>
-                        <ScrollViewer Margin="5,0,5,0" MaxHeight="100">
+                        <TextBlock Text="{Binding Users.Name}" FontSize="14" />
+                        <TextBlock Text="{Binding Books.Title, StringFormat={}Книга: {0}}" FontSize="14" Margin="10,0,0,0"/>
+                        <ScrollViewer Margin="10,0,10,0" MaxHeight="100">
                             <TextBlock Text="{Binding Comment}" FontSize="12" TextWrapping="Wrap"/>
                         </ScrollViewer>
-                        <TextBlock Text="{Binding Rating, StringFormat={}Оценка: {0}}" FontSize="14" Margin="0,0,5,0"/>
-                        <TextBlock Text="{Binding DateOfReview, StringFormat={}Дата отзыва: {0}}"/>
+                        <TextBlock Text="{Binding Rating, StringFormat={}Оценка: {0}}" FontSize="14" Margin="0,0,10,0"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

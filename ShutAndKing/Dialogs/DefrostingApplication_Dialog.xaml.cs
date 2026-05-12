@@ -48,16 +48,31 @@ namespace ShutAndKing.Dialogs
                 return;
             }
 
-            var newDefrostApplication = new DefrostingApplication()
+            var newDefrostApplication = new DefrostingApplication();
+            if (accID == 0) 
             {
-                UserID = User.ID,
-                AccountID = accID,
-                BookID = bookID,
-                Reason = reasonTBox.Text.Trim()
-            };
+                newDefrostApplication = new DefrostingApplication()
+                {
+                    UserID = User.ID,
+                    AccountID = null,
+                    BookID = bookID,
+                    Reason = reasonTBox.Text.Trim()
+                };
+            }
+            else 
+            {
+                newDefrostApplication = new DefrostingApplication()
+                {
+                    UserID = User.ID,
+                    AccountID = accID,
+                    BookID = null,
+                    Reason = reasonTBox.Text.Trim()
+                };
+            }
+
     
-            Core.ContextKIP.DefrostingApplication.Add(newDefrostApplication);
-            Core.ContextKIP.SaveChanges();
+            Core.ContextHOME.DefrostingApplication.Add(newDefrostApplication);
+            Core.ContextHOME.SaveChanges();
 
             MessageBox.Show("Заявление успешно отправлено!", "Выполнено", MessageBoxButton.OK, MessageBoxImage.Information);
             this.DialogResult = true;
@@ -68,10 +83,12 @@ namespace ShutAndKing.Dialogs
             if (accID > bookID)
             {
                 applicationTB.Text = "Заявление на разморозку Аккаунта";
+                bookID = 0;
             }
             else
             {
                 applicationTB.Text = "Заявление на разморозку Книги";
+                accID = 0;
             }
 
         }

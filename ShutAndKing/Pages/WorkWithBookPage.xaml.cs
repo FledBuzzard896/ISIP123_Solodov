@@ -46,16 +46,23 @@ namespace ShutAndKing.Pages
                     Status = "Не заморожена"
                 };
     
-
-            Core.ContextKIP.Books.Add(newBook);
+                Core.ContextHOME.Books.Add(newBook);
+                MessageBox.Show("Книга добавлена!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
+                if (string.IsNullOrWhiteSpace(TitleTBox.Text) == true && string.IsNullOrWhiteSpace(DescriptionTBox.Text) == true && string.IsNullOrWhiteSpace(TextTBox.Text) == true)
+                {
+                    MessageBox.Show("Все поля должны быть заполнены!", "Отказ", MessageBoxButton.OK, MessageBoxImage.Stop);
+                    return;
+                }
+
                 book.Title = TitleTBox.Text;
                 book.Description = DescriptionTBox.Text;
                 book.Text = TextTBox.Text;
+                MessageBox.Show("Книга изменена!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            Core.ContextKIP.SaveChanges();
+            Core.ContextHOME.SaveChanges();
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
@@ -69,8 +76,8 @@ namespace ShutAndKing.Pages
                 var ans = MessageBox.Show($"Вы точно хотите удалить книгу: {book.Title}", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (ans == MessageBoxResult.Yes)
                 {
-                    Core.ContextKIP.Books.Remove(book);
-                    Core.ContextKIP.SaveChanges();
+                    Core.ContextHOME.Books.Remove(book);
+                    Core.ContextHOME.SaveChanges();
                 }
                 return;
             }
@@ -84,6 +91,11 @@ namespace ShutAndKing.Pages
                 DescriptionTBox.Text = book.Description;
                 TextTBox.Text = book.Text;
             }
+        }
+
+        private void BackBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
         }
     }
 }

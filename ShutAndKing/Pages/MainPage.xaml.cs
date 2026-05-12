@@ -25,6 +25,7 @@ namespace ShutAndKing.Pages
         public MainPage()
         {
             InitializeComponent();
+            Loaded += PageLoaded;
         }
 
         private void AccountBtn_Click(object sender, RoutedEventArgs e)
@@ -33,14 +34,29 @@ namespace ShutAndKing.Pages
         }
         private void BooksCatalogBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (User.Status == "Заморожен") 
+            {
+                MessageBox.Show("Для того, чтобы порльзоваться сервисом, ваш аккаунт должен быть Активен", "Отказано в доступе", MessageBoxButton.OK, MessageBoxImage.Stop);
+                return;
+            }
             MainFrame.NavigationService.Navigate(new BooksCatalog());
         }
         private void BooksListsBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (User.Status == "Заморожен")
+            {
+                MessageBox.Show("Для того, чтобы порльзоваться сервисом, ваш аккаунт должен быть Активен", "Отказано в доступе", MessageBoxButton.OK, MessageBoxImage.Stop);
+                return;
+            }
             MainFrame.NavigationService.Navigate(new BooksLists());
         }
         private void AdministrationBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (User.Status == "Заморожен")
+            {
+                MessageBox.Show("Для того, чтобы порльзоваться сервисом, ваш аккаунт должен быть Активен", "Отказано в доступе", MessageBoxButton.OK, MessageBoxImage.Stop);
+                return;
+            }
             if (User.RoleID == 3)
             {
                 MainFrame.NavigationService.Navigate(new AdministrationPage());
@@ -49,6 +65,11 @@ namespace ShutAndKing.Pages
         }
         private void AuthorPageBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (User.Status == "Заморожен")
+            {
+                MessageBox.Show("Для того, чтобы порльзоваться сервисом, ваш аккаунт должен быть Активен", "Отказано в доступе", MessageBoxButton.OK, MessageBoxImage.Stop);
+                return;
+            }
             if (User.RoleID == 2)
             {
                 MainFrame.NavigationService.Navigate(new AuthorPage());
@@ -70,6 +91,15 @@ namespace ShutAndKing.Pages
             if (answer == MessageBoxResult.Yes)
             {
                 Application.Current.Shutdown();
+            }
+        }
+
+        private void PageLoaded(object sender, RoutedEventArgs e) 
+        {
+            if (User.Status == "Заморожен") 
+            {
+                GreenFlagBtn.Visibility = Visibility.Collapsed;
+                RedFlagBtn.Visibility = Visibility.Visible;
             }
         }
     }

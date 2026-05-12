@@ -45,7 +45,7 @@ namespace ShutAndKing.Dialogs
             if (selectedRole != null)
             {
                 thisUser.RoleID = selectedRole.ID;
-                Core.ContextKIP.SaveChanges();
+                Core.ContextHOME.SaveChanges();
                 DialogResult = true;
             }
             else 
@@ -57,14 +57,16 @@ namespace ShutAndKing.Dialogs
 
         private void PageLoaded(object sender, RoutedEventArgs e) 
         {
-            thisUser = Core.ContextKIP.Users.FirstOrDefault(x => x.ID == thisUserID);
+            thisUser = Core.ContextHOME.Users.FirstOrDefault(x => x.ID == thisUserID);
             if (thisUser == null)
             {
                 MessageBox.Show("Пользователь не найден", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Stop);
                 this.DialogResult = false;
             }
 
-            var listOfRoles = Core.ContextKIP.Roles.Where(x => x.ID != thisUser.RoleID).ToList();
+            top.Text = $"Текущая роль {thisUser.Login}: {thisUser.Roles.Title}";
+
+            var listOfRoles = Core.ContextHOME.Roles.Where(x => x.ID != thisUser.RoleID).ToList();
             RoleCombo.ItemsSource = listOfRoles;
         }
     }

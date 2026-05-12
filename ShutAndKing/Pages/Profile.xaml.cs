@@ -30,6 +30,12 @@ namespace ShutAndKing.Pages
 
         private void AuthorApplicationBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (User.RoleID == 2)
+            {
+                MessageBox.Show("Вы уже автор :)", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
             AuthorApplication_Dialog dialog = new AuthorApplication_Dialog();
             if (dialog != null)
             {
@@ -51,12 +57,12 @@ namespace ShutAndKing.Pages
             nameTB.Text = User.Name;
             loginTB.Text = User.Login;
             mailTB.Text = User.Email;
-            roleTB.Text = Core.ContextKIP.Roles.FirstOrDefault(x => x.ID == User.ID).Title;
+            roleTB.Text = Core.ContextHOME.Roles.FirstOrDefault(x => x.ID == User.RoleID).Title;
 
             isFrozen.Text = User.Status;
             if (User.Status == "Заморожен") UnFreezeBtn.Visibility = Visibility.Visible;
 
-            var reviews = Core.ContextKIP.UserReviews.Where(x => x.UserID == User.ID).ToList();
+            var reviews = Core.ContextHOME.UserReviews.Where(x => x.UserID == User.ID).ToList();
             Reviews_LB.ItemsSource = reviews;
         }
 

@@ -55,7 +55,7 @@ namespace ShutAndKing.Pages
             }
 
             MessageBox.Show("Операция выполнена!", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
-            Core.ContextKIP.SaveChanges();
+            Core.ContextHOME.SaveChanges();
         }
 
         private void FreezeReview_Click(object sender, RoutedEventArgs e)
@@ -68,10 +68,16 @@ namespace ShutAndKing.Pages
             var button = sender as Button;
             if (button?.Tag is UserReviews review)
             {
-                Core.ContextKIP.UserReviews.Remove(review);
-                Core.ContextKIP.SaveChanges();
+                review.Status = "Заморожен";
+                Core.ContextHOME.SaveChanges();
 
-                MessageBox.Show("Отзыв заморожен (удалён навсегда, вы его больше никогда не увидите, прощай, земля тебе пуховик)", "Операция выполнена", MessageBoxButton.OK, MessageBoxImage.Information);
+                var usersReviews = Core.ContextHOME.UserReviews
+                .Include(x => x.Users)
+                .Where(x => x.BookID == book.ID && x.Status == "Активен")
+                .ToList();
+                Reviews_LB.ItemsSource = usersReviews;
+
+                MessageBox.Show("Отзыв заморожен", "Операция выполнена", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
@@ -96,8 +102,8 @@ namespace ShutAndKing.Pages
                 AuthorID = null,
                 Reason = book_complaint.Text.Trim()
             };
-            Core.ContextKIP.Complaints.Add(newComplaint);
-            Core.ContextKIP.SaveChanges();
+            Core.ContextHOME.Complaints.Add(newComplaint);
+            Core.ContextHOME.SaveChanges();
 
             MessageBox.Show("Жалоба на книгу отправлена администратору.", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
             book_complaint.Clear();
@@ -116,12 +122,12 @@ namespace ShutAndKing.Pages
                 UserID = User.ID,
                 BookID = null,
                 ReviewID = null,
-                AuthorID = Convert.ToInt32(Core.ContextKIP.Users.First(x => x.ID == book.AuthorID)),
+                AuthorID = Core.ContextHOME.Users.First(x => x.ID == book.AuthorID).ID,
                 Reason = author_complaint.Text.Trim()
             };
 
             MessageBox.Show("Жалоба на автора отправлена администратору.", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
-            book_complaint.Clear();
+            author_complaint.Clear();
         }
 
         private void ReviewComplaint_Click(object sender, RoutedEventArgs e)
@@ -155,14 +161,14 @@ namespace ShutAndKing.Pages
             //{
             //    book_cover.Source = new BitmapImage(new Uri(book.CoverPath, UriKind.RelativeOrAbsolute));
             //}
-
+                                         
             // Общая информация
             book_name.Text = book.Title;
             book_descript.Text = book.Description;
             book_text.Text = book.Text;
 
             // Рейтинг
-            var ratingList = Core.ContextKIP.UserReviews.Where(x => x.BookID == book.ID).ToList();
+            var ratingList = Core.ContextHOME.UserReviews.Where(x => x.BookID == book.ID).ToList();
             if (ratingList.Any())
             {
                 double avgRating = ratingList.Average(x => x.Rating);
@@ -171,13 +177,13 @@ namespace ShutAndKing.Pages
             else book_rating.Text = "Нет оценок";
 
             // Автор
-            var author = Core.ContextKIP.Users.First(x => x.ID == book.AuthorID);
+            var author = Core.ContextHOME.Users.First(x => x.ID == book.AuthorID);
             book_author.Text = author.Name;
 
             // Отзывы
-            var usersReviews = Core.ContextKIP.UserReviews
+            var usersReviews = Core.ContextHOME.UserReviews
                 .Include(x => x.Users) // загружаем автора отзыва
-                .Where(x => x.BookID == book.ID)
+                .Where(x => x.BookID == book.ID && x.Status == "Активен")
                 .ToList();
             Reviews_LB.ItemsSource = usersReviews;
 
