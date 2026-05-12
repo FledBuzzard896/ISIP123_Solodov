@@ -40,11 +40,11 @@ namespace ShutAndKing.Pages
             string searchQuery = searchTB.Text.Trim();
             if (string.IsNullOrEmpty(searchQuery))
             {
-                _allBooks = Core.ContextHOME.Books.ToList();
+                _allBooks = Core.ContextKIP.Books.ToList();
             }
             else
             {
-                _allBooks = Core.ContextHOME.Books
+                _allBooks = Core.ContextKIP.Books
                     .Where(p => p.Title.Contains(searchQuery) || p.Users.Name.Contains(searchQuery))
                     .ToList();
             }
@@ -129,12 +129,12 @@ namespace ShutAndKing.Pages
 
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
-            Books_LB.ItemsSource = Core.ContextHOME.Books.Include(b => b.Users).ToList();
-            _allBooks = Core.ContextHOME.Books.ToList();
+            Books_LB.ItemsSource = Core.ContextKIP.Books.Include(b => b.Users).ToList();
+            _allBooks = Core.ContextKIP.Books.ToList();
 
             // Жанры
             List<string> filterItems = new List<string> { "Все" };
-            foreach (var genre in Core.ContextHOME.Genres.ToList())
+            foreach (var genre in Core.ContextKIP.Genres.ToList())
                 filterItems.Add($"{genre.Title}");
             filter_box.ItemsSource = filterItems;
 

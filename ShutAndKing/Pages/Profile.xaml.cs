@@ -51,13 +51,18 @@ namespace ShutAndKing.Pages
             nameTB.Text = User.Name;
             loginTB.Text = User.Login;
             mailTB.Text = User.Email;
-            roleTB.Text = Core.ContextHOME.Roles.FirstOrDefault(x => x.ID == User.ID).Title;
+            roleTB.Text = Core.ContextKIP.Roles.FirstOrDefault(x => x.ID == User.ID).Title;
 
             isFrozen.Text = User.Status;
             if (User.Status == "Заморожен") UnFreezeBtn.Visibility = Visibility.Visible;
 
-            var reviews = Core.ContextHOME.UserReviews.Where(x => x.UserID == User.ID).ToList();
+            var reviews = Core.ContextKIP.UserReviews.Where(x => x.UserID == User.ID).ToList();
             Reviews_LB.ItemsSource = reviews;
+        }
+
+        private void BackBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
         }
     }
 }

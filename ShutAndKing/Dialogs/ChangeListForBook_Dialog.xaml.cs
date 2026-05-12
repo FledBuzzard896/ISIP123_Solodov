@@ -37,9 +37,9 @@ namespace ShutAndKing.Dialogs
             // Обработка нулевого значения
             if (toLst == null) { MessageBox.Show("Выберите список, куда хотите переместить книгу.", "Отказано", MessageBoxButton.OK, MessageBoxImage.Stop); return; }
 
-            var bookLine = Core.ContextHOME.UserReadingList.FirstOrDefault(x => x.UserID == User.ID && x.BookID == book.ID);
+            var bookLine = Core.ContextKIP.UserReadingList.FirstOrDefault(x => x.UserID == User.ID && x.BookID == book.ID);
             bookLine.SectionID = toLst.ID;
-            Core.ContextHOME.SaveChanges();
+            Core.ContextKIP.SaveChanges();
 
             MessageBox.Show("Книга перемещена в другой список", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
             this.DialogResult = true;
@@ -53,7 +53,7 @@ namespace ShutAndKing.Dialogs
 
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
-            var userReadingEntry = Core.ContextHOME.UserReadingList.Where(x => x.UserID == User.ID && x.BookID == book.ID).ToList();
+            var userReadingEntry = Core.ContextKIP.UserReadingList.Where(x => x.UserID == User.ID && x.BookID == book.ID).ToList();
             var elem = userReadingEntry[0];
 
             From_ComboBox.SelectedValuePath = "ReadingListSection.Title";
@@ -65,7 +65,7 @@ namespace ShutAndKing.Dialogs
                 From_ComboBox.DisplayMemberPath = "ReadingListSection.Title";
             }
 
-            var sections = Core.ContextHOME.ReadingListSection.Where(x => x.Title != elem.ReadingListSection.Title).ToList();
+            var sections = Core.ContextKIP.ReadingListSection.Where(x => x.Title != elem.ReadingListSection.Title).ToList();
             To_ComboBox.ItemsSource = sections;
             To_ComboBox.DisplayMemberPath = "Title";
         }

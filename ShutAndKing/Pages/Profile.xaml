@@ -18,7 +18,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-
+        <Button x:Name="BackBtn" Content="Назад" Width="55" HorizontalAlignment="Left" Margin="10" Click="BackBtn_Click"/>
         <TextBlock Margin="5"
 		    Text="Информация:" FontSize="20"
 		    HorizontalAlignment="Center"

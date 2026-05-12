@@ -51,15 +51,14 @@ namespace ShutAndKing.Pages
             if (button.Tag is Books book)
             {
                 DefrostingApplication_Dialog dialog = new DefrostingApplication_Dialog(-1, book.ID);
-    
                 dialog.ShowDialog();
             }
         }
 
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
-            var publishedBooks = Core.ContextHOME.Books.Where(x => x.AuthorID == User.ID && x.Status != "Заморожен").ToList();
-            var frozenBooks = Core.ContextHOME.Books.Where(x => x.AuthorID == User.ID && x.Status == "Заморожен").ToList();
+            var publishedBooks = Core.ContextKIP.Books.Where(x => x.AuthorID == User.ID && x.Status != "Заморожен").ToList();
+            var frozenBooks = Core.ContextKIP.Books.Where(x => x.AuthorID == User.ID && x.Status == "Заморожен").ToList();
 
             PublishedBooks_LB.ItemsSource = publishedBooks;
             FrozenBooks_LB.ItemsSource = frozenBooks;

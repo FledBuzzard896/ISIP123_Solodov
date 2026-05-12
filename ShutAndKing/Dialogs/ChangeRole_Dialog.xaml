@@ -5,8 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShutAndKing.Dialogs"
         mc:Ignorable="d"
-        Title="ChangeRole_Dialog" Height="450" Width="800">
+        Title="ChangeRole_Dialog" Height="400" Width="350">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Текущая роль пользователя: РОЛЬ" Margin="10" Grid.Row="0"/>
+        <StackPanel Margin="10" Grid.Row="1">
+            <TextBlock Text="Выберите другую роль:" Margin="0,0,0,5"/>
+            <ComboBox x:Name="RoleCombo" DisplayMemberPath="Title" SelectedValuePath="ID"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:Name="CloseBtn" Content="Закрыть" Width="75" Margin="0,0,5,10" Click="CloseBtn_Click"/>
+            <Button x:Name="EditBtn" Content="Сменить" Width="75" Margin="0,0,0,10" Click="EditBtn_Click"/>
+        </StackPanel>
     </Grid>
 </Window>

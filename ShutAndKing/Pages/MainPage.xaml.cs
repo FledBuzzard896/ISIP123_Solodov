@@ -29,7 +29,7 @@ namespace ShutAndKing.Pages
 
         private void AccountBtn_Click(object sender, RoutedEventArgs e)
         {
-            // Навигация на страницу профиля
+            NavigationService.Navigate(new Profile());
         }
         private void BooksCatalogBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -49,15 +49,19 @@ namespace ShutAndKing.Pages
         }
         private void AuthorPageBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            if (User.RoleID == 2)
+            {
+                MainFrame.NavigationService.Navigate(new AuthorPage());
+            }
+            else MessageBox.Show("Вы не являетесь автором, но вы можете им стать, если подадите заявку на авторство.", "Отказано", MessageBoxButton.OK, MessageBoxImage.Stop);
         }
         private void GreenFlagBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show("Ваш аккаунт не заморожен", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         private void RedFlagBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show("Ваш аккаунт заморожен, вы можете опровергнуть свою заморозку в специальной форме.", "Информация", MessageBoxButton.OK, MessageBoxImage.Stop);
         }
         
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
