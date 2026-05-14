@@ -54,7 +54,7 @@ namespace ShutAndKing.Dialogs
                 return;
             }
 
-            Users _User = Core.ContextHOME.Users.FirstOrDefault(u => u.ID == _UserID);
+            Users _User = Core.ContextKIP_Local.Users.FirstOrDefault(u => u.ID == _UserID);
             if (_User is null)
             {
                 MessageBox.Show("Пользователь не найден", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Stop);
@@ -63,7 +63,7 @@ namespace ShutAndKing.Dialogs
             else
             {
                 _User.Password = secondPassword.Text.Trim();
-                Core.ContextHOME.SaveChanges();
+                Core.ContextKIP_Local.SaveChanges();
 
                 this.DialogResult = true;
                 this.Close();

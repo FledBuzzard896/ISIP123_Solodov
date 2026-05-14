@@ -79,7 +79,7 @@ namespace ShutAndKing.Pages
         }
         private void RefreshCurrentCategory()
         {
-            _allBooks = Core.ContextHOME.UserReadingList
+            _allBooks = Core.ContextKIP_Local.UserReadingList
                 .Where(x => x.UserID == User.ID && x.ReadingListSection.Title == _currentSectionTitle)
                 .Select(x => x.Books)
                 .ToList();
@@ -185,14 +185,14 @@ namespace ShutAndKing.Pages
 
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
-            _allBooks = Core.ContextHOME.UserReadingList
+            _allBooks = Core.ContextKIP_Local.UserReadingList
                 .Where(x => x.UserID == User.ID && x.ReadingListSection.Title == "Читаю")
                 .Select(x => x.Books)   // сразу берём объекты книг
                 .ToList();
             BooksInLists_LB.ItemsSource = _allBooks;
 
             List<string> filterItems = new List<string> { "Все" };
-            foreach (var genre in Core.ContextHOME.Genres.ToList())
+            foreach (var genre in Core.ContextKIP_Local.Genres.ToList())
                 filterItems.Add($"{genre.Title}");
             filter_box.ItemsSource = filterItems;
 

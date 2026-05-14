@@ -53,8 +53,8 @@ namespace ShutAndKing.Dialogs
                 Reason = Complaint_TBox.Text.Trim(),
             };
     
-            Core.ContextHOME.Complaints.Add(newComplaint);
-            Core.ContextHOME.SaveChanges();
+            Core.ContextKIP_Local.Complaints.Add(newComplaint);
+            Core.ContextKIP_Local.SaveChanges();
 
             MessageBox.Show("Жалоба на отзыв отправлена администратору.", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
 

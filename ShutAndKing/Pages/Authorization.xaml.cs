@@ -61,7 +61,7 @@ namespace ShutAndKing.Pages
             {
                 if (LoginTBox.Text != "" && PasswordTBox.Password != "" && NameTBox.Text != "" && EmailTBox.Text != "")
                 {
-                    if (Core.ContextHOME.Users.FirstOrDefault(x => x.Login == LoginTBox.Text) is null)
+                    if (Core.ContextKIP_Local.Users.FirstOrDefault(x => x.Login == LoginTBox.Text) is null)
                     {
                         if (EmailTBox.Text.Contains("@") && EmailTBox.Text.Contains("."))
                         {
@@ -75,8 +75,8 @@ namespace ShutAndKing.Pages
                                 RoleID = 1,
                                 Status = "Активен",
                             };
-                            Core.ContextHOME.Users.Add(newUser);
-                            Core.ContextHOME.SaveChanges();
+                            Core.ContextKIP_Local.Users.Add(newUser);
+                            Core.ContextKIP_Local.SaveChanges();
 
                             SetUser(newUser.ID, newUser.Login, newUser.Password, newUser.Name, newUser.Email, (DateTime)newUser.RegisteredOn, newUser.RoleID, newUser.Status);
 
@@ -93,7 +93,7 @@ namespace ShutAndKing.Pages
             {
                 if (LoginTBox.Text != "" && PasswordTBox.Password != "")
                 {
-                    var Users = Core.ContextHOME.Users.ToList();
+                    var Users = Core.ContextKIP_Local.Users.ToList();
                     if (Users.Any(x => x.Login == LoginTBox.Text))
                     {
                         var User = Users.First(x => x.Login == LoginTBox.Text);

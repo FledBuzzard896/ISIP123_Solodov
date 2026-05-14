@@ -25,6 +25,7 @@ namespace ShutAndKing.DB_Models
         public int BookID { get; set; }
         public string Comment { get; set; }
         public int Rating { get; set; }
+        public Nullable<System.DateTime> DateOfReview { get; set; }
         public string Status { get; set; }
     
         public virtual Books Books { get; set; }

@@ -137,6 +137,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Dialogs\AddReview_Dialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\AddToLists_Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -169,6 +173,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Classes\GenresStatusModel.cs" />
+    <Compile Include="DB_Models\Model_KIP_LOCAL.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_KIP_LOCAL.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB_Models\Model_KIP_LOCAL.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_KIP_LOCAL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB_Models\Model_KIP_LOCAL.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_KIP_LOCAL.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\AddReview_Dialog.xaml.cs">
+      <DependentUpon>AddReview_Dialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\AddToLists_Dialog.xaml.cs">
       <DependentUpon>AddToLists_Dialog.xaml</DependentUpon>
     </Compile>
@@ -180,19 +203,19 @@
     <Compile Include="Classes\ReadingListViewModel.cs" />
     <Compile Include="Classes\User.cs" />
     <Compile Include="DB_Models\AuthorApplication.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP_LOCAL.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\Books.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP_LOCAL.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\Complaints.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP_LOCAL.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\DefrostingApplication.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP_LOCAL.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\Genres.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP_LOCAL.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\Model_HOME.Context.cs">
       <AutoGen>True</AutoGen>
@@ -225,22 +248,22 @@
       <DependentUpon>Model_KIP.edmx</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\ReadingListSection.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP_LOCAL.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\Roles.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP_LOCAL.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\sysdiagrams.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP_LOCAL.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\UserReadingList.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP_LOCAL.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\UserReviews.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP_LOCAL.tt</DependentUpon>
     </Compile>
     <Compile Include="DB_Models\Users.cs">
-      <DependentUpon>Model_HOME.tt</DependentUpon>
+      <DependentUpon>Model_KIP_LOCAL.tt</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\AuthorApplication_Dialog.xaml.cs">
       <DependentUpon>AuthorApplication_Dialog.xaml</DependentUpon>
@@ -360,6 +383,13 @@
     <None Include="DB_Models\Model_KIP.edmx.diagram">
       <DependentUpon>Model_KIP.edmx</DependentUpon>
     </None>
+    <EntityDeploy Include="DB_Models\Model_KIP_LOCAL.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_KIP_LOCAL.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DB_Models\Model_KIP_LOCAL.edmx.diagram">
+      <DependentUpon>Model_KIP_LOCAL.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -390,6 +420,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model_KIP.edmx</DependentUpon>
       <LastGenOutput>Model_KIP.cs</LastGenOutput>
+    </Content>
+    <Content Include="DB_Models\Model_KIP_LOCAL.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Model_KIP_LOCAL.Context.cs</LastGenOutput>
+      <DependentUpon>Model_KIP_LOCAL.edmx</DependentUpon>
+    </Content>
+    <Content Include="DB_Models\Model_KIP_LOCAL.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_KIP_LOCAL.edmx</DependentUpon>
+      <LastGenOutput>Model_KIP_LOCAL.cs</LastGenOutput>
     </Content>
     <Resource Include="Images\no_image.png" />
     <Resource Include="Images\admin.png" />

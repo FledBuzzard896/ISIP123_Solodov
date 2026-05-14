@@ -55,7 +55,7 @@ namespace ShutAndKing.Pages
             }
 
             MessageBox.Show("Операция выполнена!", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
-            Core.ContextHOME.SaveChanges();
+            Core.ContextKIP_Local.SaveChanges();
         }
 
         private void FreezeReview_Click(object sender, RoutedEventArgs e)
@@ -69,9 +69,9 @@ namespace ShutAndKing.Pages
             if (button?.Tag is UserReviews review)
             {
                 review.Status = "Заморожен";
-                Core.ContextHOME.SaveChanges();
+                Core.ContextKIP_Local.SaveChanges();
 
-                var usersReviews = Core.ContextHOME.UserReviews
+                var usersReviews = Core.ContextKIP_Local.UserReviews
                 .Include(x => x.Users)
                 .Where(x => x.BookID == book.ID && x.Status == "Активен")
                 .ToList();
@@ -102,8 +102,8 @@ namespace ShutAndKing.Pages
                 AuthorID = null,
                 Reason = book_complaint.Text.Trim()
             };
-            Core.ContextHOME.Complaints.Add(newComplaint);
-            Core.ContextHOME.SaveChanges();
+            Core.ContextKIP_Local.Complaints.Add(newComplaint);
+            Core.ContextKIP_Local.SaveChanges();
 
             MessageBox.Show("Жалоба на книгу отправлена администратору.", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
             book_complaint.Clear();
@@ -122,7 +122,7 @@ namespace ShutAndKing.Pages
                 UserID = User.ID,
                 BookID = null,
                 ReviewID = null,
-                AuthorID = Core.ContextHOME.Users.First(x => x.ID == book.AuthorID).ID,
+                AuthorID = Core.ContextKIP_Local.Users.First(x => x.ID == book.AuthorID).ID,
                 Reason = author_complaint.Text.Trim()
             };
 
@@ -168,7 +168,7 @@ namespace ShutAndKing.Pages
             book_text.Text = book.Text;
 
             // Рейтинг
-            var ratingList = Core.ContextHOME.UserReviews.Where(x => x.BookID == book.ID).ToList();
+            var ratingList = Core.ContextKIP_Local.UserReviews.Where(x => x.BookID == book.ID).ToList();
             if (ratingList.Any())
             {
                 double avgRating = ratingList.Average(x => x.Rating);
@@ -177,12 +177,12 @@ namespace ShutAndKing.Pages
             else book_rating.Text = "Нет оценок";
 
             // Автор
-            var author = Core.ContextHOME.Users.First(x => x.ID == book.AuthorID);
+            var author = Core.ContextKIP_Local.Users.First(x => x.ID == book.AuthorID);
             book_author.Text = author.Name;
 
             // Отзывы
-            var usersReviews = Core.ContextHOME.UserReviews
-                .Include(x => x.Users) // загружаем автора отзыва
+            var usersReviews = Core.ContextKIP_Local.UserReviews
+                .Include(x => x.Users)
                 .Where(x => x.BookID == book.ID && x.Status == "Активен")
                 .ToList();
             Reviews_LB.ItemsSource = usersReviews;
@@ -205,6 +205,21 @@ namespace ShutAndKing.Pages
                     freezeBookBtn.Content = "Разморозить книгу";
                     isFreeze = true;
                 }
+            }
+        }
+
+        private void AddReview_Click(object sender, RoutedEventArgs e)
+        {
+            AddReview_Dialog dialog = new AddReview_Dialog(book);
+            dialog.ShowDialog();
+
+            if (dialog.DialogResult == true) 
+            {
+                var usersReviews = Core.ContextKIP_Local.UserReviews
+                    .Include(x => x.Users)
+                    .Where(x => x.BookID == book.ID && x.Status == "Активен")
+                    .ToList();
+                Reviews_LB.ItemsSource = usersReviews;
             }
         }
     }

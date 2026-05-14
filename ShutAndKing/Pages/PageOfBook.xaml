@@ -36,7 +36,8 @@
                 <Image x:Name="book_cover" 
 				   Source="/Images/no_image.png" 
 				   Height="150"/>
-                <Button x:Name="AddToListBtn" Margin="15" Height="20" Width="100" Content="Добавить" Click="AddToList_Click"/>
+                <Button x:Name="AddToListBtn" Margin="15" Height="20" Width="125" Content="Добавить в список" Click="AddToList_Click"/>
+                <Button x:Name="AddReviewBtn" Margin="15" Height="20" Width="125" Content="Добавить отзыв" Click="AddReview_Click"/>
                 <!-- Кнопка заморозки книги для администратора -->
                 <Button x:Name="freezeBookBtn" 
                     Content="Заморозить книгу" 

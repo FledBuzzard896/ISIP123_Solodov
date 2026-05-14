@@ -71,8 +71,8 @@ namespace ShutAndKing.Dialogs
             }
 
     
-            Core.ContextHOME.DefrostingApplication.Add(newDefrostApplication);
-            Core.ContextHOME.SaveChanges();
+            Core.ContextKIP_Local.DefrostingApplication.Add(newDefrostApplication);
+            Core.ContextKIP_Local.SaveChanges();
 
             MessageBox.Show("Заявление успешно отправлено!", "Выполнено", MessageBoxButton.OK, MessageBoxImage.Information);
             this.DialogResult = true;

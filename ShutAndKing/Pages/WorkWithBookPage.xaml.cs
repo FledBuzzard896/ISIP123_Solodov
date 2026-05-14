@@ -23,10 +23,12 @@ namespace ShutAndKing.Pages
     public partial class WorkWithBookPage : Page
     {
         private Books book = null;
+        private List<GenresStatusModel> GenresList = new List<GenresStatusModel>();
 
         public WorkWithBookPage(Books inputBook)
         {
             InitializeComponent();
+            this.DataContext = this;
 
             book = inputBook;
             Loaded += PageLoaded;
@@ -45,8 +47,17 @@ namespace ShutAndKing.Pages
                     AuthorID = User.ID,
                     Status = "Не заморожена"
                 };
-    
-                Core.ContextHOME.Books.Add(newBook);
+
+                foreach (var item in GenresList) 
+                {
+                    if (item.IsSelected) 
+                    {
+                        newBook.Genres.Add(Core.ContextKIP_Local.Genres.First(x => x.Title == item.Name));
+                    }
+                }
+                
+                Core.ContextKIP_Local.Books.Add(newBook);
+                
                 MessageBox.Show("Книга добавлена!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
@@ -62,7 +73,7 @@ namespace ShutAndKing.Pages
                 book.Text = TextTBox.Text;
                 MessageBox.Show("Книга изменена!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            Core.ContextHOME.SaveChanges();
+            Core.ContextKIP_Local.SaveChanges();
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
@@ -76,8 +87,8 @@ namespace ShutAndKing.Pages
                 var ans = MessageBox.Show($"Вы точно хотите удалить книгу: {book.Title}", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (ans == MessageBoxResult.Yes)
                 {
-                    Core.ContextHOME.Books.Remove(book);
-                    Core.ContextHOME.SaveChanges();
+                    Core.ContextKIP_Local.Books.Remove(book);
+                    Core.ContextKIP_Local.SaveChanges();
                 }
                 return;
             }
@@ -85,12 +96,28 @@ namespace ShutAndKing.Pages
 
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
+            var listOfGenres = Core.ContextKIP_Local.Genres.ToList();
+
             if (book != null)
             {
                 TitleTBox.Text = book.Title;
                 DescriptionTBox.Text = book.Description;
                 TextTBox.Text = book.Text;
+
+                //foreach (var elem in listOfGenres) 
+                //{
+                //    GenresList.Add(new GenresStatusModel { Name = elem.Title, IsSelected = false });
+                //}
+
+                //foreach (var )
+                //GenreBox.ItemsSource = GenresList;
             }
+
+            foreach (var elem in listOfGenres)
+            {
+                GenresList.Add(new GenresStatusModel { Name = elem.Title, IsSelected = false });
+            }
+            GenreBox.ItemsSource = GenresList;
         }
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)
