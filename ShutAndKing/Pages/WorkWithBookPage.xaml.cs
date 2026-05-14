@@ -52,11 +52,11 @@ namespace ShutAndKing.Pages
                 {
                     if (item.IsSelected) 
                     {
-                        newBook.Genres.Add(Core.ContextKIP_Local.Genres.First(x => x.Title == item.Name));
+                        newBook.Genres.Add(Core.ContextHOME.Genres.First(x => x.Title == item.Name));
                     }
                 }
                 
-                Core.ContextKIP_Local.Books.Add(newBook);
+                Core.ContextHOME.Books.Add(newBook);
                 
                 MessageBox.Show("Книга добавлена!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
             }
@@ -73,7 +73,7 @@ namespace ShutAndKing.Pages
                 book.Text = TextTBox.Text;
                 MessageBox.Show("Книга изменена!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            Core.ContextKIP_Local.SaveChanges();
+            Core.ContextHOME.SaveChanges();
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
@@ -87,8 +87,8 @@ namespace ShutAndKing.Pages
                 var ans = MessageBox.Show($"Вы точно хотите удалить книгу: {book.Title}", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (ans == MessageBoxResult.Yes)
                 {
-                    Core.ContextKIP_Local.Books.Remove(book);
-                    Core.ContextKIP_Local.SaveChanges();
+                    Core.ContextHOME.Books.Remove(book);
+                    Core.ContextHOME.SaveChanges();
                 }
                 return;
             }
@@ -96,7 +96,7 @@ namespace ShutAndKing.Pages
 
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
-            var listOfGenres = Core.ContextKIP_Local.Genres.ToList();
+            var listOfGenres = Core.ContextHOME.Genres.ToList();
 
             if (book != null)
             {

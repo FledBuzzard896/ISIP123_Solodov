@@ -46,8 +46,8 @@ namespace ShutAndKing.Dialogs
                 Reason = reasonTBox.Text.Trim()
             };
     
-            Core.ContextKIP_Local.AuthorApplication.Add(newApplication);
-            Core.ContextKIP_Local.SaveChanges();
+            Core.ContextHOME.AuthorApplication.Add(newApplication);
+            Core.ContextHOME.SaveChanges();
 
             MessageBox.Show("Заявление успешно отправлено!", "Выполнено", MessageBoxButton.OK, MessageBoxImage.Information);
             this.DialogResult = true;

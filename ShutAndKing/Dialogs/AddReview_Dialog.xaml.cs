@@ -58,8 +58,8 @@ namespace ShutAndKing.Dialogs
                 DateOfReview = DateTime.Now,
                 Status = "Активен"
             };
-            Core.ContextKIP_Local.UserReviews.Add(newReview);
-            Core.ContextKIP_Local.SaveChanges();
+            Core.ContextHOME.UserReviews.Add(newReview);
+            Core.ContextHOME.SaveChanges();
 
             this.DialogResult = true;
         }

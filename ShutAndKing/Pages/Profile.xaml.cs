@@ -36,7 +36,7 @@ namespace ShutAndKing.Pages
                 return;
             }
 
-            if (Core.ContextKIP_Local.AuthorApplication.FirstOrDefault(x => x.UserID == User.ID) != null) 
+            if (Core.ContextHOME.AuthorApplication.FirstOrDefault(x => x.UserID == User.ID) != null) 
             {
                 MessageBox.Show("Ваша заявка уже рассматривается администраторами!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
@@ -63,12 +63,12 @@ namespace ShutAndKing.Pages
             nameTB.Text = User.Name;
             loginTB.Text = User.Login;
             mailTB.Text = User.Email;
-            roleTB.Text = Core.ContextKIP_Local.Roles.FirstOrDefault(x => x.ID == User.RoleID).Title;
+            roleTB.Text = Core.ContextHOME.Roles.FirstOrDefault(x => x.ID == User.RoleID).Title;
 
             isFrozen.Text = User.Status;
             if (User.Status == "Заморожен") UnFreezeBtn.Visibility = Visibility.Visible;
 
-            var reviews = Core.ContextKIP_Local.UserReviews.Where(x => x.UserID == User.ID).ToList();
+            var reviews = Core.ContextHOME.UserReviews.Where(x => x.UserID == User.ID).ToList();
             Reviews_LB.ItemsSource = reviews;
         }
 
