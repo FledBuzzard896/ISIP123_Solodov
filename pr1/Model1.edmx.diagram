@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6f8e3858428645bb845519d96213653c" Name="Diagram1">
+        <EntityTypeShape EntityType="db_for_importModel.Categories_" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_for_importModel.Manufacturers_" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_for_importModel.OrderItems_" Width="1.5" PointX="9.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_for_importModel.Orders_" Width="1.5" PointX="7.5" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_for_importModel.Products_" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_for_importModel.Roles_" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_for_importModel.Sizes_" Width="1.5" PointX="5.25" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_for_importModel.StockItems_" Width="1.5" PointX="7.5" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_for_importModel.Subcategories_" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_for_importModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_for_importModel.Users_" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
+        <AssociationConnector Association="db_for_importModel.FK_Subcategories__Categories_" ManuallyRouted="false" />
+        <AssociationConnector Association="db_for_importModel.FK_Products__Manufacturers_" ManuallyRouted="false" />
+        <AssociationConnector Association="db_for_importModel.FK_OrderItems__Orders_" ManuallyRouted="false" />
+        <AssociationConnector Association="db_for_importModel.FK_OrderItems__StockItems_" ManuallyRouted="false" />
+        <AssociationConnector Association="db_for_importModel.FK_Orders__Users_" ManuallyRouted="false" />
+        <AssociationConnector Association="db_for_importModel.FK_Products__Subcategories_" ManuallyRouted="false" />
+        <AssociationConnector Association="db_for_importModel.FK_StockItems__Products_" ManuallyRouted="false" />
+        <AssociationConnector Association="db_for_importModel.FK_Users__Roles_" ManuallyRouted="false" />
+        <AssociationConnector Association="db_for_importModel.FK_StockItems__Sizes_" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
