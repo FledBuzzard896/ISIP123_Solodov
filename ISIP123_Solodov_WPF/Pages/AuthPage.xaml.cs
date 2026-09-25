@@ -24,5 +24,32 @@ namespace ISIP123_Solodov_WPF.Pages
         {
             InitializeComponent();
         }
+
+        private void enterBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var usr = Core.Context.Users.FirstOrDefault(x => x.Login == loginBox.Text);
+            if (usr != null)
+            {
+                MessageBox.Show("Пользователя с таким Login не существует.", "Отказ", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            else if (passwordBox.Password != usr.Password) 
+            {
+                MessageBox.Show("Логин или пароль неправильный", "Отказ", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            Core.CurrentUser = usr;
+            NavigationService.Navigate("");
+        }
+
+        private void regBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate("");
+        }
+
+        private void entryGuestBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate("");
+        }
     }
 }
