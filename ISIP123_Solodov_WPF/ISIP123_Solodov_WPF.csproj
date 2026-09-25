@@ -35,8 +35,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,6 +62,57 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CS2Market.cs">
+      <DependentUpon>steam-model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Inventories.cs">
+      <DependentUpon>steam-model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Items.cs">
+      <DependentUpon>steam-model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Iznos.cs">
+      <DependentUpon>steam-model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Operations.cs">
+      <DependentUpon>steam-model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AuthPage.xaml.cs">
+      <DependentUpon>AuthPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Qualities.cs">
+      <DependentUpon>steam-model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Status.cs">
+      <DependentUpon>steam-model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="steam-model.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>steam-model.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="steam-model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>steam-model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="steam-model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>steam-model.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>steam-model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TransactionsHistory.cs">
+      <DependentUpon>steam-model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types.cs">
+      <DependentUpon>steam-model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Users.cs">
+      <DependentUpon>steam-model.tt</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -63,10 +121,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Core.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\AuthPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -86,13 +149,39 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="steam-model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>steam-model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="steam-model.edmx.diagram">
+      <DependentUpon>steam-model.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\stem-logo-nobg.png" />
+    <Resource Include="Images\stem-logo.png" />
+    <Content Include="steam-model.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>steam-model.Context.cs</LastGenOutput>
+      <DependentUpon>steam-model.edmx</DependentUpon>
+    </Content>
+    <Content Include="steam-model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>steam-model.edmx</DependentUpon>
+      <LastGenOutput>steam-model.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
