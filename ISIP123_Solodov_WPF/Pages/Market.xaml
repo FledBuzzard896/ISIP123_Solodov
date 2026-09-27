@@ -128,15 +128,15 @@
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Image Source="{Binding ссылка}" Width="75" Grid.Column="0" Margin="5"/>
+                                    <Image Source="{Binding Inventories.Items.ItemPicture}" Width="75" Grid.Column="0" Margin="5"/>
                                     <StackPanel Grid.Column="1" Orientation="Vertical">
-                                        <TextBlock Text="{Binding навание}" FontSize="16" FontWeight="Bold" Foreground="#afb1b8"/>
+                                        <TextBlock Text="{Binding Inventories.Items.Name}" FontSize="16" FontWeight="Bold" Foreground="#afb1b8"/>
                                         <TextBlock Text="Counter-Strike 2" Foreground="#afb1b8"/>
                                     </StackPanel>
-                                    <TextBlock Text="{Binding количество}" Foreground="#afb1b8" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Inventories.Count}" Foreground="#afb1b8" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
                                         <TextBlock Text="От" Foreground="#afb1b8"/>
-                                        <TextBlock Text="{Binding цена, StringFormat={}{0} руб.}" Foreground="White"/>
+                                        <TextBlock Text="{Binding Price, StringFormat={}{0} руб.}" Foreground="White"/>
                                     </StackPanel>
                                 </Grid>
                             </DataTemplate>

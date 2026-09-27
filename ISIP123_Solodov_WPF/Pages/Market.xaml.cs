@@ -23,6 +23,7 @@ namespace ISIP123_Solodov_WPF.Pages
         public Market()
         {
             InitializeComponent();
+            Loaded += PageLoaded;
         }
 
         private void listingsBtn_Click(object sender, RoutedEventArgs e)
@@ -31,6 +32,11 @@ namespace ISIP123_Solodov_WPF.Pages
         }
 
         private void historyBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PageLoaded(object sender, RoutedEventArgs e)
         {
 
         }
